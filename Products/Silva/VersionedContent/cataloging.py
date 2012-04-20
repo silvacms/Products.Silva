@@ -8,13 +8,8 @@ from five import grok
 
 from Acquisition import aq_base
 
-from OFS.interfaces import IObjectClonedEvent
-from silva.core.interfaces import IVersionedContent, IVersion
+from silva.core.interfaces import IVersionedContent
 from silva.core.services.catalog import Cataloging, catalog_queue
-from silva.core.services.interfaces import ICataloging
-from silva.core.interfaces.events import IContentClosedEvent
-from silva.core.interfaces.events import IContentPublishedEvent
-from silva.core.interfaces.events import IApprovalEvent
 
 
 class VersionedContentCataloging(Cataloging):
@@ -49,23 +44,3 @@ class VersionedContentCataloging(Cataloging):
             for version in self.get_indexable_versions():
                 catalog_queue.unindex(version)
         super(VersionedContentCataloging, self).unindex()
-
-
-
-@grok.subscribe(IVersion, IObjectClonedEvent)
-def catalog_version(version, event):
-    ICataloging(version).index()
-    ICataloging(version.get_content()).index(with_versions=False)
-
-
-@grok.subscribe(IVersion, IApprovalEvent)
-@grok.subscribe(IVersion, IContentPublishedEvent)
-def recatalog_version(version, event):
-    ICataloging(version).index()
-    ICataloging(version.get_content()).index(with_versions=False)
-
-
-@grok.subscribe(IVersion, IContentClosedEvent)
-def uncatalog_version(version, event):
-    ICataloging(version).unindex()
-    ICataloging(version.get_content()).unindex(with_versions=False)

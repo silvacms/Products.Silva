@@ -10,6 +10,7 @@ from OFS.SimpleItem import SimpleItem
 from Products.Silva import MAILHOST_ID
 from Products.Silva.ftesting import smi_settings
 from Products.Silva.tests.mockers import install_mockers
+from silva.core.services.catalog import catalog_queue
 import Products.Silva
 
 from infrae.testbrowser.browser import Browser
@@ -24,6 +25,21 @@ import transaction
 
 
 SENT_MAILS = []
+
+
+class CatalogTransaction(object):
+    """Commit the code executed, using a catalog queue
+    """
+
+    def __enter__(self):
+        transaction.abort()
+        catalog_queue.activate(transaction.begin())
+
+    def __exit__(self, t, v, tb):
+        if v is None and not transaction.isDoomed():
+            transaction.commit()
+        else:
+            transaction.abort()
 
 
 class MockMail(object):

@@ -5,7 +5,7 @@
 
 import unittest
 
-from Products.Silva.testing import FunctionalLayer
+from Products.Silva.testing import FunctionalLayer, CatalogTransaction
 from Products.Silva.tests.helpers import open_test_file
 
 
@@ -16,9 +16,11 @@ class FileCatalogTestCase(unittest.TestCase):
         self.root = self.layer.get_application()
         self.layer.login('editor')
 
-        with open_test_file('dark_energy.txt') as data:
-            factory = self.root.manage_addProduct['Silva']
-            factory.manage_addFile('universe', u'Not related to Silva', data)
+        with CatalogTransaction():
+            with open_test_file('dark_energy.txt') as data:
+                factory = self.root.manage_addProduct['Silva']
+                factory.manage_addFile(
+                    'universe', u'Not related to Silva', data)
 
     def search(self, **kwargs):
         return map(lambda b: (b.getPath(), b.publication_status),
@@ -41,6 +43,23 @@ class FileCatalogTestCase(unittest.TestCase):
         self.assertItemsEqual(
             self.search(fulltext='dark energy'),
             [('/root/renamed_universe', 'public')])
+        self.assertItemsEqual(
+            self.search(fulltext='in zope'),
+            [])
+
+    def test_rename_transaction(self):
+        """A file is reindexed if it is renamed.
+        """
+        with CatalogTransaction():
+            self.root.universe.set_title(u'All true in Zope')
+            self.root.manage_renameObject('universe', 'renamed_universe')
+
+        self.assertItemsEqual(
+            self.search(fulltext='dark energy'),
+            [('/root/renamed_universe', 'public')])
+        self.assertItemsEqual(
+            self.search(fulltext='in zope'),
+            [('/root/renamed_universe', 'public')])
 
     def test_rename_title(self):
         """A file whose the title changed is reindexed.
@@ -59,6 +78,22 @@ class FileCatalogTestCase(unittest.TestCase):
         factory = self.root.manage_addProduct['Silva']
         factory.manage_addPublication('publication', 'Publication')
         token = self.root.manage_cutObjects(['universe'])
+
+        self.root.publication.manage_pasteObjects(token)
+        self.assertItemsEqual(
+            self.search(path='/root'),
+            [('/root', 'unapproved'),
+             ('/root/publication', 'unapproved'),
+             ('/root/publication/universe', 'public')])
+
+    def test_moving_transaction(self):
+        """A moved filed is reindexed.
+        """
+        with CatalogTransaction():
+            factory = self.root.manage_addProduct['Silva']
+            factory.manage_addPublication('publication', 'Publication')
+            token = self.root.manage_cutObjects(['universe'])
+
         self.root.publication.manage_pasteObjects(token)
         self.assertItemsEqual(
             self.search(path='/root'),
@@ -71,6 +106,19 @@ class FileCatalogTestCase(unittest.TestCase):
         """
         token = self.root.manage_copyObjects(['universe'])
         self.root.manage_pasteObjects(token)
+
+        self.assertItemsEqual(
+            self.search(fulltext='dark energy'),
+            [('/root/universe', 'public'),
+             ('/root/copy_of_universe', 'public')])
+
+    def test_copy_transaction(self):
+        """A copy of a file is indexed.
+        """
+        with CatalogTransaction():
+            token = self.root.manage_copyObjects(['universe'])
+            self.root.manage_pasteObjects(token)
+
         self.assertItemsEqual(
             self.search(fulltext='dark energy'),
             [('/root/universe', 'public'),
@@ -80,6 +128,20 @@ class FileCatalogTestCase(unittest.TestCase):
         """A file is unindex when it is removed.
         """
         self.root.manage_delObjects(['universe'])
+
+        self.assertItemsEqual(
+            self.search(path='/root'),
+            [('/root', 'unapproved')])
+        self.assertItemsEqual(
+            self.search(fulltext='dark energy'),
+            [])
+
+    def test_deletion_transaction(self):
+        """A file is unindex when it is removed.
+        """
+        with CatalogTransaction():
+            self.root.manage_delObjects(['universe'])
+
         self.assertItemsEqual(
             self.search(path='/root'),
             [('/root', 'unapproved')])

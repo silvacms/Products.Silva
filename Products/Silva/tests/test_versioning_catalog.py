@@ -6,9 +6,10 @@
 import unittest
 
 from silva.core.interfaces import IPublicationWorkflow
+from silva.core.interfaces import IContainerManager
 
 from DateTime import DateTime
-from Products.Silva.testing import FunctionalLayer
+from Products.Silva.testing import FunctionalLayer, CatalogTransaction
 
 
 class CatalogVersioningTestCase(unittest.TestCase):
@@ -18,14 +19,17 @@ class CatalogVersioningTestCase(unittest.TestCase):
         self.root = self.layer.get_application()
         self.layer.login('editor')
 
-        factory = self.root.manage_addProduct['Silva']
-        factory.manage_addMockupVersionedContent('document', 'Document')
+        with CatalogTransaction():
+            factory = self.root.manage_addProduct['Silva']
+            factory.manage_addMockupVersionedContent('document', 'Document')
 
     def search(self, path):
         return map(lambda b: (b.getPath(), b.publication_status),
                    self.root.service_catalog(path=path))
 
     def test_unapproved(self):
+        """By default everything is cataloged and unapproved.
+        """
         self.assertItemsEqual(
             self.search('/root'),
             [('/root', 'unapproved'),
@@ -35,35 +39,69 @@ class CatalogVersioningTestCase(unittest.TestCase):
     def test_approved(self):
         IPublicationWorkflow(self.root.document).approve(DateTime() + 60)
         self.assertItemsEqual(
-            self.search('/root'),
-            [('/root', 'unapproved'),
-             ('/root/document', 'approved'),
+            self.search('/root/document'),
+            [('/root/document', 'approved'),
              ('/root/document/0', 'approved')])
 
-    def test_public(self):
+    def test_publish(self):
+        """If you publish a document, it is recataloged.
+        """
         IPublicationWorkflow(self.root.document).publish()
         self.assertItemsEqual(
-            self.search('/root'),
-            [('/root', 'public'),
-             ('/root/document', 'public'),
+            self.search('/root/document'),
+            [('/root/document', 'public'),
              ('/root/document/0', 'public')])
 
     def test_closed(self):
+        """If you close a document, its version is no longer
+        catalogued, and the document appears as unapproved.
+        """
         IPublicationWorkflow(self.root.document).publish()
         IPublicationWorkflow(self.root.document).close()
-        # Close unindex the version, but the versioned is kept in the catalog
+
+        self.assertItemsEqual(
+            self.search('/root'),
+            [('/root', 'unapproved'),
+             ('/root/document', 'unapproved')])
+
+    def test_closed_transaction(self):
+        """If you close a document within a transaction, its version
+        is no longer catalogued, and the document appears as
+        unapproved.
+        """
+        with CatalogTransaction():
+            IPublicationWorkflow(self.root.document).publish()
+            IPublicationWorkflow(self.root.document).close()
+
         self.assertItemsEqual(
             self.search('/root'),
             [('/root', 'unapproved'),
              ('/root/document', 'unapproved')])
 
     def test_new(self):
+        """If you create a new version of a published document, it
+        appears in the catalog.
+        """
         IPublicationWorkflow(self.root.document).publish()
         IPublicationWorkflow(self.root.document).new_version()
+
         self.assertItemsEqual(
-            self.search('/root'),
-            [('/root', 'unapproved'),
-             ('/root/document', 'public'),
+            self.search('/root/document'),
+            [('/root/document', 'public'),
+             ('/root/document/0', 'public'),
+             ('/root/document/1', 'unapproved')])
+
+    def test_new_transaction(self):
+        """If you create a new version of a published document within
+        a transaction, it appears in the catalog.
+        """
+        with CatalogTransaction():
+            IPublicationWorkflow(self.root.document).publish()
+            IPublicationWorkflow(self.root.document).new_version()
+
+        self.assertItemsEqual(
+            self.search('/root/document'),
+            [('/root/document', 'public'),
              ('/root/document/0', 'public'),
              ('/root/document/1', 'unapproved')])
 
@@ -71,6 +109,7 @@ class CatalogVersioningTestCase(unittest.TestCase):
         IPublicationWorkflow(self.root.document).publish()
         IPublicationWorkflow(self.root.document).new_version()
         IPublicationWorkflow(self.root.document).approve(DateTime() + 60)
+
         self.assertItemsEqual(
             self.search('/root'),
             [('/root', 'unapproved'),
@@ -79,13 +118,30 @@ class CatalogVersioningTestCase(unittest.TestCase):
              ('/root/document/1', 'approved')])
 
     def test_new_published(self):
+        """If we published, make a new version and publish again the
+        document, it should be published.
+        """
         IPublicationWorkflow(self.root.document).publish()
         IPublicationWorkflow(self.root.document).new_version()
         IPublicationWorkflow(self.root.document).publish()
+
         self.assertItemsEqual(
-            self.search('/root'),
-            [('/root', 'public'),
-             ('/root/document', 'public'),
+            self.search('/root/document'),
+            [('/root/document', 'public'),
+             ('/root/document/1', 'public')])
+
+    def test_new_published_transaction(self):
+        """If we published, make a new version and publish again the
+        document, it should be published.
+        """
+        with CatalogTransaction():
+            IPublicationWorkflow(self.root.document).publish()
+            IPublicationWorkflow(self.root.document).new_version()
+            IPublicationWorkflow(self.root.document).publish()
+
+        self.assertItemsEqual(
+            self.search('/root/document'),
+            [('/root/document', 'public'),
              ('/root/document/1', 'public')])
 
     def test_rename(self):
@@ -100,18 +156,35 @@ class CatalogVersioningTestCase(unittest.TestCase):
              ('/root/renamed_document/0', 'public')])
 
     def test_copy(self):
-        """Copy a published document.
+        """Copy a published document. The copy should be catalogued
+        and not published.
         """
         IPublicationWorkflow(self.root.document).publish()
-        token = self.root.manage_copyObjects(['document'])
-        self.root.manage_pasteObjects(token)
+        with IContainerManager(self.root).copier() as copier:
+            copier(self.root.document)
+
         self.assertItemsEqual(
             self.search('/root'),
             [('/root', 'public'),
              ('/root/document', 'public'),
              ('/root/document/0', 'public'),
-             ('/root/copy_of_document', 'unapproved'),
-             ('/root/copy_of_document/0', 'unapproved')])
+             ('/root/copy_of_document', 'unapproved')])
+
+    def test_copy_transaction(self):
+        """Copy a published document within a transaction. The copy
+        should be catalogued and not published.
+        """
+        with CatalogTransaction():
+            IPublicationWorkflow(self.root.document).publish()
+            with IContainerManager(self.root).copier() as copier:
+                copier(self.root.document)
+
+        self.assertItemsEqual(
+            self.search('/root'),
+            [('/root', 'public'),
+             ('/root/document', 'public'),
+             ('/root/document/0', 'public'),
+             ('/root/copy_of_document', 'unapproved')])
 
     def test_moving(self):
         """Test moving published elements into a folder.
@@ -119,8 +192,26 @@ class CatalogVersioningTestCase(unittest.TestCase):
         IPublicationWorkflow(self.root.document).publish()
         factory = self.root.manage_addProduct['Silva']
         factory.manage_addFolder('folder', 'Folder')
-        token = self.root.manage_cutObjects(['document'])
-        self.root.folder.manage_pasteObjects(token)
+        with IContainerManager(self.root.folder).mover() as mover:
+            mover(self.root.document)
+
+        self.assertItemsEqual(
+            self.search('/root'),
+            [('/root', 'public'),
+             ('/root/folder', 'public'),
+             ('/root/folder/document', 'public'),
+             ('/root/folder/document/0', 'public')])
+
+    def test_moving_transaction(self):
+        """Test moving published elements into a folder within a transaction.
+        """
+        with CatalogTransaction():
+            IPublicationWorkflow(self.root.document).publish()
+            factory = self.root.manage_addProduct['Silva']
+            factory.manage_addFolder('folder', 'Folder')
+            with IContainerManager(self.root.folder).mover() as mover:
+                mover(self.root.document)
+
         self.assertItemsEqual(
             self.search('/root'),
             [('/root', 'public'),

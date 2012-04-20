@@ -22,10 +22,13 @@ from Products.Silva import SilvaPermissions
 from Products.Silva.SilvaObject import TitledObject
 from Products.SilvaMetadata.interfaces import IMetadataService
 
-from silva.translations import translate as _
-from silva.core.interfaces import IVersionManager
 from silva.core.interfaces import IVersion, VersioningError
+from silva.core.interfaces import IVersionManager
+from silva.core.interfaces.events import IApprovalEvent
+from silva.core.interfaces.events import IContentClosedEvent
+from silva.core.interfaces.events import IContentPublishedEvent
 from silva.core.services.interfaces import ICataloging
+from silva.translations import translate as _
 
 
 class Version(TitledObject, SimpleItem):
@@ -167,25 +170,10 @@ _i18n_markers = (_('unapproved'), _('approved'), _('last_closed'),
                  _('closed'), _('draft'), _('pending'), _('public'),)
 
 
-@grok.subscribe(IVersion, IObjectModifiedEvent)
-def version_modified(version, event):
-    # This version have been modified
-    version.get_content().sec_update_last_author_info()
-    ICataloging(version).reindex()
-
-
-@grok.subscribe(IVersion, IObjectWillBeRemovedEvent)
-def catalog_version_removed(version, event):
-    if version != event.object:
-        # Only interested about version removed by hand.
-        return
-    ICataloging(version).unindex()
-
-
 @grok.subscribe(IVersion, IObjectCreatedEvent)
 @grok.subscribe(IVersion, IObjectClonedEvent)
 def version_created(version, event):
-    if (version != event.object or
+    if ((version != event.object) or
         IObjectCopiedEvent.providedBy(event)):
         return
 
@@ -193,5 +181,37 @@ def version_created(version, event):
     binding = service.getMetadata(version)
     if binding is not None:
         binding.setValues('silva-extra', {'creationtime': DateTime()})
+
     ICataloging(version).index()
+    ICataloging(version.get_content()).index(with_versions=False)
+
+
+@grok.subscribe(IVersion, IApprovalEvent)
+@grok.subscribe(IVersion, IContentPublishedEvent)
+def version_published(version, event):
+    ICataloging(version).index()
+    ICataloging(version.get_content()).index(with_versions=False)
+
+
+@grok.subscribe(IVersion, IContentClosedEvent)
+def version_closed(version, event):
+    ICataloging(version).unindex()
+    ICataloging(version.get_content()).index(with_versions=False)
+
+
+@grok.subscribe(IVersion, IObjectModifiedEvent)
+def version_modified(version, event):
+    # This version have been modified
+    version.get_content().sec_update_last_author_info()
+    ICataloging(version).reindex()
+    ICataloging(version.get_content()).index(with_versions=False)
+
+
+@grok.subscribe(IVersion, IObjectWillBeRemovedEvent)
+def version_removed(version, event):
+    if version != event.object:
+        # Only interested about version removed by hand.
+        return
+    ICataloging(version).unindex()
+
 
