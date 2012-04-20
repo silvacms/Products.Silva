@@ -28,7 +28,7 @@ from OFS import Image   # For ZODB storage
 from Products.Silva import SilvaPermissions
 from Products.Silva import mangle
 from Products.Silva.Asset import Asset
-from Products.Silva.converters import get_converter_for_mimetype
+from Products.Silva.File.converters import get_converter_for_mimetype
 from Products.Silva.helpers import create_new_filename
 from Products.Silva.magic import MagicGuess
 
@@ -63,9 +63,9 @@ def manage_addFile(context, identifier, title=None, file=None):
     content = context._getOb(identifier)
     if title is not None:
         content.set_title(title)
-    notify(ObjectCreatedEvent(content))
     if file is not None:
         content.set_file(file)
+    notify(ObjectCreatedEvent(content))
     return content
 
 
@@ -116,22 +116,22 @@ class File(Asset):
     def fulltext(self):
         """Return the content of this object without any markup
         """
-
-        mimetype = self.get_mime_type()
-        converter = get_converter_for_mimetype(mimetype)
-        fulltextlist = [self.get_title()]
+        converter = get_converter_for_mimetype(self.get_mime_type())
+        fulltext = [self.get_title()]
         if converter is None:
-            return fulltextlist
+            return fulltext
 
-        file_data = self.get_file()
-        fulltext = None
-        if file_data:
-            fulltext = converter.convert(file_data, self.REQUEST)
-
-        if fulltext is None:
-            return fulltextlist
-        fulltextlist.append(fulltext)
-        return fulltextlist
+        text = None
+        filename = self.get_file_system_path()
+        if filename is not None:
+            text = converter.convert_file(filename)
+        else:
+            file_data = self.get_file()
+            if file_data:
+                text = converter.convert_string(file_data)
+        if text:
+            fulltext.append(text)
+        return fulltext
 
     security.declareProtected(
         SilvaPermissions.View, 'get_download_url')
@@ -394,6 +394,7 @@ InitializeClass(BlobFile)
 def file_modified(content, event):
     create_new_filename(content, content.getId())
     content.update_quota()
+
 
 @grok.subscribe(
     interfaces.IFile, zope.lifecycleevent.interfaces.IObjectMovedEvent)

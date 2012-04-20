@@ -5,16 +5,21 @@
 
 import unittest
 
+from Products.Silva import File
 from Products.Silva.testing import FunctionalLayer, CatalogTransaction
 from Products.Silva.tests.helpers import open_test_file
 
 
-class FileCatalogTestCase(unittest.TestCase):
+class DefaultFileCatalogTestCase(unittest.TestCase):
     layer = FunctionalLayer
+    implementation = None
 
     def setUp(self):
         self.root = self.layer.get_application()
         self.layer.login('editor')
+
+        if self.implementation is not None:
+            self.root.service_files.storage = self.implementation
 
         with CatalogTransaction():
             with open_test_file('dark_energy.txt') as data:
@@ -150,7 +155,14 @@ class FileCatalogTestCase(unittest.TestCase):
             [])
 
 
+class BlobFileCatalogTestCase(DefaultFileCatalogTestCase):
+    """Test blob file implementation.
+    """
+    implementation = File.BlobFile
+
+
 def test_suite():
     suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(FileCatalogTestCase))
+    suite.addTest(unittest.makeSuite(DefaultFileCatalogTestCase))
+    suite.addTest(unittest.makeSuite(BlobFileCatalogTestCase))
     return suite
