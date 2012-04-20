@@ -110,7 +110,6 @@ class Publication(Folder.Folder):
         quota = self.get_current_quota() * 1024 * 1024
         if quota and self.used_space > quota:
             excess = self.used_space - quota
-            transaction.abort()
             raise OverQuotaException(excess)
 
     # ACCESSORS
