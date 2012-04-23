@@ -1,7 +1,7 @@
 Changes
 =======
 
-Silva 2.3.2-bethel.6 (unreleased)
+Silva 2.3.2-bethel.6 (2012-04-24)
 ---------------------------------
 
 - disable http cache in rest.items.Items.
