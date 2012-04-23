@@ -7,7 +7,7 @@ from Acquisition import aq_parent
 from five import grok
 from infrae import rest
 from silva.core import interfaces
-from silva.core.views.interfaces import IVirtualSite
+from silva.core.views.interfaces import IVirtualSite, IHTTPResponseHeaders
 from zope.interface.interfaces import IInterface
 from zope import component
 from zope.intid.interfaces import IIntIds
@@ -64,6 +64,13 @@ class Items(rest.REST):
         return details
 
     def GET(self, intid=None, interface=None):
+        #aaltepet - some browsers were caching this request, causing the
+        # items view to not be updated once a new item was added.  
+        # Trying disable cache here to see whether that addresses the issue.
+        # XXX Note: this really should be addressed at a higher level within
+        #           infrae.rest
+        component.getMultiAdapter((self.request, self.context), 
+                                  IHTTPResponseHeaders).disable_cache()
         if intid is not None:
             try:
                 content = self.intid.getObject(int(intid))
