@@ -1,10 +1,10 @@
 Changes
 =======
 
-Silva 2.3.7 (unreleased)
+Silva 2.3.7 (2012/05/10)
 ------------------------
 
-- Various Kupu fixes for IE 7, 9 and 10.
+- Various Kupu fixes for IE 7, 9 and 10, and webkit based browsers.
 
 Silva 2.3.6 (2012/02/23)
 ------------------------
