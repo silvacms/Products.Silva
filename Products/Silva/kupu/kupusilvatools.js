@@ -541,6 +541,8 @@ function SilvaImageTool(
     this.toolbox = new SilvaToolBox(toolboxid, activeclass, plainclass);
     this.alignment = $('#' + alignid);
     this.resizePollingInterval = null;
+    this.resizePollingImage = null;
+    this.resizePollingChanged = false;
     this.image = null;
 
     this.add_button = $('#' + addbuttonid);
@@ -689,7 +691,7 @@ SilvaImageTool.prototype.createImageHandler = function(event) {
     }
 
     var default_title = this.content.title();
-    var url = this.content.url();
+    var url = this.content.url() + '?_=' + $.now();
     var self = this;
 
     var update_attributes = function(image) {
@@ -707,45 +709,28 @@ SilvaImageTool.prototype.createImageHandler = function(event) {
         image.setAttribute('src', url);
     };
 
-    if (this.image) {
+    var cache_image = new Image();
+
+    $(cache_image).bind('load', function () {
         // It will restart on update when updateState is called. We
         // don't hide the button as it might have been resized.
-        this.stopResizePolling();
-
-        update_attributes(this.image);
-
-        this.editor.content_changed = true;
-        this.editor.updateState();
-    } else {
-        var cache_image = new Image();
-
-        $(cache_image).bind('load', function () {
+        self.stopResizePolling();
+        if (self.image) {
+            update_attributes(self.image);
+        } else {
             var image = self.editor.getInnerDocument().createElement('img');
 
             update_attributes(image);
-
             self.editor.insertNodeAtSelection(image, 1);
-
-            self.editor.content_changed = true;
-            self.editor.updateState();
-        });
-        cache_image.src = url;
-    }
+        };
+        self.editor.content_changed = true;
+        self.editor.updateState();
+    });
+    cache_image.src = url;
 };
 
 SilvaImageTool.prototype.resetTool = function () {
-    this.stopResizePolling();
-
-    if (this.resize_button.is(':visible') && this.image) {
-        /* image has been resized, so prompt user to
-           confirm resizing */
-        this.resize_button.hide();
-        if (confirm(
-            "Image has been resized in kupu, but not confirmed. " +
-                "Really resize?")) {
-            this.resizeImage(false);
-        };
-    };
+    this.stopResizePolling(true);
     this.toolbox.close();
     this.content.clear();
     this.image = null;
@@ -753,13 +738,26 @@ SilvaImageTool.prototype.resetTool = function () {
 
 SilvaImageTool.prototype.updateState = function(selNode, event) {
     var extsourcetool = this.editor.getTool('extsourcetool');
+    var image = null;
     if (extsourcetool != undefined) {
         if (extsourcetool.getNearestExternalSource(selNode, event)) {
             this.resetTool();
             return;
         };
     };
-    var image = this.editor.getNearestParentOfType(selNode, 'img');
+    if (event !== undefined) {
+        var selection = this.editor.getSelection();
+        var target = (event.target !== undefined) ?
+                event.target:
+                event.srcElement;
+        if (event.type == 'click' && target.nodeName == 'IMG') {
+            image = target;
+            selection.selectNode(image);
+        };
+    };
+    if (image === null) {
+        image = this.editor.getNearestParentOfType(selNode, 'img');
+    };
     if (image) {
          /* the rest of the image tool was originally designed to
             getNearestparentOfType(img), but the 'confirm resizing'
@@ -785,7 +783,7 @@ SilvaImageTool.prototype.updateState = function(selNode, event) {
 };
 
 SilvaImageTool.prototype.confirmResizeHandler = function() {
-    this.resizeImage(true);
+    this.stopResizePolling(true, true);
 };
 
 SilvaImageTool.prototype.resizeImage = function(continue_polling) {
@@ -795,10 +793,6 @@ SilvaImageTool.prototype.resizeImage = function(continue_polling) {
         this.editor.logMessage('No image selected!  unable to resize.');
         return;
     };
-    /* Pause polling during resize */
-    this.stopResizePolling();
-    this.resize_button.hide();
-
     var self = this;
     var width = image.width;
     var height = image.height;
@@ -821,13 +815,18 @@ SilvaImageTool.prototype.resizeImage = function(continue_polling) {
                 };
             });
             // Add with and height to prevent image being cached by the browser
-            cache_image.src = image.src.replace(/\?.*/,'') + '?' + width + 'x' + height;
+            cache_image.src = image.src.replace(/\?.*/,'') +  + '?_=' + $.now();
         });
 };
 
 SilvaImageTool.prototype.startResizePolling = function(image) {
-    if (this.resizePollingInterval)
-        return;
+    if (this.resizePollingInterval !== null) {
+        if (this.resizePollingImage !== image) {
+            this.stopResizePolling(true);
+        } else {
+            return;
+        };
+    };
 
     var image_size = [image.width, image.height];
     var self = this;
@@ -838,17 +837,33 @@ SilvaImageTool.prototype.startResizePolling = function(image) {
         if (!(image_size[0] == new_image_size[0] &&
               image_size[1] == new_image_size[1])) {
             // The image have just been resized.
+            self.resizePollingChanged = true;
             self.resize_button.show();
             image_size = new_image_size;
         };
     };
+    this.resizePollingImage = image;
     this.resizePollingInterval = setInterval(polling, 300);
 };
 
-SilvaImageTool.prototype.stopResizePolling = function() {
-    if (this.resizePollingInterval) {
+SilvaImageTool.prototype.stopResizePolling = function(clear, restart) {
+    if (this.resizePollingInterval !== null) {
         clearInterval(this.resizePollingInterval);
         this.resizePollingInterval = null;
+        if (this.resizePollingChanged) {
+            if (clear) {
+                if (restart || confirm(
+                    "Image has been resized in kupu, but not confirmed. " +
+                        "Really resize?")) {
+                    this.resizeImage(restart);
+                } else {
+
+                };
+            };
+            this.resize_button.hide();
+        };
+        this.resizePollingImage = null;
+        this.resizePollingChanged = false;
     };
 };
 
