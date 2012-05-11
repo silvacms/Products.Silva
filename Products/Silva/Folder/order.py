@@ -5,6 +5,8 @@
 
 from five import grok
 from zope.event import notify
+from zope.component import getUtility
+from zope.intid.interfaces import IIntIds
 from zope.lifecycleevent.interfaces import IObjectMovedEvent
 from zope.lifecycleevent.interfaces import IObjectRemovedEvent
 
@@ -28,15 +30,20 @@ class OrderManager(grok.Annotation):
         super(OrderManager, self).__init__()
         self.order = []
 
+    def _get_id(self, content):
+        # Poor man cache.
+        utility = getattr(self, '_v_utility', None)
+        if utility is None:
+            utility = self._v_utility = getUtility(IIntIds)
+        return utility.register(content)
+
     def _is_valid(self, content):
         return (self.order_only.providedBy(content) and
                 not (IPublishable.providedBy(content) and content.is_default()))
 
     def add(self, content):
-        """Add content to the end of the list of ordered ids.
-        """
         if self._is_valid(content):
-            identifier = content.getId()
+            identifier = self._get_id(content)
             if identifier not in self.order:
                 self.order.append(identifier)
                 self._p_changed = True
@@ -67,9 +74,12 @@ class OrderManager(grok.Annotation):
         if not self._is_valid(content):
             return -1
         try:
-            return self.order.index(content.getId())
+            return self.order.index(self._get_id(content))
         except ValueError:
             return -1
+
+    def __len__(self):
+        return len(self.order)
 
     def _fix(self, folder):
         # Maintenance method that remove id that have been removed
@@ -88,7 +98,8 @@ class OrderManager(grok.Annotation):
 @grok.subscribe(ISilvaObject, IObjectMovedEvent)
 def content_added(content, event):
     if (event.object != content or
-        IObjectRemovedEvent.providedBy(event)):
+        IObjectRemovedEvent.providedBy(event) or
+        event.newParent == event.oldParent):
         return
     if IOrderableContainer.providedBy(event.newParent):
         manager = IOrderManager(event.newParent)
@@ -98,8 +109,9 @@ def content_added(content, event):
 @grok.subscribe(ISilvaObject, IObjectWillBeMovedEvent)
 def content_removed(content, event):
     if (event.object != content or
-        IObjectWillBeAddedEvent.providedBy(event)):
+        IObjectWillBeAddedEvent.providedBy(event) or
+        event.newParent == event.oldParent):
         return
-    if IOrderableContainer.providedBy(event.newParent):
-        manager = IOrderManager(event.newParent)
+    if IOrderableContainer.providedBy(event.oldParent):
+        manager = IOrderManager(event.oldParent)
         manager.remove(content)

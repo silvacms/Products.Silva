@@ -25,7 +25,7 @@ from Products.Silva.Ghost import ghost_factory
 
 from infrae.comethods import cofunction
 from silva.core import conf as silvaconf
-from silva.core.interfaces import IContainerManager, IOrderManager
+from silva.core.interfaces import IContainerManager
 from silva.core.interfaces import IAddableContents
 from silva.core.interfaces import IContainer, IAsset
 from silva.core.interfaces import ContainerError, ContentError
@@ -180,7 +180,6 @@ class ContainerManager(grok.Adapter):
     @cofunction
     def renamer(self):
         any_renames = False
-        ordering = IOrderManager(self.context, None)
 
         data = yield
         while data is not None:
@@ -195,14 +194,8 @@ class ContainerManager(grok.Adapter):
                     result = mangle.Id(
                         self.context, to_identifier, instance=content).verify()
                 if result is None:
-                    position = ordering.get_position(content) if ordering is not None else -1
-
                     content = self.__move(
                         content, self.context, from_identifier, to_identifier)
-
-                    if position > 0:
-                        ordering.move(content, position)
-
                     any_renames = True
 
             # Update title

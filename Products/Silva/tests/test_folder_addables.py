@@ -11,6 +11,7 @@ from zope.interface.verify import verifyObject
 
 DEFAULT_ALL_ADDABLES = [
     'Mockup VersionedContent',
+    'Mockup Asset',
     'Silva Folder',
     'Silva Publication',
     'Silva Image',
@@ -22,6 +23,7 @@ DEFAULT_ALL_ADDABLES = [
     'Silva AutoTOC']
 AUTHOR_ALL_ADDABLES = [
     'Mockup VersionedContent',
+    'Mockup Asset',
     'Silva Folder',
     'Silva Image',
     'Silva File',
