@@ -72,11 +72,13 @@ class ExtensionRegistryTestCase(unittest.TestCase):
              'Silva Root',
              'Silva Simple Member',
              'Silva TOC Filter Service',
+             'Mockup Asset',
              'Mockup VersionedContent',
              'Mockup Version'])
         self.assertEqual(
             [c['product'] for c in extension.get_content()],
             ['Silva',
+             'Silva',
              'Silva',
              'Silva',
              'Silva',
@@ -130,7 +132,6 @@ class ExtensionServiceTestCase(unittest.TestCase):
         self.layer.login('manager')
 
         factory = self.root.manage_addProduct['Silva']
-        factory.manage_addMockupVersionedContent('documentation', 'Documentation')
         factory.manage_addMockupVersionedContent('extra', 'Extra')
         factory.manage_addMockupVersionedContent('contact', 'Contact')
 

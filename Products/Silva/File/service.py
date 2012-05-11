@@ -14,7 +14,6 @@ from zope.interface import directlyProvides
 
 # Zope 2
 from AccessControl import ClassSecurityInfo
-from Acquisition import aq_parent
 from App.class_init import InitializeClass
 
 # Silva
@@ -140,7 +139,7 @@ class StorageConverterHelper(object):
         return context
 
 
-class FileStorageConverter(object):
+class FileStorageConverter(upgrade.BaseUpgrader):
     """Convert storage for a file.
     """
     grok.implements(interfaces.IUpgrader)
@@ -157,18 +156,24 @@ class FileStorageConverter(object):
         return True
 
     def upgrade(self, content):
-        data = content.get_file_fd()
-        id = content.getId()
-        title = content.get_title()
-        content_type = content.get_content_type()
+        identifier = content.getId()
 
-        new_file = self.service.new_file(id)
-        container = aq_parent(content)
-        new_file = container._getOb(id)
-        new_file.set_title(title)
-        new_file.set_file(data)
-        new_file.set_content_type(content_type)
-
+        tmp_identifier = identifier + '__conv_storage'
+        new_file = self.service.new_file(identifier)
+        container = content.aq_parent
+        if not interfaces.IContainer.providedBy(container):
+            # Self-autodestruct file.
+            container._delObject(identifier)
+            raise StopIteration
+        container._setObject(tmp_identifier, new_file)
+        new_file = container._getOb(tmp_identifier)
+        self.replace_references(content, new_file)
+        self.replace(content, new_file)
+        new_file.set_file(content.get_file_fd())
+        new_file.set_content_type(content.get_content_type())
+        new_file.set_content_encoding(content.get_content_encoding())
+        container._delObject(identifier)
+        container.manage_renameObject(tmp_identifier, identifier)
         logger.info("File %s migrated" %
                     '/'.join(new_file.getPhysicalPath()))
         return new_file
