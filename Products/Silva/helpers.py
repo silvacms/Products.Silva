@@ -3,8 +3,6 @@
 # $Id$
 
 # Python
-import mimetypes
-import os
 import urllib
 
 # Zope
@@ -14,76 +12,10 @@ from zope.event import notify
 from zope.interface import alsoProvides
 from zope.intid.interfaces import IIntIds
 from zope.lifecycleevent import ObjectModifiedEvent
-import zope.deferredimport
 
 # Silva core
 from silva.core import interfaces
 from silva.core.layout.interfaces import ICustomizableTag
-
-# Load mime.types
-mimetypes.init()
-
-_ENCODING_MIMETYPE_TO_ENCODING = {
-    'application/x-gzip': 'gzip',
-    'application/x-bzip2': 'bzip2',
-    }
-_CONTENT_ENCODING_EXT = {
-    'gzip': '.gz',
-    'bzip2': '.bz'
-    }
-_EXT_CONTENT_ENCODING = {
-    '.gz': 'gzip',
-    '.bz': 'bzip2'
-    }
-
-def create_new_filename(file, basename):
-    """Compute and set a new filename for an file. It is composed of
-    the given id, basename, where the file extension is changed in
-    order to match the format of the file.
-    """
-    # This function is here to be usable by File and Image
-    if not file.get_file_size():
-        return
-
-    extension = None
-    content_type = file.get_content_type()
-    content_encoding = file.get_content_encoding()
-
-    if '.' in basename:
-        basename, extension = os.path.splitext(basename)
-        if extension in _EXT_CONTENT_ENCODING and '.' in basename:
-            if content_encoding is None:
-                content_encoding = _EXT_CONTENT_ENCODING[extension]
-            basename, extension = os.path.splitext(basename)
-
-    guessed_extension = mimetypes.guess_extension(content_type)
-    # Compression extension are not reconized by mimetypes use an
-    # extra table for them.
-    if guessed_extension is None:
-        if (content_type in _ENCODING_MIMETYPE_TO_ENCODING and
-            content_encoding is None):
-            # Compression extension often are used with some other
-            # extension. Unfortunately, at this point we might have
-            # lost that other extension. The editor has to rename
-            # properly the file.
-            content_encoding = _ENCODING_MIMETYPE_TO_ENCODING[content_type]
-    elif guessed_extension is not None:
-        extension = guessed_extension
-    if content_encoding is not None:
-        if content_encoding in _CONTENT_ENCODING_EXT:
-            if extension is None:
-                extension = ''
-            extension += _CONTENT_ENCODING_EXT[content_encoding]
-    if extension is not None:
-        basename += extension
-    file.set_filename(basename)
-
-
-zope.deferredimport.deprecated(
-    'Please import directly from silva.core.conf.utils '
-    'this import will be removed in Silva 2.4',
-    register_service='silva.core.conf.utils:registerService',
-    unregister_service='silva.core.conf.utils:unregisterService')
 
 
 def add_and_edit(self, id, REQUEST, screen='manage_main'):

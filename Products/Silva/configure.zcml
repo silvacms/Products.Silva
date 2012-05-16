@@ -32,6 +32,10 @@
      component=".File.service.FileStorageTypeVocabulary"
      name="File Storage Type" />
 
+  <utility
+     factory=".mimetypes.MimeTypeClassifierFactory"
+     provides="silva.core.interfaces.IMimeTypeClassifier" />
+
   <adapter
      for="silva.core.interfaces.IImage
           zope.publisher.interfaces.browser.IBrowserRequest"

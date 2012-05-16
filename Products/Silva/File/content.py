@@ -12,7 +12,7 @@ from cStringIO import StringIO
 # Zope 3
 from ZODB import blob
 from five import grok
-from zope import component
+from zope.component import getUtility
 from zope.event import notify
 from zope.lifecycleevent import ObjectCreatedEvent
 from zope.lifecycleevent import ObjectModifiedEvent
@@ -29,18 +29,16 @@ from Products.Silva import SilvaPermissions
 from Products.Silva import mangle
 from Products.Silva.Asset import Asset
 from Products.Silva.File.converters import get_converter_for_mimetype
-from Products.Silva.helpers import create_new_filename
-from Products.Silva.magic import MagicGuess
 
 from silva.core import conf as silvaconf
 from silva.core import interfaces
+from silva.core.interfaces import IMimeTypeClassifier
 from silva.core.services.interfaces import IFilesService
 from silva.translations import translate as _
 
 logger = logging.getLogger('silva.file')
 CHUNK_SIZE = 1<<16              # 64K
 DEFAULT_MIMETYPE = 'application/octet-stream'
-MAGIC = MagicGuess()
 
 
 def manage_addFile(context, identifier, title=None, file=None):
@@ -58,7 +56,7 @@ def manage_addFile(context, identifier, title=None, file=None):
     if identifier in context.objectIds():
         raise ValueError(
             _(u"Duplicate id. Please provide an explicit id."))
-    service = component.getUtility(IFilesService)
+    service = getUtility(IFilesService)
     context._setObject(identifier, service.new_file(identifier))
     content = context._getOb(identifier)
     if title is not None:
@@ -169,7 +167,8 @@ class File(Asset):
     def is_text(self):
         mimetype = self.get_mime_type()
         if ((mimetype.startswith('text/') and mimetype != 'text/rtf') or
-            mimetype in ('application/x-javascript',)):
+            mimetype in ('application/x-javascript', 'application/xml',
+                         'application/xhtml+xml')):
             return self.get_content_encoding() is None
         return False
 
@@ -275,7 +274,8 @@ class ZODBFile(File):
     def _set_file_helper(self, file):
         data, size = self._file._read_data(file)
         filename = getattr(file, 'filename', self.id)
-        content_type, content_encoding = MAGIC.guess(
+        content_type, content_encoding = getUtility(
+            IMimeTypeClassifier).guess_type(
             id=filename,
             buffer=hasattr(data, 'data') and data.data or data,
             default=DEFAULT_MIMETYPE)
@@ -316,7 +316,8 @@ class BlobFile(File):
         id  = getattr(file, 'filename', self.id)
         blob_filename = self._file._p_blob_uncommitted or \
             self._file._p_blob_committed
-        self._content_type, self._content_encoding = MAGIC.guess(
+        self._content_type, self._content_encoding = getUtility(
+            IMimeTypeClassifier).guess_type(
             id=id,
             filename=blob_filename,
             default=content_type)
@@ -392,7 +393,7 @@ InitializeClass(BlobFile)
 @grok.subscribe(
     interfaces.IFile, zope.lifecycleevent.interfaces.IObjectModifiedEvent)
 def file_modified(content, event):
-    create_new_filename(content, content.getId())
+    getUtility(IMimeTypeClassifier).guess_filename(content, content.getId())
     content.update_quota()
 
 
@@ -401,4 +402,4 @@ def file_modified(content, event):
 def file_added(content, event):
     if content is not event.object or event.newName is None:
         return
-    create_new_filename(content, event.newName)
+    getUtility(IMimeTypeClassifier).guess_filename(content, event.newName)
