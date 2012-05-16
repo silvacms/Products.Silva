@@ -114,7 +114,7 @@ class VersionedContent(Versioning, Content, BaseFolder):
         version_id = self.get_unapproved_version()
         if version_id is None:
             return None # there is no editable version
-        return getattr(self, version_id)
+        return self._getOb(version_id, None)
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_previewable')
@@ -129,7 +129,7 @@ class VersionedContent(Versioning, Content, BaseFolder):
                 version_id = self.get_last_closed_version()
                 if version_id is None:
                     return None
-        return getattr(self, version_id)
+        return self._getOb(version_id, None)
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_viewable')
@@ -140,7 +140,7 @@ class VersionedContent(Versioning, Content, BaseFolder):
         version_id = self.get_public_version()
         if version_id is None:
             return None # There is no public document
-        return getattr(self, version_id)
+        return self._getOb(version_id, None)
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
         'is_deletable')

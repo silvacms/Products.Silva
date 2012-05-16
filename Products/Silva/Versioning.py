@@ -412,13 +412,13 @@ class Versioning(object):
                     self._previous_versions = []
                 self._previous_versions.append(self._public_version)
                 notify(events.ContentClosedEvent(
-                        getattr(self, self._public_version[0])))
+                        self._getOb(self._public_version[0], None)))
             self._public_version = self._approved_version
             if self._first_publication_date is None:
                 self._first_publication_date = publication_datetime
             self._approved_version = empty_version
             notify(events.ContentPublishedEvent(
-                    getattr(self, self._public_version[0])))
+                    self._getOb(self._public_version[0], None)))
         # get expiration datetime of public version
         expiration_datetime = self._public_version[2]
         # expire public version if expiration datetime reached
@@ -429,7 +429,7 @@ class Versioning(object):
             self._public_version = empty_version
             self._previous_versions = previous_versions
             notify(events.ContentExpiredEvent(
-                    getattr(self, self._previous_versions[-1][0])))
+                    self._getOb(self._previous_versions[-1][0], None)))
 
     # ACCESSORS
 
