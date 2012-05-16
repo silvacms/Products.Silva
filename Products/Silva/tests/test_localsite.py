@@ -24,10 +24,10 @@ class LocalSiteTestCase(unittest.TestCase):
         self.assertTrue(verifyObject(ISiteManager, manager))
 
         # By default the root is a local site
-        self.assertTrue(manager.isSite())
+        self.assertTrue(manager.is_site())
         # And you can't disable it/play with it
-        self.assertRaises(ValueError, manager.deleteSite)
-        self.assertRaises(ValueError, manager.makeSite)
+        self.assertRaises(ValueError, manager.delete_site)
+        self.assertRaises(ValueError, manager.make_site)
 
     def test_localsite_on_publication(self):
         # Now we add a publication
@@ -39,14 +39,14 @@ class LocalSiteTestCase(unittest.TestCase):
         self.assertTrue(verifyObject(ISiteManager, manager))
 
         # It's not a local site by default.
-        self.assertFalse(manager.isSite())
+        self.assertFalse(manager.is_site())
         # So we can't disable it.
-        self.assertRaises(ValueError, manager.deleteSite)
+        self.assertRaises(ValueError, manager.delete_site)
         # But we can enable it.
-        manager.makeSite()
-        self.assertTrue(manager.isSite())
+        manager.make_site()
+        self.assertTrue(manager.is_site())
         # Only one time
-        self.assertRaises(ValueError, manager.makeSite)
+        self.assertRaises(ValueError, manager.make_site)
 
         # We can add a local service in it.
         factory = self.root.publication.manage_addProduct['silva.core.layout']
@@ -56,9 +56,9 @@ class LocalSiteTestCase(unittest.TestCase):
         self.root.publication.manage_delObjects(['service_customization',])
 
         # And disable it.
-        manager.deleteSite()
-        self.assertFalse(manager.isSite())
-        self.assertRaises(ValueError, manager.deleteSite)
+        manager.delete_site()
+        self.assertFalse(manager.is_site())
+        self.assertRaises(ValueError, manager.delete_site)
 
     def test_localsite_on_invalid_content(self):
         # Create a document

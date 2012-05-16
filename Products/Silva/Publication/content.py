@@ -11,7 +11,6 @@ from Acquisition import aq_parent
 from App.special_dtml import DTMLFile
 from App.class_init import InitializeClass
 from zExceptions import BadRequest
-import transaction
 
 # Silva
 from Products.Silva import Folder

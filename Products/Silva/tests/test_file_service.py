@@ -45,7 +45,7 @@ class FileServicesTest(TestCase):
         factory.manage_addFolder('folder1in1in1', 'Folder 1 in 1 in 1')
 
         # We can only add a new service in a site
-        interfaces.ISiteManager(self.root.folder1.folder1in1).makeSite()
+        interfaces.ISiteManager(self.root.folder1.folder1in1).make_site()
         factory.manage_addFilesService()
 
     def add_test_file(self, id, context):
