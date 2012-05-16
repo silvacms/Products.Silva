@@ -60,6 +60,8 @@ class SilvaProducer(xmlexport.Producer):
         """Export the metadata
         """
         binding = getUtility(IMetadataService).getMetadata(self.context)
+        if binding is None:
+            return
         # Don't acquire metadata only for the root of the xmlexport
         acquire_metadata = int(self.getInfo().root is self.context)
 
