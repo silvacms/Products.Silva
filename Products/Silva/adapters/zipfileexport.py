@@ -47,9 +47,9 @@ class ZipFileExportAdapter(grok.Adapter):
     def export(self, **options):
         settings = xmlexport.ExportSettings()
         settings.setWithSubPublications(
-            options['include_sub_publications'])
+            options.get('include_sub_publications', False))
         settings.setLastVersion(
-            options['export_newest_version_only'])
+            options.get('export_newest_version_only', False))
 
         archive_file = StringIO()
         archive = ZipFile(archive_file, "w", ZIP_DEFLATED)

@@ -13,7 +13,7 @@ from datetime import datetime
 from silva.core import conf as silvaconf
 from silva.core.interfaces import IVersion
 from silva.core.interfaces import IVersionedContent
-from silva.core.interfaces import IPublicationWorkflow, PublicationError
+from silva.core.interfaces import IPublicationWorkflow, VersioningError
 from silva.translations import translate as _
 
 
@@ -59,7 +59,7 @@ class VersionedContentPublicationWorkflow(grok.Adapter):
     @silvaconf.protect('silva.ApproveSilvaContent')
     def approve(self, time=None):
         if self.context.get_unapproved_version() is None:
-            raise PublicationError(
+            raise VersioningError(
                 _("There is no unapproved version to approve."),
                 self.context)
         if time is not None:
@@ -77,7 +77,7 @@ class VersionedContentPublicationWorkflow(grok.Adapter):
         # well.
         if not self.context.get_unapproved_version():
             if self.context.is_published():
-                raise PublicationError(
+                raise VersioningError(
                     _("There is no unapproved version to approve."),
                     self.context)
             self.context.create_copy()
