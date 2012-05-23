@@ -17,7 +17,7 @@ from silva.core.interfaces import ISilvaXMLExportHandler, IXMLZEXPExportable
 from silva.core.interfaces import IPublicationWorkflow
 from silva.core.interfaces.errors import ExternalReferenceError
 from silva.core.references.interfaces import IReferenceService
-from silva.core.references.utils import canonical_path
+from silva.core.references.utils import canonical_path, relative_path
 from silva.translations import translate as _
 from sprout.saxext import xmlexport
 
@@ -30,6 +30,12 @@ from Products.Silva.silvaxml import NS_SILVA_CONTENT_URI, NS_SILVA_EXTRA_URI
 class SilvaProducer(xmlexport.Producer):
     grok.baseclass()
     grok.implements(ISilvaXMLExportHandler)
+
+    def relative_path_to(self, content):
+        origin_path = self.getInfo().root.get_root().getPhysicalPath()
+        dest_path = content.getPhysicalPath()
+        rel_path = "/".join(relative_path(origin_path, dest_path))
+        return canonical_path(rel_path)
 
     def reference(self, name):
         """Return a path to refer an object in the export of a
