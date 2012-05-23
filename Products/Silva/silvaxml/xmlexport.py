@@ -32,7 +32,7 @@ class SilvaProducer(xmlexport.Producer):
     grok.implements(ISilvaXMLExportHandler)
 
     def relative_path_to(self, content):
-        origin_path = self.getInfo().root.getPhysicalPath()
+        origin_path = self.getInfo().root.getRoot().getPhysicalPath()
         dest_path = content.getPhysicalPath()
         rel_path = "/".join(relative_path(origin_path, dest_path))
         return canonical_path(rel_path)
