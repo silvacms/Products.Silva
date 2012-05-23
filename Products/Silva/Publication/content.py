@@ -50,14 +50,13 @@ class Publication(Folder.Folder):
     def manage_options(self):
         base_options = super(Publication, self).manage_options
         manage_options = (base_options[0], )
-        if ISiteManager(self).isSite():
+        if ISiteManager(self).is_site():
             manage_options += ({'label':'Services', 'action':'manage_services'},)
         return manage_options + base_options[1:]
 
-    security.declareProtected(SilvaPermissions.ViewManagementScreens,
-                              'manage_main')
-    manage_main = DTMLFile(
-        'www/folderContents', globals())
+    security.declareProtected(
+        SilvaPermissions.ViewManagementScreens, 'manage_main')
+    manage_main = DTMLFile('folderContents', globals())
 
     security.declarePublic('objectItemsContents')
     def objectItemsContents(self, spec=None):
@@ -66,10 +65,9 @@ class Publication(Folder.Folder):
         return [item for item in super(Publication, self).objectItems()
                 if not item[0].startswith('service_')]
 
-    security.declareProtected(SilvaPermissions.ViewManagementScreens,
-                              'manage_services')
-    manage_services = DTMLFile(
-        'www/folderServices', globals())
+    security.declareProtected(
+        SilvaPermissions.ViewManagementScreens, 'manage_services')
+    manage_services = DTMLFile('folderServices', globals())
 
     security.declarePublic('objectItemsServices')
     def objectItemsServices(self, spec=None):
@@ -81,15 +79,15 @@ class Publication(Folder.Folder):
 
     # MANIPULATORS
 
-    security.declareProtected(SilvaPermissions.ApproveSilvaContent,
-                              'to_folder')
+    security.declareProtected(
+        SilvaPermissions.ApproveSilvaContent, 'to_folder')
     def to_folder(self):
         """Publication becomes a folder instead.
         """
         self._to_folder_or_publication_helper(to_folder=1)
 
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'validate_wanted_quota')
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'validate_wanted_quota')
     def validate_wanted_quota(self, value, REQUEST=None):
         """Validate the wanted quota is correct the current
         publication.
@@ -113,8 +111,8 @@ class Publication(Folder.Folder):
 
     # ACCESSORS
 
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'get_current_quota')
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'get_current_quota')
     def get_current_quota(self):
         """Return the current quota value on the publication.
         """
@@ -126,16 +124,16 @@ class Publication(Folder.Folder):
                                 # this metadata set
             return aq_parent(self).get_current_quota()
 
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'get_publication')
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'get_publication')
     def get_publication(self):
         """Get publication. Can be used with acquisition to get
         'nearest' Silva publication.
         """
         return self.aq_inner
 
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'is_transparent')
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'is_transparent')
     def is_transparent(self):
         return 0
 
