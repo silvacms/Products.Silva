@@ -3,7 +3,10 @@
 # $Id$
 
 import unittest
+from zope.publisher.browser import TestRequest
+from zope.interface.verify import verifyObject
 
+from silva.core.interfaces import IPublication
 from Products.Silva.testing import FunctionalLayer
 from Products.Silva.ExtensionService import install_documentation
 
@@ -19,8 +22,11 @@ class DocumentationTestCase(unittest.TestCase):
         """Test documentation installation. That should not make any
         error at all.
         """
-        install_documentation(self.root)
-        self.failUnless('docs' in self.root.objectIds())
+        self.assertFalse('docs' in self.root.objectIds())
+
+        install_documentation(self.root, TestRequest())
+        self.assertTrue('docs' in self.root.objectIds())
+        self.assertTrue(verifyObject(IPublication, self.root._getOb('docs')))
 
 
 def test_suite():
