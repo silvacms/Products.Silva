@@ -44,16 +44,16 @@ class IconRegistryTestCase(unittest.TestCase):
 
         self.assertEqual(
             resolver.get_content(self.root.pdf),
-            '++resource++silva.icons/file_pdf.png')
+            '++static++/silva.icons/file_pdf.png')
         self.assertEqual(
             resolver.get_content_url(self.root.pdf),
-            'http://localhost/root/++resource++silva.icons/file_pdf.png')
+            'http://localhost/root/++static++/silva.icons/file_pdf.png')
         self.assertEqual(
             resolver.get_content(self.root.text),
-            '++resource++silva.icons/file_txt.png')
+            '++static++/silva.icons/file_txt.png')
         self.assertEqual(
             resolver.get_content_url(self.root.text),
-            'http://localhost/root/++resource++silva.icons/file_txt.png')
+            'http://localhost/root/++static++/silva.icons/file_txt.png')
 
 
     def test_default_icons(self):
@@ -77,10 +77,10 @@ class IconRegistryTestCase(unittest.TestCase):
         # File icons
         self.assertEqual(
             registry.get_icon(self.root.pdf),
-            '++resource++silva.icons/file_pdf.png')
+            '++static++/silva.icons/file_pdf.png')
         self.assertEqual(
             registry.get_icon(self.root.text),
-            '++resource++silva.icons/file_txt.png')
+            '++static++/silva.icons/file_txt.png')
 
     def test_registry(self):
         """Test registry
