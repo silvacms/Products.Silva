@@ -33,7 +33,7 @@
      name="File Storage Type" />
 
   <utility
-     factory=".mimetypes.MimeTypeClassifierFactory"
+     factory=".File.mimetypes.MimeTypeClassifierFactory"
      provides="silva.core.interfaces.IMimeTypeClassifier" />
 
   <adapter

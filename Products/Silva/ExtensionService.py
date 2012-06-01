@@ -96,7 +96,7 @@ def install_documentation(container, request):
     """Install documentation in the given container.
     """
     documentation_path = os.path.join(
-        os.path.dirname(__file__), 'doc', 'silva_docs.zip')
+        os.path.dirname(__file__), 'docs', 'silva_docs.zip')
     with open(documentation_path, 'rb') as documentation:
         interfaces.IZipfileImporter(container).importFromZip(
             documentation, request)
