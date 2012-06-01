@@ -30,7 +30,7 @@ from Products.Silva import SilvaPermissions
 
 from silva.core import conf as silvaconf
 from silva.core.conf import schema as silvaschema
-from silva.core.interfaces import IRoot
+from silva.core.interfaces import IRoot, ContentError
 from silva.core.interfaces.events import InstallRootEvent
 from silva.core.interfaces.events import InstallRootServicesEvent
 from silva.core.messages.interfaces import IMessageService
@@ -144,14 +144,16 @@ class Root(Publication):
     def to_folder(self):
         """Don't do anything here. Can't do this with root.
         """
-        pass
+        raise ContentError(
+            _(u"Root cannot be converted to folder"), self)
 
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'to_publication')
     def to_publication(self):
         """Don't do anything here. Can't do this with root.
         """
-        pass
+        raise ContentError(
+            _(u"Root cannot be converted to publication"), self)
 
     security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
                               'add_silva_addable_forbidden')

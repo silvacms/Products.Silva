@@ -13,12 +13,13 @@ from App.class_init import InitializeClass
 from zExceptions import BadRequest
 
 # Silva
-from Products.Silva import Folder
-from Products.Silva import SilvaPermissions
+from Products.Silva.Folder import Folder, FolderAddForm
+from Products.Silva import SilvaPermissions, helpers
 
 from silva.core import conf as silvaconf
 from silva.core.interfaces import (
     IPublication, IRoot, ISiteManager, IInvisibleService)
+from silva.core.interfaces import ContentError
 from silva.translations import translate as _
 
 
@@ -28,7 +29,7 @@ class OverQuotaException(BadRequest):
     pass
 
 
-class Publication(Folder.Folder):
+class Publication(Folder):
     __doc__ = _("""Publications are special folders. They function as the
        major organizing blocks of a Silva site. They are comparable to
        binders, and can contain folders, documents, and assets.
@@ -84,7 +85,14 @@ class Publication(Folder.Folder):
     def to_folder(self):
         """Publication becomes a folder instead.
         """
-        self._to_folder_or_publication_helper(to_folder=1)
+        helpers.convert_content(self, Folder)
+
+    security.declareProtected(
+        SilvaPermissions.ApproveSilvaContent, 'to_publication')
+    def to_publication(self):
+        raise ContentError(
+            _(u"You cannot convert a publication into a publication"), self)
+
 
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'validate_wanted_quota')
@@ -141,6 +149,6 @@ class Publication(Folder.Folder):
 InitializeClass(Publication)
 
 
-class PublicationAddForm(Folder.FolderAddForm):
+class PublicationAddForm(FolderAddForm):
     grok.context(IPublication)
     grok.name(u'Silva Publication')

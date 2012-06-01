@@ -47,14 +47,15 @@ class GhostFolderTestCase(unittest.TestCase):
         """Test a Ghost Folder haunting to a Folder.
         """
         factory = self.root.target.manage_addProduct['Silva']
-        factory.manage_addGhostFolder('ghost', 'Ghost', haunted=self.root.folder)
+        factory.manage_addGhostFolder(
+            'ghost', 'Ghost', haunted=self.root.folder)
 
         ghost = self.root.target.ghost
         folder = self.root.folder
         self.assertTrue(verifyObject(IGhostFolder, ghost))
-        self.assertEqual(ghost.get_link_status(), None)
         self.assertEqual(ghost.get_haunted(), folder)
         self.assertEqual(aq_chain(ghost.get_haunted()), aq_chain(folder))
+        self.assertEqual(ghost.get_link_status(), None)
 
         # Content have been ghost with the same IDS
         self.assertEqual(
@@ -131,15 +132,18 @@ class GhostFolderTestCase(unittest.TestCase):
         """Test the reference created by the ghost.
         """
         factory = self.root.target.manage_addProduct['Silva']
-        factory.manage_addGhostFolder('ghost', 'Ghost', haunted=self.root.folder)
+        factory.manage_addGhostFolder(
+            'ghost', 'Ghost', haunted=self.root.folder)
 
         ghost = self.root.target.ghost
+        folder = self.root.folder
+
         reference = getUtility(IReferenceService).get_reference(
             ghost, name=u"haunted")
         self.assertTrue(verifyObject(IReferenceValue, reference))
         self.assertEqual(
             aq_chain(reference.target),
-            aq_chain(self.root.folder))
+            aq_chain(folder))
         self.assertEqual(
             aq_chain(reference.source),
             aq_chain(ghost))
@@ -148,7 +152,8 @@ class GhostFolderTestCase(unittest.TestCase):
         """Test convertion of a Ghost Folder to a Publication.
         """
         factory = self.root.target.manage_addProduct['Silva']
-        factory.manage_addGhostFolder('ghost', 'Ghost', haunted=self.root.folder)
+        factory.manage_addGhostFolder(
+            'ghost', 'Ghost', haunted=self.root.folder)
 
         ghost = self.root.target.ghost
         self.assertFalse(IPublication.providedBy(ghost))
@@ -187,7 +192,8 @@ class GhostFolderTestCase(unittest.TestCase):
         """Test Ghost Folder convertion to a regular Folder.
         """
         factory = self.root.target.manage_addProduct['Silva']
-        factory.manage_addGhostFolder('ghost', 'Ghost', haunted=self.root.folder)
+        factory.manage_addGhostFolder(
+            'ghost', 'Ghost', haunted=self.root.folder)
 
         ghost = self.root.target.ghost
         self.assertTrue(verifyObject(IGhostFolder, ghost))
@@ -309,10 +315,19 @@ class GhostFolderTestCase(unittest.TestCase):
         """Test modifications haunting in the source folder.
         """
         factory = self.root.target.manage_addProduct['Silva']
-        factory.manage_addGhostFolder('ghost', 'Ghost', haunted=self.root.folder)
+        factory.manage_addGhostFolder(
+            'ghost', 'Ghost', haunted=self.root.folder)
 
-        # Do some modifications
-        self.root.folder.manage_delObjects(['index', 'folder'])
+        ghost = self.root.target.ghost
+        folder = self.root.folder
+
+        # Delete content. They are directly removed from the ghost folder.
+        self.assertTrue('index' in ghost.objectIds())
+        self.assertTrue('folder' in ghost.objectIds())
+
+        folder.manage_delObjects(['index', 'folder'])
+        self.assertFalse('index' in ghost.objectIds())
+        self.assertFalse('folder' in ghost.objectIds())
 
 
 def test_suite():

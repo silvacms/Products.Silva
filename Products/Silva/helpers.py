@@ -17,6 +17,8 @@ from zope.lifecycleevent import ObjectModifiedEvent
 from silva.core import interfaces
 from silva.core.layout.interfaces import ICustomizableTag
 
+from Products.SilvaMetadata.interfaces import IMetadataService
+
 
 def add_and_edit(self, id, REQUEST, screen='manage_main'):
     """Helper function to point to the object's management screen if
@@ -111,3 +113,10 @@ class SwitchClass(object):
 
     def __repr__(self):
         return "<SwitchClass %r>" % self.cls
+
+
+def convert_content(content, destination_type):
+    # This doesn't work.
+    switcher = SwitchClass(destination_type)
+    target = switcher.upgrade(content)
+    return target

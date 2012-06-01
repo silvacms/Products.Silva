@@ -75,8 +75,6 @@ class GhostTestCase(unittest.TestCase):
     def test_ghost_title(self):
         """Test ghost get_title. It should return the title of the target.
         """
-        # XXX I don't think those are expected results ...
-        # XXX Add get_short_title to the test as well
         factory = self.root.manage_addProduct['Silva']
         factory.manage_addGhost('ghost', 'Ghost')
         ghost = self.root.ghost
@@ -84,28 +82,33 @@ class GhostTestCase(unittest.TestCase):
 
         ghost.get_editable().set_haunted(target)
         self.assertEqual(ghost.get_title_editable(), 'Document')
-        self.assertEqual(ghost.get_short_title(), 'Ghost target is broken')
-        self.assertEqual(ghost.get_title(), 'Ghost target is broken')
+        self.assertEqual(ghost.get_short_title(), 'ghost')
+        self.assertEqual(ghost.get_title(), '')
+        self.assertEqual(ghost.get_title_or_id(), 'ghost')
 
         IPublicationWorkflow(target).publish()
         self.assertEqual(ghost.get_title_editable(), 'Document')
-        self.assertEqual(ghost.get_short_title(), 'Ghost target is broken')
-        self.assertEqual(ghost.get_title(), 'Ghost target is broken')
+        self.assertEqual(ghost.get_short_title(), 'ghost')
+        self.assertEqual(ghost.get_title(), '')
+        self.assertEqual(ghost.get_title_or_id(), 'ghost')
 
         IPublicationWorkflow(ghost).publish()
         self.assertEqual(ghost.get_title_editable(), 'Document')
         self.assertEqual(ghost.get_short_title(), 'Document')
         self.assertEqual(ghost.get_title(), 'Document')
+        self.assertEqual(ghost.get_title_or_id(), 'Document')
 
         IPublicationWorkflow(target).close()
         self.assertEqual(ghost.get_title_editable(), 'Document')
         self.assertEqual(ghost.get_short_title(), 'Ghost target is broken')
         self.assertEqual(ghost.get_title(), 'Ghost target is broken')
+        self.assertEqual(ghost.get_title_or_id(), 'Ghost target is broken')
 
         ghost.get_viewable().set_haunted(0)
         self.assertEqual(ghost.get_title_editable(), 'Ghost target is broken')
         self.assertEqual(ghost.get_short_title(), 'Ghost target is broken')
         self.assertEqual(ghost.get_title(), 'Ghost target is broken')
+        self.assertEqual(ghost.get_title_or_id(), 'Ghost target is broken')
 
     def test_ghost_is_published(self):
         """Test whenever a Ghost is published or not. This depends if

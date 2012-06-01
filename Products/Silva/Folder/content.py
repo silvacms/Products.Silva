@@ -25,6 +25,7 @@ from Products.Silva import helpers
 from silva.core.interfaces import (
     IContentImporter, INonPublishable, IPublishable, IOrderManager,
     IVersionedContent, IFolder, IRoot)
+from silva.core.interfaces import ContentError
 
 from silva.core import conf as silvaconf
 from silva.translations import translate as _
@@ -153,17 +154,16 @@ class Folder(Publishable, BaseFolder):
     def to_publication(self):
         """Turn this folder into a publication.
         """
-        self._to_folder_or_publication_helper(to_folder=0)
+        from Products.Silva.Publication import Publication
+        helpers.convert_content(self, Publication)
 
-    def _to_folder_or_publication_helper(self, to_folder):
-        if to_folder:
-            sc = helpers.SwitchClass(Folder)
-        else:
-            # to publication
-            from Products.Silva.Publication import Publication
-            sc = helpers.SwitchClass(Publication)
-        content = sc.upgrade(self)
-        return content
+    security.declareProtected(SilvaPermissions.ApproveSilvaContent,
+                              'to_folder')
+    def to_folder(self):
+        """Turn this folder into a folder.
+        """
+        raise ContentError(
+            _(u"You cannot convert a folder into a folder"), self)
 
     def _verify_quota(self):
         # Hook to check quota. Do nothing by default.

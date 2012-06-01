@@ -5,7 +5,7 @@
 
 # Zope 3
 from five import grok
-from zope.annotation.interfaces import IAnnotations
+from zope.component import getUtility
 from zope.lifecycleevent.interfaces import IObjectCreatedEvent
 
 # Zope 2
@@ -13,19 +13,20 @@ from AccessControl import ClassSecurityInfo
 from AccessControl.security import checkPermission
 from Acquisition import aq_parent
 from App.class_init import InitializeClass
-from DateTime import DateTime
 
 # silva
-from Products.Silva import Folder
-from Products.Silva import SilvaPermissions
+from Products.Silva.Folder import Folder
+from Products.Silva.Publication import Publication
+from Products.Silva import SilvaPermissions, helpers
 from Products.Silva.Ghost import GhostBase
 from Products.Silva.Ghost import TargetValidator
+from Products.SilvaMetadata.interfaces import IMetadataService
 
 from silva.core import conf as silvaconf
 from silva.core.interfaces import IAddableContents
-from silva.core.interfaces import IOrderManager
+from silva.core.interfaces import IOrderManager, IPublicationWorkflow
 from silva.core.interfaces import (
-    IContainer, IContent, IGhost, IVersionedContent,
+    IContainer, IContent, IGhost,
     IPublication, IGhostFolder)
 from silva.core.conf.interfaces import IIdentifiedContent
 from silva.core.references.reference import Reference
@@ -47,84 +48,109 @@ class Sync(object):
         if g_ob is not None:
             self.g_id = g_ob.getId()
 
+    def source(self):
+        return self.h_ob
+
     def update(self):
-        self._do_update()
-        return self.g_container._getOb(self.h_id)
+        raise NotImplementedError
+
+    def verify(self):
+        return True
 
     def create(self):
-        self._do_create()
-        return self.g_container._getOb(self.h_id)
+        raise NotImplementedError
 
     def finish(self):
         pass
-
-    def _do_update(self):
-        raise NotImplementedError
-
-    def _do_create(self):
-        raise NotImplementedError
 
 
 class SyncContainer(Sync):
 
+    def create(self):
+        factory = self.g_container.manage_addProduct['Silva']
+        factory.manage_addGhostFolder(self.h_id, 'Ghost Folder')
+        self.g_ob = self.g_container._getOb(self.h_id)
+        self.g_ob.set_haunted(self.source(), weak=True)
+        return self.g_ob
+
+    def verify(self):
+        return self.source() == self.g_ob.get_haunted()
+
+    def update(self):
+        self.g_ob.set_haunted(self.source(), weak=True)
+        return self.g_ob
+
     def finish(self):
         ## XXX: I don't think that works (like ever worked)
         orderer = IOrderManager(self.g_ob)
-        for index, content in enumerate(self.h_ob.get_ordered_publishables()):
+        for index, content in enumerate(self.source().get_ordered_publishables()):
             orderer.move(content, index)
 
-    def _do_create(self):
-        self.g_container.manage_addProduct['Silva'].manage_addGhostFolder(
-            self.h_id, 'Ghost Folder', haunted=self.h_ob)
+
+class SyncGhostContainer(SyncContainer):
+
+    def source(self):
+        return self.h_ob.get_haunted()
+
+
+class SyncContent(Sync):
+
+    def create(self):
+        factory = self.g_container.manage_addProduct['Silva']
+        factory.manage_addGhost(self.h_id, 'Ghost')
         self.g_ob = self.g_container._getOb(self.h_id)
-        self._do_update()
+        self.g_ob.get_editable().set_haunted(self.source(), weak=True)
+        IPublicationWorkflow(self.g_ob).publish()
+        return self.g_ob
 
-    def _do_update(self):
-        pass
+    def verify(self):
+        return self.source() == self.g_ob.get_haunted()
 
-
-class SyncGhost(Sync):
-
-    def _do_update(self):
-        content = self._get_content()
-        old_content = self.g_ob.get_haunted()
-        if content == old_content:
-            return
-        self.g_ob.create_copy()
-        version_id = self.g_ob.get_unapproved_version()
-        version = getattr(self.g_ob, version_id)
-        version.set_haunted(content)
-
-    def _do_create(self):
-        content = self._get_content()
-        self.g_container.manage_addProduct['Silva'].manage_addGhost(
-            self.h_id, 'Ghost', haunted=content)
-
-    def _get_content(self):
-        return  self.h_ob.get_haunted()
+    def update(self):
+        publication = IPublicationWorkflow(self.g_ob)
+        if self.g_ob.get_editable() is None:
+            publication.new_version()
+        self.g_ob.get_editable().set_haunted(self.source(), weak=True)
+        publication.publish()
+        return self.g_ob
 
 
-class SyncContent(SyncGhost):
+class SyncGhost(SyncContent):
 
-    def _get_content(self):
-        return self.h_ob
+    def source(self):
+        return self.h_ob.get_haunted()
 
 
 class SyncCopy(Sync):
     # this is anything else -- copy it. We cannot check if it was
     # modified and if copying is really necessary.
 
-    def _do_update(self):
-        assert self.g_ob is not None
-        self.g_container.manage_delObjects([self.h_id])
-        self.create()
-
-    def _do_create(self):
+    def create(self):
         g_ob_new = self.h_ob._getCopy(self.g_container)
         self.g_container._setObject(self.h_id, g_ob_new)
+        return self.g_container._getOb(self.h_id)
+
+    def update(self):
+        assert self.g_ob is not None
+        self.g_container.manage_delObjects([self.h_id])
+        return self.create()
 
 
-class GhostFolder(GhostBase, Folder.Folder):
+
+
+# sync map... (haunted objects interface, ghost objects interface,
+# update/create class) order is important, i.e. interfaces are
+# checked in this order.
+SYNC_MAP = [
+    (IGhostFolder, IGhostFolder, SyncGhostContainer),
+    (IContainer, IContainer, SyncContainer),
+    (IGhost, IGhost, SyncGhost),
+    (IContent, IGhost, SyncContent),
+    (None, None, SyncCopy),
+    ]
+
+
+class GhostFolder(GhostBase, Folder):
     __doc__ = _("""Ghost Folders are similar to Ghosts, but instead of being a
        placeholder for a document, they create placeholders and/or copies of all
        the contents of the &#8216;original&#8217; folder. The advantage of Ghost
@@ -140,16 +166,6 @@ class GhostFolder(GhostBase, Folder.Folder):
     silvaconf.priority(0)
 
     security = ClassSecurityInfo()
-
-    # sync map... (haunted objects interface, ghost objects interface,
-    # update/create class) order is important, i.e. interfaces are
-    # checked in this order.
-    _sync_map = [
-        (IContainer, IContainer, SyncContainer),
-        (IGhost, IGhost, SyncGhost),
-        (IContent, IGhost, SyncContent),
-        (None, None, SyncCopy),
-        ]
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'haunt')
@@ -183,7 +199,7 @@ class GhostFolder(GhostBase, Folder.Folder):
                 g_ob = g_container._getOb(g_id)
             g_ob_new = None
 
-            for h_if, g_if, update_class in self._sync_map:
+            for h_if, g_if, update_class in SYNC_MAP:
                 if h_if and not h_if.providedBy(h_ob):
                     continue
                 if g_ob is None:
@@ -200,7 +216,8 @@ class GhostFolder(GhostBase, Folder.Folder):
                 uc = update_class(self, h_container, h_ob, g_container,
                     g_ob)
                 updaters.append(uc)
-                g_ob_new = uc.update()
+                if not uc.verify():
+                    g_ob_new = uc.update()
                 break
 
             msg = "no updater was called for %r" % ((self, h_container, h_ob, g_container, g_ob), )
@@ -209,8 +226,6 @@ class GhostFolder(GhostBase, Folder.Folder):
                 object_list.extend(self._haunt_diff(h_ob, g_ob_new))
         for updater in updaters:
             updater.finish()
-
-        self._publish_ghosts()
 
     def _haunt_diff(self, haunted, ghost):
         """diffes two containers
@@ -256,24 +271,34 @@ class GhostFolder(GhostBase, Folder.Folder):
         return [(haunted, h_id, ghost, g_id) for (h_id, g_id) in ids]
 
     security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'to_publication')
+        SilvaPermissions.ApproveSilvaContent, 'to_publication')
     def to_publication(self):
         """replace self with a folder"""
-        new_self = self._to_folder_or_publication_helper(to_folder=0)
-        self._copy_annotations_from_haunted(new_self)
+        haunted = self.get_haunted()
+        if haunted is not None:
+            binding = getUtility(IMetadataService).getMetadata(haunted)
+            data_content = binding.get('silva-content', acquire=0)
+            data_extra = binding.get('silva-extra', acquire=0)
+        helpers.convert_content(self, Publication)
+        if haunted is not None:
+            binding = getUtility(IMetadataService).getMetadata(self)
+            binding.setValues('silva-content', data_content)
+            binding.setValues('silva-extra', data_extra)
 
     security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'to_folder')
+        SilvaPermissions.ApproveSilvaContent, 'to_folder')
     def to_folder(self):
         """replace self with a folder"""
-        new_self = self._to_folder_or_publication_helper(to_folder=1)
-        self._copy_annotations_from_haunted(new_self)
-
-    def _copy_annotations_from_haunted(self, new_self):
-        src = IAnnotations(self.get_haunted())
-        dst = IAnnotations(new_self)
-        for key in src.keys():
-            dst[key] = src[key]
+        haunted = self.get_haunted()
+        if haunted is not None:
+            binding = getUtility(IMetadataService).getMetadata(haunted)
+            data_content = binding.get('silva-content', acquire=0)
+            data_extra = binding.get('silva-extra', acquire=0)
+        helpers.convert_content(self, Folder)
+        if haunted is not None:
+            binding = getUtility(IMetadataService).getMetadata(self)
+            binding.setValues('silva-content', data_content)
+            binding.setValues('silva-extra', data_extra)
 
     # all this is for a nice side bar
     def is_transparent(self):
@@ -293,22 +318,6 @@ class GhostFolder(GhostBase, Folder.Folder):
 
     def is_deletable(self):
         pass
-
-    def _publish_ghosts(self):
-        activate_list = self.objectValues()
-        # ativate all containing objects, depth first
-        while activate_list:
-            object = activate_list.pop()
-            if IContainer.providedBy(object):
-                activate_list += object.objectValues()
-            if IVersionedContent.providedBy(object):
-                if object.is_published():
-                    continue
-                if not object.get_unapproved_version():
-                    object.create_copy()
-                object.set_unapproved_version_publication_datetime(
-                    DateTime())
-                object.approve_version()
 
 
 InitializeClass(GhostFolder)
