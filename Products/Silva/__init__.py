@@ -75,7 +75,7 @@ def initialize_icons():
     for mimetype, icon_name in mimeicons:
         registry.register(
             ('mime_type', mimetype),
-            '++resource++silva.icons/%s' % icon_name)
+            '++static++/silva.icons/%s' % icon_name)
 
     misc_icons = [
         ('ghostfolder', 'folder', 'silvaghost_folder.gif'),
@@ -87,6 +87,6 @@ def initialize_icons():
     for klass, kind, icon_name in misc_icons:
         registry.register(
             (klass, kind),
-            '++resource++silva.icons/%s' % icon_name)
+            '++static++/silva.icons/%s' % icon_name)
 
 initialize_icons()
