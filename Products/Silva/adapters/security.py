@@ -13,13 +13,13 @@ from Acquisition import aq_parent
 from AccessControl import getSecurityManager
 from AccessControl.PermissionRole import rolesForPermissionOn
 from AccessControl.Permission import Permission
-from Products.Silva.Security import UnauthorizedRoleAssignement
 from Products.Silva import SilvaPermissions
 from Products.Silva import roleinfo
 
 from silva.core import interfaces
-from silva.core.interfaces import events
+from silva.core.interfaces import events, errors
 from silva.core.services.interfaces import IMemberService, IGroupService
+from silva.translations import translate as _
 
 
 def silva_roles(roles):
@@ -45,7 +45,7 @@ def minimum_role(role):
     return all_roles[all_roles.index(role):]
 
 
-class AccessSecurityAdapter(grok.Adapter):
+class AccessSecurityManager(grok.Adapter):
     grok.implements(interfaces.IAccessSecurity)
     grok.provides(interfaces.IAccessSecurity)
     grok.context(interfaces.ISilvaObject)
@@ -85,7 +85,7 @@ class AccessSecurityAdapter(grok.Adapter):
     acquired = property(is_acquired)
 
 
-class RootAccessSecurityAdapter(AccessSecurityAdapter):
+class RootAccessSecurityAdapter(AccessSecurityManager):
     grok.context(interfaces.IRoot)
 
     def set_acquired(self):
@@ -100,7 +100,7 @@ class RootAccessSecurityAdapter(AccessSecurityAdapter):
     def is_acquired(self):
         if not self.get_minimum_role():
             return True
-        return AccessSecurityAdapter.is_acquired(self)
+        return AccessSecurityManager.is_acquired(self)
 
     # Need to redefined the property with the new version of is_acquired
     acquired = property(is_acquired)
@@ -117,18 +117,18 @@ class Authorization(object):
         self.type = type
         self.source = source
         self.context = context
-        self.__query = query
-        self.__acquired_roles = silva_roles(acquired_roles)
-        self.__local_roles = silva_roles(local_roles)
+        self._query = query
+        self._acquired_roles = silva_roles(acquired_roles)
+        self._local_roles = silva_roles(local_roles)
 
     @property
     def local_role(self):
-        roles = self.__local_roles
+        roles = self._local_roles
         return roles[0] if len(roles) else None
 
     @property
     def acquired_role(self):
-        roles = self.__acquired_roles
+        roles = self._acquired_roles
         return roles[0] if len(roles) else None
 
     @property
@@ -151,12 +151,18 @@ class Authorization(object):
         if not role:
             return False
         identifier = self.identifier
-        user_role = self.__query.get_user_role()
+        if identifier == self._query.get_user_id():
+            raise errors.UnauthorizedRoleAssignement(
+                _(u"You cannot revoke your own role"),
+                self.context, role, identifier)
+        user_role = self._query.get_user_role()
         if user_role is None or is_role_greater(role, user_role):
-            raise UnauthorizedRoleAssignement(role, identifier)
+            raise errors.UnauthorizedRoleAssignement(
+                _(u"You must have at least the role you are trying to revoke"),
+                self.context, role, identifier)
         self.context.manage_delLocalRoles([identifier])
         # Update computed value
-        self.__local_roles = []
+        self._local_roles = []
         notify(events.SecurityRoleRemovedEvent(self.context, identifier, []))
         return True
 
@@ -168,14 +174,18 @@ class Authorization(object):
         if current_role and is_role_greater_or_equal(current_role, role):
             return False
         identifier = self.identifier
-        user_role = self.__query.get_user_role()
+        user_role = self._query.get_user_role()
         if user_role is None or is_role_greater(role, user_role):
-            raise UnauthorizedRoleAssignement(role, identifier)
+            raise errors.UnauthorizedRoleAssignement(
+                _(u"You must have at least the role you are trying to grant"),
+                self.context, role, identifier)
         if role not in self.source.allowed_roles():
-            raise UnauthorizedRoleAssignement(role, identifier)
+            raise errors.UnauthorizedRoleAssignement(
+                _(u"This role cannot be granted in this context"),
+                self.context, role, identifier)
         self.context.manage_setLocalRoles(identifier, [role])
         # Update computed value
-        self.__local_roles.insert(0, role)
+        self._local_roles.insert(0, role)
         notify(events.SecurityRoleAddedEvent(self.context, identifier, [role]))
         return True
 
@@ -236,16 +246,22 @@ class AuthorizationManager(grok.Adapter):
 
     def __init__(self, context):
         self.context = context
-        self.__member = getUtility(IMemberService)
-        self.__group = queryUtility(IGroupService)
+        self._current_user_id = getSecurityManager().getUser().getId()
+        self._member = getUtility(IMemberService)
+        self._group = queryUtility(IGroupService)
 
-    def get_user_role(self, user_id=None):
-        return self.get_authorization(identifier=user_id).role
+    def get_user_role(self, identifier=None):
+        return self.get_authorization(identifier=identifier).role
+
+    def get_user_id(self, identifier=None):
+        if identifier is None:
+            return self._current_user_id
+        return identifier
 
     def _get_identity(self, identifier):
-        identity = self.__member.get_member(identifier, location=self.context)
-        if identity is None and self.__group is not None:
-            identity = self.__group.get_group(identifier, location=self.context)
+        identity = self._member.get_member(identifier, location=self.context)
+        if identity is None and self._group is not None:
+            identity = self._group.get_group(identifier, location=self.context)
         return identity
 
     def get_authorization(self, identifier=None, dont_acquire=False):
@@ -253,8 +269,7 @@ class AuthorizationManager(grok.Adapter):
         is specified, return authorization object for the current
         authenticated user.
         """
-        if identifier is None:
-            identifier = getSecurityManager().getUser().getId()
+        identifier = self.get_user_id(identifier)
 
         identity = self._get_identity(identifier)
         if identity is None:

@@ -7,13 +7,13 @@ import unittest
 
 from silva.core.interfaces import IAccessSecurity
 from silva.core.interfaces import IAuthorization, IAuthorizationManager
+from silva.core.interfaces import UnauthorizedRoleAssignement
 from zope import component
 from zope.interface.verify import verifyObject
 
 from AccessControl import getSecurityManager
 from Products.Silva.testing import FunctionalLayer
 from Products.Silva.testing import assertNotTriggersEvents, assertTriggersEvents
-from Products.Silva.Security import UnauthorizedRoleAssignement
 
 
 class AccessSecurityTestCase(unittest.TestCase):
@@ -123,11 +123,9 @@ class UserAccessSecurityTestCase(unittest.TestCase):
         factory = self.root.manage_addProduct['Silva']
         factory.manage_addFolder('folder', 'Folder')
 
-        self.access = component.queryAdapter(
-            self.root.folder, IAuthorizationManager)
-
     def test_interface(self):
-        self.assertTrue(verifyObject(IAuthorizationManager, self.access))
+        access = IAuthorizationManager(self.root.folder)
+        self.assertTrue(verifyObject(IAuthorizationManager, access))
 
     def test_logged_in_user(self):
         """Lookup information about the current logged in user.
@@ -135,11 +133,10 @@ class UserAccessSecurityTestCase(unittest.TestCase):
         for user_id in ['viewer', 'reader', 'author', 'editor', 'manager']:
             # Test users have the same login than their role (in lower case).
             self.layer.login(user_id)
-            self.assertEqual(
-                self.access.get_user_role().lower(),
-                user_id)
+            access = IAuthorizationManager(self.root.folder)
+            self.assertEqual(access.get_user_role().lower(), user_id)
 
-            authorization = self.access.get_authorization()
+            authorization = access.get_authorization()
             self.assertTrue(verifyObject(IAuthorization, authorization))
             self.assertEqual(authorization.identifier, user_id)
             self.assertEqual(authorization.role.lower(), user_id)
@@ -154,11 +151,11 @@ class UserAccessSecurityTestCase(unittest.TestCase):
         """
         for user_id in ['viewer', 'reader', 'author', 'editor', 'manager']:
             # Test users have the same login than their role (in lower case).
+            access = IAuthorizationManager(self.root.folder)
             self.assertEqual(
-                self.access.get_user_role(user_id).lower(),
-                user_id)
+                access.get_user_role(user_id).lower(), user_id)
 
-            authorization = self.access.get_authorization(user_id)
+            authorization = access.get_authorization(user_id)
             self.assertTrue(verifyObject(IAuthorization, authorization))
             self.assertEqual(authorization.identifier, user_id)
             self.assertEqual(authorization.role.lower(), user_id)
@@ -170,9 +167,10 @@ class UserAccessSecurityTestCase(unittest.TestCase):
     def test_user_no_default_role(self):
         """Lookup a user that doesn't have a default role.
         """
-        self.assertEqual(self.access.get_user_role('dummy'), None)
+        access = IAuthorizationManager(self.root.folder)
+        self.assertEqual(access.get_user_role('dummy'), None)
 
-        authorization = self.access.get_authorization('dummy')
+        authorization = access.get_authorization('dummy')
         self.assertTrue(verifyObject(IAuthorization, authorization))
         self.assertEqual(authorization.identifier, 'dummy')
         self.assertEqual(authorization.type, 'user')
@@ -183,15 +181,14 @@ class UserAccessSecurityTestCase(unittest.TestCase):
     def test_grant_role(self):
         """Test setting a role (as a ChiefEditor).
         """
-        authorization = self.access.get_authorization('reader')
+        access = IAuthorizationManager(self.root.folder)
+        authorization = access.get_authorization('reader')
         self.assertEqual(authorization.role, 'Reader')
 
         # We (chiefeditor) don't have Manager, so can't give that role.
         with assertNotTriggersEvents('SecurityRoleAddedEvent'):
-            self.assertRaises(
-                UnauthorizedRoleAssignement,
-                authorization.grant,
-                'Manager')
+            with self.assertRaises(UnauthorizedRoleAssignement):
+                authorization.grant('Manager')
 
         # The user already have role, reader, so this does nothing
         with assertNotTriggersEvents('SecurityRoleAddedEvent'):
@@ -211,7 +208,8 @@ class UserAccessSecurityTestCase(unittest.TestCase):
         """
         self.layer.login('manager')
 
-        authorization = self.access.get_authorization('reader')
+        access = IAuthorizationManager(self.root.folder)
+        authorization = access.get_authorization('reader')
         self.assertEqual(authorization.role, 'Reader')
 
         # The user already have role, reader, so this does nothing
@@ -228,7 +226,7 @@ class UserAccessSecurityTestCase(unittest.TestCase):
         self.assertEqual(authorization.role, 'Manager')
 
         # A new query returns the same  results
-        authorization = self.access.get_authorization('reader')
+        authorization = access.get_authorization('reader')
         self.assertEqual(authorization.local_role, 'Manager')
         self.assertEqual(authorization.role, 'Manager')
 
@@ -237,23 +235,18 @@ class UserAccessSecurityTestCase(unittest.TestCase):
         """
         self.layer.login('dummy')
 
-        authorization = self.access.get_authorization('reader')
+        access = IAuthorizationManager(self.root.folder)
+        authorization = access.get_authorization('reader')
         self.assertEqual(authorization.role, 'Reader')
 
         # You don't have the right to do any of those
         with assertNotTriggersEvents('SecurityRoleAddedEvent'):
-            self.assertRaises(
-                UnauthorizedRoleAssignement,
-                authorization.grant,
-                'Manager')
-            self.assertRaises(
-                UnauthorizedRoleAssignement,
-                authorization.grant,
-                'Editor')
-            self.assertRaises(
-                UnauthorizedRoleAssignement,
-                authorization.grant,
-                'Author')
+            with self.assertRaises(UnauthorizedRoleAssignement):
+                authorization.grant('Manager')
+            with self.assertRaises(UnauthorizedRoleAssignement):
+                authorization.grant('Editor')
+            with self.assertRaises(UnauthorizedRoleAssignement):
+                authorization.grant('Author')
 
             # The user already have role, reader, so this does nothing
             self.assertEqual(authorization.grant('Viewer'), False)
@@ -261,7 +254,6 @@ class UserAccessSecurityTestCase(unittest.TestCase):
         # Nothing changed
         self.assertEqual(authorization.local_role, None)
         self.assertEqual(authorization.role, 'Reader')
-
 
 
 class AcquiredUserAccessSecurityTestCase(unittest.TestCase):
@@ -275,7 +267,6 @@ class AcquiredUserAccessSecurityTestCase(unittest.TestCase):
         factory = self.root.manage_addProduct['Silva']
         factory.manage_addFolder('folder', 'Folder')
         factory.manage_addPublication('publication', 'Publication')
-        self.publication = self.root.publication
         factory = self.root.publication.manage_addProduct['Silva']
         factory.manage_addFolder('folder', 'Folder')
         self.folder = self.root.publication.folder
@@ -286,7 +277,7 @@ class AcquiredUserAccessSecurityTestCase(unittest.TestCase):
         authorization = access.get_authorization('viewer')
         authorization.grant('Reader')
 
-        access = IAuthorizationManager(self.publication)
+        access = IAuthorizationManager(self.root.publication)
         authorization = access.get_authorization('viewer')
         authorization.grant('ChiefEditor')
 
@@ -345,7 +336,7 @@ class AcquiredUserAccessSecurityTestCase(unittest.TestCase):
         self.assertEqual(authorization.acquired_role, None)
         self.assertEqual(authorization.role, None)
 
-    def  test_get_users_authorzation(self):
+    def  test_get_users_authorization(self):
         """Test get_authorizations.
         """
         access = IAuthorizationManager(self.folder)
@@ -368,7 +359,6 @@ class AcquiredUserAccessSecurityTestCase(unittest.TestCase):
         self.assertEqual(authorization.local_role, None)
         self.assertEqual(authorization.acquired_role, 'Editor')
         self.assertEqual(authorization.role, 'Editor')
-
 
     def test_revoke_as_manager(self):
         """Revoke a local role as a manager.
@@ -409,14 +399,34 @@ class AcquiredUserAccessSecurityTestCase(unittest.TestCase):
 
         # We don't have the right to revoke that role
         with assertNotTriggersEvents('SecurityRoleRemovedEvent'):
-            self.assertRaises(
-                UnauthorizedRoleAssignement,
-                authorization.revoke)
+            with self.assertRaises(UnauthorizedRoleAssignement):
+                authorization.revoke()
 
         # So it is not changed
         self.assertEqual(authorization.local_role, 'Manager')
         self.assertEqual(authorization.acquired_role, 'Editor')
         self.assertEqual(authorization.role, 'Manager')
+
+    def test_revoke_own_role_as_chiefeditor(self):
+        """Revoke its own local role as chiefeditor.
+        """
+        self.layer.login('viewer')
+
+        access = IAuthorizationManager(self.root.publication)
+        authorization = access.get_authorization('viewer')
+
+        self.assertEqual(authorization.local_role, 'ChiefEditor')
+        self.assertEqual(authorization.acquired_role, 'Reader')
+        self.assertEqual(authorization.role, 'ChiefEditor')
+
+        # We try to revoke the role
+        with assertNotTriggersEvents('SecurityRoleRemovedEvent'):
+            with self.assertRaises(UnauthorizedRoleAssignement):
+                authorization.revoke()
+
+        self.assertEqual(authorization.local_role, 'ChiefEditor')
+        self.assertEqual(authorization.acquired_role, 'Reader')
+        self.assertEqual(authorization.role, 'ChiefEditor')
 
     def test_revoke_as_chiefeditor(self):
         """Revoke a local role as a chiefeditor (of an editor).
@@ -454,16 +464,14 @@ class AcquiredUserAccessSecurityTestCase(unittest.TestCase):
         # We don't have the right to revoke that role
         authorization = access.get_authorization('reader')
         with assertNotTriggersEvents('SecurityRoleRemovedEvent'):
-            self.assertRaises(
-                UnauthorizedRoleAssignement,
-                authorization.revoke)
+            with self.assertRaises(UnauthorizedRoleAssignement):
+                authorization.revoke()
 
         # We don't have the right to revoke that role
         authorization = access.get_authorization('viewer')
         with assertNotTriggersEvents('SecurityRoleRemovedEvent'):
-            self.assertRaises(
-                UnauthorizedRoleAssignement,
-                authorization.revoke)
+            with self.assertRaises(UnauthorizedRoleAssignement):
+                authorization.revoke()
 
     def test_revoke_no_role(self):
         """Revoke local role when there is no local role.
@@ -477,7 +485,6 @@ class AcquiredUserAccessSecurityTestCase(unittest.TestCase):
             self.assertEqual(authorization.revoke(), False)
 
         self.assertEqual(authorization.local_role, None)
-
 
 
 def test_suite():

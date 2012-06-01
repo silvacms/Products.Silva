@@ -59,7 +59,6 @@ class Member(Persistent, Acquisition.Implicit):
         """
         return None
 
-
     security.declarePrivate('allowed_roles')
     def allowed_roles(self):
         return []
@@ -179,7 +178,6 @@ class NoneMember(Persistent, Acquisition.Implicit):
         """Extra information.
         """
         return None
-
 
     security.declarePrivate('allowed_roles')
     def allowed_roles(self):

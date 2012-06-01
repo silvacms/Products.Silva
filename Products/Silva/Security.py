@@ -14,20 +14,12 @@ from five import grok
 # Silva
 from Products.Silva import SilvaPermissions
 from Products.Silva.Membership import noneMember
+from Products.SilvaMetadata.interfaces import IMetadataService
 
 from silva.core.interfaces import IVersion, ISecurity
 from silva.core.services.interfaces import IMemberService
 
-from Products.SilvaMetadata.interfaces import IMetadataService
 
-
-class SecurityError(Exception):
-    """An error has been triggered by the security system.
-    """
-
-class UnauthorizedRoleAssignement(SecurityError):
-    """This roles can be assigned.
-    """
 
 class Security(object):
     """Can be mixed in with an object to support Silva security.
