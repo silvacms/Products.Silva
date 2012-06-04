@@ -14,17 +14,20 @@ from OFS.Folder import Folder as BaseFolder
 
 # Silva
 from Products.Silva import SilvaPermissions
-from Products.Silva.Versioning import Versioning
 from Products.Silva.Content import Content
+from Products.Silva.Publishable import NonPublishable
+from Products.Silva.SilvaObject import SilvaObject, ViewableObject
+from Products.Silva.Versioning import Versioning
 
 from silva.translations import translate as _
 from silva.core.interfaces import IVersionedContent, ContentError
+from silva.core.interfaces import IVersionedObject
+from silva.core.interfaces import IVersionedNonPublishable
 
 
-class VersionedContent(Versioning, Content, BaseFolder):
+class VersionedObject(Versioning, SilvaObject, ViewableObject):
     security = ClassSecurityInfo()
-
-    grok.implements(IVersionedContent)
+    grok.implements(IVersionedObject)
     grok.baseclass()
 
     # there is always at least a single version to start with,
@@ -162,4 +165,14 @@ class VersionedContent(Versioning, Content, BaseFolder):
                     _(u"Content is approved."),
                     self)
 
-InitializeClass(VersionedContent)
+InitializeClass(VersionedObject)
+
+
+class VersionedContent(VersionedObject, Content, BaseFolder):
+    grok.implements(IVersionedContent)
+    grok.baseclass()
+
+
+class VersionedNonPublishable(VersionedObject, NonPublishable, BaseFolder):
+    grok.implements(IVersionedNonPublishable)
+    grok.baseclass()

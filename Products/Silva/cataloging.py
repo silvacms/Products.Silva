@@ -33,13 +33,13 @@ class CatalogingAttributesVersion(CatalogingAttributes):
     grok.context(interfaces.IVersion)
 
     def content_intid(self):
-        return getUtility(IIntIds).register(self.context.get_content())
+        return getUtility(IIntIds).register(self.context.get_silva_object())
 
     def publication_status(self):
         """Returns the status of the current version
         Can be 'unapproved', 'approved', 'public', 'last_closed' or 'closed'
         """
-        content = self.context.get_content()
+        content = self.context.get_silva_object()
         status = None
         unapproved_version = content.get_unapproved_version()
         approved_version = content.get_approved_version()

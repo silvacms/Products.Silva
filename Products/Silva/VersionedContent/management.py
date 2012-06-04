@@ -12,13 +12,13 @@ from datetime import datetime
 
 from silva.core import conf as silvaconf
 from silva.core.interfaces import IVersion
-from silva.core.interfaces import IVersionedContent
+from silva.core.interfaces import IVersionedObject
 from silva.core.interfaces import IPublicationWorkflow, VersioningError
 from silva.translations import translate as _
 
 
 class VersionedContentPublicationWorkflow(grok.Adapter):
-    grok.context(IVersionedContent)
+    grok.context(IVersionedObject)
     grok.implements(IPublicationWorkflow)
     grok.provides(IPublicationWorkflow)
 

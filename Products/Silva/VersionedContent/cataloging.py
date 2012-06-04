@@ -8,14 +8,14 @@ from five import grok
 
 from Acquisition import aq_base
 
-from silva.core.interfaces import IVersionedContent
+from silva.core.interfaces import IVersionedObject
 from silva.core.services.catalog import Cataloging, catalog_queue
 
 
 class VersionedContentCataloging(Cataloging):
     """Cataloging support for versioned content.
     """
-    grok.context(IVersionedContent)
+    grok.context(IVersionedObject)
 
     def get_indexable_versions(self):
         version_ids = [
