@@ -33,7 +33,7 @@ def send_message_to_editors(target, from_userid, subject, text):
         target.get_title_editable(),
         target.absolute_url(), text)
     # XXX this may not get the right people, but what does?
-    current = target.get_content().aq_inner
+    current = target.get_silva_object().aq_inner
     recipients = []
     while True:
         auth = interfaces.IAuthorizationManager(current)
