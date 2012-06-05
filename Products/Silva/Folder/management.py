@@ -114,11 +114,11 @@ class ContainerManager(grok.Adapter):
                 content)
         if not  move_check(self.context, content):
             return ContainerError(
-                _(u"You Cannot move this content to this container."),
+                _(u"You cannot move this content to this container."),
                 content)
         if content.meta_type not in self.__addables:
             return ContainerError(
-                _(u"You Cannot add this content type in this container."),
+                _(u"You cannot add this content type in this container."),
                 content)
         return None
 
