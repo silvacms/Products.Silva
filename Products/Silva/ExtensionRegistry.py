@@ -278,25 +278,27 @@ class ExtensionRegistry(object):
         self._extensions_order = result
 
     def install(self, name, root):
-        installer = self._extensions[name].installer
-        installer.install(root)
-        notify(InstalledExtensionEvent(installer, root))
+        extension = self._extensions[name]
+        extension.installer.install(root, extension)
+        notify(InstalledExtensionEvent(extension, root))
 
     def uninstall(self, name, root):
-        self._extensions[name].installer.uninstall(root)
+        extension = self._extensions[name]
+        extension.installer.uninstall(root, extension)
 
     def refresh(self, name, root):
-        if hasattr(self._extensions[name].installer, 'refresh'):
+        extension = self._extensions[name]
+        if hasattr(extension, 'refresh'):
             # installer has a refresh, so use it note: the default
             # refresh (in silva.core.conf.installer.DefaultInstaller)
             # is to just uninstall/install.  Extensions may choose to
             # override this to do a custom uninstall/install which may,
             # e.g. not remove a special service_<extension> object
             # which contains site-specific customizations
-            self._extensions[name].installer.refresh(root)
+            extension.installer.refresh(root, extension)
         else:
-            self._extensions[name].installer.uninstall(root)
-            self._extensions[name].installer.install(root)
+            extension.installer.uninstall(root, extension)
+            extension.installer.install(root, extension)
 
     # ACCESSORS
 
@@ -309,7 +311,7 @@ class ExtensionRegistry(object):
     def is_installed(self, name, root):
         extension = self.get_extension(name)
         if extension:
-            return extension.installer.is_installed(root)
+            return extension.installer.is_installed(root, extension)
         return False
 
     def get_name_for_class(self, cls):

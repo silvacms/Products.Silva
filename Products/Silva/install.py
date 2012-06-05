@@ -19,13 +19,13 @@ from Products.Silva import roleinfo
 from Products.Silva import MAILDROPHOST_AVAILABLE, MAILHOST_ID
 
 
-def install(root):
+def install(root, extension):
     pass
 
-def uninstall(root):
+def uninstall(root, extension):
     pass
 
-def is_installed(root):
+def is_installed(root, extension):
     return IRoot.providedBy(root)
 
 

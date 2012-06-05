@@ -117,7 +117,9 @@ class ExtensionRegistryTestCase(unittest.TestCase):
         system_installer = SystemExtensionInstaller()
         self.assertTrue(verifyObject(IExtensionInstaller, system_installer))
         # A system extension is always installed
-        self.assertEqual(system_installer.is_installed(self.root), True)
+        self.assertEqual(
+            system_installer.is_installed(self.root, object()),
+            True)
 
         # Other test on installer are done with grok tests.
 
