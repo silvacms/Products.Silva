@@ -168,7 +168,7 @@ class GhostFolder(GhostBase, Folder):
     security = ClassSecurityInfo()
 
     security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'haunt')
+        SilvaPermissions.ApproveSilvaContent, 'haunt')
     def haunt(self):
         """populate the the ghost folder with ghosts
         """

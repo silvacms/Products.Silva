@@ -13,7 +13,8 @@ from DateTime import DateTime
 from Products.SilvaMetadata.interfaces import IMetadataService
 from silva.core import interfaces
 from silva.core.interfaces import IExportSettings
-from silva.core.interfaces import ISilvaXMLExportHandler, IXMLZEXPExportable
+from silva.core.interfaces import ISilvaXMLExportHandler
+from silva.core.interfaces import INonPublishable, IPublishable, IXMLExportable
 from silva.core.interfaces import IPublicationWorkflow
 from silva.core.interfaces.errors import ExternalReferenceError
 from silva.core.references.interfaces import IReferenceService
@@ -200,7 +201,8 @@ class SilvaContainerProducer(SilvaProducer):
         for content in self.context.get_non_publishables():
             self.subsax(content)
         if settings.otherContent():
-            meta_types = meta_types_for_interface(IXMLZEXPExportable)
+            meta_types = meta_types_for_interface(
+                IXMLExportable, excepts=[IPublishable, INonPublishable])
             for content in self.context.objectValues(meta_types):
                 self.subsax(content)
         self.endElement('content')

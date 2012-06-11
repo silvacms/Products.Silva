@@ -35,14 +35,14 @@ def filter_types_for_interfaces(types, requires, excepts):
     return filter(filter_types, types)
 
 
-def meta_types_for_interface(interface):
+def meta_types_for_interface(interface, excepts=[]):
     """Return a list of meta_type who implements the given interface.
     """
     addables = Products.meta_types
     if interface.extends(ISilvaObject):
         addables = extensionRegistry.get_addables()
-    return [addable['name'] for addable in addables
-            if interface.implementedBy(addable['instance'])]
+    return [addable['name'] for addable in
+            filter_types_for_interfaces(addables, [interface], excepts)]
 
 
 def _get_product_meta_type(content_type):
