@@ -2,6 +2,7 @@
 # See also LICENSE.txt
 # $Id$
 
+from contextlib import contextmanager
 from StringIO import StringIO
 from zipfile import ZipFile
 import unittest
@@ -20,6 +21,7 @@ from Products.Silva.testing import FunctionalLayer
 from Products.Silva.testing import TestCase
 from Products.Silva.tests.helpers import open_test_file
 from Products.SilvaMetadata.interfaces import IMetadataService
+from silva.core.messages.interfaces import IMessageService
 
 
 class SilvaXMLTestCase(TestCase):
@@ -35,14 +37,29 @@ class SilvaXMLTestCase(TestCase):
         # setUp triggered some events. Clear them.
         clearEvents()
 
-    def import_file(self, filename, globs=None, replace=False):
+    def import_file(self, filename, globs=None, replace=False,
+                    check_warnings=False):
         """Import an XML file.
         """
         if globs is None:
-            globs = globals()
-        with open_test_file(filename, globs) as source_file:
-            xmlimport.importFromFile(
-                source_file, self.root, TestRequest(), replace=replace)
+                globs = globals()
+        with self._check_warnings(check_warnings):
+            with open_test_file(filename, globs) as source_file:
+                xmlimport.importFromFile(
+                    source_file, self.root, TestRequest(), replace=replace)
+
+    @contextmanager
+    def _check_warnings(self, enabled):
+        if enabled:
+            message_service = getUtility(IMessageService)
+            # clear the errors
+            message_service.receive(TestRequest(), namespace='error')
+            yield
+            errors = message_service.receive(TestRequest(), namespace='error')
+            self.assertEquals(0, len(errors),
+                "import warning : \n" + "\n".join(map(str, errors)))
+        else:
+            yield
 
     def import_zip(self, filename, globs=None, replace=False):
         """Import a ZIP file.
