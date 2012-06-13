@@ -18,7 +18,7 @@ from infrae.testbrowser.selenium.browser import Browser as SeleniumBrowser
 from infrae.testing import TestCase, suite_from_package
 from infrae.testing import get_event_names, clear_events, get_events
 from infrae.testing import assertNotTriggersEvents, assertTriggersEvents
-from infrae.wsgi.testing import BrowserLayer
+from infrae.wsgi.testing import BrowserLayer, TestRequest
 from fanstatic.wsgi import Fanstatic
 from zope.site.hooks import setSite, setHooks
 import transaction
