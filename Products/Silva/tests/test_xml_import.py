@@ -43,19 +43,20 @@ class SilvaXMLTestCase(TestCase):
         """
         if globs is None:
                 globs = globals()
-        with self._check_warnings(check_warnings):
+        request = TestRequest()
+        with self._check_warnings(check_warnings, request):
             with open_test_file(filename, globs) as source_file:
                 xmlimport.importFromFile(
-                    source_file, self.root, TestRequest(), replace=replace)
+                    source_file, self.root, request, replace=replace)
 
     @contextmanager
-    def _check_warnings(self, enabled):
+    def _check_warnings(self, enabled, request):
         if enabled:
             message_service = getUtility(IMessageService)
             # clear the errors
-            message_service.receive(TestRequest(), namespace='error')
+            message_service.receive(request, namespace='error')
             yield
-            errors = message_service.receive(TestRequest(), namespace='error')
+            errors = message_service.receive(request, namespace='error')
             self.assertEquals(0, len(errors),
                 "import warning : \n" + "\n".join(map(str, errors)))
         else:
