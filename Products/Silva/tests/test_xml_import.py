@@ -44,13 +44,13 @@ class SilvaXMLTestCase(TestCase):
         if globs is None:
                 globs = globals()
         request = TestRequest()
-        with self._check_warnings(check_warnings, request):
+        with self._check_warnings(request, enabled=check_warnings):
             with open_test_file(filename, globs) as source_file:
                 xmlimport.importFromFile(
                     source_file, self.root, request, replace=replace)
 
     @contextmanager
-    def _check_warnings(self, enabled, request):
+    def _check_warnings(self, request, enabled=True):
         if enabled:
             message_service = getUtility(IMessageService)
             # clear the errors
