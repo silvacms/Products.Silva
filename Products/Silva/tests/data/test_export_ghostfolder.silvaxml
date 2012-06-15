@@ -32,7 +32,7 @@
         <silva-extra:language>
         </silva-extra:language>
         <silva-extra:lastauthor>
-          author
+          chiefeditor
         </silva-extra:lastauthor>
         <silva-extra:modificationtime>
           YYYY-MM-DDTHH:MM:SS
@@ -64,7 +64,7 @@
               YYYY-MM-DDTHH:MM:SS
             </silva-extra:creationtime>
             <silva-extra:creator>
-              author
+              chiefeditor
             </silva-extra:creator>
             <silva-extra:hide_from_tocs>
               do not hide
@@ -74,7 +74,7 @@
             <silva-extra:language>
             </silva-extra:language>
             <silva-extra:lastauthor>
-              author
+              chiefeditor
             </silva-extra:lastauthor>
             <silva-extra:modificationtime>
               YYYY-MM-DDTHH:MM:SS
@@ -107,7 +107,7 @@
                     YYYY-MM-DDTHH:MM:SS
                   </silva-extra:creationtime>
                   <silva-extra:creator>
-                    author
+                    chiefeditor
                   </silva-extra:creator>
                   <silva-extra:hide_from_tocs>
                     do not hide
@@ -117,7 +117,7 @@
                   <silva-extra:language>
                   </silva-extra:language>
                   <silva-extra:lastauthor>
-                    author
+                    chiefeditor
                   </silva-extra:lastauthor>
                   <silva-extra:modificationtime>
                     YYYY-MM-DDTHH:MM:SS
@@ -162,7 +162,7 @@
                     YYYY-MM-DDTHH:MM:SS
                   </silva-extra:creationtime>
                   <silva-extra:creator>
-                    author
+                    chiefeditor
                   </silva-extra:creator>
                   <silva-extra:hide_from_tocs>
                     do not hide
@@ -172,7 +172,7 @@
                   <silva-extra:language>
                   </silva-extra:language>
                   <silva-extra:lastauthor>
-                    author
+                    chiefeditor
                   </silva-extra:lastauthor>
                   <silva-extra:modificationtime>
                     YYYY-MM-DDTHH:MM:SS
@@ -208,7 +208,7 @@
                   YYYY-MM-DDTHH:MM:SS
                 </silva-extra:creationtime>
                 <silva-extra:creator>
-                  author
+                  chiefeditor
                 </silva-extra:creator>
                 <silva-extra:hide_from_tocs>
                   do not hide
@@ -218,7 +218,7 @@
                 <silva-extra:language>
                 </silva-extra:language>
                 <silva-extra:lastauthor>
-                  author
+                  chiefeditor
                 </silva-extra:lastauthor>
                 <silva-extra:modificationtime>
                   YYYY-MM-DDTHH:MM:SS

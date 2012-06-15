@@ -148,6 +148,7 @@ class XMLExportTestCase(SilvaXMLTestCase):
     def test_ghostfolder(self):
         """Export a ghost folder.
         """
+        self.layer.login('chiefeditor')
         factory = self.root.folder.manage_addProduct['Silva']
         factory.manage_addFolder('container', 'Content')
         factory.manage_addGhostFolder(
@@ -159,6 +160,7 @@ class XMLExportTestCase(SilvaXMLTestCase):
         factory.manage_addFile('file', 'Torvald blob')
 
         self.root.folder.ghost.haunt()
+        self.layer.login('author')
 
         xml, info = xmlexport.exportToString(self.root.folder)
         self.assertExportEqual(xml, 'test_export_ghostfolder.silvaxml')
@@ -170,6 +172,7 @@ class XMLExportTestCase(SilvaXMLTestCase):
     def test_ghostfolder_outside_of_export(self):
         """Export a ghost folder but not the ghosted folder.
         """
+        self.layer.login('chiefeditor')
         factory = self.root.folder.manage_addProduct['Silva']
         factory.manage_addFolder('container', 'Content')
         factory = self.root.manage_addProduct['Silva']
@@ -181,6 +184,7 @@ class XMLExportTestCase(SilvaXMLTestCase):
         factory.manage_addFile('file', 'Torvald blob')
 
         self.root.ghost.haunt()
+        self.layer.login('author')
 
         self.assertRaises(
             ExternalReferenceError, xmlexport.exportToString, self.root.ghost)
