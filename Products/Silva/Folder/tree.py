@@ -5,8 +5,6 @@
 
 from five import grok
 from silva.core.interfaces import ITreeContents, IContainer
-from silva.core.services.interfaces import IContentFilteringService
-from zope.component import getUtility
 
 
 class TreeContent(grok.Adapter):
@@ -78,8 +76,6 @@ class TreeContent(grok.Adapter):
     def _get_public_tree_helper(self, l, indent, depth, include_non_transparent_containers=0):
         for item in self.context.get_ordered_publishables():
             if not item.is_published():
-                continue
-            if getUtility(IContentFilteringService).filter(item):
                 continue
             if (IContainer.providedBy(item) and
                 (item.is_transparent() or include_non_transparent_containers)):

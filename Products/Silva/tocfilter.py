@@ -4,44 +4,120 @@
 
 
 from five import grok
+from AccessControl import getSecurityManager
+
+from zope.component import getUtility
 from silva.core import conf as silvaconf
-from silva.core.interfaces import ISilvaObject
+from silva.core.interfaces import IViewableObject
 from silva.core.services.base import SilvaService
 from silva.core.services.interfaces import IContentFilteringService
-from silva.core.views.interfaces import IDisableNavigationTag
-
-_filters = []
-
-
-def registerTocFilter(filter):
-    # filter should be a callable accepting one argument that returns True
-    # if the argument should be filtered out, False if it should not be
-    # filtered out.
-    _filters.append(filter)
+from silva.core.views.interfaces import IDisableNavigationTag, IPreviewLayer
+from Products.SilvaMetadata.interfaces import IMetadataService
 
 
-def hideFromTOC(context):
-    # if document is not publish, it's hidden.
-    if not ISilvaObject.providedBy(context):
+class Filter(object):
+    """Appy a list of filter to a list contents.
+    """
+
+    def __init__(self, instances):
+        self._instances = instances
+
+    def filter(self, content):
+        for instance in self._instances:
+            if instance(content):
+                return False
         return True
-    viewable = context.get_viewable()
-    return (viewable is None) or \
-        (context.service_metadata.getMetadataValue(
-            viewable, 'silva-extra', 'hide_from_tocs') == 'hide')
+
+    def __call__(self, contents):
+        return filter(self.filter, contents)
 
 
-_filters.append(IDisableNavigationTag.providedBy)
-_filters.append(hideFromTOC)
+class FilteringRegistry(object):
+    """Register available filters.
+    """
+
+    def __init__(self):
+        self.clear()
+
+    def register(self, factory):
+        self._factories.append(factory)
+
+    def clear(self):
+        self._factories = []
+
+    def __call__(self, request):
+        instances = []
+        for factory in self._factories:
+            instances.append(factory(request))
+        return Filter(instances)
+
+registry = FilteringRegistry()
 
 
-class TOCFilterService(SilvaService):
-    meta_type = 'Silva TOC Filter Service'
+class ViewPermissionFilter(object):
+    """Filter out elements where you don't have the view permission.
+    """
+
+    def __init__(self, request):
+        self.check = getSecurityManager().checkPermission
+
+    def __call__(self, content):
+        return not self.check('View', content)
+
+registry.register(ViewPermissionFilter)
+
+
+class MarkerFilter(object):
+    """Filter out elements that are explict marked with a marker.
+    """
+
+    def __init__(self, request):
+        pass
+
+    def __call__(self, content):
+        return IDisableNavigationTag.providedBy(content)
+
+
+registry.register(MarkerFilter)
+
+
+class ViewableFilter(object):
+    """Filter out elements that are not viewable, or are marked in the
+    metadata set.
+    """
+
+    def __init__(self, request):
+        self.get = lambda content: content.get_viewable()
+        if IPreviewLayer.providedBy(request):
+            self.get = lambda content: content.get_previewable()
+        self.metadata = getUtility(IMetadataService).getMetadataValue
+
+    def __call__(self, content):
+        if not IViewableObject.providedBy(content):
+            return True
+        item = self.get(content)
+        return (
+            (item is None) or
+            (self.metadata(item, 'silva-extra', 'hide_from_tocs') == 'hide'))
+
+registry.register(ViewableFilter)
+
+
+class FilteringService(SilvaService):
+    meta_type = 'Silva Filtering Service'
     grok.implements(IContentFilteringService)
     grok.name('service_filtering')
     silvaconf.default_service()
 
-    def filter(self, context):
-        for filter in _filters:
-            if filter(context):
-                return True
-        return False
+    def filter(self, request):
+        return registry(request)
+
+    def contents(self, contents, request):
+        return self.filter(request)(contents)
+
+
+import zope.deferredimport
+zope.deferredimport.define(
+    TOCFilterService='Products.Silva.tocfilter:FilteringService')
+
+

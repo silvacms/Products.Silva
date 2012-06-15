@@ -100,14 +100,13 @@ class TOCRendering(silvaviews.ContentProvider):
         """Yield for every element in this toc.  The 'depth' argument
         limits the number of levels, defaults to unlimited.
         """
-        content_filter = getUtility(IContentFilteringService)
+        filter_content = getUtility(
+            IContentFilteringService).filter(self.request)
         can_recurse = self.toc_depth == -1 or level < self.toc_depth
 
-        for item in self.list_container_items(
-            container, is_displayable):
+        for item in filter_content(self.list_container_items(
+                container, is_displayable)):
 
-            if content_filter.filter(item):
-                    continue
             yield (level, item)
 
             if IContainer.providedBy(item) and can_recurse:
