@@ -13,7 +13,7 @@ A extension should have a installer:
   >>> grok('Products.Silva.tests.grok.extension_noinstaller')
   Traceback (most recent call last):
       ...
-  GrokError: You need to define an installer for your extension Test Extension.
+  GrokError: You need to create an installer for your extension Test Extension based on 'DefaultInstaller'.
 
 But you can use the default installer from silva.core.conf.installer:
 
