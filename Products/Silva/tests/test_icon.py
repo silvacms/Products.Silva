@@ -9,12 +9,11 @@ import unittest
 from silva.core import interfaces
 from zope.component import queryAdapter
 from zope.interface.verify import verifyObject
-from zope.publisher.browser import TestRequest
 from silva.core.interfaces.adapters import IIconResolver
 
 
 from Products.Silva.icon import IconRegistry, registry
-from Products.Silva.testing import FunctionalLayer
+from Products.Silva.testing import FunctionalLayer, TestRequest
 
 
 class IconRegistryTestCase(unittest.TestCase):

@@ -13,7 +13,6 @@ from zope.lifecycleevent.interfaces import IObjectCreatedEvent
 from zope.lifecycleevent.interfaces import IObjectModifiedEvent
 from zope.lifecycleevent.interfaces import IObjectMovedEvent
 from zope.lifecycleevent.interfaces import IObjectRemovedEvent
-from zope.traversing.browser import absoluteURL
 
 # Zope 2
 from AccessControl import ClassSecurityInfo
@@ -120,10 +119,6 @@ class SilvaObject(TitledObject, Security):
     """Inherited by all Silva objects.
     """
     security = ClassSecurityInfo()
-
-    # Use regular Zope 3 absoluteURL lookup instead of Zope 2 one.
-    def absolute_url(self, relative=None):
-        return absoluteURL(self, self.REQUEST)
 
     # ACCESSORS
 

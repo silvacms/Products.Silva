@@ -12,16 +12,16 @@ from Acquisition import aq_chain
 
 from zope.component import getUtility
 from zope.component.eventtesting import clearEvents
-from zope.publisher.browser import TestRequest
+
 from silva.core import interfaces
 from silva.core.interfaces.events import IContentImported
+from silva.core.messages.interfaces import IMessageService
 
 from Products.Silva.silvaxml import xmlimport
-from Products.Silva.testing import FunctionalLayer
+from Products.Silva.testing import FunctionalLayer, TestRequest
 from Products.Silva.testing import TestCase
 from Products.Silva.tests.helpers import open_test_file
 from Products.SilvaMetadata.interfaces import IMetadataService
-from silva.core.messages.interfaces import IMessageService
 
 
 class SilvaXMLTestCase(TestCase):

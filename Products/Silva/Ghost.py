@@ -74,8 +74,8 @@ class GhostBase(object):
     """
     security = ClassSecurityInfo()
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                              'set_title')
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'set_title')
     def set_title(self, title):
         """Don't do anything.
         """

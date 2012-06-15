@@ -5,8 +5,8 @@
 import unittest
 
 from Products.Silva.testing import FunctionalLayer
-
 from silva.core.interfaces import IPublicationWorkflow
+
 
 class PreviewTestCase(unittest.TestCase):
     """Test preview access.

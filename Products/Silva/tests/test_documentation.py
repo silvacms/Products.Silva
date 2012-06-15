@@ -3,11 +3,10 @@
 # $Id$
 
 import unittest
-from zope.publisher.browser import TestRequest
 from zope.interface.verify import verifyObject
 
 from silva.core.interfaces import IPublication
-from Products.Silva.testing import FunctionalLayer
+from Products.Silva.testing import FunctionalLayer, TestRequest
 from Products.Silva.ExtensionService import install_documentation
 
 

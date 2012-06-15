@@ -18,10 +18,18 @@ from zeam.form import silva as silvaforms
 
 
 class MockupVersion(Version):
+    """Test version content.
+
+    (Note: the docstring is required for traversing to work)
+    """
     meta_type = 'Mockup Version'
 
 
 class MockupVersionedContent(VersionedContent):
+    """Test versioned content.
+
+    (Note: the docstring is required for traversing to work)
+    """
     meta_type = 'Mockup VersionedContent'
     grok.implements(IIndexEntries)
     silvaconf.priority(-11)

@@ -11,9 +11,8 @@ from silva.core.interfaces.events import IContentImported
 from zope.component import getAdapter
 from zope.component.eventtesting import clearEvents
 from zope.interface.verify import verifyObject
-from zope.publisher.browser import TestRequest
 
-from Products.Silva.testing import FunctionalLayer, TestCase
+from Products.Silva.testing import FunctionalLayer, TestCase, TestRequest
 from Products.Silva.tests.helpers import open_test_file
 
 
