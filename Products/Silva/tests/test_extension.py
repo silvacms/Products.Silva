@@ -71,7 +71,7 @@ class ExtensionRegistryTestCase(unittest.TestCase):
              'Silva Publication',
              'Silva Root',
              'Silva Simple Member',
-             'Silva TOC Filter Service',
+             'Silva Filtering Service',
              'Mockup Asset',
              'Mockup VersionedContent',
              'Mockup Version'])
