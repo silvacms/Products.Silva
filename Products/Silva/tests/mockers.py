@@ -66,7 +66,7 @@ class MockupEditForm(silvaforms.SMIEditForm):
 class MockupView(silvaviews.View):
     """View mockup a Version.
     """
-    silvaconf.context(MockupVersionedContent)
+    grok.context(MockupVersionedContent)
 
     def render(self):
         return self.content.get_title()
