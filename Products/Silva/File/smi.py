@@ -88,7 +88,13 @@ class FileTextEditForm(silvaforms.SMISubForm):
         silvaforms.EditAction())
 
     def available(self):
-        return self.context.is_text_editable()
+        if self.context.is_text_editable():
+            try:
+                unicode(self.context.get_text())
+                return True
+            except (UnicodeDecodeError, TypeError):
+                return False
+        return False
 
 
 class InfoPortlet(SMIAssetPortlet):
