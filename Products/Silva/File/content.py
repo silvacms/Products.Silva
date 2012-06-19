@@ -41,6 +41,18 @@ CHUNK_SIZE = 1<<16              # 64K
 DEFAULT_MIMETYPE = 'application/octet-stream'
 
 
+def get_file_name(file, default=None):
+    # get name from file object
+    # http://docs.python.org/library/stdtypes.html#file.name
+    if hasattr(file, 'name'):
+        name = file.name
+        if name.startswith('<') and name.endswith('>'):
+            # e.g <fdopen>
+            return default
+        return name
+    return default
+
+
 def manage_addFile(context, identifier, title=None, file=None):
     """Add a File
     """
@@ -273,7 +285,7 @@ class ZODBFile(File):
 
     def _set_file_helper(self, file):
         data, size = self._file._read_data(file)
-        filename = getattr(file, 'filename', self.id)
+        filename = get_file_name(file, default=self.id)
         content_type, content_encoding = getUtility(
             IMimeTypeClassifier).guess_type(
             id=filename,
@@ -313,7 +325,7 @@ class BlobFile(File):
         self._content_type = DEFAULT_MIMETYPE
 
     def _set_content_type(self, file, content_type=None):
-        id  = getattr(file, 'filename', self.id)
+        id = get_file_name(file, default=self.id)
         blob_filename = self._file._p_blob_uncommitted or \
             self._file._p_blob_committed
         self._content_type, self._content_encoding = getUtility(

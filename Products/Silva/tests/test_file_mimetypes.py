@@ -1,5 +1,6 @@
 
 import unittest
+from cStringIO import StringIO
 
 from zope.component import queryUtility
 from zope.interface.verify import verifyObject
@@ -16,11 +17,13 @@ class MimetypeClassifierTestCase(unittest.TestCase):
         self.root = self.layer.get_application()
         self.layer.login('author')
 
-    def create_test_file(self, filename):
+    def create_test_file(self, filename, id=None):
         with helpers.open_test_file(filename) as file_handle:
             factory = self.root.manage_addProduct['Silva']
-            factory.manage_addFile('testfile', 'Test File', file_handle)
-            return self.root.testfile
+            if id is None:
+                id = 'testfile'
+            factory.manage_addFile(id, 'Test File', file_handle)
+            return self.root._getOb(id)
 
     def test_imlementation(self):
         classifier = queryUtility(IMimeTypeClassifier)
@@ -111,6 +114,26 @@ class MimetypeClassifierTestCase(unittest.TestCase):
         guess_filename = queryUtility(IMimeTypeClassifier).guess_filename
         self.assertEqual(guess_filename(test_file, 'files'), 'files.zip')
         self.assertEqual(test_file.get_filename(), 'files.zip')
+
+    def test_id_with_ext(self):
+        file = self.create_test_file('dark_energy.txt', id='test_file.txt')
+        self.assertEquals(file.get_content_type(), 'text/plain; charset=utf-8')
+
+        with helpers.open_test_file('torvald.jpg') as f:
+            file.set_file(f)
+        self.assertEquals(file.get_content_type(), 'image/jpeg')
+
+        with helpers.open_test_file('torvald.jpg') as f:
+            # we replace the file with a StringIO. StringIO doesn't have
+            # a `name` attribute which makes the mimetype guess to use the id
+            # of the Silva File object.
+            io = StringIO(f.read())
+            try:
+                file.set_file(io)
+            finally:
+                io.close()
+
+        self.assertEquals(file.get_content_type(), 'text/plain; charset=utf-8')
 
 
 def test_suite():
