@@ -37,7 +37,18 @@ class CatalogVersioningTestCase(unittest.TestCase):
              ('/root/document/0', 'unapproved')])
 
     def test_approved(self):
+        """If you approve a document it is recatalogued.
+        """
         IPublicationWorkflow(self.root.document).approve(DateTime() + 60)
+        self.assertItemsEqual(
+            self.search('/root/document'),
+            [('/root/document', 'approved'),
+             ('/root/document/0', 'approved')])
+
+    def test_approved_transaction(self):
+        with CatalogTransaction():
+            IPublicationWorkflow(self.root.document).approve(DateTime() + 60)
+
         self.assertItemsEqual(
             self.search('/root/document'),
             [('/root/document', 'approved'),
@@ -226,6 +237,97 @@ class CatalogVersioningTestCase(unittest.TestCase):
         self.assertItemsEqual(
             self.search('/root'),
             [('/root', 'unapproved'),])
+
+    def test_deletion_transaction(self):
+        """Test deleting a document.
+        """
+        with CatalogTransaction():
+            with IContainerManager(self.root).deleter() as deleter:
+                deleter(self.root.document)
+
+        self.assertItemsEqual(
+            self.search('/root'),
+            [('/root', 'unapproved'),])
+
+    def test_add_published_rename_transaction(self):
+        """Test adding a new content, publishing it and moving it.
+        """
+        with CatalogTransaction():
+            factory = self.root.manage_addProduct['Silva']
+            factory.manage_addMockupVersionedContent('info', 'Content')
+            IPublicationWorkflow(self.root.info).publish()
+            with IContainerManager(self.root).renamer() as renamer:
+                self.assertNotEqual(
+                    renamer((self.root.info, 'renamed', 'Renamed content')),
+                    None)
+
+        self.assertItemsEqual(
+            self.search('/root'),
+            [('/root', 'public'),
+             ('/root/renamed', 'public'),
+             ('/root/renamed/0', 'public'),
+             ('/root/document', 'unapproved'),
+             ('/root/document/0', 'unapproved')])
+
+    def test_remove_add_publish_transaction(self):
+        """Test removing a content, adding a new one with the same,
+        publishing it and remove it again.
+        """
+        with CatalogTransaction():
+            with IContainerManager(self.root).deleter() as deleter:
+                deleter(self.root.document)
+
+            factory = self.root.manage_addProduct['Silva']
+            factory.manage_addMockupVersionedContent('document', 'Document')
+            IPublicationWorkflow(self.root.document).publish()
+
+        self.assertItemsEqual(
+            self.search('/root'),
+            [('/root', 'public'),
+             ('/root/document', 'public'),
+             ('/root/document/0', 'public')])
+
+    def test_remove_add_published_remove_transaction(self):
+        """Test removing a content, adding a new one with the same,
+        publishing it and remove it again.
+        """
+        with CatalogTransaction():
+            with IContainerManager(self.root).deleter() as deleter:
+                deleter(self.root.document)
+
+            factory = self.root.manage_addProduct['Silva']
+            factory.manage_addMockupVersionedContent('document', 'Fake')
+            IPublicationWorkflow(self.root.document).publish()
+
+            with IContainerManager(self.root).deleter() as deleter:
+                deleter(self.root.document)
+
+        self.assertItemsEqual(
+            self.search('/root'),
+            [('/root', 'unapproved')])
+
+    def test_add_published_remove_rename_transaction(self):
+        """Test removing a content, adding a new one with the same,
+        publishing it and remove it again.
+        """
+        with CatalogTransaction():
+            factory = self.root.manage_addProduct['Silva']
+            factory.manage_addMockupVersionedContent('temp', 'Temp document')
+            IPublicationWorkflow(self.root.temp).publish()
+
+            with IContainerManager(self.root).deleter() as deleter:
+                deleter(self.root.document)
+
+            with IContainerManager(self.root).renamer() as renamer:
+                self.assertNotEqual(
+                    renamer((self.root.temp, 'document', 'Document')),
+                    None)
+
+        self.assertItemsEqual(
+            self.search('/root'),
+            [('/root', 'public'),
+             ('/root/document', 'public'),
+             ('/root/document/0', 'public')])
 
 
 def test_suite():

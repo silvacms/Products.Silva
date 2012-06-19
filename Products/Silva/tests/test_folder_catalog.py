@@ -32,7 +32,7 @@ class FolderCatalogTestCase(unittest.TestCase):
             [('/root', 'unapproved'),
              ('/root/folder', 'unapproved')])
 
-    def test_public(self):
+    def test_add_public(self):
         """A folder is public in the catalog if it is_published (have
         an index).
         """
@@ -45,7 +45,7 @@ class FolderCatalogTestCase(unittest.TestCase):
              ('/root/folder', 'public'),
              ('/root/folder/index', 'public')])
 
-    def test_public_transaction(self):
+    def test_add_public_transaction(self):
         """A folder is public in the catalog if it is_published (have
         an index) within a transaction.
         """
@@ -145,10 +145,25 @@ class FolderCatalogTestCase(unittest.TestCase):
     def test_deletion_transaction(self):
         """A removed folder is no longer cataloged within a transaction.
         """
-        self.root.manage_delObjects(['folder'])
+        with CatalogTransaction():
+            self.root.manage_delObjects(['folder'])
+
         self.assertItemsEqual(
             self.search(path='/root'),
             [('/root', 'unapproved')])
+
+    def test_add_deletion_translaction(self):
+        """Add an remove a folder The catalog content should not change.
+        """
+        with CatalogTransaction():
+            factory = self.root.folder.manage_addProduct['Silva']
+            factory.manage_addAutoTOC('index', 'Index')
+            self.root.folder.manage_delObjects(['index'])
+
+        self.assertItemsEqual(
+            self.search(path='/root'),
+            [('/root', 'unapproved'),
+             ('/root/folder', 'unapproved')])
 
 
 def test_suite():

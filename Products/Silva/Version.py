@@ -182,21 +182,21 @@ def version_created(version, event):
     if binding is not None:
         binding.setValues('silva-extra', {'creationtime': DateTime()})
 
+    # The parent is indexed by the subscriber in SilvaObject.py
     ICataloging(version).index()
-    ICataloging(version.get_silva_object()).index(with_versions=False)
 
 
 @grok.subscribe(IVersion, IApprovalEvent)
 @grok.subscribe(IVersion, IContentPublishedEvent)
 def version_published(version, event):
-    ICataloging(version).index()
-    ICataloging(version.get_silva_object()).index(with_versions=False)
+    ICataloging(version).reindex()
+    ICataloging(version.get_silva_object()).reindex(with_versions=False)
 
 
 @grok.subscribe(IVersion, IContentClosedEvent)
 def version_closed(version, event):
     ICataloging(version).unindex()
-    ICataloging(version.get_silva_object()).index(with_versions=False)
+    ICataloging(version.get_silva_object()).reindex(with_versions=False)
 
 
 @grok.subscribe(IVersion, IObjectModifiedEvent)
@@ -204,7 +204,7 @@ def version_modified(version, event):
     # This version have been modified
     version.get_silva_object().sec_update_last_author_info()
     ICataloging(version).reindex()
-    ICataloging(version.get_silva_object()).index(with_versions=False)
+    ICataloging(version.get_silva_object()).reindex(with_versions=False)
 
 
 @grok.subscribe(IVersion, IObjectWillBeRemovedEvent)

@@ -219,7 +219,10 @@ def index_and_update_author_modified_content(content, event):
         IContainerModifiedEvent.providedBy(event)):
         return
     content.sec_update_last_author_info()
-    ICataloging(content).index()
+    if IObjectModifiedEvent.providedBy(event):
+        ICataloging(content).reindex()
+    else:
+        ICataloging(content).index()
 
 
 @grok.subscribe(ISilvaObject, IObjectMovedEvent)

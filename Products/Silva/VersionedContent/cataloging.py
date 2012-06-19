@@ -34,10 +34,10 @@ class VersionedContentCataloging(Cataloging):
                 catalog_queue.index(version, indexes)
 
     def reindex(self, indexes=None, with_versions=True):
-        super(VersionedContentCataloging, self).index(indexes=indexes)
+        super(VersionedContentCataloging, self).reindex(indexes=indexes)
         if with_versions:
             for version in self.get_indexable_versions():
-                catalog_queue.index(version, indexes)
+                catalog_queue.reindex(version, indexes)
 
     def unindex(self, with_versions=True):
         if with_versions:
