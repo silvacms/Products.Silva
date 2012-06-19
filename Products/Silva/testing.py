@@ -33,7 +33,8 @@ class CatalogTransaction(object):
 
     def __enter__(self):
         transaction.abort()
-        catalog_queue.activate(transaction.begin())
+        transaction.begin()
+        catalog_queue.activate()
 
     def __exit__(self, t, v, tb):
         if v is None and not transaction.isDoomed():

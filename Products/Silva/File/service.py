@@ -105,13 +105,10 @@ class FileServiceConvert(silvaforms.ZMISubForm):
         parent = self.context.get_publication()
         service = self.context
         upg = upgrade.UpgradeRegistry()
-        upg.registerUpgrader(
-            StorageConverterHelper(parent), '0.1', upgrade.AnyMetaType)
-        upg.registerUpgrader(
-            FileStorageConverter(service), '0.1', 'Silva File')
-        upg.registerUpgrader(
-            ImageStorageConverter(service), '0.1', 'Silva Image')
-        upg.upgradeTree(parent, '0.1')
+        upg.register(StorageConverterHelper(parent), '0.1', upgrade.AnyMetaType)
+        upg.register(FileStorageConverter(service), '0.1', 'Silva File')
+        upg.register(ImageStorageConverter(service), '0.1', 'Silva Image')
+        upg.upgrade_tree(parent, '0.1')
         self.status = _(u'Storage for Silva Files and Images converted. '
                         u'Check the log for more details.')
 
