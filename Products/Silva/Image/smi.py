@@ -144,8 +144,12 @@ class InfoPortlet(SMIAssetPortlet):
                 scaled_dimensions = None
         self.thumbnail = None
         if self.context.thumbnail_image:
-            self.thumbnail = self.context.tag(thumbnail=1)
-        self.original =self.context.url(hires=1)
+            self.thumbnail = self.context.tag(request=self.request,
+                                              preview=True,
+                                              thumbnail=True)
+        self.original = self.context.url(request=self.request,
+                                         preview=True,
+                                         hires=True)
         self.orientation = self.context.get_orientation()
         self.orientation_cls = unicode(self.orientation)
 

@@ -31,7 +31,7 @@ from silva.core import interfaces
 from silva.core.interfaces import IMimeTypeClassifier
 from silva.core.services.interfaces import IFilesService
 from silva.translations import translate as _
-from silva.core.views.interfaces import ISilvaURL, INonCachedLayer
+from silva.core.views.interfaces import IContentURL, INonCachedLayer
 
 try:
     from PIL import Image as PILImage
@@ -304,9 +304,16 @@ class Image(Asset):
                                u"not supported"))
         return image.get_file()
 
+    def _get_raw_image(self, hires=False, thumbnail=False):
+        if hires and self.hires_image is not None:
+            return self.hires_image
+        if thumbnail and self.thumbnail_image is not None:
+            return self.thumbnail_image
+        return self.image
 
     security.declareProtected(SilvaPermissions.View, 'tag')
-    def tag(self, hires=False, thumbnail=False, **extra_attributes):
+    def tag(self, hires=False, thumbnail=False,
+            request=None, preview=False, **extra_attributes):
         """ return xhtml tag
 
         Since 'class' is a Python reserved word, it cannot be passed in
@@ -315,26 +322,45 @@ class Image(Asset):
         will accept a 'css_class' argument that will be converted to
         'class' in the output tag to work around this.
         """
-        image, img_src = self._get_image_and_src(hires, thumbnail)
+        url = self.url(request=request,
+                       preview=preview,
+                       hires=hires,
+                       thumbnail=thumbnail)
+
         title = self.get_title_or_id()
-        width, height = self.get_dimensions(image)
-        named = []
+        image = self._get_raw_image(hires=hires, thumbnail=thumbnail)
+        width, height = (0, 0)
+        if image is not None:
+            width, height = self._get_dimensions_from_image_data(image)
 
         if extra_attributes.has_key('css_class'):
             extra_attributes['class'] = extra_attributes['css_class']
             del extra_attributes['css_class']
 
-        for name, value in extra_attributes.items():
-            named.append('%s="%s"' % (escape(name, 1), escape(value, 1)))
-        named = ' '.join(named)
-        return '<img src="%s" width="%s" height="%s" alt="%s" %s />' % (
-            img_src, width, height, escape(title, 1), named)
+        extra_html_attributes = [
+            '{name}="{value}"'.format(name=escape(name, 1),
+                                      value=escape(value, 1))
+            for name, value in extra_attributes.iteritems()]
+
+        return '<img src="{src}" width="{width}" height="{height}" ' \
+               'alt="{alt}" {extra_attributes} />'.format(
+                    src=url,
+                    width=str(width),
+                    height=str(height),
+                    alt=escape(title, 1),
+                    extra_attributes=" ".join(extra_html_attributes))
 
     security.declareProtected(SilvaPermissions.View, 'url')
-    def url(self, hires=0, thumbnail=0):
+    def url(self, hires=False, thumbnail=False, request=None, preview=False):
         "return url of image"
-        image, img_src = self._get_image_and_src(hires, thumbnail)
-        return img_src
+        request = request or self.REQUEST
+        url = getMultiAdapter(
+            (self, request), IContentURL).url(preview=preview)
+        if hires:
+            url += '?hires'
+        elif thumbnail:
+            url += '?thumbnail'
+        return url
 
     security.declareProtected(SilvaPermissions.View, 'get_web_format')
     def get_web_format(self):
@@ -530,20 +556,6 @@ class Image(Asset):
             new_image.set_content_type(content_type)
         getUtility(IMimeTypeClassifier).guess_filename(new_image, self.getId())
         return new_image
-
-    def _get_image_and_src(self, hires=False, thumbnail=False):
-        request = self.REQUEST
-        absolute_url = getMultiAdapter((self, request), ISilvaURL)
-        img_src = absolute_url.url(preview=INonCachedLayer.providedBy(request))
-        if hires:
-            image = self.hires_image
-            img_src += '?hires'
-        elif thumbnail:
-            image = self.thumbnail_image
-            img_src += '?thumbnail'
-        else:
-            image = self.image
-        return image, img_src
 
     def _image_is_hires(self):
         return (self.image is not None and
