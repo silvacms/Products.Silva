@@ -10,12 +10,20 @@ except ImportError:
 import unittest
 
 from zope.interface.verify import verifyObject
+from zope.component import getUtility
+
 from silva.core import interfaces
+from silva.core.services.interfaces import ICatalogService
 
 from Products.Silva import File
 from Products.Silva.testing import FunctionalLayer, TestCase
-from Products.Silva.testing import assertTriggersEvents
+from Products.Silva.testing import assertTriggersEvents, CatalogTransaction
 from Products.Silva.tests.helpers import open_test_file
+
+
+def search(**query):
+    catalog = getUtility(ICatalogService)
+    return map(lambda b: b.getPath(), catalog(**query))
 
 
 class DefaultImageTestCase(TestCase):
@@ -39,7 +47,7 @@ class DefaultImageTestCase(TestCase):
         factory.manage_addImage('test_image', 'Test Image', image_file)
         image_file.close()
 
-    def test_content(self):
+    def test_image(self):
         """Test image content.
         """
         content = self.root.test_image
@@ -73,7 +81,7 @@ class DefaultImageTestCase(TestCase):
         self.assertEquals((960, 1280), pil_image.size)
         self.assertEquals('JPEG', pil_image.format)
 
-    def test_rename_content(self):
+    def test_rename_image(self):
         """Move an image and check that the filename is updated correctly.
         """
         content = getattr(self.root, 'test_image')
@@ -83,7 +91,7 @@ class DefaultImageTestCase(TestCase):
         content = getattr(self.root, 'new_image.gif')
         self.assertEquals(content.get_filename(), 'new_image.tiff')
 
-    def test_copy_paste_content(self):
+    def test_copy_paste_image(self):
         """Cut and paste an image. Check the filename is updated.
         """
         token = self.root.manage_copyObjects(['test_image'])
@@ -94,6 +102,37 @@ class DefaultImageTestCase(TestCase):
         self.assertEquals(
             copy_of_content.get_filename(),
             'copy_of_test_image.tiff')
+
+    def test_catalog(self):
+        """Verify that the image is properly catalogued.
+        """
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addFolder('folder', 'Folder')
+
+        with open_test_file('photo.tiff') as image_file:
+            factory = self.root.manage_addProduct['Silva']
+            factory.manage_addImage('image', 'Test Image', image_file)
+
+        # Test that the image is catalogued.
+        self.assertItemsEqual(
+            search(path='/root/folder'),
+            ['/root/document/0'])
+
+    def test_catalog_transaction(self):
+        """Verify that the image is properly catalogued.
+        """
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addFolder('folder', 'Folder')
+
+        with CatalogTransaction():
+            with open_test_file('photo.tiff') as image_file:
+                factory = self.root.manage_addProduct['Silva']
+                factory.manage_addImage('image', 'Test Image', image_file)
+
+        # Test that the image is catalogued.
+        self.assertItemsEqual(
+            search(path='/root/folder'),
+            ['/root/document/0'])
 
     def test_asset_data(self):
         """Test AssetData adapter.
