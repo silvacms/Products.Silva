@@ -350,7 +350,9 @@ class BlobFile(File):
         finally:
             desc.close()
         self._set_content_type(file, DEFAULT_MIMETYPE)
-        notify(ObjectModifiedEvent(self))
+        if not interfaces.IImage.providedBy(aq_parent(self)):
+            # If we are not a storage of an image, trigger an event.
+            notify(ObjectModifiedEvent(self))
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'set_text')
@@ -358,7 +360,9 @@ class BlobFile(File):
         desc = self._file.open('w')
         desc.write(filestr)
         desc.close()
-        notify(ObjectModifiedEvent(self))
+        if not interfaces.IImage.providedBy(aq_parent(self)):
+            # If we are not a storage of an image, trigger an event.
+            notify(ObjectModifiedEvent(self))
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'set_content_type')

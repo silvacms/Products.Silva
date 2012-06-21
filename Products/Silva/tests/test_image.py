@@ -109,30 +109,33 @@ class DefaultImageTestCase(TestCase):
         factory = self.root.manage_addProduct['Silva']
         factory.manage_addFolder('folder', 'Folder')
 
-        with open_test_file('photo.tiff') as image_file:
-            factory = self.root.manage_addProduct['Silva']
+        with open_test_file('photo.tif') as image_file:
+            factory = self.root.folder.manage_addProduct['Silva']
             factory.manage_addImage('image', 'Test Image', image_file)
 
-        # Test that the image is catalogued.
+        # Test that the image is catalogued (and not the sub-files)
         self.assertItemsEqual(
             search(path='/root/folder'),
-            ['/root/document/0'])
+            ['/root/folder',
+             '/root/folder/image'])
 
     def test_catalog_transaction(self):
         """Verify that the image is properly catalogued.
         """
-        factory = self.root.manage_addProduct['Silva']
-        factory.manage_addFolder('folder', 'Folder')
+        with CatalogTransaction():
+            factory = self.root.manage_addProduct['Silva']
+            factory.manage_addFolder('folder', 'Folder')
 
         with CatalogTransaction():
-            with open_test_file('photo.tiff') as image_file:
-                factory = self.root.manage_addProduct['Silva']
+            with open_test_file('photo.tif') as image_file:
+                factory = self.root.folder.manage_addProduct['Silva']
                 factory.manage_addImage('image', 'Test Image', image_file)
 
-        # Test that the image is catalogued.
+        # Test that the image is catalogued (and not the sub-files)
         self.assertItemsEqual(
             search(path='/root/folder'),
-            ['/root/document/0'])
+            ['/root/folder',
+             '/root/folder/image'])
 
     def test_asset_data(self):
         """Test AssetData adapter.
