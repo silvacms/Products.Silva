@@ -181,8 +181,9 @@ def version_created(version, event):
     binding = service.getMetadata(version)
     if binding is not None:
         binding.setValues('silva-extra', {'creationtime': DateTime()})
-
-    # The parent is indexed by the subscriber in SilvaObject.py
+    content = version.get_silva_object()
+    content.sec_update_last_author_info()
+    ICataloging(content).index(with_versions=False)
     ICataloging(version).index()
 
 

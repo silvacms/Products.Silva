@@ -232,12 +232,13 @@ def manage_addRoot(self, id, title, REQUEST=None):
     if not isinstance(title, unicode):
         title = unicode(title, 'latin1')
     id = str(id)
-    root = Root(id)
     container = self.Destination()
 
     # We suppress events are no local utility is present event
     # handlers all fails.
-    container._setObject(id, root, suppress_events=True)
+    root = Root(id)
+    setattr(root, '__initialization__', True)
+    container._setObject(id, root)
     root = container._getOb(id)
     # This root is the new local site where all local utilities (Silva
     # services) will be installed.
@@ -248,12 +249,9 @@ def manage_addRoot(self, id, title, REQUEST=None):
         notify(InstallRootServicesEvent(root))
         notify(InstallRootEvent(root))
 
-        # Now every is ready, we trigger the events we previously
-        # suppressed.
-        notify(ObjectAddedEvent(root, container, id))
-        notify(ObjectCreatedEvent(root))
-
         root.set_title(title)
+        delattr(root, '__initialization__')
+        notify(ObjectCreatedEvent(root))
 
         if REQUEST is not None:
             add_and_edit(self, id, REQUEST)

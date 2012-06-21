@@ -194,41 +194,37 @@ def content_created(content, event):
         IVersionedContent.providedBy(content)):
         return
 
+    ICataloging(content).index()
     service = getUtility(IMetadataService)
     binding = service.getMetadata(content)
     if binding is not None:
         binding.setValues('silva-extra', {'creationtime': DateTime()})
-    ICataloging(content).index()
+    content.sec_update_last_author_info()
 
 
-@grok.subscribe(ISilvaObject, IObjectCreatedEvent)
-@grok.subscribe(ISilvaObject, IObjectClonedEvent)
 @grok.subscribe(ISilvaObject, IObjectModifiedEvent)
 def index_and_update_author_modified_content(content, event):
     """A content have been created of modifed. Update its author
     information.
     """
-    # ObjectCopiedEvent should not be ignored but content is not in
-    # Zope tree when it is triggered, so metadata service doesn't
-    # work. We use IObjectClonedEvent instead.
-    if IObjectCopiedEvent.providedBy(event):
-        return
     # In the same way, we discard event on versioned content if they
     # are about adding or removing a version.
     if (IVersionedContent.providedBy(content) and
         IContainerModifiedEvent.providedBy(event)):
         return
+    if getattr(content, '__initialization__', False):
+        return
     content.sec_update_last_author_info()
-    if IObjectModifiedEvent.providedBy(event):
-        ICataloging(content).reindex()
-    else:
-        ICataloging(content).index()
+    ICataloging(content).reindex()
 
 
 @grok.subscribe(ISilvaObject, IObjectMovedEvent)
 def index_moved_content(content, event):
     """We index all added content (due to a move).
     """
+    if getattr(content, '__initialization__', False):
+        return
+
     if (not IObjectAddedEvent.providedBy(event) and
         not IObjectRemovedEvent.providedBy(event)):
         ICataloging(content).index()
