@@ -14,7 +14,6 @@ from five import grok
 from zope.component import getMultiAdapter, getUtility
 from zope.event import notify
 from zope.lifecycleevent import ObjectCreatedEvent
-from zope.lifecycleevent import ObjectModifiedEvent
 from zope.lifecycleevent.interfaces import IObjectMovedEvent
 
 # Zope 2
@@ -158,13 +157,13 @@ class Rect(object):
 class Transformation(object):
 
     def validate(self):
-        """ Raise ValueError
+        """Raise ValueError on failure.
         """
         pass
 
     def __call__(self, image):
-        """ Apply transformation on image and return wether
-        it modified it or not.
+        """Apply transformation on image and return new image
+        if modified else False.
         """
         return False
 
