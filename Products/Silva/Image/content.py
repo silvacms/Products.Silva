@@ -120,12 +120,6 @@ class Size(SizeBase):
     def __gte__(self, other):
         return self.surface >= other.surface
 
-    def __eq__(self, other):
-        return self.width == other.width and self.height == other.height
-
-    def __ne__(self, other):
-        return not self.__eq__(other)
-
 
 class Rect(object):
 
@@ -197,7 +191,8 @@ class Crop(Transformation):
                    self.rect.lower_edge.y,
                    self.rect.higher_edge.x,
                    self.rect.higher_edge.y)
-        return image.crop(cropbox)
+        image.crop(cropbox)
+        return image
 
 
 class Resize(Transformation):
@@ -211,8 +206,7 @@ class Resize(Transformation):
         if size == image_size:
             return False
 
-        image.resize((size.width, size.height), PILImage.ANTIALIAS)
-        return True
+        return image.resize((size.width, size.height), PILImage.ANTIALIAS)
 
 
 class WebFormat(Transformation):
@@ -223,7 +217,7 @@ class WebFormat(Transformation):
     def __call__(self, image):
         if self.format == Format.JPEG and image.mode != 'RGB':
             image.convert("RGB")
-            return True
+            return image
         return False
 
 
@@ -242,13 +236,19 @@ class Transformer(object):
     def append(self, transform):
         self.transformations.append(transform)
 
-    def transform(self, image, output_format):
+    def transform(self, image, output_format, changed_on_format=False):
         pil_image = PILImageFactory(image)
         changed = False
         for transformation in self.transformations:
-            changed = changed or transformation(pil_image)
-        
-        return save_image(pil_image, output_format)
+            new_image = transformation(pil_image)
+            if new_image:
+                changed = True
+                pil_image = new_image
+
+        if changed or (changed_on_format and
+                       pil_image.format != output_format):
+            return save_image(pil_image, output_format)
+        return None
 
 
 class ThumbnailResize(object):
@@ -259,7 +259,7 @@ class ThumbnailResize(object):
     def __call__(self, image):
         image.thumbnail((self.size.width, self.size.height),
                         PILImage.ANTIALIAS)
-        return True
+        return image
 
 
 class PercentResizeSpec(object):
@@ -446,10 +446,14 @@ class Image(Asset):
         elif not hires and webformat:
             image = self.image
         elif hires and webformat:
-            transformer = Transformer(webformat(self.web_format))
+            transformer = Transformer(WebFormat(self.web_format))
             image_data = transformer.transform(self.hires_image,
-                                               self.web_format)
-            return image_data.getvalue()
+                                               self.web_format,
+                                               changed_on_format=True)
+            if image_data:
+                return image_data.getvalue()
+            else:
+                image = self.hires_image
         elif not hires and not webformat:
             raise ValueError(_(u"Low resolution image in original format is "
                                u"not supported"))
@@ -670,7 +674,7 @@ class Image(Asset):
                 transformer.append(Crop(crop_rect))
 
             if self.web_scale != '100%':
-                spec = WHResizeSpec(self.web_scale)
+                spec = WHResizeSpec.parse(self.web_scale)
                 if spec is None:
                     spec = PercentResizeSpec.parse(self.web_scale)
                 if spec is not None:
@@ -679,8 +683,11 @@ class Image(Asset):
             transformer.append(WebFormat(self.web_format))
             image_io = transformer.transform(self.hires_image,
                                              self.web_format)
-            ct = self._web2ct[self.web_format]
-            self._image_factory('image', image_io, ct)
+            if image_io:
+                ct = self._web2ct[self.web_format]
+                self._image_factory('image', image_io, ct)
+            else:
+                self.image = self.hires_image
         except ValueError, e:
             logger.info("Web presentation creation failed for %s with %s" %
                         ('/'.join(self.getPhysicalPath()), str(e)))
@@ -701,8 +708,9 @@ class Image(Asset):
                                       WebFormat(self.web_format))
             thumb = transformer.transform(self.image or self.hires_image,
                                           self.web_format)
-            ct = self._web2ct[self.web_format]
-            self._image_factory('thumbnail_image', thumb, ct)
+            if thumb:
+                ct = self._web2ct[self.web_format]
+                self._image_factory('thumbnail_image', thumb, ct)
         except IOError, e:
             logger.info("Thumbnail creation failed for %s with %s" %
                         ('/'.join(self.getPhysicalPath()), str(e)))

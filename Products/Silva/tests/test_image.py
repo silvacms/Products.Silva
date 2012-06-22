@@ -65,10 +65,11 @@ class DefaultImageTestCase(TestCase):
         self.assertEquals(content.get_dimensions(), (960, 1280))
         self.assertEquals(str(content.get_orientation()), "portrait")
         content.set_web_presentation_properties('JPEG', '100x100', '')
-        self.assertRaises(ValueError, content.get_image, hires=0, webformat=0)
+        self.assertRaises(ValueError, content.get_image,
+                          hires=False, webformat=False)
         self.assertTrue(content.tag() is not None)
 
-        data = StringIO(content.get_image(hires=True, webformat=True))
+        data = StringIO(content.get_image(hires=False, webformat=True))
         pil_image = PILImage.open(data)
         self.assertEquals((100, 100), pil_image.size)
         self.assertEquals('JPEG', pil_image.format)
