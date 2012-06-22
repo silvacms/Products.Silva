@@ -9,7 +9,6 @@ from zope.interface import Interface
 
 from silva.core.views import views as silvaviews
 from silva.core.views.traverser import SilvaPublishTraverse
-from silva.core.views.interfaces import IPreviewLayer
 from silva.core.interfaces import IImage
 
 
@@ -29,7 +28,7 @@ class DefaultImageView(silvaviews.View):
     def render(self):
         return self.content.tag(request=self.request,
                                 hires=self.hires,
-                                preview=IPreviewLayer.providedBy(self.request),
+                                preview=self.is_preview(),
                                 thumbnail=self.thumbnail)
 
 

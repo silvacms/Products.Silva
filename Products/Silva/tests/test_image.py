@@ -68,15 +68,15 @@ class DefaultImageTestCase(TestCase):
         self.assertRaises(ValueError, content.get_image, hires=0, webformat=0)
         self.assertTrue(content.tag() is not None)
 
-        data = StringIO(content.get_image(hires=0, webformat=1))
+        data = StringIO(content.get_image(hires=True, webformat=True))
         pil_image = PILImage.open(data)
         self.assertEquals((100, 100), pil_image.size)
         self.assertEquals('JPEG', pil_image.format)
 
-        data = content.get_image(hires=1, webformat=0)
+        data = content.get_image(hires=True, webformat=False)
         self.assertEquals(self.image_data, data)
 
-        data = StringIO(content.get_image(hires=1, webformat=1))
+        data = StringIO(content.get_image(hires=True, webformat=True))
         pil_image = PILImage.open(data)
         self.assertEquals((960, 1280), pil_image.size)
         self.assertEquals('JPEG', pil_image.format)

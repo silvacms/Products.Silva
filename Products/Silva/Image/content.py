@@ -53,7 +53,8 @@ def validate_image(file):
     except IOError, error:
         raise ValueError(error.args[-1].capitalize())
     # Come back at the begining..
-    file.seek(0)
+    finally:
+        file.seek(0)
 
 
 def manage_addImage(context, identifier, title=None, file=None):
@@ -84,6 +85,267 @@ def manage_addImage(context, identifier, title=None, file=None):
     return content
 
 
+from collections import namedtuple
+
+Point = namedtuple('Point', ('x', 'y'))
+SizeBase = namedtuple('SizeBase', ('width', 'height'))
+
+
+class Format(object):
+
+    JPEG = 'JPEG'
+    PNG = 'PNG'
+    GIF = 'GIF'
+
+
+class Size(SizeBase):
+
+    @classmethod
+    def from_points(cls, p1, p2):
+        return cls(abs(p1.x - p2.x), abs(p1.y - p2.y))
+
+    @property
+    def surface(self):
+        return self.width * self.height
+
+    def __lt__(self, other):
+        return self.surface < other.surface
+
+    def __lte__(self, other):
+        return self.surface <= other.surface
+
+    def __gt__(self, other):
+        return self.surface > other.surface
+
+    def __gte__(self, other):
+        return self.surface >= other.surface
+
+    def __eq__(self, other):
+        return self.width == other.width and self.height == other.height
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
+
+
+class Rect(object):
+
+    _STR_RE = re.compile(r'^(?P<x1>[0-9]+)[Xx](?P<y1>[0-9]+)-(?P<x2>[0-9]+)[Xx](?P<y2>[0-9]+)')
+
+    @classmethod
+    def parse(cls, string):
+        match = cls._STR_RE.match(string)
+        if match:
+            p1 = Point(int(match.group('x1')), int(match.group('y1')))
+            p2 = Point(int(match.group('x2')), int(match.group('y2')))
+            return cls.from_points(p1, p2)
+        return None
+
+    @classmethod
+    def from_points(cls, p1, p2):
+        lower_vertex = Point(min(p1.x, p2.x), min(p1.y, p2.y))
+        higher_vertex = Point(max(p1.x, p2.x), max(p1.y, p2.y))
+        return cls(lower_vertex, Size.from_points(lower_vertex, higher_vertex))
+
+    def __init__(self, lower_edge, size):
+        self.size = size
+        self.lower_edge = lower_edge
+
+    def to_string(self):
+        higher_edge = self.higher_edge
+        return "%dx%d-%dx%d" % (self.lower_edge.x, self.lower_edge.y,
+                               higher_edge.x, higher_edge.y)
+
+    @property
+    def higher_edge(self):
+        return Point(self.lower_edge.x + self.size.width,
+                     self.lower_edge.y + self.size.height)
+
+
+class Transformation(object):
+
+    def validate(self):
+        """ Raise ValueError
+        """
+        pass
+
+    def __call__(self, image):
+        """ Apply transformation on image and return wether
+        it modified it or not.
+        """
+        return False
+
+
+def image_rect(image):
+    x1, y1, x2, y2 = image.getbbox()
+    return Rect.from_points(Point(x1, y1), Point(x2, y2))
+
+
+class Crop(Transformation):
+
+    def __init__(self, rect):
+        self.rect = rect        
+
+    def validate(self, image):
+        rect = image_rect(image)
+        if rect.size < self.rect.size:
+            msg = _("'${crop}' defines an impossible cropping for the current image",
+                    mapping={'crop': self.rect.to_string()})
+            raise ValueError(msg)
+
+    def __call__(self, image):
+        cropbox = (self.rect.lower_edge.x,
+                   self.rect.lower_edge.y,
+                   self.rect.higher_edge.x,
+                   self.rect.higher_edge.y)
+        return image.crop(cropbox)
+
+
+class Resize(Transformation):
+
+    def __init__(self, spec):
+        self.spec = spec
+
+    def __call__(self, image):
+        image_size = Size(*image.size)
+        size = self.spec.get_size(image)
+        if size == image_size:
+            return False
+
+        image.resize((size.width, size.height), PILImage.ANTIALIAS)
+        return True
+
+
+class WebFormat(Transformation):
+
+    def __init__(self, format):
+        self.format = format
+
+    def __call__(self, image):
+        if self.format == Format.JPEG and image.mode != 'RGB':
+            image.convert("RGB")
+            return True
+        return False
+
+
+def save_image(image, format):
+    data = StringIO()    
+    image.save(data, format)
+    data.seek(0)
+    return data
+
+
+class Transformer(object):
+
+    def __init__(self, *transformations):
+        self.transformations = list(transformations)
+
+    def append(self, transform):
+        self.transformations.append(transform)
+
+    def transform(self, image, output_format):
+        pil_image = PILImageFactory(image)
+        changed = False
+        for transformation in self.transformations:
+            changed = changed or transformation(pil_image)
+        
+        return save_image(pil_image, output_format)
+
+
+class ThumbnailResize(object):
+
+    def __init__(self, size):
+        self.size = size
+
+    def __call__(self, image):
+        image.thumbnail((self.size.width, self.size.height),
+                        PILImage.ANTIALIAS)
+        return True
+
+
+class PercentResizeSpec(object):
+
+    re_percentage = re.compile(r'^([0-9\.]+)\%$')
+
+    @classmethod
+    def parse(cls, string):
+        match = cls.re_percentage.match(string)
+        if match:
+            try:
+                return cls(float(match.group(1)))
+            except (TypeError, ValueError):
+                return None
+        return None
+
+    def __init__(self, percent):
+        self.percent = percent
+
+    def __eq__(self, other):
+        if isinstance(other, PercentResizeSpec):
+            return self.percent == other.percent
+        return False
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
+
+    def get_size(self, image):
+        width, height = image.size
+        return Size(int(width * self.percent / 100),
+                    int(height * self.percent / 100))
+
+
+class WHResizeSpec(object):
+    
+    re_WidthXHeight = re.compile(r'^([0-9]+|\*)[Xx]([0-9\*]+|\*)$')
+
+    @classmethod
+    def parse(cls, string):
+        match = cls.re_WidthXHeight.match(string)
+        width, height = (0, 0)
+        if match:
+            width = match.group(1)
+            if width != '*':
+                width = int(width)
+            height = match.group(2)
+            if height != '*':
+                height = int(height)
+            if '*' == width == height:
+                return None
+            return cls(width, height)
+        return None
+
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+
+    def __eq__(self, other):
+        if isinstance(other, WHResizeSpec):
+            return (self.width, self.height) == (other.width, other.height)
+        return False
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
+
+    def get_size(self, image):
+        image_width, image_height = image.size
+        width, height = (self.width, self.height)
+        if width == '*':
+            width = image_width
+        if height == '*':
+            height = image_height
+        return Size(width, height)
+
+
+def PILImageFactory(img):
+    if img is None:
+        raise ValueError("can't open None (PILImage)")
+    image_reference = img.get_file_fd()
+    try:
+        image = PILImage.open(image_reference)
+    except IOError, error:
+        raise ValueError(error.args[-1].capitalize())
+    return image
+
+
 class Image(Asset):
     __doc__ = _("""Web graphics (gif, jpg, png) can be uploaded and inserted in
        documents, or used as viewable assets.
@@ -98,20 +360,20 @@ class Image(Asset):
     re_percentage = re.compile(r'^([0-9\.]+)\%$')
     re_box = re.compile(r'^([0-9]+)[Xx]([0-9]+)-([0-9]+)[Xx]([0-9]+)')
 
-    thumbnail_size = 120
+    thumbnail_size = Size(120, 120)
 
     image = None
     hires_image = None
     thumbnail_image = None
     web_scale = '100%'
     web_crop = ''
-    web_format = 'JPEG'
-    web_formats = ('JPEG', 'GIF', 'PNG',)
+    web_format = Format.JPEG
+    web_formats = (Format.JPEG, Format.GIF, Format.PNG)
 
     _web2ct = {
-        'JPEG': 'image/jpeg',
-        'GIF': 'image/gif',
-        'PNG': 'image/png',
+        Format.JPEG: 'image/jpeg',
+        Format.GIF: 'image/gif',
+        Format.PNG: 'image/png',
     }
 
     silvaconf.priority(-3)
@@ -132,30 +394,29 @@ class Image(Asset):
 
         Automaticaly updates cached web presentation image.
         """
-        update_cache = 0
+        update_cache = False
         if self.hires_image is None:
-            update_cache = 1
+            update_cache = True
             self.hires_image = self.image
             self.image = None
         if web_format != 'unknown':
             if self.web_format != web_format and \
                     web_format in self.web_formats:
                 self.web_format = web_format
-                update_cache = 1
+                update_cache = True
         # check if web_scale can be parsed:
         self.get_canonical_web_scale(web_scale)
         if self.web_scale != web_scale:
-            update_cache = 1
+            update_cache = True
             self.web_scale = web_scale
         # check if web_crop can be parsed:
         self.get_crop_box(web_crop)
         if self.web_crop != web_crop:
-            update_cache = 1
+            update_cache = True
             # if web_crop is None it should be replaced by an empty string
             self.web_crop = web_crop and web_crop or ''
         if self.hires_image is not None and update_cache:
-            self._createDerivedImages()
-        notify(ObjectModifiedEvent(self))
+            self._create_derived_images()
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'set_image')
@@ -171,11 +432,28 @@ class Image(Asset):
             self.web_format = format
         self.web_scale = '100%'
         self.web_crop = ''
-        self._createDerivedImages()
-        notify(ObjectModifiedEvent(self))
+        self._create_derived_images()
 
         # XXX Should be on event
         self.update_quota()
+
+    security.declareProtected(SilvaPermissions.View, 'get_image')
+    def get_image(self, hires=True, webformat=False):
+        """Return image data.
+        """
+        if hires and not webformat:
+            image = self.hires_image
+        elif not hires and webformat:
+            image = self.image
+        elif hires and webformat:
+            transformer = Transformer(webformat(self.web_format))
+            image_data = transformer.transform(self.hires_image,
+                                               self.web_format)
+            return image_data.getvalue()
+        elif not hires and not webformat:
+            raise ValueError(_(u"Low resolution image in original format is "
+                               u"not supported"))
+        return image.get_file()
 
     security.declareProtected(SilvaPermissions.View, 'get_canonical_web_scale')
     def get_canonical_web_scale(self, scale=None):
@@ -190,11 +468,9 @@ class Image(Asset):
                         "Probably a percent symbol is missing.",
                         mapping={'scale': scale})
                 raise ValueError(msg)
-            cropbox = self.get_crop_box()
+            cropbox = Rect.parse(self.web_crop)
             if cropbox:
-                x1, y1, x2, y2 = cropbox
-                width = x2 - x1
-                height = y2 - y1
+                width, height = cropbox.size
             else:
                 width, height = self.get_dimensions()
             percentage = float(m.group(1))/100.0
@@ -217,99 +493,51 @@ class Image(Asset):
                 height = img_h * width / img_w
             else:
                 width = int(width)
-                height = int(height)
-        return width, height
 
     security.declareProtected(SilvaPermissions.View, 'get_crop_box')
     def get_crop_box(self, crop=None):
         """return crop box"""
-        if crop is None:
-            crop = self.web_crop
+        crop = crop or self.web_crop
         if crop is None or crop.strip() == '':
             return None
-        m = self.re_box.match(crop)
-        if m is None:
+        rect = Rect.parse(crop)
+        if rect is None:
             msg = _("'${crop} is not a valid crop identifier",
                     mapping={'crop': crop})
             raise ValueError(msg)
-        x1 = int(m.group(1))
-        y1 = int(m.group(2))
-        x2 = int(m.group(3))
-        y2 = int(m.group(4))
-        if x1 > x2 and y1 > y2:
-            s = x1
-            x1 = x2
-            x2 = s
-            s = y1
-            y1 = y2
-            y2 = s
-        image = self._getPILImage(self.hires_image)
-        bbox = image.getbbox()
-        if x1 < bbox[0]:
-            x1 = bbox[0]
-        if y1 < bbox[1]:
-            y1 = bbox[1]
-        if x2 > bbox[2]:
-            x2 = bbox[2]
-        if y2 > bbox[3]:
-            y2 = bbox[3]
-        if x1 >= x2 or y1 >= y2:
-            msg = _("'${crop}' defines an impossible cropping for the current image",
-                    mapping={'crop': crop})
-            raise ValueError(msg)
-        return (x1, y1, x2, y2)
+        image = PILImageFactory(self.hires_image)
+        Crop(rect).validate(image)
+        return (rect.lower_edge.x, rect.lower_edge.y,
+                rect.higher_edge.x, rect.higher_edge.y)
 
     security.declareProtected(SilvaPermissions.View, 'get_dimensions')
-    def get_dimensions(self, img=None):
+    def get_dimensions(self, thumbnail=False, hires=False):
         """Returns width, heigt of (hi res) image.
 
         Raises ValueError if there is no way of determining the dimenstions,
         Return 0, 0 if there is no image,
         Returns width, height otherwise.
         """
-        if img is None:
+        img = None
+        if thumbnail:
+            img = self.thumbnail_image
+        elif hires:
             img = self.hires_image
-        if img is None:
+        else:
             img = self.image
+
         if img is None:
             return (0, 0)
         try:
-            width, height = self._get_dimensions_from_image_data(img)
-        except TypeError:
-            return (0, 0)
-        return width, height
+            return Size(*PILImageFactory(img).size)
+        except (ValueError, TypeError):
+            return Size(0, 0)
 
     security.declareProtected(SilvaPermissions.View, 'get_format')
     def get_format(self):
         """Returns image format.
         """
-        return self._getPILImage(self.hires_image).format
-
-    security.declareProtected(SilvaPermissions.View, 'get_image')
-    def get_image(self, hires=1, webformat=0):
-        """Return image data.
-        """
-        if hires and not webformat:
-            image = self.hires_image
-        elif not hires and webformat:
-            image = self.image
-        elif hires and webformat:
-            pil_image = self._getPILImage(self.hires_image)
-            have_changed, pil_image = self._prepareWebFormat(pil_image)
-            image_data = StringIO()
-            pil_image.save(image_data, self.web_format)
-            return image_data.getvalue()
-        elif not hires and not webformat:
-            raise ValueError(_(u"Low resolution image in original format is "
-                               u"not supported"))
-        return image.get_file()
-
-    def _get_raw_image(self, hires=False, thumbnail=False):
-        if hires and self.hires_image is not None:
-            return self.hires_image
-        if thumbnail and self.thumbnail_image is not None:
-            return self.thumbnail_image
-        return self.image
+        return PILImageFactory(self.hires_image).format
 
     security.declareProtected(SilvaPermissions.View, 'tag')
     def tag(self, hires=False, thumbnail=False,
@@ -328,11 +556,7 @@ class Image(Asset):
                        thumbnail=thumbnail)
 
         title = self.get_title_or_id()
-        image = self._get_raw_image(hires=hires, thumbnail=thumbnail)
-        width, height = (0, 0)
-        if image is not None:
-            width, height = self._get_dimensions_from_image_data(image)
-
+        width, height = self.get_dimensions(thumbnail=thumbnail, hires=hires)
         if extra_attributes.has_key('css_class'):
             extra_attributes['class'] = extra_attributes['css_class']
             del extra_attributes['css_class']
@@ -367,7 +591,7 @@ class Image(Asset):
         """Return file format of web presentation image
         """
         try:
-            return self._getPILImage(self.image).format
+            return PILImageFactory(self.image).format
         except (ValueError, TypeError):
             # XXX i18n - should we translate this?
             return 'unknown'
@@ -432,62 +656,36 @@ class Image(Asset):
     ##########
     ## private
 
-    def _getPILImage(self, img):
-        """return PIL of an image
+    def _create_derived_images(self):
+        self._create_web_presentation()
+        self._create_thumbnail()
 
-            raise ValueError if no PIL is available
-            raise ValueError if image could not be identified
-        """
-        if img is None:
-            img = self.image
-            if img is None:
-                img = self.hires_image
-                if img is None:
-                    raise ValueError(u"Image missing.")
-        image_reference = img.get_file_fd()
+    def _create_web_presentation(self):
         try:
-            image = PILImage.open(image_reference)
-        except IOError, error:
-            raise ValueError(error.args[-1].capitalize())
-        return image
+            transformer = Transformer()
+            cropbox = self.get_crop_box()
+            if cropbox is not None:
+                crop_rect = Rect.from_points(Point(cropbox[0], cropbox[1]),
+                                             Point(cropbox[2], cropbox[3]))
+                transformer.append(Crop(crop_rect))
 
+            if self.web_scale != '100%':
+                spec = WHResizeSpec(self.web_scale)
+                if spec is None:
+                    spec = PercentResizeSpec.parse(self.web_scale)
+                if spec is not None:
+                    transformer.append(Resize(spec))
 
-    def _createDerivedImages(self):
-        self._createWebPresentation()
-        self._createThumbnail()
-
-
-    def _createWebPresentation(self):
-        try:
-            image = self._getPILImage(self.hires_image)
+            transformer.append(WebFormat(self.web_format))
+            image_io = transformer.transform(self.hires_image,
+                                             self.web_format)
+            ct = self._web2ct[self.web_format]
+            self._image_factory('image', image_io, ct)
         except ValueError, e:
             logger.info("Web presentation creation failed for %s with %s" %
                         ('/'.join(self.getPhysicalPath()), str(e)))
             self.image = self.hires_image
             return
-
-        changed = False
-        cropbox = self.get_crop_box()
-        if cropbox:
-            image = image.crop(cropbox)
-            changed = True
-
-        if self.web_scale != '100%':
-            width, height = self.get_canonical_web_scale()
-            image = image.resize((width, height), PILImage.ANTIALIAS)
-            changed = True
-
-        have_changed, image = self._prepareWebFormat(image)
-        if have_changed:
-            changed = True
-
-        if not changed:
-            self.image = self.hires_image
-            return
-
-        new_image_data = StringIO()
-        try:
-            image.save(new_image_data, self.web_format)
         except IOError, e:
             logger.info("Web presentation creation failed for %s with %s" %
                         ('/'.join(self.getPhysicalPath()), str(e)))
@@ -497,24 +695,14 @@ class Image(Asset):
             else:
                 raise ValueError(str(e))
 
-        ct = self._web2ct[self.web_format]
-        new_image_data.seek(0)
-        self._image_factory('image', new_image_data, ct)
-
-    def _createThumbnail(self):
+    def _create_thumbnail(self):
         try:
-            image = self._getPILImage(self.image)
-        except ValueError, e:
-            logger.info("Thumbnail creation failed for %s with %s" %
-                        ('/'.join(self.getPhysicalPath()), str(e)))
-            # no thumbnail
-            self.thumbnail_image = None
-            return
-
-        try:
-            thumb = image.copy()
-            ts = self.thumbnail_size
-            thumb.thumbnail((ts, ts), PILImage.ANTIALIAS)
+            transformer = Transformer(ThumbnailResize(self.thumbnail_size),
+                                      WebFormat(self.web_format))
+            thumb = transformer.transform(self.image or self.hires_image,
+                                          self.web_format)
+            ct = self._web2ct[self.web_format]
+            self._image_factory('thumbnail_image', thumb, ct)
         except IOError, e:
             logger.info("Thumbnail creation failed for %s with %s" %
                         ('/'.join(self.getPhysicalPath()), str(e)))
@@ -523,28 +711,12 @@ class Image(Asset):
                 return
             else:
                 raise ValueError(str(e))
-
-        changed, thumb = self._prepareWebFormat(thumb)
-        thumb_data = StringIO()
-        try:
-            thumb.save(thumb_data, self.web_format)
-        except:
-            # Some images can not be saved as thumbnail. Bug in PIL.
+        except ValueError, e:
+            logger.info("Thumbnail creation failed for %s with %s" %
+                        ('/'.join(self.getPhysicalPath()), str(e)))
+            # no thumbnail
             self.thumbnail_image = None
             return
-
-        ct = self._web2ct[self.web_format]
-        thumb_data.seek(0)
-        self._image_factory('thumbnail_image', thumb_data, ct)
-
-    def _prepareWebFormat(self, image):
-        """Converts image's mode if necessary. Return True on change,
-        False if nothing is done.
-        """
-
-        if image.mode != 'RGB' and self.web_format == 'JPEG':
-            return True, image.convert("RGB")
-        return False, image
 
     def _image_factory(self, image_id, image_file, content_type=None):
         service_files = getUtility(IFilesService)
@@ -561,12 +733,6 @@ class Image(Asset):
         return (self.image is not None and
                 self.image.aq_base is self.hires_image.aq_base)
 
-    def _get_dimensions_from_image_data(self, img):
-        """return width, heigth computed from image's data
-
-            raises ValueError if the dimensions could not be determined
-        """
-        return self._getPILImage(img).size
 
 InitializeClass(Image)
 
@@ -599,7 +765,7 @@ class ImageStorageConverter(object):
         content_type = image_file.get_mime_type()
         data = image_file.get_file_fd()
         image._image_factory('hires_image', data, content_type)
-        image._createDerivedImages()
+        image._create_derived_images()
         logger.info(
             "Storage for image %s converted" %
             '/'.join(image.getPhysicalPath()))
