@@ -191,8 +191,7 @@ class Crop(Transformation):
                    self.rect.lower_edge.y,
                    self.rect.higher_edge.x,
                    self.rect.higher_edge.y)
-        image.crop(cropbox)
-        return image
+        return image.crop(cropbox)
 
 
 class Resize(Transformation):
@@ -497,6 +496,7 @@ class Image(Asset):
                 height = img_h * width / img_w
             else:
                 width = int(width)
+        return width, height
 
     security.declareProtected(SilvaPermissions.View, 'get_crop_box')
     def get_crop_box(self, crop=None):

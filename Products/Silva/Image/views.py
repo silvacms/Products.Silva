@@ -28,7 +28,7 @@ class DefaultImageView(silvaviews.View):
     def render(self):
         return self.content.tag(request=self.request,
                                 hires=self.hires,
-                                preview=self.is_preview(),
+                                preview=self.is_preview,
                                 thumbnail=self.thumbnail)
 
 
