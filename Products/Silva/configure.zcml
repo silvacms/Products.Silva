@@ -36,13 +36,6 @@
      factory=".File.mimetypes.MimeTypeClassifierFactory"
      provides="silva.core.interfaces.IMimeTypeClassifier" />
 
-  <adapter
-     for="silva.core.interfaces.IImage
-          zope.publisher.interfaces.browser.IBrowserRequest"
-     factory=".Image.views.ImagePublishTraverse"
-     provides="zope.publisher.interfaces.browser.IBrowserPublisher"
-     />
-
   <!-- Setd default view on Application to get a welcome page -->
   <browser:defaultView
      for="OFS.Application.Application"

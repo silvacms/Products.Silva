@@ -431,7 +431,6 @@ class Image(Asset):
         self.web_scale = '100%'
         self.web_crop = ''
         self._create_derived_images()
-
         # XXX Should be on event
         self.update_quota()
 

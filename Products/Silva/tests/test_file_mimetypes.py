@@ -50,7 +50,8 @@ class MimetypeClassifierTestCase(unittest.TestCase):
             guess_type(id='archive.zip'),
             ('application/zip', None))
         self.assertEqual(guess_type(id='image.jpeg'), ('image/jpeg', None))
-        self.assertEqual(guess_type(id='image.bmp'), ('image/bmp', None))
+        self.assertTrue(guess_type(id='image.bmp') in set([('image/bmp', None),
+                                                           ('image/x-ms-bmp', None)]))
         self.assertEqual(guess_type(id='page.html'), ('text/html', None))
         self.assertEqual(guess_type(id='page.htm'), ('text/html', None))
 
