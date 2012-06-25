@@ -128,7 +128,7 @@ class SilvaObject(TitledObject, Security):
         """Get the object. Can be used with acquisition to get the Silva
         Document for a Version object.
         """
-        return self
+        return self.aq_inner
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_creation_datetime')
@@ -151,7 +151,7 @@ class SilvaObject(TitledObject, Security):
     def get_editable(self):
         """Get the editable version (may be object itself if no versioning).
         """
-        return self
+        return self.aq_inner
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
         'is_deletable')
@@ -174,14 +174,14 @@ class ViewableObject(object):
         """Get the previewable version (may be the object itself if no
         versioning).
         """
-        return self
+        return self.aq_inner
 
     security.declareProtected(SilvaPermissions.View, 'get_viewable')
     def get_viewable(self):
         """Get the publically viewable version (may be the object itself if
         no versioning).
         """
-        return self
+        return self.aq_inner
 
 InitializeClass(ViewableObject)
 

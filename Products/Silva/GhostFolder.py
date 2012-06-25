@@ -313,7 +313,7 @@ class GhostFolder(GhostBase, Folder):
         """returns self if haunted object is a publication"""
         content = self.get_haunted()
         if IPublication.providedBy(content):
-            return self
+            return self.aq_inner
         return aq_parent(self).get_publication()
 
     def is_deletable(self):
