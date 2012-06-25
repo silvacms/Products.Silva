@@ -7,10 +7,9 @@ import unittest
 
 # Silva
 from silva.core import interfaces
+from silva.core.interfaces.adapters import IIconResolver
 from zope.component import queryAdapter
 from zope.interface.verify import verifyObject
-from silva.core.interfaces.adapters import IIconResolver
-
 
 from Products.Silva.icon import IconRegistry, registry
 from Products.Silva.testing import FunctionalLayer, TestRequest
@@ -75,6 +74,10 @@ class IconRegistryTestCase(unittest.TestCase):
         self.assertEqual(
             resolver.get_tag(identifier='Silva Root'),
             '<img height="16" width="16" src="http://localhost/root/++resource++icon-Silva-Root.png" alt="Silva Root" />')
+        self.assertEqual(
+            resolver.get_tag(identifier='default'),
+            '<img height="16" width="16" src="http://localhost/root/++static++/silva.icons/silvageneric.gif" alt="default" />')
+
 
     def test_default_icons(self):
         """Test default registered icons.
