@@ -28,8 +28,8 @@ class IconRegistryTestCase(unittest.TestCase):
         self.root.pdf.set_content_type('application/pdf')
         self.root.text.set_content_type('text/plain')
 
-    def test_get_icon_url(self):
-        """Test usefull function get_icon_url
+    def test_icon_url(self):
+        """Test adapter to retrieve icon urls'.
         """
         resolver = queryAdapter(TestRequest(), IIconResolver)
         self.assertTrue(verifyObject(IIconResolver, resolver))
@@ -39,6 +39,12 @@ class IconRegistryTestCase(unittest.TestCase):
             '++resource++icon-Silva-Root.png')
         self.assertEqual(
             resolver.get_content_url(self.root),
+            'http://localhost/root/++resource++icon-Silva-Root.png')
+        self.assertEqual(
+            resolver.get_identifier('Silva Root'),
+            '++resource++icon-Silva-Root.png')
+        self.assertEqual(
+            resolver.get_identifier_url('Silva Root'),
             'http://localhost/root/++resource++icon-Silva-Root.png')
 
         self.assertEqual(
@@ -54,6 +60,21 @@ class IconRegistryTestCase(unittest.TestCase):
             resolver.get_content_url(self.root.text),
             'http://localhost/root/++static++/silva.icons/file_txt.png')
 
+    def test_icon_tag(self):
+        """Test usefull function used to access icon tags.
+        """
+        resolver = queryAdapter(TestRequest(), IIconResolver)
+        self.assertTrue(verifyObject(IIconResolver, resolver))
+
+        self.assertEqual(
+            resolver.get_tag(self.root),
+            '<img height="16" width="16" src="http://localhost/root/++resource++icon-Silva-Root.png" alt="Silva Root" />')
+        self.assertEqual(
+            resolver.get_tag(content=self.root),
+            '<img height="16" width="16" src="http://localhost/root/++resource++icon-Silva-Root.png" alt="Silva Root" />')
+        self.assertEqual(
+            resolver.get_tag(identifier='Silva Root'),
+            '<img height="16" width="16" src="http://localhost/root/++resource++icon-Silva-Root.png" alt="Silva Root" />')
 
     def test_default_icons(self):
         """Test default registered icons.

@@ -72,6 +72,8 @@ class IconResolver(grok.Adapter):
     grok.context(IBrowserRequest)
     grok.implements(IIconResolver)
 
+    default = '++static++/silva.icons/silvageneric.gif'
+
     def __init__(self, request):
         self.request = request
 
@@ -80,18 +82,34 @@ class IconResolver(grok.Adapter):
         site = IVirtualSite(self.request)
         return site.get_root_url()
 
-    def get_tag(self, content):
+    def get_tag(self, content=None, identifier=None):
+        if content is not None:
+            url = self.get_content_url(content)
+            alt = getattr(content, 'meta_type', None)
+        else:
+            url = self.get_identifier_url(identifier)
+            alt = identifier
         return """<img height="16" width="16" src="%s" alt="%s" />""" % (
-            self.get_content_url(content),
-            getattr(content, 'meta_type', ''))
+            url, alt)
+
+    def get_identifier(self, identifier):
+        try:
+            return registry.get_icon_by_identifier(('meta_type', identifier))
+        except ValueError:
+            return self.default
 
     def get_content(self, content):
         try:
             return registry.get_icon(content)
         except ValueError:
-            return '++static++/silva.icons/silvageneric.gif'
+            return self.default
 
     def get_content_url(self, content):
         """Return a content icon URL.
         """
         return "/".join((self._base_url, self.get_content(content),))
+
+    def get_identifier_url(self, identifier):
+        """Return a URL out of a identifier.
+        """
+        return "/".join((self._base_url, self.get_identifier(identifier),))
