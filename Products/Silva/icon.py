@@ -85,10 +85,10 @@ class IconResolver(grok.Adapter):
     def get_tag(self, content=None, identifier=None):
         if content is not None:
             url = self.get_content_url(content)
-            alt = getattr(content, 'meta_type', None)
+            alt = getattr(content, 'meta_type', 'Missing')
         else:
             url = self.get_identifier_url(identifier)
-            alt = identifier
+            alt = identifier or 'Missing'
         return """<img height="16" width="16" src="%s" alt="%s" />""" % (
             url, alt)
 

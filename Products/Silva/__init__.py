@@ -78,6 +78,7 @@ def initialize_icons():
             '++static++/silva.icons/%s' % icon_name)
 
     misc_icons = [
+        ('meta_type', None, 'missing.png'),
         ('ghostfolder', 'folder', 'silvaghost_folder.gif'),
         ('ghostfolder', 'publication', 'silvaghost_publication.gif'),
         ('ghostfolder', 'link_broken', 'silvaghost_broken.png'),
