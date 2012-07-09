@@ -285,7 +285,7 @@ class ExtensionRegistry(object):
 
     def refresh(self, name, root):
         extension = self._extensions[name]
-        if hasattr(extension, 'refresh'):
+        if hasattr(extension.installer, 'refresh'):
             # installer has a refresh, so use it note: the default
             # refresh (in silva.core.conf.installer.DefaultInstaller)
             # is to just uninstall/install.  Extensions may choose to

@@ -41,8 +41,8 @@ def smi_settings(browser):
             browser.open(self.smi_url + '/edit')
 
             form = browser.get_form('login_form')
-            form.get_control('__ac_name').value = user
-            form.get_control('__ac_password').value = password
+            form.get_control('__ac.field.name').value = user
+            form.get_control('__ac.field.password').value = password
 
             form.inspect.actions['log in'].click()
 

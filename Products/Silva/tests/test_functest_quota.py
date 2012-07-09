@@ -55,7 +55,7 @@ class EnableQuotaFunctionalTestCase(unittest.TestCase):
         browser.inspect.zmi_listing['service_extensions'].click()
         self.assertEqual(
             browser.inspect.zmi_title,
-            ['Configure Silva Extension Products'])
+            ['Extensions management'])
 
         form = browser.get_form('general')
         form.get_control('enable_quota_subsystem').click()
@@ -87,7 +87,7 @@ class QuotaFunctionalTestCase(unittest.TestCase):
         browser.inspect.zmi_listing['service_extensions'].click()
         self.assertEqual(
             browser.inspect.zmi_title,
-            ['Configure Silva Extension Products'])
+            ['Extensions management'])
 
         form = browser.get_form('general')
         form.get_control('disable_quota_subsystem').click()

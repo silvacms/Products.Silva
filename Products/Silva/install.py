@@ -25,6 +25,10 @@ def install(root, extension):
 def uninstall(root, extension):
     pass
 
+def refresh(root, extension):
+    # Refresh reinstall metadata.
+    configure_metadata(root.service_metadata, None)
+
 def is_installed(root, extension):
     return IRoot.providedBy(root)
 
@@ -45,6 +49,9 @@ def configure_metadata(service, event):
          ('Silva Folder', 'Silva File', 'Silva Image', 'Silva Root',
           'Silva Publication', 'Silva Indexer', 'Silva AutoTOC',
           'Silva Link Version')),
+        (('silva-settings',),
+         ('Silva Folder', 'Silva Root', 'Silva Publication', 'Silva Indexer',
+          'Silva AutoTOC', 'Silva Link Version')),
         (('silva-layout',),
          ('Silva Root', 'Silva Publication'))]
 
