@@ -828,8 +828,8 @@ class XMLImportTestCase(SilvaXMLTestCase):
         self.assertEqual(
             get_metadata('silva-extra', 'lastauthor'), u'hacker-kun')
         self.assertEqual(
-            get_metadata('silva-extra', 'hide_from_tocs'),
-            u'do not hide')
+            get_metadata('silva-settings', 'hide_from_tocs'),
+            u'hide')
         self.assertEqual(
             get_metadata('silva-extra', 'content_description'),
             u'Report local assets.')

@@ -24,9 +24,6 @@
         <silva-extra:creator>
           author
         </silva-extra:creator>
-        <silva-extra:hide_from_tocs>
-          do not hide
-        </silva-extra:hide_from_tocs>
         <silva-extra:keywords>
         </silva-extra:keywords>
         <silva-extra:language>
@@ -39,6 +36,11 @@
         </silva-extra:modificationtime>
         <silva-extra:subject>
         </silva-extra:subject>
+      </set>
+      <set xmlns:silvasettings="http://infrae.com/namespace/metadata/silva-settings" id="silva-settings">
+        <silvasettings:hide_from_tocs>
+          do not hide
+        </silvasettings:hide_from_tocs>
       </set>
     </metadata>
     <content>
@@ -78,9 +80,6 @@
               <silva-extra:creator>
                 author
               </silva-extra:creator>
-              <silva-extra:hide_from_tocs>
-                do not hide
-              </silva-extra:hide_from_tocs>
               <silva-extra:keywords>
               </silva-extra:keywords>
               <silva-extra:language>
@@ -93,6 +92,11 @@
               </silva-extra:modificationtime>
               <silva-extra:subject>
               </silva-extra:subject>
+            </set>
+            <set xmlns:silvasettings="http://infrae.com/namespace/metadata/silva-settings" id="silva-settings">
+              <silvasettings:hide_from_tocs>
+                do not hide
+              </silvasettings:hide_from_tocs>
             </set>
           </metadata>
           <url>

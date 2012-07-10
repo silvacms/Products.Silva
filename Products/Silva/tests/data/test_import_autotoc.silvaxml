@@ -27,6 +27,11 @@
           This folder have been created only in testing purpose.
         </silva-extra:content_description>
       </set>
+      <set xmlns:silvasettings="http://infrae.com/namespace/metadata/silva-settings" id="silva-settings">
+        <silvasettings:hide_from_tocs>
+          do not hide
+        </silvasettings:hide_from_tocs>
+      </set>
     </metadata>
     <content>
       <default>
@@ -52,9 +57,6 @@
               <silva-extra:creator>
                 jean-paul
               </silva-extra:creator>
-              <silva-extra:hide_from_tocs>
-                do not hide
-              </silva-extra:hide_from_tocs>
               <silva-extra:lastauthor>
                 jean-paul
               </silva-extra:lastauthor>
@@ -84,9 +86,6 @@
             <silva-extra:creator>
               hacker-kun
             </silva-extra:creator>
-            <silva-extra:hide_from_tocs>
-              do not hide
-            </silva-extra:hide_from_tocs>
             <silva-extra:language>
               ja
             </silva-extra:language>
@@ -96,6 +95,11 @@
             <silva-extra:modificationtime>
               2004-04-23T16:13:39Z
             </silva-extra:modificationtime>
+          </set>
+          <set xmlns:silvasettings="http://infrae.com/namespace/metadata/silva-settings" id="silva-settings">
+            <silvasettings:hide_from_tocs>
+              hide
+            </silvasettings:hide_from_tocs>
           </set>
         </metadata>
       </auto_toc>

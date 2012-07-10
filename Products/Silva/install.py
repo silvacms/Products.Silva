@@ -45,13 +45,10 @@ def configure_metadata(service, event):
     schema = os.path.join(os.path.dirname(__file__), 'schema')
 
     metadata_sets_types = [
-        (('silva-content', 'silva-extra'),
+        (('silva-content', 'silva-extra', 'silva-settings'),
          ('Silva Folder', 'Silva File', 'Silva Image', 'Silva Root',
           'Silva Publication', 'Silva Indexer', 'Silva AutoTOC',
           'Silva Link Version')),
-        (('silva-settings',),
-         ('Silva Folder', 'Silva Root', 'Silva Publication', 'Silva Indexer',
-          'Silva AutoTOC', 'Silva Link Version')),
         (('silva-layout',),
          ('Silva Root', 'Silva Publication'))]
 
