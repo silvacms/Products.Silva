@@ -2,11 +2,7 @@
 # See also LICENSE.txt
 # $Id$
 
-import urllib
-import hashlib
-
 from five import grok
-from zope import interface, schema
 
 # zope
 from AccessControl import ClassSecurityInfo
@@ -26,21 +22,12 @@ from silva.core.services.base import SilvaService, ZMIObject
 from silva.core import interfaces
 from silva.core import conf as silvaconf
 from silva.translations import translate as _
-from zeam.form import silva as silvaforms
-
-
-GRAVATAR_URL = "https://secure.gravatar.com/avatar.php?"
-GRAVATAR_TEMPLATE = """
-<img src="%(image)s" alt="%(userid)s's avatar" title="%(userid)s's avatar"
-     style="height: %(size)spx; width: %(size)spx" />
-"""
 
 
 class SimpleMember(Member, Security, ZMIObject):
     """Silva Simple Member"""
 
     grok.implements(interfaces.IEditableMember)
-
     security = ClassSecurityInfo()
 
     meta_type = 'Silva Simple Member'
@@ -135,25 +122,6 @@ class SimpleMember(Member, Security, ZMIObject):
         """
         return self._avatar if self._avatar is not None else self._email
 
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'avatar_tag')
-    def avatar_tag(self, size=32):
-        """HTML <img /> tag for the avatar icon
-        """
-        #See http://en.gravatar.com/site/implement/python
-        email = self.avatar()
-        default = self.get_root_url() + "/globals/avatar.png"
-
-        if email:
-            url = GRAVATAR_URL + urllib.urlencode(
-                {'gravatar_id':hashlib.md5(email.lower()).hexdigest(),
-                 'default':default, 'size':str(size)})
-        else:
-            url = default
-        info = {'userid': self.userid(),
-                'size': size,
-                'image': url}
-        return GRAVATAR_TEMPLATE % info
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'is_approved')
@@ -180,18 +148,11 @@ def manage_addSimpleMember(self, id, REQUEST=None):
 
 
 class SimpleMemberService(SilvaService):
-    meta_type = 'Silva Simple Member Service'
-    _use_direct_lookup = False
-
     grok.implements(IMemberService)
     grok.baseclass()
     silvaconf.icon('www/members.png')
     security = ClassSecurityInfo()
-
-    manage_options = (
-        {'label':'Configure', 'action':'manage_configure'},
-        ) + SilvaService.manage_options
-
+    meta_type = 'Silva Simple Member Service'
 
     # XXX will be used by access tab and should be opened wider if this
     # is central service..
@@ -211,8 +172,8 @@ class SimpleMemberService(SilvaService):
                 result.append(self.get_cached_member(userid))
         return result
 
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'is_user')
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'is_user')
     def is_user(self, userid, location=None):
         # XXX: get_valid_userids is evil: will break with other user
         # folder implementations.
@@ -220,35 +181,24 @@ class SimpleMemberService(SilvaService):
             location = self
         return userid in location.get_valid_userids()
 
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'get_member')
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'get_member')
     def get_member(self, userid, location=None):
         if not self.is_user(userid, location=location):
             return None
         # get member, add it if it doesn't exist yet
-        members = self.Members
+        members = self.get_root()._getOb('Members')
         member = members._getOb(userid, None)
         if member is None:
             members.manage_addProduct['Silva'].manage_addSimpleMember(userid)
             member = members._getOb(userid)
         return member
 
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'get_cached_member')
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'get_cached_member')
     def get_cached_member(self, userid, location=None):
         """Returns a cloned member object, which can be stored in the ZODB"""
         return cloneMember(self.get_member(userid, location=location)).__of__(self)
-
-    security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
-                              'set_use_direct_lookup')
-    def set_use_direct_lookup(self, value):
-        """sets use_direct_lookup"""
-        self._use_direct_lookup = value
-
-    security.declareProtected(SilvaPermissions.ReadSilvaContent,
-                              'use_direct_lookup')
-    def use_direct_lookup(self):
-        return self._use_direct_lookup
 
     security.declarePublic('logout')
     def logout(self, came_from=None, REQUEST=None):
@@ -264,20 +214,3 @@ class SimpleMemberService(SilvaService):
 
 InitializeClass(SimpleMemberService)
 
-
-
-class IServiceSetting(interface.Interface):
-    _use_direct_lookup = schema.Bool(
-        title=_(u"Use direct lookup?"),
-        description=_(u"Disable search feature to affect a role to a user."))
-
-
-class EditMemberService(silvaforms.ZMIForm):
-    grok.context(SimpleMemberService)
-    grok.name('manage_configure')
-
-    label = _(u"Configure member service")
-    description = _(u"Update member service settings.")
-    ignoreContent = False
-    fields = silvaforms.Fields(IServiceSetting)
-    actions = silvaforms.Actions(silvaforms.EditAction(_(u"Update")))

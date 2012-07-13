@@ -14,8 +14,8 @@ class SeleniumTestCase(unittest.TestCase):
     def setUp(self):
         self.root = self.layer.get_application()
 
-    def test_boot(self):
-        browser = self.layer.get_selenium_browser(smi_settings)
+    def test_add_folder(self):
+        browser = self.layer.get_web_browser(smi_settings)
         browser.login('manager')
         browser.open('/root/edit')
         self.assertEqual(browser.location, '/root/edit')

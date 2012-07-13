@@ -22,7 +22,7 @@ class AuthorContentTestCase(unittest.TestCase):
     def test_folder(self):
         """We should be able to add/remove a folder.
         """
-        browser = self.layer.get_browser(smi_settings)
+        browser = self.layer.get_web_browser(smi_settings)
         browser.login(self.username, self.username)
 
         self.assertEqual(browser.open('/root/edit'), 200)
@@ -57,7 +57,7 @@ class AuthorContentTestCase(unittest.TestCase):
     def test_indexer(self):
         """Indexer should not be available.
         """
-        browser = self.layer.get_browser(smi_settings)
+        browser = self.layer.get_web_browser(smi_settings)
         browser.login(self.username, self.username)
 
         self.assertEqual(browser.open('/root/edit'), 200)
@@ -72,7 +72,7 @@ class AuthorContentTestCase(unittest.TestCase):
     def test_publication(self):
         """Publication should not be available either.
         """
-        browser = self.layer.get_browser(smi_settings)
+        browser = self.layer.get_web_browser(smi_settings)
         browser.login(self.username, self.username)
 
         self.assertEqual(browser.open('/root/edit'), 200)
@@ -87,7 +87,7 @@ class AuthorContentTestCase(unittest.TestCase):
     def test_image(self):
         """Test create / edit / remove an image.
         """
-        browser = self.layer.get_browser(smi_settings)
+        browser = self.layer.get_web_browser(smi_settings)
 
         image = test_filename('torvald.jpg')
         browser.login(self.username, self.username)
@@ -154,7 +154,7 @@ class AuthorContentTestCase(unittest.TestCase):
     def test_file(self):
         """Test create/remove a file.
         """
-        browser = self.layer.get_browser(smi_settings)
+        browser = self.layer.get_web_browser(smi_settings)
 
         image = test_filename('test.txt')
         browser.login(self.username, self.username)
@@ -184,7 +184,7 @@ class AuthorContentTestCase(unittest.TestCase):
     def test_ghost(self):
         """Test create / remove a ghost.
         """
-        browser = self.layer.get_browser(smi_settings)
+        browser = self.layer.get_web_browser(smi_settings)
 
         browser.login(self.username, self.username)
         self.assertEqual(browser.open('/root/edit'), 200)
@@ -216,7 +216,7 @@ class AuthorContentTestCase(unittest.TestCase):
     def test_link(self):
         """Test / create remove a link.
         """
-        browser = self.layer.get_browser(smi_settings)
+        browser = self.layer.get_web_browser(smi_settings)
 
         browser.login(self.username, self.username)
         self.assertEqual(browser.open('/root/edit'), 200)
@@ -247,7 +247,7 @@ class AuthorContentTestCase(unittest.TestCase):
     def test_autotoc(self):
         """Test create/remove an autotoc.
         """
-        browser = self.layer.get_browser(smi_settings)
+        browser = self.layer.get_web_browser(smi_settings)
 
         browser.login(self.username, self.username)
         self.assertEqual(browser.open('/root/edit'), 200)
@@ -283,7 +283,7 @@ class EditorContentTestCase(AuthorContentTestCase):
     def test_indexer(self):
         """Test create/remove an indexer.
         """
-        browser = self.layer.get_browser(smi_settings)
+        browser = self.layer.get_web_browser(smi_settings)
 
         browser.login(self.username, self.username)
         self.assertEqual(browser.open('/root/edit'), 200)
@@ -313,7 +313,7 @@ class EditorContentTestCase(AuthorContentTestCase):
     def test_publication(self):
         """Test create / remove a publication.
         """
-        browser = self.layer.get_browser(smi_settings)
+        browser = self.layer.get_web_browser(smi_settings)
 
         browser.login(self.username, self.username)
         self.assertEqual(browser.open('/root/edit'), 200)

@@ -18,6 +18,34 @@ class SilvaIcons(grok.DirectoryResource):
     grok.name('silva.icons')
 
 
+
+# GRAVATAR_URL = "https://secure.gravatar.com/avatar.php?"
+# GRAVATAR_TEMPLATE = """
+# <img src="%(image)s" alt="%(userid)s's avatar" title="%(userid)s's avatar"
+#      style="height: %(size)spx; width: %(size)spx" />
+# """
+
+# security.declareProtected(SilvaPermissions.AccessContentsInformation,
+#                           'avatar_tag')
+# def avatar_tag(self, size=32):
+#     """HTML <img /> tag for the avatar icon
+#     """
+#     #See http://en.gravatar.com/site/implement/python
+#     email = self.avatar()
+#     default = self.get_root_url() + "/globals/avatar.png"
+
+#     if email:
+#         url = GRAVATAR_URL + urllib.urlencode(
+#             {'gravatar_id':hashlib.md5(email.lower()).hexdigest(),
+#              'default':default, 'size':str(size)})
+#     else:
+#         url = default
+#     info = {'userid': self.userid(),
+#             'size': size,
+#             'image': url}
+#     return GRAVATAR_TEMPLATE % info
+
+
 class IconRegistry(object):
     grok.implements(interfaces.IIconRegistry)
 

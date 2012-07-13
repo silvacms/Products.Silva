@@ -19,7 +19,7 @@ class AuthorMetadataTestCase(unittest.TestCase):
         factory.manage_addDocument('document', 'Document')
 
     def test_metadata(self):
-        browser = self.layer.get_browser(smi_settings)
+        browser = self.layer.get_web_browser(smi_settings)
         browser.login(self.username, self.username)
 
         self.assertEqual(browser.open('/root/document/edit'), 200)

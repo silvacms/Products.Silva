@@ -213,7 +213,7 @@ class SilvaLayer(BrowserLayer):
         self._browsers.append(browser)
         return browser
 
-    def get_selenium_browser(self, settings=None):
+    def get_web_browser(self, settings=None):
         browser = SeleniumBrowser(self.get_wsgi_application())
         if settings is not None:
             settings(browser)

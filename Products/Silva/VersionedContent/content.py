@@ -84,8 +84,8 @@ class VersionedObject(Versioning, SilvaObject, ViewableObject):
         """Get title or id editable or previewable use.
         """
         title = self.get_title_editable()
-        if title.strip() == '':
-            return self.id
+        if not title.strip():
+            return self.get_silva_object().id
         return title
 
     security.declareProtected(

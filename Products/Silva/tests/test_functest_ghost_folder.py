@@ -47,7 +47,7 @@ class BaseTest(unittest.TestCase):
         self.pubdoc = getattr(self.publication, 'pubdoc')
 
         self.layer.logout()
-        self.browser = self.layer.get_browser(smi_settings)
+        self.browser = self.layer.get_web_browser(smi_settings)
         self.browser.login('manager', 'manager')
 
 

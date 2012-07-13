@@ -20,7 +20,7 @@ class AuthorPublicationTestCase(unittest.TestCase):
             'link', 'Link', relative=False, url='http://infrae.com')
 
     def test_request_approval_withdraw(self):
-        browser = self.layer.get_browser(smi_settings)
+        browser = self.layer.get_web_browser(smi_settings)
         browser.login('author')
 
         self.assertEqual(browser.open('/root/link/edit'), 200)
@@ -59,7 +59,7 @@ class AuthorPublicationTestCase(unittest.TestCase):
         self.assertEqual(form.inspect.actions, ['request approval'])
 
     def test_request_approval_rejected(self):
-        browser = self.layer.get_browser(smi_settings)
+        browser = self.layer.get_web_browser(smi_settings)
         browser.login('author')
         self.assertEqual(browser.open('/root/link/edit'), 200)
 
@@ -100,7 +100,7 @@ class AuthorPublicationTestCase(unittest.TestCase):
         self.assertEqual(form.inspect.actions, ['publish now'])
 
     def test_request_approval_published(self):
-        browser = self.layer.get_browser(smi_settings)
+        browser = self.layer.get_web_browser(smi_settings)
         browser.login('author')
         self.assertEqual(browser.open('/root/link/edit'), 200)
 
@@ -165,7 +165,7 @@ class EditorPublicationTestCase(unittest.TestCase):
             'link', 'Link', relative=False, url='http://infrae.com')
 
     def test_quick_publish(self):
-        browser = self.layer.get_browser(smi_settings)
+        browser = self.layer.get_web_browser(smi_settings)
         browser.login(self.username)
 
         self.assertEqual(browser.open('/root/link/edit'), 200)

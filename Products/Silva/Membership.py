@@ -69,7 +69,6 @@ InitializeClass(Member)
 class CachedMember(Persistent, Acquisition.Implicit):
     """A member object returned by cloneMember
     """
-
     implements(IMember)
 
     security = ClassSecurityInfo()

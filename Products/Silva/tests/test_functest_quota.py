@@ -45,7 +45,7 @@ class EnableQuotaFunctionalTestCase(unittest.TestCase):
     def test_enable_quota(self):
         """Go in ZMI, and on service_extension enable the quota system.
         """
-        browser = self.layer.get_selenium_browser(smi_settings)
+        browser = self.layer.get_web_browser(smi_settings)
         browser.login('manager')
         browser.open('/root/manage_main')
 
@@ -78,7 +78,7 @@ class QuotaFunctionalTestCase(unittest.TestCase):
     def test_disable_quota(self):
         """Disable the quota system.
         """
-        browser = self.layer.get_selenium_browser(smi_settings)
+        browser = self.layer.get_web_browser(smi_settings)
         browser.login('manager')
         browser.open('/root/manage_main')
 
@@ -98,7 +98,7 @@ class QuotaFunctionalTestCase(unittest.TestCase):
     def test_add_asset_overquota(self):
         """Test adding an asset (file and image) being overquota.
         """
-        browser = self.layer.get_selenium_browser(quota_settings)
+        browser = self.layer.get_web_browser(quota_settings)
         browser.login('manager')
         browser.open('/root/edit')
 
@@ -141,7 +141,7 @@ class QuotaFunctionalTestCase(unittest.TestCase):
     def test_add_asset(self):
         """Test adding an asset while the quota is on.
         """
-        browser = self.layer.get_selenium_browser(quota_settings)
+        browser = self.layer.get_web_browser(quota_settings)
         browser.login('manager')
 
         self.assertEqual(browser.open('/root/edit'), 200)
@@ -179,7 +179,7 @@ class QuotaFunctionalTestCase(unittest.TestCase):
     def test_set_quota(self):
         """Test modification of the quota's value.
         """
-        browser = self.layer.get_selenium_browser(quota_settings)
+        browser = self.layer.get_web_browser(quota_settings)
         browser.login('manager')
 
         browser.open('/root/edit')

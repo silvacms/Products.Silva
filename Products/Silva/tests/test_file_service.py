@@ -152,6 +152,12 @@ class FileServicesTest(TestCase):
         converted_file_data = self.root.testfile.get_file()
         self.assertHashEqual(file_data, converted_file_data)
 
+    def test_convert_keep_metadata(self):
+        assert False, 'TBD'
+
+    def test_convert_keep_markers(self):
+        assert False, 'TBD'
+
 
 def test_suite():
     suite = unittest.TestSuite()

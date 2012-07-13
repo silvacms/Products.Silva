@@ -19,7 +19,7 @@ class ContentInFolderTestCase(unittest.TestCase):
         self.root = self.layer.get_application()
 
     def test_document(self):
-        browser = self.layer.get_browser(smi_settings)
+        browser = self.layer.get_web_browser(smi_settings)
         browser.login('manager', 'manager')
 
         self.assertEqual(browser.open('/root/edit'), 200)
@@ -63,7 +63,7 @@ class ContentInFolderTestCase(unittest.TestCase):
         browser.macros.delete('container')
 
     def test_folder(self):
-        browser = self.layer.get_browser(smi_settings)
+        browser = self.layer.get_web_browser(smi_settings)
         browser.login('manager', 'manager')
 
         self.assertEqual(browser.open('/root/edit'), 200)
@@ -109,7 +109,7 @@ class ContentInFolderTestCase(unittest.TestCase):
         browser.macros.delete('container')
 
     def test_publication(self):
-        browser = self.layer.get_browser(smi_settings)
+        browser = self.layer.get_web_browser(smi_settings)
         browser.login('manager', 'manager')
 
         self.assertEqual(browser.open('/root/edit'), 200)
@@ -150,7 +150,7 @@ class ContentInFolderTestCase(unittest.TestCase):
         browser.macros.delete('container')
 
     def test_image(self):
-        browser = self.layer.get_browser(smi_settings)
+        browser = self.layer.get_web_browser(smi_settings)
         browser.login('manager', 'manager')
 
         self.assertEqual(browser.open('/root/edit'), 200)
@@ -192,7 +192,7 @@ class ContentInFolderTestCase(unittest.TestCase):
         browser.macros.delete('container')
 
     def test_file(self):
-        browser = self.layer.get_browser(smi_settings)
+        browser = self.layer.get_web_browser(smi_settings)
         browser.login('manager', 'manager')
 
         self.assertEqual(browser.open('/root/edit'), 200)
@@ -235,7 +235,7 @@ class ContentInFolderTestCase(unittest.TestCase):
         browser.macros.delete('container')
 
     def test_find(self):
-        browser = self.layer.get_browser(smi_settings)
+        browser = self.layer.get_web_browser(smi_settings)
         browser.login('manager', 'manager')
 
         self.assertEqual(browser.open('/root/edit'), 200)
@@ -277,7 +277,7 @@ class ContentInFolderTestCase(unittest.TestCase):
         browser.macros.delete('container')
 
     def test_ghost(self):
-        browser = self.layer.get_browser(smi_settings)
+        browser = self.layer.get_web_browser(smi_settings)
         browser.login('manager', 'manager')
 
         self.assertEqual(browser.open('/root/edit'), 200)
@@ -320,7 +320,7 @@ class ContentInFolderTestCase(unittest.TestCase):
         browser.macros.delete('container')
 
     def test_indexer(self):
-        browser = self.layer.get_browser(smi_settings)
+        browser = self.layer.get_web_browser(smi_settings)
         browser.login('manager', 'manager')
 
         self.assertEqual(browser.open('/root/edit'), 200)
@@ -363,7 +363,7 @@ class ContentInFolderTestCase(unittest.TestCase):
         browser.macros.delete('container')
 
     def test_link(self):
-        browser = self.layer.get_browser(smi_settings)
+        browser = self.layer.get_web_browser(smi_settings)
         browser.login('manager', 'manager')
 
         self.assertEqual(browser.open('/root/edit'), 200)
@@ -407,7 +407,7 @@ class ContentInFolderTestCase(unittest.TestCase):
         browser.macros.delete('container')
 
     def test_autotoc(self):
-        browser = self.layer.get_browser(smi_settings)
+        browser = self.layer.get_web_browser(smi_settings)
         browser.login('manager', 'manager')
 
         self.assertEqual(browser.open('/root/edit'), 200)

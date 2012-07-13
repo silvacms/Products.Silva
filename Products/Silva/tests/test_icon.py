@@ -108,16 +108,31 @@ class IconRegistryTestCase(unittest.TestCase):
             registry.get_icon(self.root.text),
             '++static++/silva.icons/file_txt.png')
 
+    def test_member_gravatar(self):
+        """Test that if you ask the icon for a member you can a
+        gravatar icon.
+        """
+        assert False, 'TBD'
+
+        self.assertXMLEqual(
+            user.avatar_tag(),
+            '<img src="' + self.root.get_root_url() + '/globals/avatar.png" alt="manager\'s avatar" title="manager\'s avatar" style="height: 32px; width: 32px" />')
+        user.set_email('user@example.com')
+        self.assertEqual('user@example.com', user.avatar())
+        self.assertXMLEqual(
+            user.avatar_tag(),
+            '<img src="https://secure.gravatar.com/avatar.php?default=' + urllib.quote(self.root.get_root_url(),'') + '%2Fglobals%2Favatar.png&size=32&gravatar_id=b58996c504c5638798eb6b511e6f49af" alt="manager\'s avatar" title="manager\'s avatar" style="height: 32px; width: 32px" />')
+
     def test_registry(self):
         """Test registry
         """
-        self.assertEquals(
+        self.assertEqual(
             self.root.pdf.get_mime_type(), 'application/pdf')
-        self.assertEquals(
+        self.assertEqual(
             self.root.text.get_mime_type(), 'text/plain')
 
         registry = IconRegistry()
-        self.failUnless(verifyObject(interfaces.IIconRegistry, registry))
+        self.assertTrue(verifyObject(interfaces.IIconRegistry, registry))
 
         registry.register(
             ('meta_type', 'Silva Root'), 'root.png')
@@ -128,22 +143,22 @@ class IconRegistryTestCase(unittest.TestCase):
         registry.register(
             ('mime_type', 'application/pdf'), 'file_pdf.png')
 
-        self.assertEquals(
+        self.assertEqual(
             registry.get_icon_by_identifier(
                 ('meta_type', 'Silva Root')),
             'root.png')
-        self.assertEquals(
+        self.assertEqual(
             registry.get_icon_by_identifier(
                 ('mime_type', 'application/octet-stream')),
             'file.png')
-        self.assertRaises(
-            ValueError, registry.get_icon_by_identifier,
-            ('meta_type', 'Foo Bar'))
+        with self.assertRaises(ValueError):
+            registry.get_icon_by_identifier(('meta_type', 'Foo Bar'),)
 
-        self.assertEquals(registry.get_icon(self.root), 'root.png')
-        self.assertEquals(registry.get_icon(self.root.pdf), 'file_pdf.png')
-        self.assertEquals(registry.get_icon(self.root.text), 'file_text.png')
-        self.assertRaises(ValueError, registry.get_icon, TestRequest())
+        self.assertEqual(registry.get_icon(self.root), 'root.png')
+        self.assertEqual(registry.get_icon(self.root.pdf), 'file_pdf.png')
+        self.assertEqual(registry.get_icon(self.root.text), 'file_text.png')
+        with self.assertRaises(ValueError):
+            registry.get_icon(TestRequest())
 
 
 def test_suite():
