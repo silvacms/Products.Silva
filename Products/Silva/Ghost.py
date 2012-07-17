@@ -30,8 +30,10 @@ from silva.core.conf.interfaces import IIdentifiedContent
 from silva.core.interfaces import (
     IContainer, IContent, IGhost, IGhostAware, IGhostVersion)
 from silva.core.references.reference import Reference
+from silva.core.references.reference import DeleteSourceWeakReferenceValue
+from silva.core.references.reference import WeakReferenceValue
 from silva.core.references.reference import get_content_id, get_content_from_id
-from silva.core.references.interfaces import IReferenceService, IDeleteSourceOnTargetDeletion
+from silva.core.references.interfaces import IReferenceService
 from silva.core.views import views as silvaviews
 from silva.translations import translate as _
 from silva.core.interfaces import errors
@@ -113,28 +115,26 @@ class GhostBase(object):
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'set_haunted')
-    def set_haunted(self, content, weak=False):
+    def set_haunted(self, content, auto_delete=False):
         """ Set the content as the haunted object
         """
         service = getUtility(IReferenceService)
+        options = dict(name=u"haunted", add=True, factory=WeakReferenceValue)
+        if auto_delete:
+            options['factory'] = DeleteSourceWeakReferenceValue
         reference = service.get_reference(
-            aq_inner(self), name=u"haunted", add=True)
+            aq_inner(self), **options)
         if not isinstance(content, int):
             content = get_content_id(content)
-        if IDeleteSourceOnTargetDeletion.providedBy(reference):
-            if not weak:
-                noLongerProvides(reference, IDeleteSourceOnTargetDeletion)
-        else:
-            if weak:
-                alsoProvides(reference, IDeleteSourceOnTargetDeletion)
         reference.set_target_id(content)
 
     security.declareProtected(SilvaPermissions.View, 'get_haunted')
     def get_haunted(self):
         service = getUtility(IReferenceService)
         reference = service.get_reference(
-            aq_inner(self), name=u"haunted", add=True)
-        return reference.target
+            aq_inner(self), name=u"haunted")
+        if reference is not None:
+            return reference.target
 
     security.declareProtected(SilvaPermissions.View, 'get_link_status')
     def get_link_status(self):

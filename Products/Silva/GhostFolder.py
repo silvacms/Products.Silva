@@ -70,14 +70,14 @@ class SyncContainer(Sync):
         factory = self.g_container.manage_addProduct['Silva']
         factory.manage_addGhostFolder(self.h_id, 'Ghost Folder')
         self.g_ob = self.g_container._getOb(self.h_id)
-        self.g_ob.set_haunted(self.source(), weak=True)
+        self.g_ob.set_haunted(self.source(), auto_delete=True)
         return self.g_ob
 
     def verify(self):
         return self.source() == self.g_ob.get_haunted()
 
     def update(self):
-        self.g_ob.set_haunted(self.source(), weak=True)
+        self.g_ob.set_haunted(self.source(), auto_delete=True)
         return self.g_ob
 
     def finish(self):
@@ -99,7 +99,7 @@ class SyncContent(Sync):
         factory = self.g_container.manage_addProduct['Silva']
         factory.manage_addGhost(self.h_id, 'Ghost')
         self.g_ob = self.g_container._getOb(self.h_id)
-        self.g_ob.get_editable().set_haunted(self.source(), weak=True)
+        self.g_ob.get_editable().set_haunted(self.source(), auto_delete=True)
         IPublicationWorkflow(self.g_ob).publish()
         return self.g_ob
 
@@ -110,7 +110,7 @@ class SyncContent(Sync):
         publication = IPublicationWorkflow(self.g_ob)
         if self.g_ob.get_editable() is None:
             publication.new_version()
-        self.g_ob.get_editable().set_haunted(self.source(), weak=True)
+        self.g_ob.get_editable().set_haunted(self.source(), auto_delete=True)
         publication.publish()
         return self.g_ob
 

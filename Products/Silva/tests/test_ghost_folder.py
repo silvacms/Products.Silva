@@ -15,6 +15,7 @@ from silva.core.interfaces import IGhostFolder, IGhost
 from silva.core.interfaces import IPublication, IFolder
 from silva.core.references.interfaces import IReferenceService, IReferenceValue
 from silva.core.interfaces import errors
+from silva.core.interfaces import IContainerManager
 
 
 class GhostFolderTestCase(unittest.TestCase):
@@ -325,7 +326,10 @@ class GhostFolderTestCase(unittest.TestCase):
         self.assertTrue('index' in ghost.objectIds())
         self.assertTrue('folder' in ghost.objectIds())
 
-        folder.manage_delObjects(['index', 'folder'])
+        with IContainerManager(folder).deleter() as deleter:
+            deleter(folder.index)
+            deleter(folder.folder)
+
         self.assertFalse('index' in ghost.objectIds())
         self.assertFalse('folder' in ghost.objectIds())
 

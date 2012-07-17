@@ -51,9 +51,8 @@ class GhostTestCase(unittest.TestCase):
         self.assertEqual(version.get_link_status(), None)
 
         manager = IContainerManager(self.root)
-        with self.assertRaises(BrokenReferenceError):
-            with manager.deleter() as deleter:
-                deleter(self.root.document)
+        with manager.deleter() as deleter:
+            deleter(self.root.document)
 
     def test_ghost_reference(self):
         """Test the reference created by the ghost.
