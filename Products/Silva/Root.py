@@ -7,7 +7,6 @@ from five import grok
 from five.localsitemanager import make_site
 from zope import schema, interface, component
 from zope.event import notify
-from zope.lifecycleevent import ObjectAddedEvent
 from zope.lifecycleevent import ObjectCreatedEvent
 from zope.site.hooks import setSite, setHooks
 from zope.traversing.browser import absoluteURL

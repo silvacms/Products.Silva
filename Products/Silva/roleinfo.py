@@ -7,8 +7,9 @@ BUILTIN_VIEWER_ROLES = ('Anonymous', 'Authenticated')
 SILVA_VIEWER_ROLES = ('Viewer', 'Viewer +', 'Viewer ++')
 VIEWER_ROLES = BUILTIN_VIEWER_ROLES + SILVA_VIEWER_ROLES
 
-module_security.declareProtected('View','CHIEF_ROLES')
-CHIEF_ROLES = ('ChiefEditor', 'Manager')
+module_security.declareProtected('View', 'CHIEF_ROLES')
+MANAGER_ROLES = ('Manager',)
+CHIEF_ROLES = ('ChiefEditor',) + MANAGER_ROLES
 EDITOR_ROLES = ('Editor',) + CHIEF_ROLES
 AUTHOR_ROLES = ('Author',) + EDITOR_ROLES
 #aaltepet: 1/12/06: we want to be able test reader_roles

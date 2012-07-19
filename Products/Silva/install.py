@@ -28,6 +28,7 @@ def uninstall(root, extension):
 def refresh(root, extension):
     # Refresh reinstall metadata.
     configure_metadata(root.service_metadata, None)
+    configure_security(root, None)
 
 def is_installed(root, extension):
     return IRoot.providedBy(root)
@@ -125,6 +126,7 @@ def configure_security(root, event):
     # should fall back on permissions for anonymous in case viewer does
     # not have these permissions. That's why we don't have to assign them
     # to viewer.
+    root.manage_permission('Manage Silva settings', roleinfo.MANAGER_ROLES)
     root.manage_permission('Add Silva Publications', roleinfo.EDITOR_ROLES)
     root.manage_permission('Add Silva Ghost Folders', roleinfo.EDITOR_ROLES)
     root.manage_permission('Add Silva Indexers', roleinfo.EDITOR_ROLES)
