@@ -4,11 +4,13 @@
 
 import os.path
 import DateTime
+import warnings
 
 
 def approve_content(obj):
     """Publish object.
     """
+    warnings.warn(u'Please use directly the IPublicationWorkflow adapter')
     now = DateTime.DateTime()
     obj.set_unapproved_version_publication_datetime(now + 10)
     obj.approve_version()
@@ -17,6 +19,7 @@ def approve_content(obj):
 def publish_content(obj):
     """Publish object.
     """
+    warnings.warn(u'Please use directly the IPublicationWorkflow adapter')
     now = DateTime.DateTime()
     obj.set_unapproved_version_publication_datetime(now - 10)
     obj.approve_version()
@@ -24,6 +27,7 @@ def publish_content(obj):
 def publish_approved_content(obj):
     """Publish the approved object.
     """
+    warnings.warn(u'Please use directly the IPublicationWorkflow adapter')
     now = DateTime.DateTime()
     obj.set_approved_version_publication_datetime(now - 10)
 

@@ -17,8 +17,6 @@ from zope.lifecycleevent import ObjectModifiedEvent
 from silva.core import interfaces
 from silva.core.layout.interfaces import ICustomizableTag
 
-from Products.SilvaMetadata.interfaces import IMetadataService
-
 
 def add_and_edit(self, id, REQUEST, screen='manage_main'):
     """Helper function to point to the object's management screen if
