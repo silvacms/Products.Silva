@@ -98,7 +98,7 @@ class ViewableFilter(object):
         item = self.get(content)
         return (
             (item is None) or
-            (self.metadata(item, 'silva-extra', 'hide_from_tocs') == 'hide'))
+            (self.metadata(item, 'silva-settings', 'hide_from_tocs') == 'hide'))
 
 registry.register(ViewableFilter)
 
