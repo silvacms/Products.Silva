@@ -38,18 +38,18 @@ from zeam.form import silva as silvaforms
 
 class Sync(object):
 
-    def __init__(self, gf, h_container, h_ob, g_container, g_ob):
-        self.h_container = h_container
-        self.h_ob = h_ob
-        self.g_container = g_container
-        self.g_ob = g_ob
+    def __init__(self, target_container, target, ghost_container, ghost):
+        self.target_container = target_container
+        self.target = target
+        self.ghost_container = ghost_container
+        self.ghost = ghost
 
-        self.h_id = h_ob.getId()
-        if g_ob is not None:
-            self.g_id = g_ob.getId()
+        self.target_id = target.getId()
+        if ghost is not None:
+            self.ghost_id = ghost.getId()
 
-    def source(self):
-        return self.h_ob
+    def get_real_target(self):
+        return self.target
 
     def update(self):
         raise NotImplementedError
@@ -60,65 +60,72 @@ class Sync(object):
     def create(self):
         raise NotImplementedError
 
-    def finish(self):
-        pass
+    finish = None
 
 
 class SyncContainer(Sync):
 
     def create(self):
-        factory = self.g_container.manage_addProduct['Silva']
-        factory.manage_addGhostFolder(self.h_id, 'Ghost Folder')
-        self.g_ob = self.g_container._getOb(self.h_id)
-        self.g_ob.set_haunted(self.source(), auto_delete=True)
-        return self.g_ob
+        target = self.get_real_target()
+        if target is not None:
+            factory = self.ghost_container.manage_addProduct['Silva']
+            factory.manage_addGhostFolder(self.target_id, 'Ghost Folder')
+            self.ghost = self.ghost_container._getOb(self.target_id)
+            self.ghost.set_haunted(target, auto_delete=True)
+        return self.ghost
 
     def verify(self):
-        return self.source() == self.g_ob.get_haunted()
+        return self.get_real_target() == self.ghost.get_haunted()
 
     def update(self):
-        self.g_ob.set_haunted(self.source(), auto_delete=True)
-        return self.g_ob
+        self.ghost.set_haunted(self.get_real_target(), auto_delete=True)
+        return self.ghost
 
     def finish(self):
         ## XXX: I don't think that works (like ever worked)
-        orderer = IOrderManager(self.g_ob)
-        for index, content in enumerate(self.source().get_ordered_publishables()):
-            orderer.move(content, index)
+        target = self.get_real_target()
+        if target is not None:
+            orderer = IOrderManager(self.ghost)
+            for index, content in enumerate(target.get_ordered_publishables()):
+                orderer.move(content, index)
 
 
 class SyncGhostContainer(SyncContainer):
 
-    def source(self):
-        return self.h_ob.get_haunted()
+    def get_real_target(self):
+        return self.target.get_haunted()
 
 
 class SyncContent(Sync):
 
     def create(self):
-        factory = self.g_container.manage_addProduct['Silva']
-        factory.manage_addGhost(self.h_id, 'Ghost')
-        self.g_ob = self.g_container._getOb(self.h_id)
-        self.g_ob.get_editable().set_haunted(self.source(), auto_delete=True)
-        IPublicationWorkflow(self.g_ob).publish()
-        return self.g_ob
+        target = self.get_real_target()
+        if target is not None:
+            factory = self.ghost_container.manage_addProduct['Silva']
+            factory.manage_addGhost(self.target_id, 'Ghost')
+            self.ghost = self.ghost_container._getOb(self.target_id)
+            version = self.ghost.get_editable()
+            version.set_haunted(self.get_real_target(), auto_delete=True)
+            IPublicationWorkflow(self.ghost).publish()
+        return self.ghost
 
     def verify(self):
-        return self.source() == self.g_ob.get_haunted()
+        return self.get_real_target() == self.ghost.get_haunted()
 
     def update(self):
-        publication = IPublicationWorkflow(self.g_ob)
-        if self.g_ob.get_editable() is None:
+        publication = IPublicationWorkflow(self.ghost)
+        if self.ghost.get_editable() is None:
             publication.new_version()
-        self.g_ob.get_editable().set_haunted(self.source(), auto_delete=True)
+        version = self.ghost.get_editable()
+        version.set_haunted(self.get_real_target(), auto_delete=True)
         publication.publish()
-        return self.g_ob
+        return self.ghost
 
 
 class SyncGhost(SyncContent):
 
-    def source(self):
-        return self.h_ob.get_haunted()
+    def get_real_target(self):
+        return self.target.get_haunted()
 
 
 class SyncCopy(Sync):
@@ -126,13 +133,13 @@ class SyncCopy(Sync):
     # modified and if copying is really necessary.
 
     def create(self):
-        g_ob_new = self.h_ob._getCopy(self.g_container)
-        self.g_container._setObject(self.h_id, g_ob_new)
-        return self.g_container._getOb(self.h_id)
+        ghost = self.target._getCopy(self.ghost_container)
+        self.ghost_container._setObject(self.target_id, ghost)
+        return self.ghost_container._getOb(self.target_id)
 
     def update(self):
-        assert self.g_ob is not None
-        self.g_container.manage_delObjects([self.h_id])
+        assert self.ghost is not None
+        self.ghost_container.manage_delObjects([self.target_id])
         return self.create()
 
 
@@ -175,15 +182,12 @@ class GhostFolder(GhostBase, Folder):
         haunted = self.get_haunted()
         if haunted is None:
             return
-        ghost = self
-        object_list = self._haunt_diff(haunted, ghost)
-        upd = SyncContainer(self, None, haunted, None, self)
-        updaters = [upd]
+        stack = self._haunt_diff(haunted, self)
+        updaters = [SyncContainer(None, haunted, None, self)]
 
-        while object_list:
+        while stack:
             # breadth first search
-            h_container, h_id, g_container, g_id = object_list[0]
-            del(object_list[0])
+            h_container, h_id, g_container, g_id = stack.pop(0)
             if h_id is None:
                 # object was removed from haunted, so just remove it and
                 # continue
@@ -199,31 +203,34 @@ class GhostFolder(GhostBase, Folder):
                 g_ob = g_container._getOb(g_id)
             g_ob_new = None
 
-            for h_if, g_if, update_class in SYNC_MAP:
+            for h_if, g_if, factory in SYNC_MAP:
                 if h_if and not h_if.providedBy(h_ob):
                     continue
                 if g_ob is None:
                     # matching haunted interface, no ghost -> create
-                    uc = update_class(self, h_container, h_ob,
-                        g_container, g_ob)
-                    updaters.append(uc)
-                    g_ob_new = uc.create()
+                    updater = factory(h_container, h_ob, g_container, g_ob)
+                    g_ob_new = updater.create()
+                    if updater.finish is not None:
+                        updaters.append(updater)
                     break
                 if g_if and not g_if.providedBy(g_ob):
                     # haunted interface machces but ghost interface doesn't
                     continue
                 # haunted interface and ghost interface match -> update
-                uc = update_class(self, h_container, h_ob, g_container,
-                    g_ob)
-                updaters.append(uc)
-                if not uc.verify():
-                    g_ob_new = uc.update()
+                updater = factory(h_container, h_ob, g_container, g_ob)
+                # if the object is not uptodate, update it
+                if not updater.verify():
+                    g_ob_new = updater.update()
+                    if updater.finish is not None:
+                        updaters.append(updater)
+                else:
+                    g_ob_new = g_ob
                 break
-
-            msg = "no updater was called for %r" % ((self, h_container, h_ob, g_container, g_ob), )
-            assert g_ob_new is not None, msg
-            if IContainer.providedBy(h_ob):
-                object_list.extend(self._haunt_diff(h_ob, g_ob_new))
+            else:
+                assert True, "no updater was called for %r" % (
+                    (h_container, h_ob, g_container, g_ob),)
+            if IContainer.providedBy(h_ob) and g_ob_new is not None:
+                stack.extend(self._haunt_diff(h_ob, g_ob_new))
         for updater in updaters:
             updater.finish()
 

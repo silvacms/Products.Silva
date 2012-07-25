@@ -5,7 +5,6 @@
 
 # Zope 3
 from five import grok
-from zope.interface import alsoProvides, noLongerProvides
 from zope.component import getUtility, getMultiAdapter
 
 # Zope 2
@@ -30,7 +29,7 @@ from silva.core.conf.interfaces import IIdentifiedContent
 from silva.core.interfaces import (
     IContainer, IContent, IGhost, IGhostAware, IGhostVersion)
 from silva.core.references.reference import Reference
-from silva.core.references.reference import DeleteSourceWeakReferenceValue
+from silva.core.references.reference import DeleteSourceReferenceValue
 from silva.core.references.reference import WeakReferenceValue
 from silva.core.references.reference import get_content_id, get_content_from_id
 from silva.core.references.interfaces import IReferenceService
@@ -119,11 +118,11 @@ class GhostBase(object):
         """ Set the content as the haunted object
         """
         service = getUtility(IReferenceService)
-        options = dict(name=u"haunted", add=True, factory=WeakReferenceValue)
+        factory = WeakReferenceValue
         if auto_delete:
-            options['factory'] = DeleteSourceWeakReferenceValue
+            factory = DeleteSourceReferenceValue
         reference = service.get_reference(
-            aq_inner(self), **options)
+            aq_inner(self), name=u"haunted", add=True, factory=factory)
         if not isinstance(content, int):
             content = get_content_id(content)
         reference.set_target_id(content)

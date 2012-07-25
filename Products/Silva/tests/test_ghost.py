@@ -13,7 +13,6 @@ from Products.Silva.testing import FunctionalLayer
 from silva.core.interfaces import errors
 from silva.core.interfaces import IGhost, IGhostVersion
 from silva.core.interfaces import IContainerManager, IPublicationWorkflow
-from silva.core.references.reference import BrokenReferenceError
 from silva.core.references.interfaces import IReferenceService, IReferenceValue
 
 
@@ -35,7 +34,7 @@ class GhostTestCase(unittest.TestCase):
         factory.manage_addGhost('ghost', 'Ghost')
 
     def test_ghost(self):
-        """Test simple ghost creation.
+        """Test simple ghost creation and life time.
         """
         factory = self.root.manage_addProduct['Silva']
         factory.manage_addGhost('ghost', 'Ghost', haunted=self.root.document)
@@ -44,15 +43,18 @@ class GhostTestCase(unittest.TestCase):
         self.assertTrue(verifyObject(IGhost, self.root.ghost))
         self.assertTrue(verifyObject(IGhostVersion, version))
 
+        self.assertEqual(version.get_link_status(), None)
         self.assertEqual(version.get_haunted(), self.root.document)
         self.assertEqual(
             aq_chain(version.get_haunted()),
             aq_chain(self.root.document))
-        self.assertEqual(version.get_link_status(), None)
 
         manager = IContainerManager(self.root)
         with manager.deleter() as deleter:
             deleter(self.root.document)
+
+        self.assertEqual(version.get_haunted(), None)
+        self.assertEqual(version.get_link_status(), errors.EmptyInvalidTarget())
 
     def test_ghost_reference(self):
         """Test the reference created by the ghost.
@@ -70,6 +72,14 @@ class GhostTestCase(unittest.TestCase):
         self.assertEqual(
             aq_chain(reference.source),
             aq_chain(ghost))
+
+        manager = IContainerManager(self.root)
+        with manager.deleter() as deleter:
+            deleter(self.root.document)
+
+        reference = getUtility(IReferenceService).get_reference(
+            ghost, name=u"haunted")
+        self.assertEqual(reference, None)
 
     def test_ghost_title(self):
         """Test ghost get_title. It should return the title of the target.

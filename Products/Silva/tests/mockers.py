@@ -13,6 +13,7 @@ from Products.Silva import roleinfo
 from five import grok
 from silva.core import conf as silvaconf
 from silva.core.views import views as silvaviews
+from silva.core.interfaces import INonPublishable, IVersionedContent
 from silva.core.interfaces.adapters import IIndexEntries
 from zeam.form import silva as silvaforms
 
@@ -25,13 +26,17 @@ class MockupVersion(Version):
     meta_type = 'Mockup Version'
 
 
+class IMockupVersionedContent(IVersionedContent, IIndexEntries):
+    pass
+
+
 class MockupVersionedContent(VersionedContent):
     """Test versioned content.
 
     (Note: the docstring is required for traversing to work)
     """
     meta_type = 'Mockup VersionedContent'
-    grok.implements(IIndexEntries)
+    grok.implements(IMockupVersionedContent)
     silvaconf.priority(-11)
     silvaconf.version_class(MockupVersion)
     silvaconf.icon('tests/mockers.png')
@@ -72,9 +77,14 @@ class MockupView(silvaviews.View):
         return self.content.get_title()
 
 
+class IMockupAsset(INonPublishable):
+    pass
+
+
 class MockupAsset(NonPublishable, SimpleItem):
     """A mockup asset.
     """
+    grok.implements(IMockupAsset)
     meta_type = 'Mockup Asset'
     silvaconf.priority(-10)
     silvaconf.icon('tests/mockers.png')
