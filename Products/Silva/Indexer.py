@@ -24,14 +24,14 @@ from silva.core.smi.content import IEditScreen
 from silva.core.interfaces import IIndexEntries, IIndexer
 from silva.core.interfaces import IContent, IPublishable
 from silva.core.references.interfaces import IReferenceService, IReferenceValue
-from silva.core.references.reference import WeakReferenceValue
+from silva.core.references.reference import ReferenceValue
 from silva.core.services.utils import advanced_walk_silva_tree
 from silva.core.views import views as silvaviews
 from silva.translations import translate as _
 from zeam.form import silva as silvaforms
 
 
-class IndexerReferenceValue(WeakReferenceValue):
+class IndexerReferenceValue(ReferenceValue):
 
     def __init__(self, *args, **kwargs):
         super(IndexerReferenceValue, self).__init__(*args, **kwargs)
@@ -39,7 +39,7 @@ class IndexerReferenceValue(WeakReferenceValue):
             raise TypeError('Indexer only accepts IIndexer as source')
 
     def cleanup(self):
-        source = super(IndexerReferenceValue, self).cleanup()
+        source = self.source
         if source is not None:
             source._remove_reference_related_entries(self)
 
