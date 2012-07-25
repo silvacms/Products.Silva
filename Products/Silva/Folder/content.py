@@ -299,7 +299,7 @@ class Folder(Publishable, BaseFolder):
                               'get_non_publishables')
     def get_non_publishables(self, interface=INonPublishable):
         assert interface.isOrExtends(INonPublishable), u"Invalid interface"
-        result = self.objectValues(meta_types_for_interface(INonPublishable))
+        result = self.objectValues(meta_types_for_interface(interface))
         result.sort(key=lambda o: o.getId())
         return result
 
