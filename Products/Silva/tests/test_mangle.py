@@ -44,6 +44,12 @@ class MangleIdTestCase(unittest.TestCase):
         id = mangle.Id(self.root.folder, 'data', allow_dup=1)
         self.assertEqual(id.validate(), id.OK)
 
+        id = mangle.Id(self.root.folder, 'keys')
+        self.assertEqual(id.validate(), id.RESERVED)
+
+        id = mangle.Id(self.root.folder, 'values')
+        self.assertEqual(id.validate(), id.RESERVED)
+
         id = mangle.Id(self.root.folder, 'service_foobar')
         self.assertEqual(id.validate(), id.RESERVED_PREFIX)
 

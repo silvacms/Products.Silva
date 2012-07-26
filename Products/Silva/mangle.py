@@ -12,6 +12,7 @@ from types import StringType, UnicodeType
 from AccessControl import ModuleSecurityInfo
 from OFS.ObjectManager import checkValidId
 from zExceptions import BadRequest
+from Acquisition import aq_inner
 
 # Silva
 from silva.translations import translate as _
@@ -57,6 +58,7 @@ class Id(object):
 
     # sequence of all reserved prefixes (before the first '_')
     _reserved_prefixes = (
+        'cb',
         'aq',
         'get',
         'manage',
@@ -66,7 +68,7 @@ class Id(object):
 
     # all reserved/internally used ids. (This list is most probably
     # incomplete)
-    _reserved_ids = (
+    _reserved_ids = set([
         'Members',
         'REQUEST',
         'acl_users',
@@ -77,20 +79,21 @@ class Id(object):
         'content.html',
         'delete',
         'edit',
-        'email',
         'elements',
+        'email',
         'form',
         'fulltext',
         'globals',
         'home',
         'index_html',
         'insert',
+        'keys',
         'layout_macro.html',
         'logout',
         'lookup',
         'memberform',
-        'override.html',
         'object_path',
+        'override.html',
         'path',
         'placeholder',
         'preview_html',
@@ -103,8 +106,9 @@ class Id(object):
         'standard_unauthorized_message',
         'submit',
         'up',
+        'values',
         'version_status'
-         )
+         ])
 
     _reserved_ids_for_interface = {
         IAsset: ('index', )
@@ -197,7 +201,7 @@ class Id(object):
             # ugly, but Zope explicitely checks this ...
             return self.RESERVED_POSTFIX
         prefixing = maybe_id.split('_')
-        if (len(prefixing)>1) and (prefixing[0] in self._reserved_prefixes):
+        if (len(prefixing) >1) and (prefixing[0] in self._reserved_prefixes):
             return self.RESERVED_PREFIX
 
         if maybe_id in self._reserved_ids:
@@ -213,7 +217,7 @@ class Id(object):
             if maybe_id in self._reserved_ids_for_interface[self._interface]:
                 return self.RESERVED
 
-        attr = getattr(folder.aq_inner, maybe_id, _marker)
+        attr = getattr(aq_inner(folder), maybe_id, _marker)
         if attr is not _marker:
             if ISilvaObject.providedBy(attr):
                 # there is a silva object with the same id
