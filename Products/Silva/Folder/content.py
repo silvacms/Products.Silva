@@ -2,6 +2,9 @@
 # See also LICENSE.txt
 # $Id$
 
+
+import logging
+
 from five import grok
 from zope.container.contained import notifyContainerModified
 from zope.event import notify
@@ -30,7 +33,7 @@ from silva.core.interfaces import ContentError
 from silva.core import conf as silvaconf
 from silva.translations import translate as _
 
-
+logger = logging.getLogger('silva.core')
 _marker = object()
 
 
@@ -137,8 +140,13 @@ class Folder(Publishable, BaseFolder):
             raise AttributeError(id)
         if IVersionedContent.providedBy(content):
             if not hasattr(content, '_v_publication_status_updated'):
-                content._update_publication_status()
-                content._v_publication_status_updated = True
+                try:
+                    content._update_publication_status()
+                    content._v_publication_status_updated = True
+                except:
+                    logger.exception(
+                        u"error while updating publication status for: %s",
+                        '/'.join(self.getPhysicalPath() + (id,)))
         return content
 
     # MANIPULATORS

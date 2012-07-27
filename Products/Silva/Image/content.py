@@ -30,7 +30,7 @@ from silva.core import interfaces
 from silva.core.interfaces import IMimeTypeClassifier
 from silva.core.services.interfaces import IFilesService
 from silva.translations import translate as _
-from silva.core.views.interfaces import IContentURL, INonCachedLayer
+from silva.core.views.interfaces import IContentURL
 
 try:
     from PIL import Image as PILImage
@@ -91,7 +91,6 @@ SizeBase = namedtuple('SizeBase', ('width', 'height'))
 
 
 class Format(object):
-
     JPEG = 'JPEG'
     PNG = 'PNG'
     GIF = 'GIF'
@@ -176,7 +175,7 @@ def image_rect(image):
 class Crop(Transformation):
 
     def __init__(self, rect):
-        self.rect = rect        
+        self.rect = rect
 
     def validate(self, image):
         rect = image_rect(image)
@@ -209,19 +208,18 @@ class Resize(Transformation):
 
 class WebFormat(Transformation):
 
-    def __init__(self, format):
-        self.format = format
+    def __init__(self, web_format):
+        self.web_format = web_format
 
     def __call__(self, image):
-        if self.format == Format.JPEG and image.mode != 'RGB':
-            image.convert("RGB")
-            return image
+        if self.web_format == Format.JPEG and image.mode != 'RGB':
+            return image.convert("RGB")
         return False
 
 
-def save_image(image, format):
-    data = StringIO()    
-    image.save(data, format)
+def save_image(image, web_format):
+    data = StringIO()
+    image.save(data, web_format)
     data.seek(0)
     return data
 
@@ -238,13 +236,14 @@ class Transformer(object):
         pil_image = PILImageFactory(image)
         changed = False
         for transformation in self.transformations:
-            new_image = transformation(pil_image)
-            if new_image:
+            result = transformation(pil_image)
+            if result is not None:
                 changed = True
-                pil_image = new_image
+                pil_image = result
 
-        if changed or (changed_on_format and
-                       pil_image.format != output_format):
+        if changed or (
+            changed_on_format and
+            pil_image.format != output_format):
             return save_image(pil_image, output_format)
         return None
 
@@ -255,13 +254,11 @@ class ThumbnailResize(object):
         self.size = size
 
     def __call__(self, image):
-        image.thumbnail((self.size.width, self.size.height),
-                        PILImage.ANTIALIAS)
+        image.thumbnail((self.size.width, self.size.height), PILImage.ANTIALIAS)
         return image
 
 
 class PercentResizeSpec(object):
-
     re_percentage = re.compile(r'^([0-9\.]+)\%$')
 
     @classmethod
@@ -292,7 +289,6 @@ class PercentResizeSpec(object):
 
 
 class WHResizeSpec(object):
-    
     re_WidthXHeight = re.compile(r'^([0-9]+|\*)[Xx]([0-9\*]+|\*)$')
 
     @classmethod
@@ -679,8 +675,7 @@ class Image(Asset):
                     transformer.append(Resize(spec))
 
             transformer.append(WebFormat(self.web_format))
-            image_io = transformer.transform(self.hires_image,
-                                             self.web_format)
+            image_io = transformer.transform(self.hires_image, self.web_format)
             if image_io:
                 ct = self._web2ct[self.web_format]
                 self._image_factory('image', image_io, ct)
@@ -697,8 +692,7 @@ class Image(Asset):
             if str(e.args[0]) == "cannot read interlaced PNG files":
                 self.image = self.hires_image
                 return
-            else:
-                raise ValueError(str(e))
+            raise ValueError(str(e))
 
     def _create_thumbnail(self):
         try:
