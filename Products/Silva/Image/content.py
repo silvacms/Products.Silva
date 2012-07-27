@@ -237,7 +237,7 @@ class Transformer(object):
         changed = False
         for transformation in self.transformations:
             result = transformation(pil_image)
-            if result is not None:
+            if result is not False:
                 changed = True
                 pil_image = result
 
