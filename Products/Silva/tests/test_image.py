@@ -62,12 +62,14 @@ class DefaultImageTestCase(TestCase):
 
         # Image methods
         self.assertEquals(content.get_format(), 'TIFF')
+        self.assertEquals(content.get_web_format(), 'JPEG')
         self.assertEquals(content.get_dimensions(), (960, 1280))
         self.assertEquals(str(content.get_orientation()), "portrait")
         content.set_web_presentation_properties('JPEG', '100x100', '')
-        self.assertRaises(ValueError, content.get_image,
-                          hires=False, webformat=False)
+        with self.assertRaises(ValueError):
+            content.get_image(hires=False, webformat=False)
         self.assertTrue(content.tag() is not None)
+        self.assertEquals(content.get_web_format(), 'JPEG')
 
         data = StringIO(content.get_image(hires=False, webformat=True))
         pil_image = PILImage.open(data)
@@ -75,7 +77,7 @@ class DefaultImageTestCase(TestCase):
         self.assertEquals('JPEG', pil_image.format)
 
         data = content.get_image(hires=True, webformat=False)
-        self.assertEquals(self.image_data, data)
+        self.assertHashEqual(self.image_data, data)
 
         data = StringIO(content.get_image(hires=True, webformat=True))
         pil_image = PILImage.open(data)
@@ -148,18 +150,22 @@ class DefaultImageTestCase(TestCase):
     def test_http_view(self):
         """Retrieve the image, check the headers.
         """
+        data = self.root.test_image.image
         with self.layer.get_browser() as browser:
             self.assertEqual(browser.open('/root/test_image'), 200)
             self.assertEqual(
                 browser.headers['Content-Disposition'],
-                'inline;filename=test_image.tiff')
-            self.assertEqual(browser.headers['Content-Type'], 'image/tiff')
+                'inline;filename=test_image.jpeg')
+            self.assertEqual(browser.headers['Content-Type'], 'image/jpeg')
+            self.assertEquals(
+                browser.headers['Content-Length'],
+                str(data.get_file_size()))
             self.assertTrue('Last-Modified' in browser.headers)
             image_data = browser.contents
             pil_image = PILImage.open(StringIO(image_data))
             self.assertEqual((960, 1280), pil_image.size)
-            self.assertEqual('TIFF', pil_image.format)
-            self.assertHashEqual(self.image_data, image_data)
+            self.assertEqual('JPEG', pil_image.format)
+            self.assertHashEqual(data.get_file(), image_data)
 
     def test_http_view_hires(self):
         """Retrieve the image, check the headers.
@@ -198,15 +204,16 @@ class DefaultImageTestCase(TestCase):
     def test_http_head(self):
         """Do an HEAD request.
         """
+        data = self.root.test_image.image
         with self.layer.get_browser() as browser:
             self.assertEquals(browser.open('/root/test_image', method='HEAD'), 200)
             self.assertEquals(
                 browser.headers['Content-Disposition'],
-                'inline;filename=test_image.tiff')
-            self.assertEquals(browser.headers['Content-Type'], 'image/tiff')
+                'inline;filename=test_image.jpeg')
+            self.assertEquals(browser.headers['Content-Type'], 'image/jpeg')
             self.assertEquals(
                 browser.headers['Content-Length'],
-                str(self.image_size))
+                str(data.get_file_size()))
             self.assertTrue('Last-Modified' in browser.headers)
             self.assertEquals(browser.contents, '')
 
