@@ -7,6 +7,12 @@ import time
 import transaction
 
 
+def public_settings(browser):
+    browser.inspect.add(
+        'title',
+        css="h1",
+        type="text")
+
 def zmi_settings(browser):
     # ZMI
     browser.inspect.add(
@@ -27,7 +33,6 @@ def zmi_settings(browser):
     browser.inspect.add(
         'zmi_status',
         '//p[@class="system-msg"]')
-
 
 def smi_settings(browser):
     zmi_settings(browser)
