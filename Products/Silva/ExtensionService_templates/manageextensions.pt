@@ -24,19 +24,29 @@
             tal:attributes="action request/URL">
         <input type="submit" name="refresh_all" value="refresh all"
                i18n:attributes="value"/>
-        <input type="submit" name="install_documentation" value="install documentation"
+        <input type="submit"
+               name="install_documentation"
+               value="install documentation"
                tal:condition="python:context.is_installed('silva.app.document') and not hasattr(context, 'docs')"
-               i18n:attributes="value"/>
-        <input type="submit" name="refresh_catalog" value="rebuild catalog"
-               i18n:attributes="value"/>
-        <input type="submit" name="disable_quota_subsystem" value="disable quota subsystem"
-               tal:condition="context/get_quota_subsystem_status"
-               i18n:attributes="value"/>
-        <input type="submit" name="enable_quota_subsystem" value="enable quota subsystem"
-               tal:condition="not:context/get_quota_subsystem_status"
-               i18n:attributes="value"/>
-        <input type="submit" name="purge_old_versions" value="purge old versions"
-               i18n:attributes="value"/>
+               i18n:attributes="value" />
+        <input type="submit"
+               name="refresh_catalog"
+               value="rebuild catalog"
+               i18n:attributes="value" />
+        <input type="submit"
+               name="disable_quota_subsystem"
+               value="disable quota subsystem"
+               tal:condition="view/quota_enabled"
+               i18n:attributes="value" />
+        <input type="submit"
+               name="enable_quota_subsystem"
+               value="enable quota subsystem"
+               tal:condition="not:view/quota_enabled"
+               i18n:attributes="value" />
+        <input type="submit"
+               name="purge_old_versions"
+               value="purge old versions"
+               i18n:attributes="value" />
         <input type="submit" name="upgrade_all" value="upgrade content"
                onclick="if (!confirm('This will upgrade all Silva content, and may take a long time on a large site.\nThis is, however, necessary to make old Silva content work with new versions.\nAre you sure you want to continue?')) return false;"
                i18n:attributes="value" />

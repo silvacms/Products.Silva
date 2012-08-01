@@ -13,7 +13,7 @@ from zope.interface.verify import verifyObject
 from silva.core.interfaces import IFolder, IPublication
 from silva.core.layout.interfaces import ICustomizableTag
 from silva.core.services.interfaces import ICatalogService
-
+from silva.core.interfaces import ContentError
 
 from Products.Silva.testing import FunctionalLayer
 from Products.Silva.testing import assertTriggersEvents
@@ -31,6 +31,24 @@ class FolderConvertionTestCase(unittest.TestCase):
         self.layer.login('manager')
         self.get_id = getUtility(IIntIds).register
         self.get_listing = self.root.objectIds
+
+    def test_invalid_conversion(self):
+        """Test that you can't convert a folder to a folder, a
+        publication to a publication, a root to a folder or a
+        publication.
+        """
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addFolder('folder', 'Folder')
+        factory.manage_addPublication('publication', 'Publication')
+
+        with self.assertRaises(ContentError):
+            self.root.folder.to_folder()
+        with self.assertRaises(ContentError):
+            self.root.publication.to_publication()
+        with self.assertRaises(ContentError):
+            self.root.to_publication()
+        with self.assertRaises(ContentError):
+            self.root.to_folder()
 
     def test_folder_to_publication(self):
         """Test Silva Folder to Silva Publication conversion.

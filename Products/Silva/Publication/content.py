@@ -7,7 +7,7 @@ from five import grok
 
 # Zope 2
 from AccessControl import ClassSecurityInfo
-from Acquisition import aq_parent
+from Acquisition import aq_parent, aq_inner
 from App.special_dtml import DTMLFile
 from App.class_init import InitializeClass
 from zExceptions import BadRequest
@@ -93,7 +93,6 @@ class Publication(Folder):
         raise ContentError(
             _(u"You cannot convert a publication into a publication"), self)
 
-
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'validate_wanted_quota')
     def validate_wanted_quota(self, value, REQUEST=None):
@@ -101,10 +100,11 @@ class Publication(Folder):
         publication.
         """
         if value < 0:
-            return False        # Quota can't be negative.
+            # Quota can't be negative.
+            return False
         if (not value) or IRoot.providedBy(self):
-            return True         # 0 means no quota, Root don't have
-                                # any parents.
+            # 0 means no quota, Root don't have any parents.
+            return True
         parent = aq_parent(self).get_publication()
         quota = parent.get_current_quota()
         if quota and quota < value:
@@ -130,7 +130,10 @@ class Publication(Folder):
             return int(binding.get('silva-quota', element_id='quota') or 0)
         except KeyError:        # This publication object doesn't have
                                 # this metadata set
-            return aq_parent(self).get_current_quota()
+            parent = aq_parent(self)
+            if not IRoot.providedBy(parent):
+                return parent.get_current_quota()
+            return 0
 
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'get_publication')
@@ -138,7 +141,7 @@ class Publication(Folder):
         """Get publication. Can be used with acquisition to get
         'nearest' Silva publication.
         """
-        return self.aq_inner
+        return aq_inner(self)
 
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'is_transparent')

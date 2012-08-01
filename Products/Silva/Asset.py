@@ -5,6 +5,7 @@
 import logging
 
 from five import grok
+from zope.component import queryUtility
 
 from AccessControl import ClassSecurityInfo
 from Acquisition import aq_parent
@@ -17,10 +18,11 @@ from Products.Silva.SilvaObject import ViewableObject
 from Products.Silva.Publishable import NonPublishable
 from Products.Silva.mangle import Bytes
 
-from silva.core.smi.content import IEditScreen
 from silva.core.interfaces import IAsset, IImage
-from silva.core.views import views as silvaviews
+from silva.core.services.interfaces import IExtensionService
+from silva.core.smi.content import IEditScreen
 from silva.core.smi.content.metadata import ContentReferencedBy
+from silva.core.views import views as silvaviews
 from silva.translations import translate as _
 from zeam.form import silva as silvaforms
 
@@ -40,11 +42,11 @@ class Asset(NonPublishable, ViewableObject, SimpleItem.SimpleItem):
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'update_quota')
     def update_quota(self):
-        # XXX Should use utility
-        service_extension = getattr(self, 'service_extensions', None)
-        if not service_extension:
+        service = queryUtility(IExtensionService)
+        if service is None:
             return
-        if not self.service_extensions.get_quota_subsystem_status():
+        verify = service.get_quota_subsystem_status()
+        if verify is None:
             return
 
         parent = aq_parent(self)
@@ -52,7 +54,7 @@ class Asset(NonPublishable, ViewableObject, SimpleItem.SimpleItem):
             new_size = self.get_file_size()
             delta = new_size - self._old_size
             if delta:
-                parent.update_quota(delta)
+                parent.update_quota(delta, verify)
                 self._old_size = new_size
 
     security.declareProtected(
@@ -94,16 +96,15 @@ def asset_moved_update_quota(asset, event):
     """Event called on Asset when they are moved to update quota on
     parents folders.
     """
-
-    if asset != event.object:
+    if asset != event.object or event.newParent is event.oldParent:
         return
 
-    if event.newParent is event.oldParent:
-        # For rename event, we don't need to do something.
+    service = queryUtility(IExtensionService)
+    if service is None:
         return
-
-    context = event.newParent or event.oldParent
-    if not context.service_extensions.get_quota_subsystem_status():
+    verify = service.get_quota_subsystem_status()
+    if verify is None:
+        # Quota accouting is disabled
         return
 
     try:
@@ -119,9 +120,9 @@ def asset_moved_update_quota(asset, event):
         return
 
     if event.oldParent:
-        event.oldParent.update_quota(-size)
+        event.oldParent.update_quota(-size, verify)
     if event.newParent:
-        event.newParent.update_quota(size)
+        event.newParent.update_quota(size, verify)
 
 
 class AssetEditTab(silvaforms.SMIComposedForm):

@@ -6,12 +6,14 @@
 import logging
 
 from five import grok
+from zope.component import queryUtility
 from zope.container.contained import notifyContainerModified
 from zope.event import notify
 from zope.lifecycleevent import ObjectRemovedEvent
 from zope.traversing.browser import absoluteURL
 
 # Zope
+from Acquisition import aq_inner, aq_parent
 from AccessControl import ClassSecurityInfo
 from App.class_init import InitializeClass
 from OFS.Folder import Folder as BaseFolder
@@ -28,9 +30,9 @@ from Products.Silva import helpers
 from silva.core.interfaces import (
     IContentImporter, INonPublishable, IPublishable, IOrderManager,
     IVersionedContent, IFolder, IRoot)
-from silva.core.interfaces import ContentError
-
 from silva.core import conf as silvaconf
+from silva.core.interfaces import ContentError
+from silva.core.services.interfaces import IExtensionService
 from silva.translations import translate as _
 
 logger = logging.getLogger('silva.core')
@@ -150,23 +152,23 @@ class Folder(Publishable, BaseFolder):
         return content
 
     # MANIPULATORS
-    security.declareProtected(SilvaPermissions.ApproveSilvaContent,
-                              'set_allow_feeds')
+    security.declareProtected(
+        SilvaPermissions.ApproveSilvaContent, 'set_allow_feeds')
     def set_allow_feeds(self, allow):
         """change the flag that indicates whether rss/atom feeds are allowed
         on this container"""
         self._allow_feeds = allow
 
-    security.declareProtected(SilvaPermissions.ApproveSilvaContent,
-                              'to_publication')
+    security.declareProtected(
+        SilvaPermissions.ApproveSilvaContent, 'to_publication')
     def to_publication(self):
         """Turn this folder into a publication.
         """
         from Products.Silva.Publication import Publication
         helpers.convert_content(self, Publication)
 
-    security.declareProtected(SilvaPermissions.ApproveSilvaContent,
-                              'to_folder')
+    security.declareProtected(
+        SilvaPermissions.ApproveSilvaContent, 'to_folder')
     def to_folder(self):
         """Turn this folder into a folder.
         """
@@ -177,22 +179,20 @@ class Folder(Publishable, BaseFolder):
         # Hook to check quota. Do nothing by default.
         pass
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                              'update_quota')
-    def update_quota(self, delta):
-
-        if IContentImporter.providedBy(self.aq_parent):
-            self.aq_inner.update_quota(delta)
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'update_quota')
+    def update_quota(self, delta, verify=True):
+        if IContentImporter.providedBy(aq_parent(self)):
+            aq_inner(self).update_quota(delta, verify)
             return
 
         self.used_space += delta
-        if delta > 0:           # If we add stuff, check we're not
-                                # over quota.
+        # If we add stuff, check we're not over quota.
+        if verify and delta > 0:
             self._verify_quota()
 
         if not IRoot.providedBy(self):
-            self.aq_parent.update_quota(delta)
-
+            aq_parent(self).update_quota(delta, verify)
 
     # Silva addables
 
@@ -327,16 +327,20 @@ def folder_moved_update_quota(content, event):
         # For rename event, we don't need to do something.
         return
 
-    context = event.newParent or event.oldParent
-    if not context.service_extensions.get_quota_subsystem_status():
+    service = queryUtility(IExtensionService)
+    if service is None:
+        return
+    verify = service.get_quota_subsystem_status()
+    if verify is None:
+        # Quota accounting is disabled.
         return
 
     size = content.used_space
     if not size:
         return
     if event.oldParent:
-        event.oldParent.update_quota(-size)
+        event.oldParent.update_quota(-size, verify)
     if event.newParent:
-        event.newParent.update_quota(size)
+        event.newParent.update_quota(size, verify)
 
 

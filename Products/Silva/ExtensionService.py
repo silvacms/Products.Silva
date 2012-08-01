@@ -118,6 +118,7 @@ class ExtensionService(SilvaService, Folder):
         ) + SilvaService.manage_options
 
     _quota_enabled = False
+    _quota_verify = False
 
     # MANIPULATORS
 
@@ -189,6 +190,7 @@ class ExtensionService(SilvaService, Folder):
         root.service_metadata.removeTypesMapping(types, setids)
 
         self._quota_enabled = False
+        self._quota_verify = False
 
     security.declareProtected(
         'View management screens', 'enable_quota_subsystem')
@@ -216,6 +218,7 @@ class ExtensionService(SilvaService, Folder):
 
         root.used_space = compute_used_space(root)
         self._quota_enabled = True
+        self._quota_verify = True
 
     security.declareProtected(
         'View management screens', 'upgrade_content')
@@ -238,7 +241,9 @@ class ExtensionService(SilvaService, Folder):
     security.declareProtected(
         'Access contents information', 'get_quota_subsystem_status')
     def get_quota_subsystem_status(self):
-        return self._quota_enabled
+        if not self._quota_enabled:
+            return None
+        return self._quota_verify
 
     security.declareProtected(
         'Access contents information', 'is_installed')
@@ -394,6 +399,10 @@ class ManageExtensions(silvaviews.ZMIView):
                     if method in self.request.form:
                         self.status = getattr(self, method)(
                             self.request.form['name'])
+
+    @property
+    def quota_enabled(self):
+        return self.context._quota_enabled
 
     def extensions(self):
         """Return non-system extensions
