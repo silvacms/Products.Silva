@@ -62,17 +62,18 @@ class FilesService(SilvaService):
 
     security.declarePrivate('upgrade_storage')
     def convert_storage(self, container):
-        upg = upgrade.UpgradeRegistry()
-        upg.register(
-            StorageConverterHelper(container),
-            '0.1', upgrade.AnyMetaType)
-        upg.register(
-            FileStorageConverter(self),
-            '0.1', 'Silva File')
-        upg.register(
-            ImageStorageConverter(self),
-            '0.1', 'Silva Image')
-        upg.upgrade_tree(container, '0.1')
+        if self.storage is not None and self.storage is not ZODBFile:
+            upg = upgrade.UpgradeRegistry()
+            upg.register(
+                StorageConverterHelper(container),
+                '0.1', upgrade.AnyMetaType)
+            upg.register(
+                FileStorageConverter(self),
+                '0.1', 'Silva File')
+            upg.register(
+                ImageStorageConverter(self),
+                '0.1', 'Silva Image')
+            upg.upgrade_tree(container, '0.1')
 
     def is_file_using_correct_storage(self, content):
         storage = ZODBFile
@@ -112,7 +113,12 @@ class FileServiceConvert(silvaforms.ZMISubForm):
 
     label = _(u"Convert stored files")
     description = _(u"Convert all currently stored file to "
-                    u"the current set storage")
+                    u"the current set storage.")
+
+    def available(self):
+        if self.context.storage is None:
+            return False
+        return self.context.storage is not ZODBFile
 
     @silvaforms.action(_(u'Convert all files'))
     def convert(self):

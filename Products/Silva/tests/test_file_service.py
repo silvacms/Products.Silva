@@ -35,26 +35,26 @@ class FileServicesTest(TestCase):
         """Test content structure:
 
         root/service_files (by default)
-        root/folder1
-        root/folder1/folder1in1
-        root/folder1/folder1in1/folder1in1in1
-        root/folder1/folder1in1/folder1in1in1/service_files
+        root/folder
+        root/folder/publication
+        root/folder/publication/folder1in1in1
+        root/folder/publication/service_files
         root/folder2
         """
         self.root = self.layer.get_application()
         self.layer.login('manager')
         factory = self.root.manage_addProduct['Silva']
-        factory.manage_addFolder('folder1', 'Folder 1')
-        factory.manage_addFolder('folder2', 'Folder 2')
+        factory.manage_addFolder('folder', 'Folder')
+        factory.manage_addFolder('contact', 'Contact Folder')
 
-        factory = self.root.folder1.manage_addProduct['Silva']
-        factory.manage_addPublication('folder1in1', 'Folder 1 in 1')
+        factory = self.root.folder.manage_addProduct['Silva']
+        factory.manage_addPublication('publication', 'Publication')
 
-        factory = self.root.folder1.folder1in1.manage_addProduct['Silva']
+        factory = self.root.folder.publication.manage_addProduct['Silva']
         factory.manage_addFolder('folder1in1in1', 'Folder 1 in 1 in 1')
 
         # We can only add a new service in a site
-        ISiteManager(self.root.folder1.folder1in1).make_site()
+        ISiteManager(self.root.folder.publication).make_site()
         factory.manage_addFilesService()
 
     def assertIsZODBImage(self, content):
@@ -72,7 +72,7 @@ class FileServicesTest(TestCase):
         self.assertTrue(IBlobFile.providedBy(content))
 
     def addTestFile(self, id, context):
-        with open_test_file('photo.tif') as file_handle:
+        with open_test_file('docs_export_2008-06-11.odt') as file_handle:
             factory = context.manage_addProduct['Silva']
             factory.manage_addFile(id, 'Test File', file_handle)
 
@@ -90,80 +90,116 @@ class FileServicesTest(TestCase):
 
         service.storage = File.ZODBFile
         zodb_file = service.new_file('test')
-        self.assertIsZODBFile(zodb_file)
+        self.assertTrue(IZODBFile.providedBy(zodb_file))
         self.assertTrue(service.is_file_using_correct_storage(zodb_file))
 
         service.storage = File.BlobFile
         blob_file = service.new_file('test')
-        self.assertIsBlobFile(blob_file)
-        self.assertFalse(service.is_file_using_correct_storage(zodb_file))
+        self.assertTrue(IBlobFile.providedBy(blob_file))
+        self.assertFalse(IZODBFile.providedBy(blob_file))
         self.assertTrue(service.is_file_using_correct_storage(blob_file))
+        self.assertFalse(service.is_file_using_correct_storage(zodb_file))
 
         # You can only add a service file in a local site.
-        factory = self.root.folder1.manage_addProduct['Silva']
+        factory = self.root.folder.manage_addProduct['Silva']
         with self.assertRaises(BadRequest):
             factory.manage_addFilesService('service_files')
 
-    def test_manage_convert_storage(self):
-        """Test service convert.
+    def test_convert_zodb_to_blob(self):
+        """Test converting from zodb storage to blob.
         """
-        # By default we use ZODB storage
         service = getUtility(IFilesService)
         service.storage = File.ZODBFile
 
-        self.addTestImage('testimage', self.root)
-        self.addTestImage('testimage', self.root.folder1)
-        self.addTestImage('testimage', self.root.folder1.folder1in1)
-        self.addTestFile('testfile', self.root)
-        self.addTestFile('testfile', self.root.folder1.folder1in1)
+        self.addTestImage('image', self.root)
+        self.addTestImage('image', self.root.folder)
+        self.addTestImage('image', self.root.folder.publication)
+        self.addTestFile('file', self.root)
+        self.addTestFile('file', self.root.folder.publication)
 
-        self.assertIsZODBImage(self.root.testimage)
-        self.assertIsZODBImage(self.root.folder1.testimage)
-        self.assertIsZODBImage(self.root.folder1.folder1in1.testimage)
+        self.assertIsZODBImage(self.root.image)
+        self.assertEqual(self.root.image.get_filename(), 'image.tiff')
+        self.assertEqual(self.root.image.get_content_type(), 'image/tiff')
+        self.assertIsZODBImage(self.root.folder.image)
+        self.assertIsZODBImage(self.root.folder.publication.image)
 
-        self.assertIsZODBFile(self.root.testfile)
-        self.assertIsZODBFile(self.root.folder1.folder1in1.testfile)
+        self.assertIsZODBFile(self.root.file)
+        self.assertEqual(self.root.file.get_filename(), 'file.odt')
+        self.assertEqual(
+            self.root.file.get_content_type(),
+            'application/vnd.oasis.opendocument.text')
+        self.assertIsZODBFile(self.root.folder.publication.file)
 
-        image_data = self.root.testimage.get_image(hires=1)
-        file_data = self.root.testfile.get_file()
+        image_data = self.root.image.get_image(hires=1)
+        file_data = self.root.file.get_file()
 
         transaction.commit()
 
-        # Convert to Blobs
+        # Convert to blob storage.
         service.storage = File.BlobFile
         service.convert_storage(self.root)
 
-        self.assertIsBlobImage(self.root.testimage)
-        self.assertIsBlobImage(self.root.folder1.testimage)
-        self.assertIsZODBImage(self.root.folder1.folder1in1.testimage)
+        self.assertIsBlobImage(self.root.image)
+        self.assertIsBlobImage(self.root.folder.image)
+        self.assertIsZODBImage(self.root.folder.publication.image)
+        self.assertIsBlobFile(self.root.file)
+        self.assertIsZODBFile(self.root.folder.publication.file)
 
-        self.assertIsBlobFile(self.root.testfile)
-        self.assertIsZODBFile(self.root.folder1.folder1in1.testfile)
+        # Data, filename, and content_type is preserved.
+        self.assertEqual(self.root.image.get_filename(), 'image.tiff')
+        self.assertEqual(self.root.image.get_content_type(), 'image/tiff')
+        self.assertHashEqual(self.root.image.get_image(hires=1), image_data)
+        self.assertEqual(self.root.file.get_filename(), 'file.odt')
+        self.assertEqual(
+            self.root.file.get_content_type(),
+            'application/vnd.oasis.opendocument.text')
+        self.assertHashEqual(self.root.file.get_file(), file_data)
 
-        self.assertHashEqual(
-            image_data,
-            self.root.testimage.get_image(hires=1))
-        self.assertHashEqual(
-            file_data,
-            self.root.testfile.get_file())
+    def test_convert_blob_to_zodb(self):
+        """Converting from blob to zodb is not supported, due to
+        implementation limitation of OFS.Image. If you try to convert
+        to zodb storage, nothing will happen.
+        """
+        service = getUtility(IFilesService)
+        service.storage = File.BlobFile
 
-        # Convert back to ZODB
+        self.addTestImage('image', self.root)
+        self.addTestImage('image', self.root.folder)
+        self.addTestImage('image', self.root.folder.publication)
+        self.addTestFile('file', self.root)
+        self.addTestFile('file', self.root.folder.publication)
+
+        self.assertIsBlobImage(self.root.image)
+        self.assertEqual(self.root.image.get_filename(), 'image.tiff')
+        self.assertEqual(self.root.image.get_content_type(), 'image/tiff')
+        self.assertIsBlobImage(self.root.folder.image)
+        self.assertIsBlobImage(self.root.folder.publication.image)
+
+        self.assertIsBlobFile(self.root.file)
+        self.assertEqual(self.root.file.get_filename(), 'file.odt')
+        self.assertEqual(
+            self.root.file.get_content_type(),
+            'application/vnd.oasis.opendocument.text')
+        self.assertIsBlobFile(self.root.folder.publication.file)
+
+        transaction.commit()
+
+        # Convert to blob storage.
         service.storage = File.ZODBFile
         service.convert_storage(self.root)
 
-        self.assertIsZODBImage(self.root.testimage)
-        self.assertIsZODBImage(self.root.folder1.testimage)
-        self.assertIsZODBImage(self.root.folder1.folder1in1.testimage)
+        self.assertIsBlobImage(self.root.image)
+        self.assertEqual(self.root.image.get_filename(), 'image.tiff')
+        self.assertEqual(self.root.image.get_content_type(), 'image/tiff')
+        self.assertIsBlobImage(self.root.folder.image)
+        self.assertIsBlobImage(self.root.folder.publication.image)
 
-        self.assertIsZODBFile(self.root.testfile)
-        self.assertIsZODBFile(self.root.folder1.folder1in1.testfile)
-
-        self.assertHashEqual(
-            image_data,
-            self.root.testimage.get_image(hires=1))
-        self.assertHashEqual(
-            file_data,
-            self.root.testfile.get_file())
+        self.assertIsBlobFile(self.root.file)
+        self.assertEqual(self.root.file.get_filename(), 'file.odt')
+        self.assertEqual(
+            self.root.file.get_content_type(),
+            'application/vnd.oasis.opendocument.text')
+        self.assertIsBlobFile(self.root.folder.publication.file)
 
     def test_convert_keep_metadata(self):
         """Test that converting the file storage keeps the metadata.
