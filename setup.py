@@ -12,7 +12,6 @@ tests_require = [
     'infrae.testing',
     'infrae.testbrowser',
     'infrae.wsgi [test]',
-    'zope.testing',
     ]
 
 def product_readme(filename):

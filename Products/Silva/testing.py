@@ -18,6 +18,7 @@ from infrae.testbrowser.selenium.browser import Browser as SeleniumBrowser
 from infrae.testing import TestCase, suite_from_package
 from infrae.testing import get_event_names, clear_events, get_events
 from infrae.testing import assertNotTriggersEvents, assertTriggersEvents
+from infrae.testing import testCleanUp
 from infrae.wsgi.testing import BrowserLayer, TestRequest
 from fanstatic.wsgi import Fanstatic
 from zope.site.hooks import setSite, setHooks
@@ -111,6 +112,9 @@ class MockMailHost(SimpleItem):
         SENT_MAILS.append(MockMail(mfrom=mfrom, mto=mto, message=message))
 
 
+testCleanUp.add(MockMailHost.reset)
+
+
 class SilvaLayer(BrowserLayer):
     """Test layer inside Silva.
     """
@@ -186,12 +190,7 @@ class SilvaLayer(BrowserLayer):
             except:
                 pass
         self._browsers = []
-
-        # Reset local site to None
-        setSite(None)
-        setHooks()
         self._silva_root = None
-        MockMailHost.reset()
 
         super(SilvaLayer, self).testTearDown()
 

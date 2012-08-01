@@ -13,7 +13,6 @@ from five import grok
 from silva.core import interfaces
 from zope.configuration.name import resolve
 from zope.interface import implements
-from zope.testing import cleanup
 from silva.core.interfaces import ISilvaObject
 
 import Products
@@ -341,5 +340,10 @@ class ExtensionRegistry(object):
 
 extensionRegistry = ExtensionRegistry()
 
-# Cleanup registry on test tearDown
-cleanup.addCleanUp(extensionRegistry.clear_registry)
+# Cleanup registry on layer tearDown
+try:
+    from infrae.testing import layerCleanUp
+except ImportError:
+    pass
+else:
+    layerCleanUp.add(extensionRegistry.clear_registry)

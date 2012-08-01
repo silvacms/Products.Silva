@@ -240,7 +240,7 @@ class FolderHandler(SilvaBaseHandler):
         if name == (NS_SILVA_URI, 'folder'):
             uid = self.generateOrReplaceId(attrs[(None, 'id')].encode('utf-8'))
             factory = self.parent().manage_addProduct['Silva']
-            factory.manage_addFolder(uid, '')
+            factory.manage_addFolder(uid, '', no_default_content=True)
             self.setResultId(uid)
 
     def endElementNS(self, name, qname):
@@ -256,7 +256,7 @@ class PublicationHandler(SilvaBaseHandler):
         if name == (NS_SILVA_URI, 'publication'):
             uid = self.generateOrReplaceId(attrs[(None, 'id')].encode('utf-8'))
             factory = self.parent().manage_addProduct['Silva']
-            factory.manage_addPublication(uid, '')
+            factory.manage_addPublication(uid, '', no_default_content=True)
             self.setResultId(uid)
 
     def endElementNS(self, name, qname):
@@ -375,8 +375,8 @@ class GhostHandler(SilvaBaseHandler):
     def startElementNS(self, name, qname, attrs):
         if name == (NS_SILVA_URI, 'ghost'):
             uid = self.generateOrReplaceId(attrs[(None, 'id')].encode('utf-8'))
-            self.parent().manage_addProduct['Silva'].manage_addGhost(
-                uid, '', no_default_version=True)
+            factory = self.parent().manage_addProduct['Silva']
+            factory.manage_addGhost(uid, '', no_default_version=True)
             self.setResultId(uid)
 
     def endElementNS(self, name, qname):
@@ -428,8 +428,8 @@ class GhostFolderHandler(SilvaBaseHandler):
     def startElementNS(self, name, qname, attrs):
         if name == (NS_SILVA_URI, 'ghost_folder'):
             uid = self.generateOrReplaceId(attrs[(None, 'id')].encode('utf-8'))
-            self.parent().manage_addProduct['Silva'].manage_addGhostFolder(
-                uid, '')
+            factory = self.parent().manage_addProduct['Silva']
+            factory.manage_addGhostFolder(uid, '', no_default_content=True)
             self.setResultId(uid)
 
     def endElementNS(self, name, qname):
