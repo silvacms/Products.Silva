@@ -4,6 +4,8 @@
 
 import re
 import email
+import os.path
+import sys
 
 from AccessControl.SecurityManagement import newSecurityManager
 from OFS.SimpleItem import SimpleItem
@@ -200,12 +202,18 @@ class SilvaLayer(BrowserLayer):
         return self._silva_root
 
     def get_wsgi_application(self):
+        """Return a WSGI application, that can be used to query the
+        Silva Root.
+        """
         return Fanstatic(
             self._test_wsgi_application,
             publisher_signature='++static++',
             debug=True)
 
     def get_browser(self, settings=None):
+        """A lxml-based based-browser, that case be used for simple
+        functional testing.
+        """
         browser = Browser(self.get_wsgi_application())
         if settings is not None:
             settings(browser)
@@ -213,12 +221,26 @@ class SilvaLayer(BrowserLayer):
         return browser
 
     def get_web_browser(self, settings=None):
+        """Return a Selenium based-browser, that case be used for
+        advanced (with JS) functional testing.
+        """
         browser = SeleniumBrowser(self.get_wsgi_application())
         if settings is not None:
             settings(browser)
         self._browsers.append(browser)
         return browser
 
+    def open_fixture(self, filename, globs=None, mode='rb'):
+        """Open the given test file. If globs is not given, it will
+        look inside a directory located in tests/data relatively from
+        the definition of the test layer.
+        """
+        if globs is None:
+            module = sys.modules[self.__class__.__module__]
+            base_path = os.path.join(os.path.dirname(module.__file__), 'tests')
+        else:
+            base_path = os.path.dirname(globs['__file__'])
+        return open(os.path.join(base_path, 'data', filename), mode)
 
 
 FunctionalLayer = SilvaLayer(Products.Silva)
@@ -226,6 +248,7 @@ FunctionalLayer = SilvaLayer(Products.Silva)
 tests = TestMethods()
 
 __all__ = ['FunctionalLayer', 'SilvaLayer', 'tests',
-           'TestCase', 'TestMethods', 'TestCase', 'suite_from_package',
+           'TestCase', 'TestMethods', 'TestCase', 'TestRequest',
+           'suite_from_package',
            'smi_settings', 'get_event_names', 'clear_events', 'get_events',
            'assertNotTriggersEvents', 'assertTriggersEvents',]
