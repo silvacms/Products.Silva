@@ -15,7 +15,7 @@ import Products.Silva
 
 from infrae.testbrowser.browser import Browser
 from infrae.testbrowser.selenium.browser import Browser as SeleniumBrowser
-from infrae.testing import TestCase, suite_from_package
+from infrae.testing import TestCase, TestMethods, suite_from_package
 from infrae.testing import get_event_names, clear_events, get_events
 from infrae.testing import assertNotTriggersEvents, assertTriggersEvents
 from infrae.testing import testCleanUp
@@ -223,8 +223,9 @@ class SilvaLayer(BrowserLayer):
 
 FunctionalLayer = SilvaLayer(Products.Silva)
 
+tests = TestMethods()
 
-__all__ = ['FunctionalLayer', 'SilvaLayer',
-           'TestCase', 'suite_from_package',
+__all__ = ['FunctionalLayer', 'SilvaLayer', 'tests',
+           'TestCase', 'TestMethods', 'TestCase', 'suite_from_package',
            'smi_settings', 'get_event_names', 'clear_events', 'get_events',
            'assertNotTriggersEvents', 'assertTriggersEvents',]
