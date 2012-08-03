@@ -5,8 +5,7 @@
 
 import unittest
 
-from Products.Silva.testing import FunctionalLayer
-from Products.Silva.tests.helpers import open_test_file
+from Products.Silva.testing import FunctionalLayer, tests
 
 from silva.core.interfaces import IPublicationWorkflow
 from silva.core.interfaces import IFolder
@@ -88,12 +87,16 @@ class FolderTestCase(unittest.TestCase):
     def test_get_ordered_publishables_empty(self):
         """Test get_ordered_publishables without content.
         """
-        self.assertEqual(self.root.folder.get_ordered_publishables(), [])
+        tests.assertContentItemsEqual(
+            self.root.folder.get_ordered_publishables(),
+            [])
 
     def test_get_non_publishables_empty(self):
         """Test get_non_publishables without content.
         """
-        self.assertEqual(self.root.folder.get_non_publishables(), [])
+        tests.assertContentItemsEqual(
+            self.root.folder.get_non_publishables(),
+            [])
 
 
 class FolderWithContentTestCase(unittest.TestCase):
@@ -110,17 +113,17 @@ class FolderWithContentTestCase(unittest.TestCase):
         factory = self.root.folder.manage_addProduct['Silva']
         factory.manage_addLink('first_link', 'First Link')
         factory.manage_addLink('second_link', 'Second Link')
-        with open_test_file('torvald.jpg') as image:
+        with self.layer.open_fixture('torvald.jpg') as image:
             factory.manage_addImage('picture.tif', 'Picture', image)
         factory.manage_addFolder('folder', 'Folder')
-        with open_test_file('test_document.xml') as data:
+        with self.layer.open_fixture('test_document.xml') as data:
             factory.manage_addFile('data_file.xml', 'Data file', data)
         factory.manage_addPublication('publication', 'Publication')
 
     def test_get_ordered_publishables(self):
         """Test get_ordered_publishables with content.
         """
-        self.assertEqual(
+        tests.assertContentItemsEqual(
             self.root.folder.get_ordered_publishables(),
             [self.root.folder['first_link'],
              self.root.folder['second_link'],
@@ -130,7 +133,7 @@ class FolderWithContentTestCase(unittest.TestCase):
     def test_get_non_publishables(self):
         """Test get_non_publishables with content.
         """
-        self.assertItemsEqual(
+        tests.assertContentItemsEqual(
             self.root.folder.get_non_publishables(),
             [self.root.folder['data_file.xml'],
              self.root.folder['picture.tif']])
