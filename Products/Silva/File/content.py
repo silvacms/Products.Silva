@@ -224,14 +224,10 @@ class File(Asset):
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'set_file')
-    def set_file(self, file):
+    def set_file(self, stream, content_type=None, content_encoding=None):
         """Set data in _file object
         """
-        self._p_changed = 1
-        self._set_file_helper(file)
-        if not interfaces.IImage.providedBy(aq_parent(self)):
-            # If we are not a storage of an image, trigger an event.
-            notify(ObjectModifiedEvent(self))
+        raise NotImplementedError
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'set_filename')
@@ -259,13 +255,8 @@ class File(Asset):
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'set_text')
-    def set_text(self, datastr):
-        ct = self._file.content_type
-        datafile = StringIO()
-        datafile.write(datastr)
-        self.set_file(datafile)
-        datafile.close()
-        self._file.content_type = ct
+    def set_text(self, text):
+        raise NotImplementedError
 
 InitializeClass(File)
 
@@ -283,18 +274,36 @@ class ZODBFile(File):
         # Actual container of file data
         self._file = Image.File(id, id, '')
 
-    def _set_file_helper(self, file):
-        data, size = self._file._read_data(file)
-        filename = get_file_name(file, default=self.id)
-        content_type, content_encoding = getUtility(
-            IMimeTypeClassifier).guess_type(
-            id=filename,
-            buffer=hasattr(data, 'data') and data.data or data,
-            default=DEFAULT_MIMETYPE)
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'set_file')
+    def set_file(self, stream, content_type=None, content_encoding=None):
+        """Set data in _file object
+        """
+        data, size = self._file._read_data(stream)
+        if content_type is None:
+            # Detect content-type
+            identifier = get_file_name(stream, default=self.id)
+            content_type, content_encoding = getUtility(
+                IMimeTypeClassifier).guess_type(
+                id=identifier,
+                buffer=hasattr(data, 'data') and data.data or data,
+                default=DEFAULT_MIMETYPE)
+        # Update file data.
         self._file.update_data(data, content_type, size)
         if self._file.content_type == 'text/plain':
             self._file.content_type = 'text/plain; charset=utf-8'
         self._content_encoding = content_encoding
+        if not interfaces.IImage.providedBy(aq_parent(self)):
+            # If we are not a storage of an image, trigger an event.
+            notify(ObjectModifiedEvent(self))
+
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'set_text')
+    def set_text(self, text):
+        stream = StringIO()
+        stream.write(text)
+        self.set_file(stream, content_type=self._file.content_type)
+        stream.close()
 
     security.declareProtected(
         SilvaPermissions.View, 'get_file')
@@ -324,42 +333,41 @@ class BlobFile(File):
         self._file = blob.Blob()
         self._content_type = DEFAULT_MIMETYPE
 
-    def _set_content_type(self, file, content_type=None):
-        id = get_file_name(file, default=self.id)
-        blob_filename = self._file._p_blob_uncommitted or \
-            self._file._p_blob_committed
-        self._content_type, self._content_encoding = getUtility(
-            IMimeTypeClassifier).guess_type(
-            id=id,
-            filename=blob_filename,
-            default=content_type)
-        if self._content_type == 'text/plain':
-            self._content_type = 'text/plain; charset=utf-8'
-
     # MODIFIERS
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'set_file')
-    def set_file(self, file):
-        desc = self._file.open('w')
-        try:
-            data = file.read(CHUNK_SIZE)
+    def set_file(self, stream, content_type=None, content_encoding=None):
+        with self._file.open('w') as descriptor:
+            data = stream.read(CHUNK_SIZE)
             while data:
-                desc.write(data)
-                data = file.read(CHUNK_SIZE)
-        finally:
-            desc.close()
-        self._set_content_type(file, DEFAULT_MIMETYPE)
+                descriptor.write(data)
+                data = stream.read(CHUNK_SIZE)
+        if content_type is None:
+            # Detect content-type
+            identifier = get_file_name(stream, default=self.id)
+            blob_filename = self._file._p_blob_uncommitted or \
+                self._file._p_blob_committed
+            self._content_type, self._content_encoding = getUtility(
+                IMimeTypeClassifier).guess_type(
+                id=identifier,
+                filename=blob_filename,
+                default=DEFAULT_MIMETYPE)
+        else:
+            # Set provided values
+            self._content_type = content_type
+            self._content_encoding = content_encoding
+        if self._content_type == 'text/plain':
+            self._content_type = 'text/plain; charset=utf-8'
         if not interfaces.IImage.providedBy(aq_parent(self)):
             # If we are not a storage of an image, trigger an event.
             notify(ObjectModifiedEvent(self))
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'set_text')
-    def set_text(self, filestr):
-        desc = self._file.open('w')
-        desc.write(filestr)
-        desc.close()
+    def set_text(self, text):
+        with self._file.open('w') as descriptor:
+            descriptor.write(text)
         if not interfaces.IImage.providedBy(aq_parent(self)):
             # If we are not a storage of an image, trigger an event.
             notify(ObjectModifiedEvent(self))
@@ -376,11 +384,9 @@ class BlobFile(File):
     def get_file_size(self):
         """Get the size of the file as it will be downloaded.
         """
-        desc = self._file.open()
-        desc.seek(0, 2)
-        size = desc.tell()
-        desc.close()
-        return size
+        with self._file.open() as descriptor:
+            descriptor.seek(0, 2)
+            return descriptor.tell()
 
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'get_content_type')
@@ -397,10 +403,8 @@ class BlobFile(File):
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'get_file_system_path')
     def get_file_system_path(self):
-        desc = self._file.open()
-        filename = desc.name
-        desc.close()
-        return filename
+        with self._file.open() as descriptor:
+            return descriptor.name
 
 
 InitializeClass(BlobFile)

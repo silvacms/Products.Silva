@@ -2,15 +2,12 @@
 # See also LICENSE.txt
 # $Id$
 
-from cStringIO import StringIO
 import unittest
 
 from zope.interface.verify import verifyObject
 
 from Products.Silva import File
-from Products.Silva.testing import FunctionalLayer, TestCase
-from Products.Silva.testing import assertTriggersEvents
-from Products.Silva.tests import helpers
+from Products.Silva.testing import FunctionalLayer, TestCase, tests
 from silva.core import interfaces
 
 
@@ -25,34 +22,18 @@ class DefaultFileImplementationTestCase(TestCase):
         self.layer.login('author')
 
     def create_test_file(self, filename='photo.tif'):
-        file_handle = helpers.open_test_file(filename)
-        self.file_data = file_handle.read()
-        self.file_size = file_handle.tell()
-        file_handle.seek(0)
         if self.implementation is not None:
             self.root.service_files.storage = self.implementation
-        factory = self.root.manage_addProduct['Silva']
-        factory.manage_addFile(filename, 'Test File', file_handle)
-        file_handle.close()
+        with self.layer.open_fixture(filename) as stream:
+            self.file_data = stream.read()
+            self.file_size = stream.tell()
+            stream.seek(0)
+            with tests.assertTriggersEvents(
+                'ObjectWillBeAddedEvent', 'ObjectAddedEvent',
+                'ContainerModifiedEvent', 'ObjectCreatedEvent'):
+                factory = self.root.manage_addProduct['Silva']
+                factory.manage_addFile(filename, 'Test File', stream)
         return self.root._getOb(filename)
-
-    def test_event(self):
-        """Test that events are triggered.
-        """
-        with assertTriggersEvents(
-            'ObjectWillBeAddedEvent', 'ObjectAddedEvent',
-            'IntIdAddedEvent', 'ContainerModifiedEvent',
-            'MetadataModifiedEvent', 'ObjectCreatedEvent'):
-            factory = self.root.manage_addProduct['Silva']
-            factory.manage_addFile('file', 'Eventfull File')
-
-        with assertTriggersEvents(
-            'ObjectModifiedEvent'):
-            self.root.file.set_file(StringIO("Some text file"))
-
-        with assertTriggersEvents(
-            'ObjectModifiedEvent'):
-            self.root.file.set_text("Text to set as file content")
 
     def test_content_image(self):
         """Test base content methods on a file that contains an image.
@@ -117,6 +98,17 @@ class DefaultFileImplementationTestCase(TestCase):
         content.set_filename('text.txt')
         self.assertEqual(content.get_filename(), 'text.txt')
 
+        # You can change the text of a text file.
+        content.set_text("This is the story of a kind")
+        self.assertEqual(content.get_file_size(), 27)
+        # XXX This triggered object modified and reseted the filename.
+        self.assertEqual(content.get_filename(), 'test_file_text.txt')
+        self.assertEqual(content.get_content_type(), 'text/plain; charset=utf-8')
+        self.assertEqual(content.get_content_encoding(), None)
+        self.assertEqual(content.get_mime_type(), 'text/plain')
+        self.assertEqual(content.is_text(), True)
+        self.assertEqual(content.is_text_editable(), True)
+
     def test_content_compressed_text(self):
         """Test base content methods on a file that contains
         compressed text.
@@ -153,6 +145,88 @@ class DefaultFileImplementationTestCase(TestCase):
         self.assertTrue(content.tag() is not None)
         # You can edit text
         self.assertEqual(content.is_text(), True)
+
+    def test_modify_text(self):
+        """Test changing the text of a text editable file.
+        """
+        content = self.create_test_file('test_file_text.txt')
+        self.assertTrue(verifyObject(interfaces.IAsset, content))
+        self.assertTrue(verifyObject(interfaces.IFile, content))
+
+        self.assertEqual(content.get_content_type(), 'text/plain; charset=utf-8')
+        self.assertEqual(content.get_content_encoding(), None)
+        self.assertEqual(content.get_file_size(), self.file_size)
+        self.assertEqual(content.get_filename(), 'test_file_text.txt')
+        self.assertEqual(content.get_mime_type(), 'text/plain')
+
+        # You can edit text
+        self.assertEqual(content.is_text(), True)
+        self.assertEqual(content.is_text_editable(), True)
+
+        # You can change the text of a text file.
+        with tests.assertTriggersEvents('ObjectModifiedEvent'):
+            content.set_text("This is the story of a kind")
+
+        self.assertEqual(content.get_file_size(), 27)
+        self.assertEqual(content.get_filename(), 'test_file_text.txt')
+        self.assertEqual(content.get_content_type(), 'text/plain; charset=utf-8')
+        self.assertEqual(content.get_content_encoding(), None)
+        self.assertEqual(content.get_mime_type(), 'text/plain')
+        self.assertEqual(content.is_text(), True)
+        self.assertEqual(content.is_text_editable(), True)
+
+    def test_modify_file(self):
+        """Test uploading a file with a new one. The new content type
+        and content encoding should have been detected.
+        """
+        content = self.create_test_file()
+        self.assertTrue(verifyObject(interfaces.IAsset, content))
+        self.assertTrue(verifyObject(interfaces.IFile, content))
+
+        # We have an image.
+        self.assertEqual(content.get_content_type(), 'image/tiff')
+        self.assertEqual(content.get_content_encoding(), None)
+        self.assertEqual(content.get_filename(), 'photo.tif')
+        self.assertEqual(content.get_mime_type(), 'image/tiff')
+
+        # Now we upload a text file.
+        with self.layer.open_fixture('test_document.xml') as stream:
+            with tests.assertTriggersEvents('ObjectModifiedEvent'):
+                content.set_file(stream)
+
+        # We didn't specify any content_type of encoding, they should
+        # have been detected.
+        self.assertEqual(content.get_content_type(), 'application/xml')
+        self.assertEqual(content.get_content_encoding(), None)
+        self.assertEqual(content.get_filename(), 'photo.xml')
+        self.assertEqual(content.get_mime_type(), 'application/xml')
+
+    def test_modify_file_and_content_type(self):
+        """Test uploading a file with a new one. The content type
+        given as option should be used, and no content type or content
+        encoding should be detected.
+        """
+        content = self.create_test_file()
+        self.assertTrue(verifyObject(interfaces.IAsset, content))
+        self.assertTrue(verifyObject(interfaces.IFile, content))
+
+        # We have an image.
+        self.assertEqual(content.get_content_type(), 'image/tiff')
+        self.assertEqual(content.get_content_encoding(), None)
+        self.assertEqual(content.get_filename(), 'photo.tif')
+        self.assertEqual(content.get_mime_type(), 'image/tiff')
+
+        # Now we upload a text file.
+        with self.layer.open_fixture('test_document.xml') as stream:
+            with tests.assertTriggersEvents('ObjectModifiedEvent'):
+                content.set_file(stream, content_type='text/html')
+
+        # We have the new content_type and content encoding, even if
+        # they don't match the file
+        self.assertEqual(content.get_content_type(), 'text/html')
+        self.assertEqual(content.get_content_encoding(), None)
+        self.assertEqual(content.get_filename(), 'photo.html')
+        self.assertEqual(content.get_mime_type(), 'text/html')
 
     def test_download(self):
         """Test downloading file.

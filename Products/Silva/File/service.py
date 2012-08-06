@@ -181,9 +181,10 @@ class FileStorageConverter(upgrade.BaseUpgrader):
         new_file = container._getOb(tmp_identifier)
         self.replace_references(content, new_file)
         self.replace(content, new_file)
-        new_file.set_file(content.get_file_fd())
-        new_file.set_content_type(content.get_content_type())
-        new_file.set_content_encoding(content.get_content_encoding())
+        new_file.set_file(
+            content.get_file_fd(),
+            content_type=content.get_content_type(),
+            content_encoding=content.get_content_encoding())
         container._delObject(identifier)
         container.manage_renameObject(tmp_identifier, identifier)
         logger.info("File %s migrated" %

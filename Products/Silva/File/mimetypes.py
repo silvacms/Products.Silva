@@ -4,7 +4,6 @@
 
 from __future__ import absolute_import
 
-
 import logging
 import os.path
 import mimetypes
@@ -161,11 +160,10 @@ try:
     magic_error.argtypes = [magic_t]
 
     def error_check(result, func, args):
-        err = magic_error(args[0])
-        if err is not None:
-            raise MagicException(err)
-        else:
-            return result
+        error = magic_error(args[0])
+        if error is not None:
+            raise MagicException(error)
+        return result
 
     magic_open = libmagic.magic_open
     magic_open.restype = magic_t
@@ -207,24 +205,36 @@ try:
             magic_load(self.compressed_options, magic_file)
 
         def guess_buffer_type(self, buffer):
-            mimetype = magic_buffer(self.options, buffer, len(buffer))
-            encoding = None
-            if mimetype in _ENCODING_MIMETYPE_TO_ENCODING:
-                encoding = _ENCODING_MIMETYPE_TO_ENCODING[mimetype]
-                mimetype = magic_buffer(
-                    self.compressed_options, buffer, len(buffer))
-            return mimetype, encoding
+            try:
+                mimetype = magic_buffer(self.options, buffer, len(buffer))
+                encoding = None
+                if mimetype in _ENCODING_MIMETYPE_TO_ENCODING:
+                    encoding = _ENCODING_MIMETYPE_TO_ENCODING[mimetype]
+                    mimetype = magic_buffer(
+                        self.compressed_options, buffer, len(buffer))
+                return mimetype, encoding
+            except MagicException as error:
+                logger.error(
+                    u"Error while detecting mimetype for a buffer: %s",
+                    str(error))
+                return None, None
 
         def guess_file_type(self, filename):
             if not os.path.exists(filename):
                 raise IOError("File does not exist: " + filename)
 
-            mimetype = magic_file(self.options, filename)
-            encoding = None
-            if mimetype in _ENCODING_MIMETYPE_TO_ENCODING:
-                encoding = _ENCODING_MIMETYPE_TO_ENCODING[mimetype]
-                mimetype = magic_file(self.compressed_options, filename)
-            return mimetype, encoding
+            try:
+                mimetype = magic_file(self.options, filename)
+                encoding = None
+                if mimetype in _ENCODING_MIMETYPE_TO_ENCODING:
+                    encoding = _ENCODING_MIMETYPE_TO_ENCODING[mimetype]
+                    mimetype = magic_file(self.compressed_options, filename)
+                return mimetype, encoding
+            except MagicException as error:
+                logger.error(
+                    u"Error while detecting mimetype for a file: %s, %s",
+                    str(error), filename)
+                return None, None
 
 except (OSError, ImportError, AttributeError):
 

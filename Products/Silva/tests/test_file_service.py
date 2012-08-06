@@ -17,7 +17,6 @@ from zExceptions import BadRequest
 
 from Products.Silva import File
 from Products.SilvaMetadata.interfaces import IMetadataService
-from Products.Silva.tests.helpers import open_test_file
 from Products.Silva.testing import FunctionalLayer, TestCase
 
 
@@ -71,15 +70,15 @@ class FileServicesTest(TestCase):
     def assertIsBlobFile(self, content):
         self.assertTrue(IBlobFile.providedBy(content))
 
-    def addTestFile(self, id, context):
-        with open_test_file('docs_export_2008-06-11.odt') as file_handle:
+    def addTestFile(self, identifier, context):
+        with self.layer.open_fixture('docs_export_2008-06-11.odt') as stream:
             factory = context.manage_addProduct['Silva']
-            factory.manage_addFile(id, 'Test File', file_handle)
+            factory.manage_addFile(identifier, 'Test File', stream)
 
-    def addTestImage(self, id, context):
-        with open_test_file('photo.tif') as file_handle:
+    def addTestImage(self, identifier, context):
+        with self.layer.open_fixture('photo.tif') as stream:
             factory = context.manage_addProduct['Silva']
-            factory.manage_addImage(id, 'Test Image', file_handle)
+            factory.manage_addImage(identifier, 'Test Image', stream)
 
     def test_service(self):
         """Test service implementation.
@@ -128,6 +127,7 @@ class FileServicesTest(TestCase):
         self.assertEqual(
             self.root.file.get_content_type(),
             'application/vnd.oasis.opendocument.text')
+        self.assertEqual(self.root.file.get_content_encoding(), None)
         self.assertIsZODBFile(self.root.folder.publication.file)
 
         image_data = self.root.image.get_image(hires=1)
@@ -153,6 +153,7 @@ class FileServicesTest(TestCase):
         self.assertEqual(
             self.root.file.get_content_type(),
             'application/vnd.oasis.opendocument.text')
+        self.assertEqual(self.root.file.get_content_encoding(), None)
         self.assertHashEqual(self.root.file.get_file(), file_data)
 
     def test_convert_blob_to_zodb(self):

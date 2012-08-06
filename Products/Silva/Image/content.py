@@ -557,22 +557,22 @@ class Image(Asset):
 
             image_io = transformer.transform(self.hires_image, self.web_format)
             if image_io:
-                ct = self._web2ct[self.web_format]
-                self._image_factory('image', image_io, ct)
+                content_type = self._web2ct[self.web_format]
+                self._image_factory('image', image_io, content_type)
             else:
                 self.image = self.hires_image
-        except ValueError, e:
-            logger.info("Web presentation creation failed for %s with %s" %
-                        ('/'.join(self.getPhysicalPath()), str(e)))
+        except ValueError as error:
+            logger.error("Web presentation creation failed for %s with %s" %
+                        ('/'.join(self.getPhysicalPath()), str(error)))
             self.image = self.hires_image
             return
-        except IOError, e:
-            logger.info("Web presentation creation failed for %s with %s" %
-                        ('/'.join(self.getPhysicalPath()), str(e)))
-            if str(e.args[0]) == "cannot read interlaced PNG files":
+        except IOError as error:
+            logger.error("Web presentation creation failed for %s with %s" %
+                        ('/'.join(self.getPhysicalPath()), str(error)))
+            if str(error.args[0]) == "cannot read interlaced PNG files":
                 self.image = self.hires_image
                 return
-            raise ValueError(str(e))
+            raise ValueError(str(error))
 
     def _create_thumbnail(self):
         try:
@@ -580,8 +580,8 @@ class Image(Asset):
             thumb = transformer.transform(self.image or self.hires_image,
                                           self.web_format)
             if thumb:
-                ct = self._web2ct[self.web_format]
-                self._image_factory('thumbnail_image', thumb, ct)
+                content_type = self._web2ct[self.web_format]
+                self._image_factory('thumbnail_image', thumb, content_type)
         except IOError, e:
             logger.info("Thumbnail creation failed for %s with %s" %
                         ('/'.join(self.getPhysicalPath()), str(e)))
@@ -597,14 +597,12 @@ class Image(Asset):
             self.thumbnail_image = None
             return
 
-    def _image_factory(self, image_id, image_file, content_type=None):
+    def _image_factory(self, identifier, stream, content_type=None):
         service_files = getUtility(IFilesService)
-        new_image = service_files.new_file(image_id)
-        setattr(self, image_id, new_image)
-        new_image = getattr(self, image_id)
-        new_image.set_file(image_file)
-        if content_type is not None:
-            new_image.set_content_type(content_type)
+        new_image = service_files.new_file(identifier)
+        setattr(self, identifier, new_image)
+        new_image = getattr(self, identifier)
+        new_image.set_file(stream, content_type)
         getUtility(IMimeTypeClassifier).guess_filename(new_image, self.getId())
         return new_image
 
