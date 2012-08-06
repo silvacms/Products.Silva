@@ -170,7 +170,7 @@ class FileStorageConverter(upgrade.BaseUpgrader):
     def upgrade(self, content):
         identifier = content.getId()
 
-        tmp_identifier = identifier + '__conv_storage'
+        tmp_identifier = identifier + 'conv_storage'
         new_file = self.service.new_file(identifier)
         container = content.aq_parent
         if not interfaces.IContainer.providedBy(container):
