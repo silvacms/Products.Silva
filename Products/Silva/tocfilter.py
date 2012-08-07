@@ -8,7 +8,7 @@ from AccessControl import getSecurityManager
 
 from zope.component import getUtility
 from silva.core import conf as silvaconf
-from silva.core.interfaces import IViewableObject
+from silva.core.interfaces import IViewableObject, IPublishable
 from silva.core.services.base import SilvaService
 from silva.core.services.interfaces import IContentFilteringService
 from silva.core.views.interfaces import IDisableNavigationTag, IPreviewLayer
@@ -101,6 +101,21 @@ class ViewableFilter(object):
             (self.metadata(item, 'silva-settings', 'hide_from_tocs') == 'hide'))
 
 registry.register(ViewableFilter)
+
+
+class PublishableFilter(object):
+    """Filter out elements that are not published.
+    """
+
+    def __init__(self, request):
+        pass
+
+    def __call__(self, content):
+        if IPublishable.providedBy(content) and not content.is_published():
+            return True
+        return False
+
+registry.register(PublishableFilter)
 
 
 class FilteringService(SilvaService):
