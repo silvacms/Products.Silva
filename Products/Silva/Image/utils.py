@@ -15,6 +15,9 @@ class Size(namedtuple('Size', ('width', 'height'))):
     def surface(self):
         return self.width * self.height
 
+    def __eq__(self, other):
+        return self.width == other.width and self.height == other.height
+
     def __lt__(self, other):
         return self.surface < other.surface
 
@@ -133,7 +136,7 @@ class WHResizeSpec(object):
         image_width, image_height = image.get_size()
         width, height = (self.width, self.height)
         if width == '*':
-            width = image_width
+            width = (height * image_width) / image_height
         if height == '*':
-            height = image_height
+            height = (width * image_height) / image_width
         return Size(width, height)
