@@ -96,26 +96,12 @@ class ViewableFilter(object):
         if not IViewableObject.providedBy(content):
             return True
         item = self.get(content)
+        # Item is none will account for unpublished content.
         return (
             (item is None) or
             (self.metadata(item, 'silva-settings', 'hide_from_tocs') == 'hide'))
 
 registry.register(ViewableFilter)
-
-
-class PublishableFilter(object):
-    """Filter out elements that are not published.
-    """
-
-    def __init__(self, request):
-        pass
-
-    def __call__(self, content):
-        if IPublishable.providedBy(content) and not content.is_published():
-            return True
-        return False
-
-registry.register(PublishableFilter)
 
 
 class FilteringService(SilvaService):
