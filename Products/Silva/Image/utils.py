@@ -15,9 +15,6 @@ class Size(namedtuple('Size', ('width', 'height'))):
     def surface(self):
         return self.width * self.height
 
-    def __eq__(self, other):
-        return self.width == other.width and self.height == other.height
-
     def __lt__(self, other):
         return self.surface < other.surface
 
