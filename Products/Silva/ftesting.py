@@ -10,7 +10,7 @@ import transaction
 def public_settings(browser):
     browser.inspect.add(
         'title',
-        css="h1",
+        css="div.box1 h1",
         type="text")
 
 def zmi_settings(browser):
