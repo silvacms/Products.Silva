@@ -431,17 +431,17 @@ class Image(Asset):
             del extra_attributes['css_class']
 
         extra_html_attributes = [
-            '{name}="{value}"'.format(name=escape(name, 1),
+            u'{name}="{value}"'.format(name=escape(name, 1),
                                       value=escape(value, 1))
             for name, value in extra_attributes.iteritems()]
 
-        return '<img src="{src}" width="{width}" height="{height}" ' \
-               'alt="{alt}" {extra_attributes} />'.format(
+        return u'<img src="{src}" width="{width}" height="{height}" ' \
+               u'alt="{alt}" {extra_attributes} />'.format(
                     src=url,
                     width=str(width),
                     height=str(height),
                     alt=escape(title, 1),
-                    extra_attributes=" ".join(extra_html_attributes))
+                    extra_attributes=u" ".join(extra_html_attributes))
 
     security.declareProtected(SilvaPermissions.View, 'url')
     def url(self, hires=False, thumbnail=False, request=None, preview=False):

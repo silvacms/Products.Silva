@@ -8,10 +8,17 @@ import transaction
 
 
 def public_settings(browser):
+    """Settings to test public views, using the standard issue skin.
+    """
     browser.inspect.add(
         'title',
         css="div.box1 h1",
         type="text")
+    browser.inspect.add(
+        'navigation',
+        css="div#sidebar a",
+        type='link')
+
 
 def zmi_settings(browser):
     # ZMI

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright (c) 2002-2010 Infrae. All rights reserved.
 # See also LICENSE.txt
 # $Id$
@@ -44,7 +45,7 @@ class DefaultImageTestCase(TestCase):
             self.root.service_files.storage = self.implementation
 
         factory = self.root.manage_addProduct['Silva']
-        factory.manage_addImage('test_image', 'Test Image', image_file)
+        factory.manage_addImage('test_image', u'Image élaboré', image_file)
         image_file.close()
 
     def test_image(self):
