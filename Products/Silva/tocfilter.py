@@ -105,15 +105,21 @@ registry.register(ViewableFilter)
 
 
 class ContainerFilter(object):
-    """Filter out container that don't have an index.
+    """Filter out container that don't have a published index.
     """
 
     def __init__(self, request):
-        pass
+        self.get = lambda content: content.get_viewable()
+        if IPreviewLayer.providedBy(request):
+            self.get = lambda content: content.get_previewable()
 
     def __call__(self, content):
-        if IContainer.providedBy(content) and not content.is_published():
-            return True
+        if IContainer.providedBy(content):
+            default = content.get_default()
+            if default is None:
+                return True
+            if self.get(default) is None:
+                return True
         return False
 
 registry.register(ContainerFilter)
