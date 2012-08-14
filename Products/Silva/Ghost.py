@@ -26,6 +26,7 @@ from zeam.form.base.widgets import widget_id
 from silva.core.views.interfaces import IPreviewLayer
 from silva.core import conf as silvaconf
 from silva.core.conf.interfaces import IIdentifiedContent
+from silva.core.interfaces.errors import ContentError
 from silva.core.interfaces import (
     IContainer, IContent, IGhost, IGhostAware, IGhostVersion)
 from silva.core.references.reference import Reference
@@ -78,9 +79,12 @@ class GhostBase(object):
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'set_title')
     def set_title(self, title):
-        """Don't do anything.
+        """You cannot change the title of a ghost.
         """
-        pass
+        if title is not None:
+            raise ContentError(
+                _(u"A ghost title is immutable."),
+                self.get_silva_object())
 
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'get_title')
@@ -292,7 +296,7 @@ class GhostAddForm(silvaforms.SMIAddForm):
     def _add(self, parent, data):
         factory = parent.manage_addProduct['Silva']
         return factory.manage_addGhost(
-            data['id'], 'Ghost', haunted=data['haunted'])
+            data['id'], None, haunted=data['haunted'])
 
 
 class GhostEditForm(silvaforms.SMIEditForm):

@@ -376,7 +376,7 @@ class GhostHandler(SilvaBaseHandler):
         if name == (NS_SILVA_URI, 'ghost'):
             uid = self.generateOrReplaceId(attrs[(None, 'id')].encode('utf-8'))
             factory = self.parent().manage_addProduct['Silva']
-            factory.manage_addGhost(uid, '', no_default_version=True)
+            factory.manage_addGhost(uid, None, no_default_version=True)
             self.setResultId(uid)
 
     def endElementNS(self, name, qname):
@@ -393,15 +393,15 @@ class GhostVersionHandler(SilvaBaseHandler):
         if name == (NS_SILVA_URI, 'content'):
             if attrs.has_key((None, 'version_id')):
                 uid = attrs[(None, 'version_id')].encode('utf8')
-                self.parent().manage_addProduct['Silva'].manage_addGhostVersion(
-                    uid, '')
+                factory = self.parent().manage_addProduct['Silva']
+                factory.manage_addGhostVersion(uid, None)
                 self.setResultId(uid)
 
     def endElementNS(self, name, qname):
         if name == (NS_SILVA_URI, 'content'):
             haunted = self.getData('haunted')
             if haunted is None:
-                logger.error('invalid ghost at %s' %
+                logger.error(u'Invalid ghost at %s' %
                              '/'.join(self.result().getPhysicalPath()))
             else:
                 info = self.getInfo()
@@ -429,7 +429,7 @@ class GhostFolderHandler(SilvaBaseHandler):
         if name == (NS_SILVA_URI, 'ghost_folder'):
             uid = self.generateOrReplaceId(attrs[(None, 'id')].encode('utf-8'))
             factory = self.parent().manage_addProduct['Silva']
-            factory.manage_addGhostFolder(uid, '', no_default_content=True)
+            factory.manage_addGhostFolder(uid, None, no_default_content=True)
             self.setResultId(uid)
 
     def endElementNS(self, name, qname):
@@ -437,7 +437,7 @@ class GhostFolderHandler(SilvaBaseHandler):
             folder = self.result()
             haunted = self.getData('haunted')
             if haunted is None:
-                logger.error('invalid ghost folder at %s' %
+                logger.error(u'Invalid ghost folder at %s' %
                              '/'.join(folder.getPhysicalPath()))
             else:
                 info = self.getInfo()

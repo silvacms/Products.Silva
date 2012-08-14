@@ -49,8 +49,7 @@ class GhostFolderTestCase(unittest.TestCase):
         """Test a Ghost Folder haunting to a Folder.
         """
         factory = self.root.target.manage_addProduct['Silva']
-        factory.manage_addGhostFolder(
-            'ghost', 'Ghost', haunted=self.root.folder)
+        factory.manage_addGhostFolder('ghost', None, haunted=self.root.folder)
 
         ghost = self.root.target.ghost
         folder = self.root.folder
@@ -112,7 +111,7 @@ class GhostFolderTestCase(unittest.TestCase):
         """
         factory = self.root.target.manage_addProduct['Silva']
         factory.manage_addGhostFolder(
-            'ghost', 'Ghost', haunted=self.root.folder.publication)
+            'ghost', None, haunted=self.root.folder.publication)
 
         ghost = self.root.target.ghost
         publication = self.root.folder.publication
@@ -137,8 +136,7 @@ class GhostFolderTestCase(unittest.TestCase):
         """Test the reference created by the ghost.
         """
         factory = self.root.target.manage_addProduct['Silva']
-        factory.manage_addGhostFolder(
-            'ghost', 'Ghost', haunted=self.root.folder)
+        factory.manage_addGhostFolder('ghost', None, haunted=self.root.folder)
 
         ghost = self.root.target.ghost
         folder = self.root.folder
@@ -157,8 +155,7 @@ class GhostFolderTestCase(unittest.TestCase):
         """Test convertion of a Ghost Folder to a Publication.
         """
         factory = self.root.target.manage_addProduct['Silva']
-        factory.manage_addGhostFolder(
-            'ghost', 'Ghost', haunted=self.root.folder)
+        factory.manage_addGhostFolder('ghost', None, haunted=self.root.folder)
 
         ghost = self.root.target.ghost
         self.assertFalse(IPublication.providedBy(ghost))
@@ -197,8 +194,7 @@ class GhostFolderTestCase(unittest.TestCase):
         """Test Ghost Folder convertion to a regular Folder.
         """
         factory = self.root.target.manage_addProduct['Silva']
-        factory.manage_addGhostFolder(
-            'ghost', 'Ghost', haunted=self.root.folder)
+        factory.manage_addGhostFolder('ghost', None, haunted=self.root.folder)
 
         ghost = self.root.target.ghost
         self.assertTrue(verifyObject(IGhostFolder, ghost))
@@ -240,7 +236,7 @@ class GhostFolderTestCase(unittest.TestCase):
         # the modification datetime of the ghost folder itself, so,
         # the datetime of the last sync.
         factory = self.root.target.manage_addProduct['Silva']
-        factory.manage_addGhostFolder('ghost', 'Ghost')
+        factory.manage_addGhostFolder('ghost', None)
 
         ghost = self.root.target.ghost
         self.assertEqual(ghost.get_modification_datetime(), None)
@@ -258,7 +254,7 @@ class GhostFolderTestCase(unittest.TestCase):
         Folder unless is link status is correct.
         """
         factory = self.root.target.manage_addProduct['Silva']
-        factory.manage_addGhostFolder('ghost', 'Ghost')
+        factory.manage_addGhostFolder('ghost', None)
 
         ghost = self.root.target.ghost
         self.assertEqual(
@@ -299,7 +295,7 @@ class GhostFolderTestCase(unittest.TestCase):
         """Test Ghost Folder title.
         """
         factory = self.root.target.manage_addProduct['Silva']
-        factory.manage_addGhostFolder('ghost', 'Ghost')
+        factory.manage_addGhostFolder('ghost', None)
 
         ghost = self.root.target.ghost
         self.assertEqual(ghost.get_title_editable(), u'Ghost target is broken')
@@ -331,8 +327,7 @@ class GhostFolderTestCase(unittest.TestCase):
         corresponding ghosts from the ghost folder.
         """
         factory = self.root.target.manage_addProduct['Silva']
-        factory.manage_addGhostFolder(
-            'ghost', 'Ghost', haunted=self.root.folder)
+        factory.manage_addGhostFolder('ghost', None, haunted=self.root.folder)
 
         ghost = self.root.target.ghost
 
@@ -362,8 +357,7 @@ class GhostFolderTestCase(unittest.TestCase):
         haunted.
         """
         factory = self.root.target.manage_addProduct['Silva']
-        factory.manage_addGhostFolder(
-            'ghost', 'Ghost', haunted=self.root.folder)
+        factory.manage_addGhostFolder('ghost', None, haunted=self.root.folder)
 
         ghost = self.root.target.ghost
 
@@ -389,8 +383,7 @@ class GhostFolderTestCase(unittest.TestCase):
         assets in the ghost folder when the ghost folder is haunted.
         """
         factory = self.root.target.manage_addProduct['Silva']
-        factory.manage_addGhostFolder(
-            'ghost', 'Ghost', haunted=self.root.folder)
+        factory.manage_addGhostFolder('ghost', None, haunted=self.root.folder)
 
         ghost = self.root.target.ghost
         factory = self.root.folder.manage_addProduct['Silva']
@@ -417,8 +410,7 @@ class GhostFolderTestCase(unittest.TestCase):
         factory.manage_addMockupAsset('data', 'Data set 1')
         factory.manage_addMockupAsset('export', 'Export set 1')
         factory = self.root.target.manage_addProduct['Silva']
-        factory.manage_addGhostFolder(
-            'ghost', 'Ghost', haunted=self.root.folder)
+        factory.manage_addGhostFolder('ghost', None, haunted=self.root.folder)
 
         ghost = self.root.target.ghost
         with IContainerManager(self.root.folder).deleter() as deleter:
@@ -439,13 +431,12 @@ class GhostFolderTestCase(unittest.TestCase):
         new ghosts in the ghost golder when it is haunted.
         """
         factory = self.root.target.manage_addProduct['Silva']
-        factory.manage_addGhostFolder(
-            'ghost', 'Ghost', haunted=self.root.folder)
+        factory.manage_addGhostFolder('ghost', None, haunted=self.root.folder)
 
         ghost = self.root.target.ghost
         factory = self.root.folder.manage_addProduct['Silva']
         factory.manage_addGhost(
-            'notes', 'Notes', haunted=self.root.folder.document)
+            'notes', None, haunted=self.root.folder.document)
         IPublicationWorkflow(self.root.folder.notes).publish()
         self.assertFalse('notes' in ghost.objectIds())
 
@@ -469,11 +460,11 @@ class GhostFolderTestCase(unittest.TestCase):
         """
         factory = self.root.folder.manage_addProduct['Silva']
         factory.manage_addGhost(
-            'notes', 'Notes', haunted=self.root.folder.document)
+            'notes', None, haunted=self.root.folder.document)
         IPublicationWorkflow(self.root.folder.notes).publish()
         factory = self.root.target.manage_addProduct['Silva']
         factory.manage_addGhostFolder(
-            'ghost', 'Ghost', haunted=self.root.folder)
+            'ghost', None, haunted=self.root.folder)
 
         ghost = self.root.target.ghost
         self.assertTrue('notes' in ghost.objectIds())
@@ -505,11 +496,11 @@ class GhostFolderTestCase(unittest.TestCase):
         """
         factory = self.root.folder.manage_addProduct['Silva']
         factory.manage_addGhost(
-            'notes', 'Notes', haunted=self.root.folder.document)
+            'notes', None, haunted=self.root.folder.document)
         IPublicationWorkflow(self.root.folder.notes).publish()
         factory = self.root.target.manage_addProduct['Silva']
         factory.manage_addGhostFolder(
-            'ghost', 'Ghost', haunted=self.root.folder)
+            'ghost', None, haunted=self.root.folder)
 
         ghost = self.root.target.ghost
         self.assertTrue('notes' in ghost.objectIds())
@@ -547,12 +538,12 @@ class GhostFolderTestCase(unittest.TestCase):
         """
         factory = self.root.target.manage_addProduct['Silva']
         factory.manage_addGhostFolder(
-            'ghost', 'Ghost', haunted=self.root.folder)
+            'ghost', None, haunted=self.root.folder)
 
         ghost = self.root.target.ghost
         factory = self.root.folder.manage_addProduct['Silva']
         factory.manage_addGhostFolder(
-            'backup', 'Backup', haunted=self.root.folder.publication)
+            'backup', None, haunted=self.root.folder.publication)
         self.assertFalse('backup' in ghost.objectIds())
 
         ghost.haunt()
@@ -577,10 +568,10 @@ class GhostFolderTestCase(unittest.TestCase):
         """
         factory = self.root.folder.manage_addProduct['Silva']
         factory.manage_addGhostFolder(
-            'backup', 'Backup', haunted=self.root.folder.publication)
+            'backup', None, haunted=self.root.folder.publication)
         factory = self.root.target.manage_addProduct['Silva']
         factory.manage_addGhostFolder(
-            'ghost', 'Ghost', haunted=self.root.folder)
+            'ghost', None, haunted=self.root.folder)
 
         ghost = self.root.target.ghost
         self.assertTrue('backup' in ghost.objectIds())

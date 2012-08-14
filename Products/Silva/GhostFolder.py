@@ -69,7 +69,7 @@ class SyncContainer(Sync):
         target = self.get_real_target()
         if target is not None:
             factory = self.ghost_container.manage_addProduct['Silva']
-            factory.manage_addGhostFolder(self.target_id, 'Ghost Folder')
+            factory.manage_addGhostFolder(self.target_id, None)
             self.ghost = self.ghost_container._getOb(self.target_id)
             self.ghost.set_haunted(target, auto_delete=True)
         return self.ghost
@@ -102,7 +102,7 @@ class SyncContent(Sync):
         target = self.get_real_target()
         if target is not None:
             factory = self.ghost_container.manage_addProduct['Silva']
-            factory.manage_addGhost(self.target_id, 'Ghost')
+            factory.manage_addGhost(self.target_id, None)
             self.ghost = self.ghost_container._getOb(self.target_id)
             version = self.ghost.get_editable()
             version.set_haunted(self.get_real_target(), auto_delete=True)
@@ -372,7 +372,7 @@ class GhostFolderAddForm(silvaforms.SMIAddForm):
     def _add(self, parent, data):
         factory = parent.manage_addProduct['Silva']
         return factory.manage_addGhostFolder(
-            data['id'], 'Ghost', haunted=data['haunted'])
+            data['id'], None, haunted=data['haunted'])
 
 
 class GhostFolderEditForm(silvaforms.SMIEditForm):

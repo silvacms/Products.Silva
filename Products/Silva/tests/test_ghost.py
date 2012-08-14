@@ -10,6 +10,7 @@ from zope.component import getUtility
 from Acquisition import aq_chain
 from Products.Silva.testing import FunctionalLayer
 
+from silva.core.interfaces.errors import ContentError
 from silva.core.interfaces import errors
 from silva.core.interfaces import IGhost, IGhostVersion
 from silva.core.interfaces import IContainerManager, IPublicationWorkflow
@@ -31,13 +32,13 @@ class GhostTestCase(unittest.TestCase):
         factory.manage_addImage('image', 'Image')
 
         factory = self.root.folder.manage_addProduct['Silva']
-        factory.manage_addGhost('ghost', 'Ghost')
+        factory.manage_addGhost('ghost', None)
 
     def test_ghost(self):
         """Test simple ghost creation and life time.
         """
         factory = self.root.manage_addProduct['Silva']
-        factory.manage_addGhost('ghost', 'Ghost', haunted=self.root.document)
+        factory.manage_addGhost('ghost', None, haunted=self.root.document)
 
         version = self.root.ghost.get_editable()
         self.assertTrue(verifyObject(IGhost, self.root.ghost))
@@ -60,7 +61,7 @@ class GhostTestCase(unittest.TestCase):
         """Test the reference created by the ghost.
         """
         factory = self.root.manage_addProduct['Silva']
-        factory.manage_addGhost('ghost', 'Ghost', haunted=self.root.document)
+        factory.manage_addGhost('ghost', None, haunted=self.root.document)
 
         ghost = self.root.ghost.get_editable()
         reference = getUtility(IReferenceService).get_reference(
@@ -81,11 +82,37 @@ class GhostTestCase(unittest.TestCase):
             ghost, name=u"haunted")
         self.assertEqual(reference, None)
 
-    def test_ghost_title(self):
+    def test_ghost_set_title(self):
+        """Test ghost set_title. It should just trigger an error.
+        """
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addGhost('ghost', None, target=self.root.document)
+
+        # None is authorized as a title, because that is the value
+        # that it must passed to the factory.
+        self.root.ghost.set_title(None)
+
+        # Other value should raise an error
+        with self.assertRaises(ContentError):
+            self.root.ghost.set_title('Ghost')
+
+        # You sould be able to rename a ghost with the IContainerManager
+        with IContainerManager(self.root).renamer() as renamer:
+            self.assertEqual(
+                renamer((self.root.ghost, 'ghost', None)),
+                self.root.ghost)
+
+        # But not to change its tilte.
+        with IContainerManager(self.root).renamer() as renamer:
+            self.assertIsInstance(
+                renamer((self.root.ghost, 'ghost', 'Ghost')),
+                ContentError)
+
+    def test_ghost_get_title(self):
         """Test ghost get_title. It should return the title of the target.
         """
         factory = self.root.manage_addProduct['Silva']
-        factory.manage_addGhost('ghost', 'Ghost')
+        factory.manage_addGhost('ghost', None)
         ghost = self.root.ghost
         target = self.root.document
 
@@ -129,7 +156,7 @@ class GhostTestCase(unittest.TestCase):
         the ghosted content is published or not.
         """
         factory = self.root.manage_addProduct['Silva']
-        factory.manage_addGhost('ghost', 'Ghost')
+        factory.manage_addGhost('ghost', None)
         self.assertFalse(self.root.ghost.is_published())
 
         IPublicationWorkflow(self.root.ghost).publish()
@@ -149,7 +176,7 @@ class GhostTestCase(unittest.TestCase):
         """Test ghost get_link_status.
         """
         factory = self.root.manage_addProduct['Silva']
-        factory.manage_addGhost('ghost', 'Ghost')
+        factory.manage_addGhost('ghost', None)
 
         version = self.root.ghost.get_editable()
         self.assertEqual(
@@ -191,7 +218,7 @@ class GhostTestCase(unittest.TestCase):
         document.
         """
         factory = self.root.manage_addProduct['Silva']
-        factory.manage_addGhost('ghost', 'Ghost')
+        factory.manage_addGhost('ghost', None)
         ghost = self.root.ghost
         target = self.root.document
         self.assertEqual(ghost.get_modification_datetime(), None)

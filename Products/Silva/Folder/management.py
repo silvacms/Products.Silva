@@ -209,7 +209,10 @@ class ContainerManager(grok.Adapter):
                             _(u"There is no editable version to set the title on."),
                             content)
                 elif editable.get_title() != to_title:
-                    editable.set_title(to_title)
+                    try:
+                        editable.set_title(to_title)
+                    except ContentError as error:
+                        result = error
 
             if result is None:
                 result = content
