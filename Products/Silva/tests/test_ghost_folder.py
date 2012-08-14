@@ -70,6 +70,7 @@ class GhostFolderTestCase(unittest.TestCase):
         self.assertEqual(
             aq_chain(ghost.folder.get_haunted()),
             aq_chain(folder.folder))
+        self.assertEqual(ghost.folder.get_link_status(), None)
         self.assertTrue(verifyObject(IGhostFolder, ghost.publication))
         self.assertEqual(
             ghost.publication.get_haunted(),
@@ -77,6 +78,7 @@ class GhostFolderTestCase(unittest.TestCase):
         self.assertEqual(
             aq_chain(ghost.publication.get_haunted()),
             aq_chain(folder.publication))
+        self.assertEqual(ghost.publication.get_link_status(), None)
 
         # Regular content are ghosts
         self.assertTrue(verifyObject(IGhost, ghost.index))
@@ -90,6 +92,7 @@ class GhostFolderTestCase(unittest.TestCase):
 
         # Ghosted folder was published so the ghost is published as well.
         self.assertTrue(ghost.is_published())
+        self.assertEqual(ghost.document.get_viewable().get_link_status(), None)
 
         # Ghost is done recursively
         self.assertEqual(
@@ -300,18 +303,28 @@ class GhostFolderTestCase(unittest.TestCase):
 
         ghost = self.root.target.ghost
         self.assertEqual(ghost.get_title_editable(), u'Ghost target is broken')
-        self.assertEqual(ghost.get_short_title(), u'Ghost target is broken')
         self.assertEqual(ghost.get_title(), u'Ghost target is broken')
+        self.assertEqual(ghost.get_short_title_editable(), u'Ghost target is broken')
+        self.assertEqual(ghost.get_short_title(), u'Ghost target is broken')
 
         ghost.set_haunted(self.root.folder)
         self.assertEqual(ghost.get_title_editable(), 'Folder')
-        self.assertEqual(ghost.get_short_title(), 'Folder')
         self.assertEqual(ghost.get_title(), 'Folder')
+        self.assertEqual(ghost.get_short_title_editable(), 'Folder')
+        self.assertEqual(ghost.get_short_title(), 'Folder')
 
         self.root.folder.set_title('Renamed Folder')
         self.assertEqual(ghost.get_title_editable(), 'Renamed Folder')
-        self.assertEqual(ghost.get_short_title(), 'Renamed Folder')
         self.assertEqual(ghost.get_title(), 'Renamed Folder')
+        self.assertEqual(ghost.get_short_title_editable(), 'Renamed Folder')
+        self.assertEqual(ghost.get_short_title(), 'Renamed Folder')
+
+        # An empty folder will not be published.
+        ghost.set_haunted(self.root.target)
+        self.assertEqual(ghost.get_title_editable(), 'Target Folder')
+        self.assertEqual(ghost.get_title(), 'Ghost target is broken')
+        self.assertEqual(ghost.get_short_title_editable(), 'Target Folder')
+        self.assertEqual(ghost.get_short_title(), 'Ghost target is broken')
 
     def test_ghost_haunt_remove_ghosts(self):
         """Test modifications: removing content in the target remove

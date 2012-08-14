@@ -90,32 +90,37 @@ class GhostTestCase(unittest.TestCase):
         target = self.root.document
 
         ghost.get_editable().set_haunted(target)
-        self.assertEqual(ghost.get_title_editable(), 'Document')
+        self.assertEqual(ghost.get_short_title_editable(), 'Document')
         self.assertEqual(ghost.get_short_title(), 'ghost')
+        self.assertEqual(ghost.get_title_editable(), 'Document')
         self.assertEqual(ghost.get_title(), '')
         self.assertEqual(ghost.get_title_or_id(), 'ghost')
 
         IPublicationWorkflow(target).publish()
-        self.assertEqual(ghost.get_title_editable(), 'Document')
+        self.assertEqual(ghost.get_short_title_editable(), 'Document')
         self.assertEqual(ghost.get_short_title(), 'ghost')
+        self.assertEqual(ghost.get_title_editable(), 'Document')
         self.assertEqual(ghost.get_title(), '')
         self.assertEqual(ghost.get_title_or_id(), 'ghost')
 
         IPublicationWorkflow(ghost).publish()
-        self.assertEqual(ghost.get_title_editable(), 'Document')
+        self.assertEqual(ghost.get_short_title_editable(), 'Document')
         self.assertEqual(ghost.get_short_title(), 'Document')
+        self.assertEqual(ghost.get_title_editable(), 'Document')
         self.assertEqual(ghost.get_title(), 'Document')
         self.assertEqual(ghost.get_title_or_id(), 'Document')
 
         IPublicationWorkflow(target).close()
-        self.assertEqual(ghost.get_title_editable(), 'Document')
+        self.assertEqual(ghost.get_short_title_editable(), 'Document')
         self.assertEqual(ghost.get_short_title(), 'Ghost target is broken')
+        self.assertEqual(ghost.get_title_editable(), 'Document')
         self.assertEqual(ghost.get_title(), 'Ghost target is broken')
         self.assertEqual(ghost.get_title_or_id(), 'Ghost target is broken')
 
         ghost.get_viewable().set_haunted(0)
-        self.assertEqual(ghost.get_title_editable(), 'Ghost target is broken')
+        self.assertEqual(ghost.get_short_title_editable(), 'Ghost target is broken')
         self.assertEqual(ghost.get_short_title(), 'Ghost target is broken')
+        self.assertEqual(ghost.get_title_editable(), 'Ghost target is broken')
         self.assertEqual(ghost.get_title(), 'Ghost target is broken')
         self.assertEqual(ghost.get_title_or_id(), 'Ghost target is broken')
 

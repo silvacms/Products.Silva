@@ -58,10 +58,10 @@ class VersionedObject(Versioning, SilvaObject, ViewableObject):
     def get_title(self):
         """Get title for public use, from published version.
         """
-        viewable = self.get_viewable()
-        if viewable is None:
+        version = self.get_viewable()
+        if version is None:
             return ""
-        return viewable.get_title()
+        return version.get_title()
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_title_editable')
@@ -73,40 +73,30 @@ class VersionedObject(Versioning, SilvaObject, ViewableObject):
         # or, as a last resort, the closed version.
         # This to be able to show at least some title in the Silva edit
         # screens.
-        previewable = self.get_previewable()
-        if previewable is None:
+        version = self.get_previewable()
+        if version is None:
             return ""
-        return previewable.get_title_editable()
-
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'get_title_or_id_editable')
-    def get_title_or_id_editable(self):
-        """Get title or id editable or previewable use.
-        """
-        title = self.get_title_editable()
-        if not title.strip():
-            return self.get_silva_object().id
-        return title
+        return version.get_title_editable()
 
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'get_short_title')
     def get_short_title(self):
         """Get short_title for public use, from published version.
         """
-        viewable = self.get_viewable()
-        if viewable is None:
+        version = self.get_viewable()
+        if version is None:
             return self.id
-        return viewable.get_short_title()
+        return version.get_short_title()
 
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'get_short_title_editable')
     def get_short_title_editable(self):
         """Get short_title for editable or previewable use
         """
-        previewable = self.get_previewable()
-        if previewable is None:
+        version = self.get_previewable()
+        if version is None:
             return self.id
-        return previewable.get_short_title()
+        return version.get_short_title_editable()
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'get_editable')

@@ -113,6 +113,16 @@ class GhostBase(object):
         return _(u"Ghost target is broken")
 
     security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'get_short_title_editable')
+    def get_short_title_editable(self):
+        """Get title.
+        """
+        content = self.get_haunted()
+        if content is not None:
+            return content.get_short_title_editable()
+        return _(u"Ghost target is broken")
+
+    security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'set_haunted')
     def set_haunted(self, content, auto_delete=False):
         """ Set the content as the haunted object
@@ -179,7 +189,7 @@ class Ghost(VersionedContent):
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'get_haunted')
     def get_haunted(self):
-        version = self.get_viewable()
+        version = self.get_previewable()
         if version is not None:
             return version.get_haunted()
         return None
@@ -200,11 +210,12 @@ class Ghost(VersionedContent):
     def get_modification_datetime(self):
         """Return modification datetime.
         """
-        content = self.get_haunted()
-        if content is not None:
-            return content.get_modification_datetime()
+        version = self.get_viewable()
+        if version is not None:
+            content = version.get_haunted()
+            if content is not None:
+                return content.get_modification_datetime()
         return super(Ghost, self).get_modification_datetime()
-
 
 InitializeClass(Ghost)
 

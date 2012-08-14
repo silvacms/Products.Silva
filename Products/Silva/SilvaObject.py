@@ -109,8 +109,10 @@ class TitledObject(object):
         """Get the title of the editable version if possible, or id if
         not available.
         """
-        return self.get_title_or_id()
-
+        title = self.get_title_editable()
+        if not title.strip():
+            return self.get_silva_object().id
+        return title
 
 InitializeClass(TitledObject)
 
