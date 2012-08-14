@@ -10,6 +10,10 @@ import transaction
 def public_settings(browser):
     """Settings to test public views, using the standard issue skin.
     """
+    # Cookie and redirect are required for the login form.
+    browser.options.cookie_support = True
+    browser.options.follow_redirect = True
+    browser.options.follow_external_redirect = True
     browser.inspect.add(
         'title',
         css="div.box1 h1",
