@@ -64,8 +64,21 @@ def configure_metadata(service, event):
                 collection.importSet(fh)
         service.addTypesMapping(types, metadata_sets)
 
-    types = ('Silva Ghost Folder', 'Silva Ghost Version')
-    service.addTypesMapping(types, ('', ))
+    service.addTypesMapping(
+        ('Silva Ghost Folder', 'Silva Ghost Version'),
+        ('', ))
+
+    if 'silva-quota' in ids:
+        # If you reconfigure the site, refresh the silva-quota
+        # metadata set if required.
+        collection.manage_delObjects(['silva-quota'])
+        xml_file = os.path.join(schema, 'silva-quota.xml')
+        with open(xml_file, 'r') as fh:
+            collection.importSet(fh)
+        service.addTypesMapping(
+            ('Silva Root', 'Silva Publication', ),
+            ('silva-quota',))
+
     service.initializeMetadata()
 
     # Set the default skin
