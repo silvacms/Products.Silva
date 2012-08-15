@@ -199,7 +199,7 @@ def content_created(content, event):
     ICataloging(content).index()
     service = getUtility(IMetadataService)
     binding = service.getMetadata(content)
-    if binding is not None:
+    if binding is not None and not binding.read_only:
         binding.setValues('silva-extra', {'creationtime': DateTime()})
     content.sec_update_last_author_info()
 

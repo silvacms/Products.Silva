@@ -9,6 +9,7 @@ from zope.component import getUtility
 
 from Acquisition import aq_chain
 from Products.Silva.testing import FunctionalLayer
+from Products.SilvaMetadata.interfaces import IMetadataService, ReadOnlyError
 
 from silva.core.interfaces.errors import ContentError
 from silva.core.interfaces import errors
@@ -82,6 +83,118 @@ class GhostTestCase(unittest.TestCase):
             ghost, name=u"haunted")
         self.assertEqual(reference, None)
 
+    def test_ghost_metadata(self):
+        """If you ask metadata about a ghost, you should get the
+        metadata about the haunted content, if available.
+        """
+        service = getUtility(IMetadataService)
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addGhost('ghost', None)
+
+        ghost = self.root.ghost
+        document = self.root.document
+
+        # Our ghost is broken, so we have no metadata
+        self.assertEqual(service.getMetadata(ghost), None)
+
+        ghost.get_editable().set_haunted(document)
+        # The document is not published, the Ghost don't have access
+        # to the document metadata.
+        self.assertEqual(service.getMetadata(ghost), None)
+
+        IPublicationWorkflow(document).publish()
+        # Now it should work, you should get the metadata of the document
+        ghost_binding = service.getMetadata(ghost)
+        self.assertNotEqual(ghost_binding, None)
+        self.assertEqual(
+            ghost_binding.get('silva-content', 'maintitle'),
+            u"Document")
+        self.assertEqual(
+            service.getMetadataValue(ghost, 'silva-content', 'maintitle'),
+            u"Document")
+
+        # You can't change the value
+        with self.assertRaises(ReadOnlyError):
+            ghost_binding.setValues('silva-content', {'maintitle': u'Ghost'})
+
+        # Nothing changed
+        ghost_binding = service.getMetadata(ghost)
+        self.assertEqual(
+            ghost_binding.get('silva-content', 'maintitle'),
+            u"Document")
+        self.assertEqual(
+            service.getMetadataValue(ghost, 'silva-content', 'maintitle'),
+            u"Document")
+
+        # Update document metadata
+        document_binding = service.getMetadata(document.get_viewable())
+        document_binding.setValues('silva-content', {'maintitle': u"Changed"})
+
+        # You should see the values from the ghost point of view.
+        ghost_binding = service.getMetadata(ghost)
+        self.assertEqual(
+            ghost_binding.get('silva-content', 'maintitle'),
+            u"Changed")
+        self.assertEqual(
+            service.getMetadataValue(ghost, 'silva-content', 'maintitle'),
+            u"Changed")
+
+    def test_ghost_version_metadata(self):
+        """If you ask metadata about a ghost version, you should get
+        the metadata about the haunted content, if available.
+        """
+        service = getUtility(IMetadataService)
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addGhost('ghost', None)
+
+        ghost = self.root.ghost.get_editable()
+        document = self.root.document
+
+        # Our ghost is broken, so we have no metadata
+        self.assertEqual(service.getMetadata(ghost), None)
+
+        ghost.get_editable().set_haunted(document)
+        # The document is not published, the Ghost don't have access
+        # to the document metadata.
+        self.assertEqual(service.getMetadata(ghost), None)
+
+        IPublicationWorkflow(document).publish()
+        # Now it should work, you should get the metadata of the document
+        ghost_binding = service.getMetadata(ghost)
+        self.assertNotEqual(ghost_binding, None)
+        self.assertEqual(
+            ghost_binding.get('silva-content', 'maintitle'),
+            u"Document")
+        self.assertEqual(
+            service.getMetadataValue(ghost, 'silva-content', 'maintitle'),
+            u"Document")
+
+        # You can't change the value.
+        with self.assertRaises(ReadOnlyError):
+            ghost_binding.setValues('silva-content', {'maintitle': u'Ghost'})
+
+        # Nothing changed.
+        ghost_binding = service.getMetadata(ghost)
+        self.assertEqual(
+            ghost_binding.get('silva-content', 'maintitle'),
+            u"Document")
+        self.assertEqual(
+            service.getMetadataValue(ghost, 'silva-content', 'maintitle'),
+            u"Document")
+
+        # Update document metadata
+        document_binding = service.getMetadata(document.get_viewable())
+        document_binding.setValues('silva-content', {'maintitle': u"Changed"})
+
+        # You should see the values from the ghost point of view.
+        ghost_binding = service.getMetadata(ghost)
+        self.assertEqual(
+            ghost_binding.get('silva-content', 'maintitle'),
+            u"Changed")
+        self.assertEqual(
+            service.getMetadataValue(ghost, 'silva-content', 'maintitle'),
+            u"Changed")
+
     def test_ghost_set_title(self):
         """Test ghost set_title. It should just trigger an error.
         """
@@ -102,7 +215,7 @@ class GhostTestCase(unittest.TestCase):
                 renamer((self.root.ghost, 'ghost', None)),
                 self.root.ghost)
 
-        # But not to change its tilte.
+        # But not to change its title.
         with IContainerManager(self.root).renamer() as renamer:
             self.assertIsInstance(
                 renamer((self.root.ghost, 'ghost', 'Ghost')),

@@ -72,7 +72,7 @@ class Security(object):
             version._last_author_userid = user_id
             version._last_author_info = aq_base(user)
             binding = getUtility(IMetadataService).getMetadata(version)
-            if binding is None:
+            if binding is None or binding.read_only:
                 return
             now = DateTime()
             binding.setValues('silva-extra', {'modificationtime': now})

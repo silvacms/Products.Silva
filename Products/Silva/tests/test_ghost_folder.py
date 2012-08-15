@@ -11,6 +11,7 @@ from zope.component import getUtility
 from Acquisition import aq_chain
 from Products.Silva.testing import FunctionalLayer
 from Products.Silva.tests.mockers import IMockupAsset
+from Products.SilvaMetadata.interfaces import IMetadataService, ReadOnlyError
 
 from silva.core.interfaces import IContainerManager, IPublicationWorkflow
 from silva.core.interfaces import IGhostFolder, IGhost
@@ -248,6 +249,57 @@ class GhostFolderTestCase(unittest.TestCase):
 
         ghost.set_haunted(0)
         self.assertEqual(ghost.get_modification_datetime(), None)
+
+    def test_ghost_folder_metadata(self):
+        """If you ask metadata about a ghost folder, you should get
+        the metadata about the haunted content, if available.
+        """
+        service = getUtility(IMetadataService)
+        factory = self.root.target.manage_addProduct['Silva']
+        factory.manage_addGhostFolder('ghost', None)
+
+        ghost = self.root.target.ghost
+        folder = self.root.folder
+
+        # Our ghost is broken, so we have no metadata
+        self.assertEqual(service.getMetadata(ghost), None)
+
+        ghost.set_haunted(folder)
+
+        # Now it should work, you should get the metadata of the folder
+        ghost_binding = service.getMetadata(ghost)
+        self.assertNotEqual(ghost_binding, None)
+        self.assertEqual(
+            ghost_binding.get('silva-content', 'maintitle'),
+            u"Folder")
+        self.assertEqual(
+            service.getMetadataValue(ghost, 'silva-content', 'maintitle'),
+            u"Folder")
+
+        # You can't set a value
+        with self.assertRaises(ReadOnlyError):
+            ghost_binding.setValues('silva-content', {'maintitle': u'Ghost'})
+
+        ghost_binding = service.getMetadata(ghost)
+        self.assertEqual(
+            ghost_binding.get('silva-content', 'maintitle'),
+            u"Folder")
+        self.assertEqual(
+            service.getMetadataValue(ghost, 'silva-content', 'maintitle'),
+            u"Folder")
+
+        # Update folder metadata
+        folder_binding = service.getMetadata(folder)
+        folder_binding.setValues('silva-content', {'maintitle': u"Changed"})
+
+        # You should see the values from the ghost point of view.
+        ghost_binding = service.getMetadata(ghost)
+        self.assertEqual(
+            ghost_binding.get('silva-content', 'maintitle'),
+            u"Changed")
+        self.assertEqual(
+            service.getMetadataValue(ghost, 'silva-content', 'maintitle'),
+            u"Changed")
 
     def test_ghost_link_status(self):
         """Test Ghost Folder get_link_status. You cannot haunt a Ghost
