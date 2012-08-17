@@ -7,7 +7,6 @@ from zope.component import getUtility
 from zope.publisher.interfaces.browser import IBrowserRequest
 from zope.i18n.interfaces import ITranslationDomain, IUserPreferredLanguages
 from zope.publisher.browser import BrowserLanguages
-from zope.i18n.locales import locales, LoadLocaleError
 
 from DateTime import DateTime
 
@@ -34,27 +33,6 @@ class LanguageProvider(grok.Adapter):
 
     def __init__(self, request):
         self.request = request
-        self.__setupLocale()
-
-    def __setupLocale(self):
-        if hasattr(self.request, 'locale'):
-            return
-        # request doesn't have locale in Zope 2; this code should
-        # ideally move somewhere into Five
-
-        langs = IUserPreferredLanguages(self.request).getPreferredLanguages()
-        for httplang in langs:
-            parts = (httplang.split('-') + [None, None])[:3]
-            try:
-                self.request.locale = locales.getLocale(*parts)
-                return
-            except LoadLocaleError:
-                # Just try the next combination
-                pass
-        else:
-            # No combination gave us an existing locale, so use the default,
-            # which is guaranteed to exist
-            self.request.locale = locales.getLocale(None, None, None)
 
     def getAvailableLanguages(self):
         domain = getUtility(ITranslationDomain, 'silva')
