@@ -6,7 +6,6 @@
 from zope.component import getUtility
 from zope.publisher.interfaces.browser import IBrowserRequest
 from zope.i18n.interfaces import ITranslationDomain, IUserPreferredLanguages
-from zope.publisher.browser import BrowserLanguages
 
 from DateTime import DateTime
 
@@ -75,14 +74,3 @@ class LanguageProvider(grok.Adapter):
         return canonalize_language(langs[0])
 
 
-# new language extractor that looks in the silva_language cookie first,
-# then fall back on browser setting
-
-class SilvaLanguages(BrowserLanguages):
-
-    def getPreferredLanguages(self):
-        languages = super(SilvaLanguages, self).getPreferredLanguages()
-        cookie_language = self.request.cookies.get('silva_language')
-        if cookie_language is not None:
-            languages = [cookie_language] + languages
-        return languages
