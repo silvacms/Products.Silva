@@ -144,7 +144,7 @@ class Root(Publication):
         """Don't do anything here. Can't do this with root.
         """
         raise ContentError(
-            _(u"Root cannot be converted to folder"), self)
+            _(u"Root cannot be converted to folder."), self)
 
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'to_publication')
@@ -152,7 +152,7 @@ class Root(Publication):
         """Don't do anything here. Can't do this with root.
         """
         raise ContentError(
-            _(u"Root cannot be converted to publication"), self)
+            _(u"Root cannot be converted to publication."), self)
 
     security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
                               'add_silva_addable_forbidden')

@@ -91,7 +91,7 @@ class Publication(Folder):
         SilvaPermissions.ApproveSilvaContent, 'to_publication')
     def to_publication(self):
         raise ContentError(
-            _(u"You cannot convert a publication into a publication"), self)
+            _(u"You cannot convert a publication into a publication."), self)
 
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'validate_wanted_quota')

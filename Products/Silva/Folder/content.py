@@ -173,7 +173,7 @@ class Folder(Publishable, BaseFolder):
         """Turn this folder into a folder.
         """
         raise ContentError(
-            _(u"You cannot convert a folder into a folder"), self)
+            _(u"You cannot convert a folder into a folder."), self)
 
     def _verify_quota(self):
         # Hook to check quota. Do nothing by default.
