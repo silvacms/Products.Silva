@@ -6,7 +6,6 @@ from zope.component import queryUtility
 from zope.interface.verify import verifyObject
 
 from silva.core.interfaces import IMimeTypeClassifier
-from Products.Silva.tests import helpers
 from Products.Silva.testing import FunctionalLayer
 
 
@@ -18,7 +17,7 @@ class MimetypeClassifierTestCase(unittest.TestCase):
         self.layer.login('author')
 
     def create_test_file(self, filename, id=None):
-        with helpers.open_test_file(filename) as file_handle:
+        with self.layer.open_fixture(filename) as file_handle:
             factory = self.root.manage_addProduct['Silva']
             if id is None:
                 id = 'testfile'
@@ -121,15 +120,15 @@ class MimetypeClassifierTestCase(unittest.TestCase):
         file = self.create_test_file('dark_energy.txt', id='test_file.txt')
         self.assertEquals(file.get_content_type(), 'text/plain; charset=utf-8')
 
-        with helpers.open_test_file('torvald.jpg') as f:
-            file.set_file(f)
+        with self.layer.open_fixture('torvald.jpg') as image:
+            file.set_file(image)
         self.assertEquals(file.get_content_type(), 'image/jpeg')
 
-        with helpers.open_test_file('torvald.jpg') as f:
+        with self.layer.open_fixture('torvald.jpg') as image:
             # we replace the file with a StringIO. StringIO doesn't have
             # a `name` attribute which makes the mimetype guess to use the id
             # of the Silva File object.
-            io = StringIO(f.read())
+            io = StringIO(image.read())
             try:
                 file.set_file(io)
             finally:

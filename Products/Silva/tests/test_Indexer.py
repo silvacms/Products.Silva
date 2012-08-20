@@ -7,7 +7,9 @@ import unittest
 from zope.component import getUtility
 from zope.interface.verify import verifyObject
 
+from Products.Silva.ftesting import public_settings
 from Products.Silva.testing import FunctionalLayer
+
 from silva.core.interfaces import IPublicationWorkflow
 from silva.core.interfaces import IIndexer
 from silva.core.references.interfaces import IReferenceService
@@ -22,9 +24,14 @@ class IndexerTestCase(unittest.TestCase):
 
         factory = self.root.manage_addProduct['Silva']
         factory.manage_addFolder('folder', 'Folder')
+        factory.manage_addFolder('other', 'Other')
+
+        factory = self.root.other.manage_addProduct['Silva']
+        factory.manage_addIndexer('indexer', 'Indexer of nothing')
+        self.root.other.indexer.update()
 
         factory = self.root.folder.manage_addProduct['Silva']
-        factory.manage_addAutoTOC('index', 'Index')
+        factory.manage_addAutoTOC('index', 'Index of the folder')
         factory.manage_addMockupVersionedContent('alpha', 'Alpha')
         factory.manage_addMockupVersionedContent('beta', 'Beta')
         factory.manage_addMockupVersionedContent('gamma', 'Gamma')
@@ -47,7 +54,7 @@ class IndexerTestCase(unittest.TestCase):
         IPublicationWorkflow(folder.ghost).publish()
 
         # now create the indexer itself
-        factory.manage_addIndexer('indexer', 'Indexer')
+        factory.manage_addIndexer('indexer', 'Indexer of letters')
         self.root.folder.indexer.update()
 
         # Helper for the test.
@@ -106,6 +113,16 @@ class IndexerTestCase(unittest.TestCase):
         """
         self.root.manage_delObjects(['folder'])
         self.assertFalse('folder' in self.root.objectIds())
+
+    def test_view(self):
+        """Test the public view of an indexer.
+        """
+        with self.layer.get_browser(public_settings) as browser:
+            self.assertEqual(browser.open('/root/folder/indexer'), 200)
+            self.assertEqual(browser.inspect.title, ['Indexer of letters'])
+
+            self.assertEqual(browser.open('/root/other/indexer'), 200)
+            self.assertEqual(browser.inspect.title, ['Indexer of nothing'])
 
 
 def test_suite():

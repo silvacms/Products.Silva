@@ -9,7 +9,6 @@ from silva.core.interfaces import ITreeContents, IPublicationWorkflow
 from zope.interface.verify import verifyObject
 
 from Products.Silva.testing import FunctionalLayer
-from Products.Silva.tests.helpers import open_test_file
 
 
 class FolderTreeTestCase(unittest.TestCase):
@@ -25,7 +24,7 @@ class FolderTreeTestCase(unittest.TestCase):
         factory.manage_addFolder('folder', 'Folder')
         factory.manage_addPublication('publication', 'Publication')
 
-        with open_test_file('testimage.gif') as image_file:
+        with self.layer.open_fixture('testimage.gif') as image_file:
             factory.manage_addImage('image', 'Image', image_file)
 
         factory = self.root.folder.manage_addProduct['Silva']

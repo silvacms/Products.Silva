@@ -3,6 +3,7 @@
 # $Id$
 
 from cStringIO import StringIO
+import io
 from zipfile import ZipFile, ZIP_DEFLATED
 
 from five import grok
@@ -51,7 +52,7 @@ class ZipFileExportAdapter(grok.Adapter):
         settings.setLastVersion(
             options.get('export_newest_version_only', False))
 
-        archive_file = StringIO()
+        archive_file = io.BytesIO()
         archive = ZipFile(archive_file, "w", ZIP_DEFLATED)
 
         # export context to xml and add xml to zip
@@ -71,7 +72,7 @@ class ZipFileExportAdapter(grok.Adapter):
             # in the database in order to be exported.
             transaction.savepoint()
             for path, id in unknowns:
-                export = StringIO()
+                export = io.BytesIO()
                 content = self.context.restrictedTraverse(path)
                 content._p_jar.exportFile(content._p_oid, export)
                 archive.writestr('zexps/' + id, export.getvalue())

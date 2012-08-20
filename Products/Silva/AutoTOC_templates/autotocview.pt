@@ -6,12 +6,11 @@
                toc_show_icon context/get_show_icon;
                toc_show_description context/get_display_desc_flag">
   <!-- This is not a Chameleon templates as ITALNamespaceData doesn't work in Chameleon -->
-  <h2 class="heading"
-      tal:define="heading context/get_title"
-      tal:content="heading"
-      tal:condition="heading">
+  <h1 tal:define="title context/get_title"
+      tal:content="title"
+      tal:condition="title">
     Title
-  </h2>
+  </h1>
 
   <p class="content-description"
      tal:condition="view/description"

@@ -3,12 +3,12 @@
 # See also LICENSE.txt
 # $Id$
 
-from StringIO import StringIO
 try:
     from PIL import Image as PILImage
 except ImportError:
     import Image as PILImage
 import unittest
+import io
 
 from zope.interface.verify import verifyObject
 from zope.component import getUtility
@@ -19,7 +19,6 @@ from silva.core.services.interfaces import ICatalogService
 from Products.Silva import File
 from Products.Silva.testing import FunctionalLayer, TestCase
 from Products.Silva.testing import assertTriggersEvents, CatalogTransaction
-from Products.Silva.tests.helpers import open_test_file
 
 
 def search(**query):
@@ -37,16 +36,16 @@ class DefaultImageTestCase(TestCase):
         self.root = self.layer.get_application()
         self.layer.login('author')
 
-        image_file = open_test_file('photo.tif')
-        self.image_data = image_file.read()
-        self.image_size = image_file.tell()
-        image_file.seek(0, 0)
         if self.implementation is not None:
             self.root.service_files.storage = self.implementation
 
         factory = self.root.manage_addProduct['Silva']
-        factory.manage_addImage('test_image', u'Image élaboré', image_file)
-        image_file.close()
+        with self.layer.open_fixture('photo.tif') as image:
+            self.image_data = image.read()
+            self.image_size = image.tell()
+            image.seek(0, 0)
+
+            factory.manage_addImage('test_image', u'Image élaboré', image)
 
     def test_image(self):
         """Test image content.
@@ -72,7 +71,7 @@ class DefaultImageTestCase(TestCase):
         self.assertTrue(content.tag() is not None)
         self.assertEquals(content.get_web_format(), 'JPEG')
 
-        data = StringIO(content.get_image(hires=False, webformat=True))
+        data = io.BytesIO(content.get_image(hires=False, webformat=True))
         pil_image = PILImage.open(data)
         self.assertEquals((100, 100), pil_image.size)
         self.assertEquals('JPEG', pil_image.format)
@@ -80,7 +79,7 @@ class DefaultImageTestCase(TestCase):
         data = content.get_image(hires=True, webformat=False)
         self.assertHashEqual(self.image_data, data)
 
-        data = StringIO(content.get_image(hires=True, webformat=True))
+        data = io.BytesIO(content.get_image(hires=True, webformat=True))
         pil_image = PILImage.open(data)
         self.assertEquals((960, 1280), pil_image.size)
         self.assertEquals('JPEG', pil_image.format)
@@ -113,9 +112,9 @@ class DefaultImageTestCase(TestCase):
         factory = self.root.manage_addProduct['Silva']
         factory.manage_addFolder('folder', 'Folder')
 
-        with open_test_file('photo.tif') as image_file:
-            factory = self.root.folder.manage_addProduct['Silva']
-            factory.manage_addImage('image', 'Test Image', image_file)
+        factory = self.root.folder.manage_addProduct['Silva']
+        with self.layer.open_fixture('photo.tif') as image:
+            factory.manage_addImage('image', 'Test Image', image)
 
         # Test that the image is catalogued (and not the sub-files)
         self.assertItemsEqual(
@@ -131,9 +130,9 @@ class DefaultImageTestCase(TestCase):
             factory.manage_addFolder('folder', 'Folder')
 
         with CatalogTransaction():
-            with open_test_file('photo.tif') as image_file:
-                factory = self.root.folder.manage_addProduct['Silva']
-                factory.manage_addImage('image', 'Test Image', image_file)
+            factory = self.root.folder.manage_addProduct['Silva']
+            with self.layer.open_fixture('photo.tif') as image:
+                factory.manage_addImage('image', 'Test Image', image)
 
         # Test that the image is catalogued (and not the sub-files)
         self.assertItemsEqual(
@@ -163,7 +162,7 @@ class DefaultImageTestCase(TestCase):
                 str(data.get_file_size()))
             self.assertTrue('Last-Modified' in browser.headers)
             image_data = browser.contents
-            pil_image = PILImage.open(StringIO(image_data))
+            pil_image = PILImage.open(io.BytesIO(image_data))
             self.assertEqual((960, 1280), pil_image.size)
             self.assertEqual('JPEG', pil_image.format)
             self.assertHashEqual(data.get_file(), image_data)
@@ -180,7 +179,7 @@ class DefaultImageTestCase(TestCase):
                 browser.headers['Content-Type'],
                 'image/tiff')
             image_data = browser.contents
-            pil_image = PILImage.open(StringIO(image_data))
+            pil_image = PILImage.open(io.BytesIO(image_data))
             self.assertEquals((960, 1280), pil_image.size)
             self.assertEquals('TIFF', pil_image.format)
             self.assertHashEqual(self.image_data, image_data)
@@ -198,7 +197,7 @@ class DefaultImageTestCase(TestCase):
                 'image/jpeg')
             body = browser.contents
             self.assertEqual(browser.headers['Content-Length'], str(len(body)))
-            pil_image = PILImage.open(StringIO(body))
+            pil_image = PILImage.open(io.BytesIO(body))
             self.assertEqual((90, 120), pil_image.size)
             self.assertEqual('JPEG', pil_image.format)
 
@@ -317,18 +316,19 @@ class MiscellaneousImageTestCase(unittest.TestCase):
     def test_invalid_image(self):
         """Try to add an non-image.
         """
-        image_file = StringIO('invalid-image-format')
+        image = io.BytesIO('invalid-image-format')
         factory = self.root.manage_addProduct['Silva']
-        self.assertRaises(
-            ValueError,
-            factory.manage_addImage, 'badimage', 'Bad Image', image_file)
+        with self.assertRaises(ValueError):
+            factory.manage_addImage('badimage', 'Bad Image', image)
+
         self.assertFalse('badimage' in self.root.objectIds())
 
     def test_get_crop_box(self):
         """Test get_crop_box method that either return or parse a crop_box.
         """
         factory = self.root.manage_addProduct['Silva']
-        factory.manage_addImage('image', 'Torvald', open_test_file('photo.tif'))
+        with self.layer.open_fixture('photo.tif') as image:
+            factory.manage_addImage('image', 'Torvald', image)
         self.assertEqual(
             self.root.image.get_crop_box(crop="242x379-392x479"),
             (242, 379, 392, 479))

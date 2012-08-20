@@ -7,7 +7,6 @@ import unittest
 
 from Products.Silva import File
 from Products.Silva.testing import FunctionalLayer, CatalogTransaction
-from Products.Silva.tests.helpers import open_test_file
 
 
 class DefaultFileCatalogTestCase(unittest.TestCase):
@@ -22,7 +21,7 @@ class DefaultFileCatalogTestCase(unittest.TestCase):
             self.root.service_files.storage = self.implementation
 
         with CatalogTransaction():
-            with open_test_file('dark_energy.txt') as data:
+            with self.layer.open_fixture('dark_energy.txt') as data:
                 factory = self.root.manage_addProduct['Silva']
                 factory.manage_addFile(
                     'universe', u'Not related to Silva', data)

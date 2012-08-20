@@ -88,5 +88,5 @@ class LinkTestCase(unittest.TestCase):
 
 def test_suite():
     suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(LinkTestCase, 'test'))
+    suite.addTest(unittest.makeSuite(LinkTestCase))
     return suite

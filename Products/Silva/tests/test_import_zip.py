@@ -2,20 +2,19 @@
 # See also LICENSE.txt
 # $Id$
 
-# Python
-from cStringIO import StringIO
-from zipfile import ZipFile
+import io
 import unittest
+import zipfile
 
 from silva.core import interfaces
-from zope.component import getAdapter, queryAdapter
+from silva.core.interfaces import IZipFileImporter, IContentExporter
+from zope.component import getAdapter
 from zope.interface.verify import verifyObject
 
-from Products.Silva.testing import FunctionalLayer, TestCase
-from Products.Silva.tests.helpers import open_test_file
+from Products.Silva.testing import FunctionalLayer
 
 
-class ZipTestCase(TestCase):
+class ZipTestCase(unittest.TestCase):
     """Test Zip import/export.
     """
     layer = FunctionalLayer
@@ -28,33 +27,36 @@ class ZipTestCase(TestCase):
         factory.manage_addLink(
             'link', 'Link', relative=False, url="http:/infrae.com")
 
-    def test_import_adapter(self):
+    def test_zip_file_importer(self):
         """Test ZIP import adapter.
         """
-        importer = getAdapter(
-            self.root.folder, interfaces.IZipFileImporter)
-        self.failUnless(verifyObject(interfaces.IZipFileImporter, importer))
-        importer = queryAdapter(
-            self.root.link, interfaces.IZipFileImporter)
+        importer = IZipFileImporter(self.root.folder, None)
+        self.assertTrue(verifyObject(interfaces.IZipFileImporter, importer))
+        importer = IZipFileImporter(self.root.link, None)
         self.assertEqual(importer, None)
 
-    def test_import_is_archive(self):
+    def test_zip_file_importer_is_archive(self):
         """Test method isFullmediaArchive on an importer.
         """
-        importer = getAdapter(
-            self.root.folder, interfaces.IZipFileImporter)
-        with open_test_file('test1.zip') as test_archive:
+        importer = IZipFileImporter(self.root.folder)
+        with self.layer.open_fixture('test1.zip') as test_archive:
             self.assertEqual(importer.isFullmediaArchive(test_archive), False)
-        with open_test_file('test_import_link.zip') as test_archive:
+        with self.layer.open_fixture('test_import_link.zip') as test_archive:
             self.assertEqual(importer.isFullmediaArchive(test_archive), True)
 
-    def test_export(self):
+    def test_zip_content_exporter(self):
+        """Test ZIP content exporter.
+        """
+        exporter = getAdapter(self.root.folder, IContentExporter, name='zip')
+        self.assertTrue(verifyObject(IContentExporter, exporter))
+
+    def test_import_export(self):
         """Import/export a Zip file.
         """
         # XXX This test needs improvement.
-        zip_import = open_test_file('test1.zip')
         importer = interfaces.IArchiveFileImporter(self.root.folder)
-        succeeded, failed = importer.importArchive(zip_import)
+        with self.layer.open_fixture('test1.zip') as test_archive:
+            succeeded, failed = importer.importArchive(test_archive)
         self.assertItemsEqual(
             succeeded,
             ['testzip/Clock.swf',
@@ -66,17 +68,16 @@ class ZipTestCase(TestCase):
              'testzip/sound1.mp3'])
         self.assertItemsEqual(failed, [])
 
-        exporter = getAdapter(
-            self.root.folder, interfaces.IContentExporter, name='zip')
-        export = StringIO(exporter.export())
+        exporter = getAdapter(self.root.folder, IContentExporter, name='zip')
+        data = io.BytesIO(exporter.export())
 
-        zip_export = ZipFile(export, 'r')
+        export = zipfile.ZipFile(data, 'r')
         self.assertItemsEqual(
             ['assets/1.jpg', 'assets/2.jpg', 'assets/3.jpg',
              'assets/4.jpg', 'assets/5.swf', 'assets/6.jpg',
              'assets/7.mp3', 'silva.xml'],
-            zip_export.namelist())
-        zip_export.close()
+            export.namelist())
+        export.close()
 
 
 def test_suite():

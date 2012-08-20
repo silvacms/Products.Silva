@@ -13,7 +13,6 @@ from zope.component.eventtesting import clearEvents
 from zope.interface.verify import verifyObject
 
 from Products.Silva.testing import FunctionalLayer, TestCase, TestRequest
-from Products.Silva.tests.helpers import open_test_file
 
 
 class ImportExportTripTestCase(TestCase):
@@ -46,10 +45,10 @@ class ImportExportTripTestCase(TestCase):
         factory.manage_addFolder('trash', 'Trash')
 
         factory = self.root.publication.pictures.manage_addProduct['Silva']
-        factory.manage_addImage(
-            'torvald', 'Torvald', open_test_file('torvald.jpg'))
-        factory.manage_addFile(
-            'unknown', 'Something testique', open_test_file('testimage.gif'))
+        with self.layer.open_fixture('torvald.jpg') as image:
+            factory.manage_addImage('torvald', 'Torvald', image)
+        with self.layer.open_fixture('testimage.gif') as image:
+            factory.manage_addFile('unknown', 'Something testique', image)
         factory.manage_addFolder('tobesorted', 'To Be Sorted Eh!')
 
         factory = self.root.publication.manage_addProduct['Silva']

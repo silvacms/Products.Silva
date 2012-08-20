@@ -5,10 +5,10 @@
 import unittest
 
 from silva.core import interfaces
+from silva.core.interfaces import IArchiveFileImporter
 from zope.interface.verify import verifyObject
 
-from Products.Silva.tests.helpers import open_test_file
-from Products.Silva.testing import FunctionalLayer, TestCase
+from Products.Silva.testing import FunctionalLayer
 
 
 """
@@ -45,7 +45,7 @@ Test file 'test3.zip' structure:
 """
 
 
-class ArchiveFileImportTestCase(TestCase):
+class ArchiveFileImportTestCase(unittest.TestCase):
     """Test the archive file importer.
     """
     layer = FunctionalLayer
@@ -61,27 +61,27 @@ class ArchiveFileImportTestCase(TestCase):
     def test_implementation(self):
         """Test adapter lookup.
         """
-        importer = interfaces.IArchiveFileImporter(self.root.folder, None)
-        self.assertTrue(
-            verifyObject(interfaces.IArchiveFileImporter, importer))
-        self.assertTrue(
-            interfaces.IArchiveFileImporter(self.root.link, None) is None)
+        importer = IArchiveFileImporter(self.root.folder, None)
+        self.assertTrue(verifyObject(IArchiveFileImporter, importer))
+        self.assertTrue(IArchiveFileImporter(self.root.link, None) is None)
 
     def test_import_default_settings(self):
         """Import a Zip file.
         """
         folder = self.root.folder
-        importer = interfaces.IArchiveFileImporter(folder)
-        succeeded, failed = importer.importArchive(open_test_file('test1.zip'))
+        importer = IArchiveFileImporter(folder)
+        with self.layer.open_fixture('test1.zip') as archive:
+            succeeded, failed = importer.importArchive(archive)
 
-        self.assertItemsEqual(succeeded,
-                             ['testzip/foo/bar/baz/image5.jpg',
-                              'testzip/foo/bar/image4.jpg',
-                              'testzip/foo/image3.jpg',
-                              'testzip/bar/image2.jpg',
-                              'testzip/image1.jpg',
-                              'testzip/sound1.mp3',
-                              'testzip/Clock.swf'])
+        self.assertItemsEqual(
+            succeeded,
+            ['testzip/foo/bar/baz/image5.jpg',
+             'testzip/foo/bar/image4.jpg',
+             'testzip/foo/image3.jpg',
+             'testzip/bar/image2.jpg',
+             'testzip/image1.jpg',
+             'testzip/sound1.mp3',
+             'testzip/Clock.swf'])
         self.assertItemsEqual([], failed)
 
         self.assert_(folder['testzip'])
@@ -105,8 +105,9 @@ class ArchiveFileImportTestCase(TestCase):
         """Import a Zip that doesn't have any subdirectories.
         """
         folder = self.root.folder
-        importer = interfaces.IArchiveFileImporter(folder)
-        succeeded, failed = importer.importArchive(open_test_file('test2.zip'))
+        importer = IArchiveFileImporter(folder)
+        with self.layer.open_fixture('test2.zip') as archive:
+            succeeded, failed = importer.importArchive(archive)
 
         self.assertItemsEqual(
             succeeded, ['Clock.swf', 'image1.jpg', 'sound1.mp3'])
@@ -125,9 +126,10 @@ class ArchiveFileImportTestCase(TestCase):
         """Set a default title to the imported assets.
         """
         folder = self.root.folder
-        importer = interfaces.IArchiveFileImporter(folder)
-        succeeded, failed = importer.importArchive(
-            open_test_file('test1.zip'), assettitle=u'Daarhelemali')
+        importer = IArchiveFileImporter(folder)
+        with self.layer.open_fixture('test1.zip') as archive:
+            succeeded, failed = importer.importArchive(
+                archive, assettitle=u'Daarhelemali')
 
         self.assertItemsEqual(failed, [])
         self.assertEqual(
@@ -143,8 +145,8 @@ class ArchiveFileImportTestCase(TestCase):
         """
         folder = self.root.folder
         importer = interfaces.IArchiveFileImporter(folder)
-        succeeded, failed = importer.importArchive(
-            open_test_file('test1.zip'), recreatedirs=0)
+        with self.layer.open_fixture('test1.zip') as archive:
+            succeeded, failed = importer.importArchive(archive, recreatedirs=0)
 
         self.assertItemsEqual(
             succeeded,
@@ -172,8 +174,8 @@ class ArchiveFileImportTestCase(TestCase):
         """
         folder = self.root.folder
         importer = interfaces.IArchiveFileImporter(folder)
-        succeeded, failed = importer.importArchive(
-            open_test_file('test2.zip'), recreatedirs=0)
+        with self.layer.open_fixture('test2.zip') as archive:
+            succeeded, failed = importer.importArchive(archive, recreatedirs=0)
 
         self.assertItemsEqual(
             succeeded, ['Clock.swf', 'image1.jpg', 'sound1.mp3'])
@@ -189,8 +191,9 @@ class ArchiveFileImportTestCase(TestCase):
         directories. They should be ignored.
         """
         folder = self.root.folder
-        importer = interfaces.IArchiveFileImporter(folder)
-        succeeded, failed = importer.importArchive(open_test_file('test3.zip'))
+        importer = IArchiveFileImporter(folder)
+        with self.layer.open_fixture('test3.zip') as archive:
+            succeeded, failed = importer.importArchive(archive)
 
         self.assertItemsEqual(succeeded, ['imgs/c16.png', 'imgs/c17.png'])
         self.assertItemsEqual([], failed)

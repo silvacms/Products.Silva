@@ -42,7 +42,7 @@ class SilvaXMLTestCase(TestCase):
         """Import an XML file.
         """
         if globs is None:
-                globs = globals()
+            globs = globals()
         request = TestRequest()
         with self._check_warnings(request, enabled=check_warnings):
             with open_test_file(filename, globs) as source_file:
