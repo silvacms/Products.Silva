@@ -4,7 +4,7 @@
 # $Id$
 
 import time
-
+from Products.Silva.testing import tests
 
 def public_settings(browser):
     """Settings to test public views, using the standard issue skin.
@@ -50,21 +50,20 @@ def smi_settings(browser):
 
     class LoginFormHandler(object):
 
-        def __init__(self, url):
-            self.url = url
+        def __init__(self, location):
+            self.location = location
 
         def login(self, browser, user, password):
-            browser.open(self.url + '/edit')
+            browser.open(self.location + '/edit')
 
             form = browser.get_form('login_form')
             form.get_control('__ac.field.name').value = user
             form.get_control('__ac.field.password').value = password
             form.inspect.actions['log in'].click()
-
-            assert browser.location == self.url + '/edit'
+            tests.assertEqual(browser.location, self.location + '/edit')
 
         def logout(self, browser):
-            browser.open(self.url + '/service_members/logout')
+            browser.open(self.location + '/service_members/logout')
 
     def smi_click(browser, session, element, value):
         status = session.execute(
@@ -95,6 +94,7 @@ else
 
     # Macros
     def set_datetime(browser, form, prefix, dt):
+        # set a datetime field.
         mapping = {
             'day': lambda d: d.day,
             'month': lambda d: d.month,
@@ -106,7 +106,15 @@ else
             control = form.get_control(".".join([prefix, name]))
             control.value = callback(dt)
 
-    browser.macros.add('set_datetime', set_datetime)
+    def assert_feedback(browser, message):
+        # Verify the message and close it.
+        tests.assertEqual(browser.inspect.feedback, [{'message': message}])
+        tests.assertEqual(browser.inspect.feedback[0].close.click(), 200)
+        tests.assertEqual(browser.inspect.feedback, [])
+
+
+    browser.macros.add('setDatetime', set_datetime)
+    browser.macros.add('assertFeedback', assert_feedback)
 
     # SMI
     browser.inspect.add(
@@ -141,7 +149,16 @@ else
         unique=True)
     browser.inspect.add(
         'feedback',
-        css='div.jGrowl-message')
+        css='div.jGrowl-feedback',
+        nested={
+            None: ('message',),
+            'message': {
+                'css': 'div.jGrowl-message',
+                'unique': True},
+            'close': {
+                'css': 'div.jGrowl-close',
+                'type': 'clickable',
+                'unique': True}})
 
     # Content actions
     browser.inspect.add(
@@ -176,8 +193,9 @@ else
                 'type': 'clickable',
                 'unique': True},
             'goto_actions': {
-                'xpath': '//td[8]//div[@class="dropdown"]/a',
+                'xpath': '//td[8]//div[@class="dropdown"]//a',
                 'type': 'clickable'}})
+
     # jQuery UI dialogs
     browser.inspect.add(
         'dialog',
@@ -193,8 +211,18 @@ else
 
     # Form
     browser.inspect.add(
-        'form_controls',
-        css="div.form-controls a",
-        type='link')
+        'form',
+        css="form.form-fields-container",
+        nested={
+            None: ('title',),
+            'title': {
+                'xpath': 'descendant::div[@class="form-head"]/h3 | descendant::div[@class="form-head"]/h4',
+                'unique': True},
+            'form': {
+                'type': 'form',
+                'unique': True},
+            'actions': {
+                'css': 'div.form-controls a',
+                'type': 'clickable'}})
 
 

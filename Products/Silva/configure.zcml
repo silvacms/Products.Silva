@@ -25,7 +25,7 @@
   <include package="Products.SilvaMetadata" />
 
   <!-- Grok Silva -->
-  <grok:grok package="." />
+  <grok:grok package="." exclude="ftesting" />
 
   <!-- Vocabularies -->
   <utility

@@ -10,7 +10,6 @@ import sys
 from AccessControl.SecurityManagement import newSecurityManager
 from OFS.SimpleItem import SimpleItem
 from Products.Silva import MAILHOST_ID
-from Products.Silva.ftesting import smi_settings
 from Products.Silva.tests.mockers import install_mockers
 from silva.core.services.catalog import catalog_queue
 import Products.Silva
@@ -166,6 +165,8 @@ class SilvaLayer(BrowserLayer):
         if MAILHOST_ID in app.root.objectIds():
             app.root.manage_delObjects([MAILHOST_ID])
             app.root._setObject(MAILHOST_ID, MockMailHost(MAILHOST_ID))
+        if 'service_ui' in app.root.objectIds():
+            app.root.service_ui.test_mode = True
 
         install_mockers(app.root)
 
@@ -250,5 +251,5 @@ tests = TestMethods()
 __all__ = ['FunctionalLayer', 'SilvaLayer', 'tests',
            'TestCase', 'TestMethods', 'TestCase', 'TestRequest',
            'suite_from_package',
-           'smi_settings', 'get_event_names', 'clear_events', 'get_events',
+           'get_event_names', 'clear_events', 'get_events',
            'assertNotTriggersEvents', 'assertTriggersEvents',]
