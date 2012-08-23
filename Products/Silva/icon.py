@@ -57,7 +57,7 @@ class IconRegistry(object):
             identifier = ('ghost', 'link_ok')
         elif interfaces.IGhostFolder.providedBy(content):
             if content.get_link_status() is None:
-                if interfaces.IPublication.providedBy(content.get_target()):
+                if interfaces.IPublication.providedBy(content.get_haunted()):
                     kind = 'publication'
                 else:
                     kind = 'folder'
