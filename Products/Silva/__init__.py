@@ -91,3 +91,4 @@ def initialize_icons():
             '++static++/silva.icons/%s' % icon_name)
 
 initialize_icons()
+
