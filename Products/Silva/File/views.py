@@ -8,6 +8,7 @@ from zope.publisher.interfaces.browser import IBrowserRequest
 
 from webdav.common import rfc1123_date
 from ZPublisher.Iterators import IStreamIterator
+from ZPublisher.HTTPRangeSupport import parseRange, expandRanges
 
 from Products.Silva.File.content import CHUNK_SIZE
 from Products.Silva.File.content import File, BlobFile, ZODBFile
@@ -21,10 +22,15 @@ class BlobIterator(object):
     """
     grok.implements(IStreamIterator)
 
-    def __init__(self, fd, close=True):
+    def __init__(self, fd, close=True, start=None, end=None):
         self.__fd = fd
         self.__close = close
         self.__closed = False
+        self.__position = 0
+        self.__end = end
+        if start is not None:
+            self.__position = start
+            self.__fd.seek(start, 0)
 
     def __iter__(self):
         return self
@@ -32,7 +38,13 @@ class BlobIterator(object):
     def next(self):
         if self.__closed:
             raise StopIteration
-        data = self.__fd.read(CHUNK_SIZE)
+        size = CHUNK_SIZE
+        data = None
+        if self.__end is not None:
+            size = max(min(CHUNK_SIZE, self.__end - self.__position), 0)
+            self.__position += size
+        if size:
+            data = self.__fd.read(size)
         if not data:
             if self.__close:
                 self.__fd.close()
@@ -66,6 +78,9 @@ class FileResponseHeaders(HTTPResponseHeaders):
 
     def other_headers(self, headers):
         self.response.setHeader(
+            'Last-Modified',
+            rfc1123_date(self.context.get_modification_datetime()))
+        self.response.setHeader(
             'Content-Disposition',
             'inline;filename=%s' % (self.context.get_filename()))
         self.response.setHeader(
@@ -75,15 +90,14 @@ class FileResponseHeaders(HTTPResponseHeaders):
             self.response.setHeader(
                 'Content-Encoding',
                 self.context.get_content_encoding())
-        self.response.setHeader(
-            'Content-Length',
-            self.context.get_file_size())
-        self.response.setHeader(
-            'Last-Modified',
-            rfc1123_date(self.context.get_modification_datetime()))
-        self.response.setHeader(
-            'Accept-Ranges',
-            'none')
+        if not self.response.getHeader('Content-Length'):
+            self.response.setHeader(
+                'Content-Length',
+                self.context.get_file_size())
+        if not self.response.getHeader('Accept-Ranges'):
+            self.response.setHeader(
+                'Accept-Ranges',
+                'none')
 
 
 class FileView(silvaviews.View):
@@ -124,6 +138,18 @@ class FileDownloadView(silvaviews.View):
                         return True
         return False
 
+    def have_ranges(self):
+        header = self.request.environ.get('HTTP_RANGE', None)
+        if header is not None:
+            ranges = parseRange(header)
+            if len(ranges) == 1:
+                size = self.context.get_file_size()
+                satisfiable = expandRanges(ranges, size)
+                if len(satisfiable) == 1:
+                    return (satisfiable[0][0], satisfiable[0][1] - 1, size)
+                return (None, None, size)
+        return (None, None, None)
+
     def payload(self):
         raise NotImplementedError
 
@@ -152,5 +178,28 @@ class BlobFileDownloadView(FileDownloadView):
     grok.context(BlobFile)
 
     def payload(self):
-        return BlobIterator(self.context.get_file_fd())
+        self.response.setHeader(
+            'Accept-Ranges',
+            'bytes')
+        start, end, size = self.have_ranges()
+        if size is not None:
+            if start is None:
+                self.response.setStatus(416)
+                self.response.setHeader(
+                    'Content-Range',
+                    'bytes */%d' % size)
+                return u''
+            self.response.setStatus(206)
+            self.response.setHeader(
+                'Content-Length',
+                str(end - start))
+            self.response.setHeader(
+                'Content-Range',
+                'bytes %d-%d/%d' % (start, end, size))
+        return BlobIterator(self.context.get_file_fd(), start=start, end=end)
 
+    def render(self):
+        if self.is_not_modified():
+            self.response.setStatus(304)
+            return u''
+        return self.payload()

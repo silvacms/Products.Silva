@@ -147,7 +147,7 @@ class DefaultImageTestCase(TestCase):
         self.assertTrue(verifyObject(interfaces.IAssetData, asset_data))
         self.assertEquals(self.image_data, asset_data.getData())
 
-    def test_http_view(self):
+    def test_http_download(self):
         """Retrieve the image, check the headers.
         """
         data = self.root.test_image.image
@@ -163,16 +163,16 @@ class DefaultImageTestCase(TestCase):
                 browser.headers['Content-Length'],
                 str(data.get_file_size()))
             self.assertTrue('Last-Modified' in browser.headers)
-            self.assertEqual(
+            self.assertIn(
                 browser.headers['Accept-Ranges'],
-                'none')
+                ('none', 'bytes'))
             image_data = browser.contents
             pil_image = PILImage.open(io.BytesIO(image_data))
             self.assertEqual((960, 1280), pil_image.size)
             self.assertEqual('JPEG', pil_image.format)
             self.assertHashEqual(data.get_file(), image_data)
 
-    def test_http_view_hires(self):
+    def test_http_download_hires(self):
         """Retrieve the image, check the headers.
         """
         with self.layer.get_browser() as browser:
@@ -184,16 +184,16 @@ class DefaultImageTestCase(TestCase):
                 browser.headers['Content-Type'],
                 'image/tiff')
             self.assertTrue('Last-Modified' in browser.headers)
-            self.assertEqual(
+            self.assertIn(
                 browser.headers['Accept-Ranges'],
-                'none')
+                ('none', 'bytes'))
             image_data = browser.contents
             pil_image = PILImage.open(io.BytesIO(image_data))
             self.assertEquals((960, 1280), pil_image.size)
             self.assertEquals('TIFF', pil_image.format)
             self.assertHashEqual(self.image_data, image_data)
 
-    def test_http_view_thumbnail(self):
+    def test_http_download_thumbnail(self):
         """Retrieve image thumbnail, check the headers.
         """
         with self.layer.get_browser() as browser:
@@ -205,9 +205,9 @@ class DefaultImageTestCase(TestCase):
                 browser.headers['Content-Type'],
                 'image/jpeg')
             self.assertTrue('Last-Modified' in browser.headers)
-            self.assertEqual(
+            self.assertIn(
                 browser.headers['Accept-Ranges'],
-                'none')
+                ('none', 'bytes'))
             body = browser.contents
             self.assertEqual(browser.headers['Content-Length'], str(len(body)))
             pil_image = PILImage.open(io.BytesIO(body))
@@ -231,9 +231,9 @@ class DefaultImageTestCase(TestCase):
                 browser.headers['Content-Length'],
                 str(data.get_file_size()))
             self.assertTrue('Last-Modified' in browser.headers)
-            self.assertEqual(
+            self.assertIn(
                 browser.headers['Accept-Ranges'],
-                'none')
+                ('none', 'bytes'))
             self.assertEquals(browser.contents, '')
 
     def test_http_head_thumbnail(self):
@@ -253,9 +253,9 @@ class DefaultImageTestCase(TestCase):
                 browser.headers['Content-Length'],
                 '0')
             self.assertTrue('Last-Modified' in browser.headers)
-            self.assertEqual(
+            self.assertIn(
                 browser.headers['Accept-Ranges'],
-                'none')
+                ('none', 'bytes'))
             self.assertEquals(browser.contents, '')
 
     def test_http_head_hires(self):
@@ -273,9 +273,9 @@ class DefaultImageTestCase(TestCase):
                 browser.headers['Content-Length'],
                 str(self.image_size))
             self.assertTrue('Last-Modified' in browser.headers)
-            self.assertEqual(
+            self.assertIn(
                 browser.headers['Accept-Ranges'],
-                'none')
+                ('none', 'bytes'))
             self.assertEqual(len(browser.contents), 0)
 
     def test_http_not_modified(self):
@@ -319,6 +319,44 @@ class BlobImageTestCase(DefaultImageTestCase):
     """Test image with ZODB storage.
     """
     implementation = File.BlobFile
+
+    def test_http_download_range(self):
+        """Test downloading only a range of a file.
+        """
+        file_size = self.root.test_image.image.get_file_size()
+        with self.layer.get_browser() as browser:
+            browser.set_request_header('Range', 'bytes=100-500')
+            self.assertEqual(browser.open('/root/test_image'), 206)
+            self.assertEqual(len(browser.contents), 400)
+            self.assertEqual(browser.headers['Content-Length'], '400')
+            self.assertEqual(browser.headers['Content-Type'], 'image/jpeg')
+            self.assertEqual(
+                browser.headers['Content-Range'],
+                'bytes 100-500/%s' % file_size)
+            self.assertEqual(browser.headers['Accept-Ranges'], 'bytes')
+            self.assertTrue('Last-Modified' in browser.headers)
+            self.assertEqual(
+                browser.headers['Content-Disposition'],
+                'inline;filename=test_image.jpeg')
+
+    def test_http_download_invalid_range(self):
+        file_size = self.root.test_image.image.get_file_size()
+        with self.layer.get_browser() as browser:
+            browser.set_request_header('Range', 'bytes=4000000-5000000')
+            self.assertEqual(browser.open('/root/test_image'), 416)
+            self.assertEqual(len(browser.contents), 0)
+            self.assertEqual(browser.headers['Content-Type'], 'image/jpeg')
+            self.assertEqual(
+                browser.headers['Content-Length'],
+                str(file_size))
+            self.assertEqual(
+                browser.headers['Content-Range'],
+                'bytes */%s' % file_size)
+            self.assertEqual(browser.headers['Accept-Ranges'], 'bytes')
+            self.assertTrue('Last-Modified' in browser.headers)
+            self.assertEqual(
+                browser.headers['Content-Disposition'],
+                'inline;filename=test_image.jpeg')
 
 
 class MiscellaneousImageTestCase(unittest.TestCase):
@@ -375,15 +413,6 @@ class MiscellaneousImageTestCase(unittest.TestCase):
             self.root.image.get_crop_box, crop="santa clauss")
 
 
-class ImageFunctionalTest(unittest.TestCase):
-    layer = FunctionalLayer
-
-    def setUp(self):
-        self.root = self.layer.get_application()
-        self.layer.login('author')
-        image, image_data = self.add_test_image()
-        # XXX Need to add test for this
-        image.set_web_presentation_properties('JPEG', '100x100', '')
 
 
 def test_suite():

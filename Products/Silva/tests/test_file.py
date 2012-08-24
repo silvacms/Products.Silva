@@ -244,9 +244,9 @@ class DefaultFileImplementationTestCase(TestCase):
                 browser.headers['Content-Disposition'],
                 'inline;filename=photo.tif')
             self.assertTrue('Last-Modified' in browser.headers)
-            self.assertEqual(
+            self.assertIn(
                 browser.headers['Accept-Ranges'],
-                'none')
+                ('none', 'bytes'))
 
     def test_download_not_modified(self):
         """Test downloading a file if it as been modified after a date.
@@ -275,9 +275,9 @@ class DefaultFileImplementationTestCase(TestCase):
             self.assertEqual(
                 browser.headers['Content-Disposition'],
                 'inline;filename=photo.tif')
-            self.assertEqual(
+            self.assertIn(
                 browser.headers['Accept-Ranges'],
-                'none')
+                ('none', 'bytes'))
             self.assertTrue('Last-Modified' in browser.headers)
             self.assertEqual(len(browser.contents), 0)
 
@@ -307,6 +307,45 @@ class BlobFileImplementationTestCase(DefaultFileImplementationTestCase):
     """Test blob file implementation.
     """
     implementation = File.BlobFile
+
+    def test_download_range(self):
+        """Test downloading only a range of a file.
+        """
+        self.create_test_file()
+        with self.layer.get_browser() as browser:
+            browser.set_request_header('Range', 'bytes=100-500')
+            self.assertEqual(browser.open('/root/photo.tif'), 206)
+            self.assertEqual(len(browser.contents), 400)
+            self.assertEqual(browser.headers['Content-Length'], '400')
+            self.assertEqual(browser.headers['Content-Type'], 'image/tiff')
+            self.assertEqual(
+                browser.headers['Content-Range'],
+                'bytes 100-500/%s' % self.file_size)
+            self.assertEqual(browser.headers['Accept-Ranges'], 'bytes')
+            self.assertTrue('Last-Modified' in browser.headers)
+            self.assertEqual(
+                browser.headers['Content-Disposition'],
+                'inline;filename=photo.tif')
+
+    def test_download_invalid_range(self):
+        self.create_test_file()
+        with self.layer.get_browser() as browser:
+            browser.set_request_header('Range', 'bytes=4000000-5000000')
+            self.assertEqual(browser.open('/root/photo.tif'), 416)
+            self.assertEqual(len(browser.contents), 0)
+            self.assertEqual(browser.headers['Content-Type'], 'image/tiff')
+            self.assertEqual(
+                browser.headers['Content-Length'],
+                str(self.file_size))
+            self.assertEqual(
+                browser.headers['Content-Range'],
+                'bytes */%s' % self.file_size)
+            self.assertEqual(browser.headers['Accept-Ranges'], 'bytes')
+            self.assertTrue('Last-Modified' in browser.headers)
+            self.assertEqual(
+                browser.headers['Content-Disposition'],
+                'inline;filename=photo.tif')
+
 
 
 class ZODBFileImplementationTestCase(DefaultFileImplementationTestCase):

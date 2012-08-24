@@ -67,6 +67,9 @@ class ImageResponseHeaders(HTTPResponseHeaders):
             asset = image.image
 
         self.response.setHeader(
+            'Last-Modified',
+            rfc1123_date(image.get_modification_datetime()))
+        self.response.setHeader(
             'Content-Disposition',
             'inline;filename=%s' % (asset.get_filename()))
         self.response.setHeader(
@@ -76,13 +79,12 @@ class ImageResponseHeaders(HTTPResponseHeaders):
             self.response.setHeader(
                 'Content-Encoding',
                 asset.get_content_encoding())
-        self.response.setHeader(
-            'Content-Length',
-            asset.get_file_size())
-        self.response.setHeader(
-            'Last-Modified',
-            rfc1123_date(image.get_modification_datetime()))
-        self.response.setHeader(
-            'Accept-Ranges',
-            'none')
+        if not self.response.getHeader('Content-Length'):
+            self.response.setHeader(
+                'Content-Length',
+                asset.get_file_size())
+        if not self.response.getHeader('Accept-Ranges'):
+            self.response.setHeader(
+                'Accept-Ranges',
+                'none')
 
