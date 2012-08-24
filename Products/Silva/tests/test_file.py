@@ -244,8 +244,11 @@ class DefaultFileImplementationTestCase(TestCase):
                 browser.headers['Content-Disposition'],
                 'inline;filename=photo.tif')
             self.assertTrue('Last-Modified' in browser.headers)
+            self.assertEqual(
+                browser.headers['Accept-Ranges'],
+                'none')
 
-    def test_not_modified(self):
+    def test_download_not_modified(self):
         """Test downloading a file if it as been modified after a date.
         """
         self.create_test_file()
@@ -266,10 +269,15 @@ class DefaultFileImplementationTestCase(TestCase):
             self.assertEqual(
                 int(browser.headers['Content-Length']),
                 self.file_size)
-            self.assertEqual(browser.headers['Content-Type'], 'image/tiff')
+            self.assertEqual(
+                browser.headers['Content-Type'],
+                'image/tiff')
             self.assertEqual(
                 browser.headers['Content-Disposition'],
                 'inline;filename=photo.tif')
+            self.assertEqual(
+                browser.headers['Accept-Ranges'],
+                'none')
             self.assertTrue('Last-Modified' in browser.headers)
             self.assertEqual(len(browser.contents), 0)
 

@@ -156,11 +156,16 @@ class DefaultImageTestCase(TestCase):
             self.assertEqual(
                 browser.headers['Content-Disposition'],
                 'inline;filename=test_image.jpeg')
-            self.assertEqual(browser.headers['Content-Type'], 'image/jpeg')
+            self.assertEqual(
+                browser.headers['Content-Type'],
+                'image/jpeg')
             self.assertEquals(
                 browser.headers['Content-Length'],
                 str(data.get_file_size()))
             self.assertTrue('Last-Modified' in browser.headers)
+            self.assertEqual(
+                browser.headers['Accept-Ranges'],
+                'none')
             image_data = browser.contents
             pil_image = PILImage.open(io.BytesIO(image_data))
             self.assertEqual((960, 1280), pil_image.size)
@@ -178,6 +183,10 @@ class DefaultImageTestCase(TestCase):
             self.assertEquals(
                 browser.headers['Content-Type'],
                 'image/tiff')
+            self.assertTrue('Last-Modified' in browser.headers)
+            self.assertEqual(
+                browser.headers['Accept-Ranges'],
+                'none')
             image_data = browser.contents
             pil_image = PILImage.open(io.BytesIO(image_data))
             self.assertEquals((960, 1280), pil_image.size)
@@ -195,6 +204,10 @@ class DefaultImageTestCase(TestCase):
             self.assertEqual(
                 browser.headers['Content-Type'],
                 'image/jpeg')
+            self.assertTrue('Last-Modified' in browser.headers)
+            self.assertEqual(
+                browser.headers['Accept-Ranges'],
+                'none')
             body = browser.contents
             self.assertEqual(browser.headers['Content-Length'], str(len(body)))
             pil_image = PILImage.open(io.BytesIO(body))
@@ -206,15 +219,21 @@ class DefaultImageTestCase(TestCase):
         """
         data = self.root.test_image.image
         with self.layer.get_browser() as browser:
+            browser.options.handle_errors = False
             self.assertEquals(browser.open('/root/test_image', method='HEAD'), 200)
             self.assertEquals(
                 browser.headers['Content-Disposition'],
                 'inline;filename=test_image.jpeg')
-            self.assertEquals(browser.headers['Content-Type'], 'image/jpeg')
+            self.assertEquals(
+                browser.headers['Content-Type'],
+                'image/jpeg')
             self.assertEquals(
                 browser.headers['Content-Length'],
                 str(data.get_file_size()))
             self.assertTrue('Last-Modified' in browser.headers)
+            self.assertEqual(
+                browser.headers['Accept-Ranges'],
+                'none')
             self.assertEquals(browser.contents, '')
 
     def test_http_head_thumbnail(self):
@@ -227,8 +246,16 @@ class DefaultImageTestCase(TestCase):
             self.assertEquals(
                 browser.headers['Content-Disposition'],
                 'inline;filename=test_image.jpeg')
-            self.assertEquals(browser.headers['Content-Type'], 'image/jpeg')
-            self.assertNotEqual(browser.headers['Content-Length'], '0')
+            self.assertEquals(
+                browser.headers['Content-Type'],
+                'image/jpeg')
+            self.assertNotEqual(
+                browser.headers['Content-Length'],
+                '0')
+            self.assertTrue('Last-Modified' in browser.headers)
+            self.assertEqual(
+                browser.headers['Accept-Ranges'],
+                'none')
             self.assertEquals(browser.contents, '')
 
     def test_http_head_hires(self):
@@ -245,6 +272,10 @@ class DefaultImageTestCase(TestCase):
             self.assertEqual(
                 browser.headers['Content-Length'],
                 str(self.image_size))
+            self.assertTrue('Last-Modified' in browser.headers)
+            self.assertEqual(
+                browser.headers['Accept-Ranges'],
+                'none')
             self.assertEqual(len(browser.contents), 0)
 
     def test_http_not_modified(self):

@@ -2,7 +2,6 @@
 # See also LICENSE.txt
 # $Id$
 
-from cStringIO import StringIO
 import io
 from zipfile import ZipFile, ZIP_DEFLATED
 

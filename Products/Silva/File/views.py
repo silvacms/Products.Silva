@@ -16,7 +16,7 @@ from silva.core.views import views as silvaviews
 from silva.core.views.httpheaders import HTTPResponseHeaders
 
 
-class FDIterator(object):
+class BlobIterator(object):
     """This object provides an iterator on file descriptors.
     """
     grok.implements(IStreamIterator)
@@ -41,6 +41,23 @@ class FDIterator(object):
         return data
 
 
+class OFSPayloadIterator(object):
+    grok.implements(IStreamIterator)
+
+    def __init__(self, payload):
+        self.__payload = payload
+
+    def __iter__(self):
+        return self
+
+    def next(self):
+        if self.__payload is not None:
+            data = self.__payload.data
+            self.__payload = self.__payload.next
+            return data
+        raise StopIteration
+
+
 class FileResponseHeaders(HTTPResponseHeaders):
     """This reliably set HTTP headers on file serving, for GET and
     HEAD requests.
@@ -52,20 +69,24 @@ class FileResponseHeaders(HTTPResponseHeaders):
             'Content-Disposition',
             'inline;filename=%s' % (self.context.get_filename()))
         self.response.setHeader(
-            'Content-Type', self.context.get_content_type())
+            'Content-Type',
+            self.context.get_content_type())
         if self.context.get_content_encoding():
             self.response.setHeader(
-                'Content-Encoding', self.context.get_content_encoding())
+                'Content-Encoding',
+                self.context.get_content_encoding())
         self.response.setHeader(
-            'Content-Length', self.context.get_file_size())
+            'Content-Length',
+            self.context.get_file_size())
         self.response.setHeader(
             'Last-Modified',
             rfc1123_date(self.context.get_modification_datetime()))
         self.response.setHeader(
-            'Accept-Ranges', None)
+            'Accept-Ranges',
+            'none')
 
 
-class DefaultFileView(silvaviews.View):
+class FileView(silvaviews.View):
     """View a File in the SMI / preview. For this just return a tag.
 
     Note that if you directly access the URL of the file, you will
@@ -79,30 +100,15 @@ class DefaultFileView(silvaviews.View):
         return self.content.tag()
 
 
-
-class ZODBFileView(silvaviews.View):
-    """Download a ZODBFile
-    """
-    grok.context(ZODBFile)
+class FileDownloadView(silvaviews.View):
+    grok.baseclass()
     grok.require('zope2.View')
     grok.name('index.html')
 
-    def render(self):
-        # XXX This should not be required
-        self.response.setHeader(
-            'Content-Disposition',
-            'inline;filename=%s' % (self.context.get_filename()))
-        return self.context._file.index_html(self.request, self.response)
-
-
-class BlobFileView(silvaviews.View):
-    """Download a BlobFile.
-    """
-    grok.context(BlobFile)
-    grok.require('zope2.View')
-    grok.name('index.html')
-
-    def render(self):
+    def is_not_modified(self):
+        """Return true if the file was not modified since the date
+        given in the request headers.
+        """
         header = self.request.environ.get('HTTP_IF_MODIFIED_SINCE', None)
         if header is not None:
             header = header.split(';')[0]
@@ -115,7 +121,36 @@ class BlobFileView(silvaviews.View):
                 if last_mod is not None:
                     last_mod = long(last_mod)
                     if last_mod > 0 and last_mod <= mod_since:
-                        self.response.setStatus(304)
-                        return u''
-        return FDIterator(self.context.get_file_fd())
+                        return True
+        return False
+
+    def payload(self):
+        raise NotImplementedError
+
+    def render(self):
+        if self.is_not_modified():
+            self.response.setStatus(304)
+            return u''
+        return self.payload()
+
+
+class ZODBFileDownloadView(FileDownloadView):
+    """Download a ZODBFile
+    """
+    grok.context(ZODBFile)
+
+    def payload(self):
+        payload = self.context._file.data
+        if isinstance(payload, str):
+            return payload
+        return OFSPayloadIterator(payload)
+
+
+class BlobFileDownloadView(FileDownloadView):
+    """Download a BlobFile.
+    """
+    grok.context(BlobFile)
+
+    def payload(self):
+        return BlobIterator(self.context.get_file_fd())
 
