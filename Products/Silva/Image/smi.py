@@ -7,6 +7,8 @@ from zope import schema
 from zope.component import getMultiAdapter
 from zope.interface import Interface
 from zope.schema.vocabulary import SimpleVocabulary, SimpleTerm
+from zope.event import notify
+from zope.lifecycleevent import ObjectModifiedEvent
 
 from Products.Silva.Asset import AssetEditTab
 from Products.Silva.Asset import SMIAssetPortlet
@@ -116,6 +118,7 @@ class ImageFormatAndScalingForm(silvaforms.SMISubForm):
             self.send_message(e.args[0], type='error')
             return silvaforms.FAILURE
 
+        notify(ObjectModifiedEvent(self.context))
         self.send_message(_('Scaling and/or format changed.'),
                           type='feedback')
         return silvaforms.SUCCESS
