@@ -353,6 +353,7 @@ class GhostTestCase(unittest.TestCase):
         IPublicationWorkflow(ghost).publish()
         self.assertEqual(ghost.get_modification_datetime(), None)
 
+
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(GhostTestCase))

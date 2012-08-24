@@ -3,7 +3,8 @@
 # $Id$
 
 from five import grok
-from silva.core.interfaces import IIndexEntries, ISilvaObject, IGhost, IContainer
+from silva.core.interfaces import IIndexEntries
+from silva.core.interfaces import ISilvaObject, IGhost, IContainer
 
 
 class IndexableAdapter(grok.Adapter):
