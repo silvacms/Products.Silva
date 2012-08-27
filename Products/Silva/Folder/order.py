@@ -65,6 +65,7 @@ class OrderManager(grok.Annotation):
             if old_position >= 0:
                 del self.order[old_position]
                 self.order.insert(position, identifier)
+                self._p_changed = True
                 notify(ContentOrderChangedEvent(
                         content, position, old_position))
                 return True
