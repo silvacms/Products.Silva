@@ -248,7 +248,7 @@ class IGhostSchema(IIdentifiedContent):
     haunted = Reference(
         IContent,
         title=_(u"Target"),
-        description=_(u"The silva object the ghost is mirroring."),
+        description=_(u"The internal item the ghost is mirroring."),
         required=True)
 
 
@@ -289,7 +289,7 @@ class GhostAddForm(silvaforms.SMIAddForm):
 
     fields = silvaforms.Fields(IGhostSchema)
     fields['haunted'].referenceNotSetLabel = _(
-        u"Click the Lookup button to select a content to haunt.")
+        u"Click the Lookup button to select an item to haunt.")
     dataValidators = [
         TargetValidator('haunted', is_folderish=False, adding=True)]
 

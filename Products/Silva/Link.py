@@ -105,7 +105,7 @@ class ILinkSchema(ITitledContent):
     relative = schema.Bool(
         title=_(u"Relative link"),
         description=_(
-            u"If the link goes to content in Silva, put a checkmark "
+            u"If the link goes to an internal item in Silva, put a checkmark "
             u"here and lookup the target below."),
         default=False,
         required=True)
@@ -113,7 +113,7 @@ class ILinkSchema(ITitledContent):
     target = Reference(interfaces.ISilvaObject,
         title=_(u"Target of relative link"),
         description=_(
-            u"Make a reference to internal content by looking it up."),
+            u"Make a reference to an internal item by looking it up."),
         required=False)
 
     @interface.invariant
@@ -124,7 +124,7 @@ class ILinkSchema(ITitledContent):
         if not content.relative and not content.url:
             raise interface.Invalid(
                 _(u"Absolute link selected without URL. "
-                  u"If the link goes to content in Silva, "
+                  u"If the link goes to an internal item in Silva, "
                   u"put a checkmark in the relative link field."))
 
 
@@ -136,7 +136,7 @@ class LinkAddForm(silvaforms.SMIAddForm):
 
     fields = silvaforms.Fields(ILinkSchema)
     fields['target'].referenceNotSetLabel = _(
-        u"Click the Lookup button to select a content to refer to.")
+        u"Click the Lookup button to select an item to refer to.")
 
 
 class LinkEditForm(silvaforms.SMIEditForm):
@@ -146,7 +146,7 @@ class LinkEditForm(silvaforms.SMIEditForm):
 
     fields = silvaforms.Fields(ILinkSchema).omit('id')
     fields['target'].referenceNotSetLabel = _(
-        u"Click the Lookup button to select a content to refer to.")
+        u"Click the Lookup button to select an item to refer to.")
 
 
 class LinkView(silvaviews.View):

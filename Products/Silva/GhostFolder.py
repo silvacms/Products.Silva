@@ -334,7 +334,7 @@ class IGhostFolderSchema(IIdentifiedContent):
 
     haunted = Reference(IContainer,
             title=_(u"Target"),
-            description=_(u"The silva object the ghost is mirroring"),
+            description=_(u"The internal folder the ghost is mirroring"),
             required=True)
 
 
