@@ -32,11 +32,13 @@ class Security(object):
     security.declareProtected(
         permissions.AccessContentsInformation, 'get_creator_info')
     def get_creator_info(self):
-        user_id = self.getOwner().getId()
-        if not user_id:
-            return noneMember.__of__(self)
-        return getUtility(IMemberService).get_cached_member(
-            user_id, location=self)
+        owner = self.getOwner()
+        if owner is not None:
+            identifier = self.getOwner().getId()
+            if identifier:
+                return getUtility(IMemberService).get_cached_member(
+                    identifier, location=self)
+        return noneMember.__of__(self)
 
     security.declareProtected(
         permissions.AccessContentsInformation, 'get_last_author_info')
