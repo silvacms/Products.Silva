@@ -69,7 +69,7 @@ class FeedBase(grok.View):
             'title': self.context.get_title(),
             'description': metadata.get('silva-extra', 'content_description'),
             'url': absoluteURL(self.context, self.request),
-            'authors': [metadata.get('silva-extra', 'creator')],
+            'authors': [self.context.get_creator_info().fullname()],
             'date_updated': date_updated,
             'entries': feed}
 
