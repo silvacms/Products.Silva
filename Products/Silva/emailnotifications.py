@@ -143,7 +143,7 @@ def send_messages_request_approval(content, event):
 
     send_message_to_editors(
         content, message.user_id, 'Approval requested', text)
-    last_author = content.sec_get_last_author_info().userid()
+    last_author = content.get_last_author_info().userid()
     send_message(
         content, message.user_id, last_author,
         'Approval requested', text)

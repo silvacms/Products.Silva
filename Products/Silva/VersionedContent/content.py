@@ -18,6 +18,7 @@ from Products.Silva.Content import Content
 from Products.Silva.Publishable import NonPublishable
 from Products.Silva.SilvaObject import SilvaObject, ViewableObject
 from Products.Silva.Versioning import Versioning
+from Products.Silva.Membership import noneMember
 
 from silva.translations import translate as _
 from silva.core.interfaces import IVersionedContent, ContentError

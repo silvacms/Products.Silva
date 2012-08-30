@@ -80,39 +80,6 @@ class SilvaBaseHandler(xmlimport.BaseHandler):
 
     # MANIPULATORS
 
-    def storeMetadata(self):
-        content = self.result()
-        metadata_service = content.service_metadata
-        binding = metadata_service.getMetadata(content)
-        if binding is not None:
-            for set_id, elements in self._metadata.items():
-                set_obj = binding.collection.get(set_id, None)
-                if set_obj is None:
-                    logger.warn(
-                        u"unknown metadata set %s present in import file." % (
-                            set_id,))
-                    continue
-                element_names = elements.keys()
-                for element_name in element_names:
-                    if not hasattr(set_obj.aq_explicit, element_name):
-                        logger.warn(
-                            u"unknown metadata element %s in set %s." %
-                            (element_name, set_id))
-                        continue
-                    field = set_obj.getElement(element_name).field
-
-                    # Set data
-                    errors = binding._setData(
-                        namespace_key=set_obj.metadata_uri,
-                        data={
-                            element_name: field.validator.deserializeValue(
-                                field, elements[element_name], self)},
-                        reindex=0)
-                    if errors:
-                        logger.warn(
-                            u"value %s is not allowed for %s in set %s." % (
-                                elements[element_name], element_name, set_id))
-
     def notifyImport(self):
         """Notify the event system that the content have been
         imported. This must be the last item done.
@@ -147,6 +114,7 @@ class SilvaBaseHandler(xmlimport.BaseHandler):
         path.append(self.__id_original or self.__id_result)
         return path
 
+    # Metadata helpers
     def setMetadataKey(self, key):
         self._metadata_key = key
 
@@ -168,6 +136,38 @@ class SilvaBaseHandler(xmlimport.BaseHandler):
     def setMetadataMultiValue(self, trueOrFalse):
         self._metadata_multivalue = trueOrFalse
 
+    def storeMetadata(self):
+        content = self.result()
+        metadata_service = content.service_metadata
+        binding = metadata_service.getMetadata(content)
+        if binding is not None:
+            set_names = binding.getSetNames()
+            for set_id, elements in self._metadata.items():
+                if set_id not in set_names:
+                    logger.warn(
+                        u"Unknown metadata set %s present in import file.",
+                        set_id)
+                    continue
+                element_names = binding.getElementNames(set_id, mode='write')
+                values = {}
+                for element_id, element in elements.iteritems():
+                    if element_id not in element_names:
+                        logger.warn(
+                            u"Unknown metadata element %s in set %s present "
+                            u"in import file.",
+                            element_id, set_id)
+                        continue
+                    field = binding.getElement(set_id, element_id).field
+                    values[element_id] = field.validator.deserializeValue(
+                        field, elements[element_id], self)
+
+                if values:
+                    errors = binding.setValues(set_id, values, reindex=0)
+                    if errors:
+                        logger.warn(u"Error saving metadata for set %s "
+                                    u"from import file.", set_id)
+
+    # Workflow helpers
     def setWorkflowVersion(
         self, version_id, publication_time, expiration_time, status):
 

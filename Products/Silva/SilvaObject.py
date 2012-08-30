@@ -201,7 +201,7 @@ def content_created(content, event):
     binding = service.getMetadata(content)
     if binding is not None and not binding.read_only:
         binding.setValues('silva-extra', {'creationtime': DateTime()})
-    content.sec_update_last_author_info()
+    content.update_last_author_info()
 
 
 @grok.subscribe(ISilvaObject, IObjectModifiedEvent)
@@ -216,7 +216,7 @@ def index_and_update_author_modified_content(content, event):
         return
     if getattr(content, '__initialization__', False):
         return
-    content.sec_update_last_author_info()
+    content.update_last_author_info()
     ICataloging(content).reindex()
 
 

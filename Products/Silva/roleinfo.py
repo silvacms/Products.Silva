@@ -47,13 +47,6 @@ module_security.declareProtected('Change Silva access',
                                  'ASSIGNABLE_VIEWER_ROLES')
 ASSIGNABLE_VIEWER_ROLES = VIEWER_ROLES
 
-def compareRoles(role1, role2):
-    all_roles = list(ALL_ROLES)
-    return cmp(all_roles.index(role1), all_roles.index(role2))
-
-def getRolesAbove(role):
-    all_roles = list(ALL_ROLES)
-    return tuple(all_roles[all_roles.index(role):])
 
 def isEqualToOrGreaterThan(role1, role2):
     roles = list(READER_ROLES)

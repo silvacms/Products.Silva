@@ -11,7 +11,7 @@ from AccessControl.SecurityManagement import newSecurityManager
 from OFS.SimpleItem import SimpleItem
 from Products.Silva import MAILHOST_ID
 from Products.Silva.tests.mockers import install_mockers
-from silva.core.services.catalog import catalog_queue
+from silva.core.services import task_queue
 import Products.Silva
 
 from infrae.testbrowser.browser import Browser
@@ -36,7 +36,7 @@ class CatalogTransaction(object):
     def __enter__(self):
         transaction.abort()
         transaction.begin()
-        catalog_queue.activate()
+        task_queue.activate()
 
     def __exit__(self, t, v, tb):
         if v is None and not transaction.isDoomed():

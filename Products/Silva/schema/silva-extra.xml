@@ -350,7 +350,7 @@
    <index_p>0</index_p>
    <field_type>DateTimeField</field_type>
    <acquire_p>0</acquire_p>
-   <read_only_p>1</read_only_p>
+   <automatic_p>1</automatic_p>
    <read_guard>
      <roles></roles>
      <permissions></permissions>
@@ -410,7 +410,7 @@
     <metadata_in_catalog_p>1</metadata_in_catalog_p>
    <field_type>DateTimeField</field_type>
    <acquire_p>0</acquire_p>
-   <read_only_p>1</read_only_p>
+   <automatic_p>1</automatic_p>
    <read_guard>
      <roles></roles>
      <permissions></permissions>
@@ -507,7 +507,7 @@
      <value key="display_width"></value>
      <value key="required"></value>
      <value key="css_class"></value>
-     <value key="default">python: content.sec_get_creator_info().fullname()</value>
+     <value key="default">python: content.get_creator_info().fullname()</value>
      <value key="title"></value>
      <value key="truncate"></value>
      <value key="description"></value>
@@ -564,7 +564,7 @@
      <value key="display_width"></value>
      <value key="required"></value>
      <value key="css_class"></value>
-     <value key="default">python:content.sec_get_last_author_info(version=content).fullname() or "n/a" </value>
+     <value key="default">python:content.get_last_author_info().fullname() or "n/a" </value>
      <value key="title"></value>
      <value key="truncate"></value>
      <value key="description"></value>

@@ -21,17 +21,19 @@ from OFS.interfaces import IObjectWillBeRemovedEvent
 from Products.Silva import SilvaPermissions
 from Products.Silva.SilvaObject import TitledObject
 from Products.SilvaMetadata.interfaces import IMetadataService
+from Products.Silva.Security import Security
 
 from silva.core.interfaces import IVersion, VersioningError
 from silva.core.interfaces import IVersionManager
 from silva.core.interfaces.events import IApprovalEvent
 from silva.core.interfaces.events import IContentClosedEvent
 from silva.core.interfaces.events import IContentPublishedEvent
+from silva.core.interfaces.events import IPublishingEvent
 from silva.core.services.interfaces import ICataloging
 from silva.translations import translate as _
 
 
-class Version(TitledObject, SimpleItem):
+class Version(Security, TitledObject, SimpleItem):
     """A Version of a versioned content.
     """
     grok.implements(IVersion)
@@ -129,7 +131,7 @@ class VersionManager(grok.Adapter):
         return self.__get_version_tuple()[2]
 
     def get_last_author(self):
-        return self.content.sec_get_last_author_info(self.version)
+        return self.version.get_last_author_info()
 
     def get_status(self):
         """Returns the status of a version as a string
@@ -181,31 +183,33 @@ def version_created(version, event):
     binding = service.getMetadata(version)
     if binding is not None:
         binding.setValues('silva-extra', {'creationtime': DateTime()})
-    content = version.get_silva_object()
-    content.sec_update_last_author_info()
-    ICataloging(content).index(with_versions=False)
+    version.update_last_author_info()
     ICataloging(version).index()
+    ICataloging(version.get_silva_object()).index(with_versions=False)
 
 
 @grok.subscribe(IVersion, IApprovalEvent)
 @grok.subscribe(IVersion, IContentPublishedEvent)
 def version_published(version, event):
+    version.update_last_author_info()
     ICataloging(version).reindex()
     ICataloging(version.get_silva_object()).reindex(with_versions=False)
 
 
 @grok.subscribe(IVersion, IContentClosedEvent)
 def version_closed(version, event):
+    version.update_last_author_info()
     ICataloging(version).unindex()
     ICataloging(version.get_silva_object()).reindex(with_versions=False)
 
 
 @grok.subscribe(IVersion, IObjectModifiedEvent)
 def version_modified(version, event):
-    # This version have been modified
-    version.get_silva_object().sec_update_last_author_info()
-    ICataloging(version).reindex()
-    ICataloging(version.get_silva_object()).reindex(with_versions=False)
+    if not IPublishingEvent.providedBy(event):
+        # This version have been modified
+        version.update_last_author_info()
+        ICataloging(version).reindex()
+        ICataloging(version.get_silva_object()).reindex(with_versions=False)
 
 
 @grok.subscribe(IVersion, IObjectWillBeRemovedEvent)
