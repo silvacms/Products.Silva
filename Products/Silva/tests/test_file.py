@@ -4,11 +4,15 @@
 
 import unittest
 
+from DateTime import DateTime
+
+from zope.component import getUtility
 from zope.interface.verify import verifyObject
 
 from Products.Silva import File
 from Products.Silva.testing import FunctionalLayer, TestCase, tests
 from silva.core import interfaces
+from silva.core.services.interfaces import IMetadataService
 
 
 class DefaultFileImplementationTestCase(TestCase):
@@ -33,7 +37,11 @@ class DefaultFileImplementationTestCase(TestCase):
                 'ContainerModifiedEvent', 'ObjectCreatedEvent'):
                 factory = self.root.manage_addProduct['Silva']
                 factory.manage_addFile(filename, 'Test File', stream)
-        return self.root._getOb(filename)
+        content =  self.root._getOb(filename)
+        metadata = getUtility(IMetadataService).getMetadata(content)
+        metadata.setValues('silva-extra', {
+                'modificationtime': DateTime('2010-04-25T12:00:00Z')})
+        return content
 
     def test_content_image(self):
         """Test base content methods on a file that contains an image.
@@ -243,7 +251,9 @@ class DefaultFileImplementationTestCase(TestCase):
             self.assertEqual(
                 browser.headers['Content-Disposition'],
                 'inline;filename=photo.tif')
-            self.assertTrue('Last-Modified' in browser.headers)
+            self.assertEqual(
+                browser.headers['Last-Modified'],
+                'Sun, 25 Apr 2010 12:00:00 GMT')
             self.assertIn(
                 browser.headers['Accept-Ranges'],
                 ('none', 'bytes'))
@@ -278,7 +288,9 @@ class DefaultFileImplementationTestCase(TestCase):
             self.assertIn(
                 browser.headers['Accept-Ranges'],
                 ('none', 'bytes'))
-            self.assertTrue('Last-Modified' in browser.headers)
+            self.assertEqual(
+                browser.headers['Last-Modified'],
+                'Sun, 25 Apr 2010 12:00:00 GMT')
             self.assertEqual(len(browser.contents), 0)
 
     def test_asset_data(self):
@@ -322,7 +334,53 @@ class BlobFileImplementationTestCase(DefaultFileImplementationTestCase):
                 browser.headers['Content-Range'],
                 'bytes 100-500/%s' % self.file_size)
             self.assertEqual(browser.headers['Accept-Ranges'], 'bytes')
-            self.assertTrue('Last-Modified' in browser.headers)
+            self.assertEqual(
+                browser.headers['Last-Modified'],
+                'Sun, 25 Apr 2010 12:00:00 GMT')
+            self.assertEqual(
+                browser.headers['Content-Disposition'],
+                'inline;filename=photo.tif')
+
+    def test_download_range_if_match(self):
+        """Test download a range of a file with an If-Range header.
+        """
+        self.create_test_file()
+        with self.layer.get_browser() as browser:
+            browser.set_request_header('Range', 'bytes=100-500')
+            browser.set_request_header('If-Range', 'Wed, 23 Jun 2010 12:00:00 GMT')
+            self.assertEqual(browser.open('/root/photo.tif'), 206)
+            self.assertEqual(len(browser.contents), 400)
+            self.assertEqual(browser.headers['Content-Length'], '400')
+            self.assertEqual(browser.headers['Content-Type'], 'image/tiff')
+            self.assertEqual(
+                browser.headers['Content-Range'],
+                'bytes 100-500/%s' % self.file_size)
+            self.assertEqual(browser.headers['Accept-Ranges'], 'bytes')
+            self.assertEqual(
+                browser.headers['Last-Modified'],
+                'Sun, 25 Apr 2010 12:00:00 GMT')
+            self.assertEqual(
+                browser.headers['Content-Disposition'],
+                'inline;filename=photo.tif')
+
+    def test_download_range_if_not_match(self):
+        """Test download a range of a file with an If-Range header.
+        """
+        self.create_test_file()
+        with self.layer.get_browser() as browser:
+            browser.set_request_header('Range', 'bytes=100-500')
+            browser.set_request_header('If-Range', 'Sat, 23 Jun 2001 12:00:00 GMT')
+            self.assertEqual(browser.open('/root/photo.tif'), 200)
+            self.assertEqual(len(browser.contents), self.file_size)
+            self.assertEqual(browser.headers['Content-Type'], 'image/tiff')
+            self.assertEqual(browser.headers['Accept-Ranges'], 'bytes')
+            self.assertNotIn('Content-Range', browser.headers)
+            self.assertEqual(
+                browser.headers['Content-Length'],
+                str(self.file_size))
+            self.assertEqual(
+                browser.headers['Last-Modified'],
+                'Sun, 25 Apr 2010 12:00:00 GMT')
             self.assertEqual(
                 browser.headers['Content-Disposition'],
                 'inline;filename=photo.tif')
@@ -341,7 +399,9 @@ class BlobFileImplementationTestCase(DefaultFileImplementationTestCase):
                 browser.headers['Content-Range'],
                 'bytes */%s' % self.file_size)
             self.assertEqual(browser.headers['Accept-Ranges'], 'bytes')
-            self.assertTrue('Last-Modified' in browser.headers)
+            self.assertEqual(
+                browser.headers['Last-Modified'],
+                'Sun, 25 Apr 2010 12:00:00 GMT')
             self.assertEqual(
                 browser.headers['Content-Disposition'],
                 'inline;filename=photo.tif')

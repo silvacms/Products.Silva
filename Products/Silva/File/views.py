@@ -3,6 +3,7 @@
 # See also LICENSE.txt
 
 from five import grok
+from zope.cachedescriptors.property import Lazy
 from zope.datetime import time as time_from_datetime
 from zope.publisher.interfaces.browser import IBrowserRequest
 
@@ -114,10 +115,20 @@ class FileView(silvaviews.View):
         return self.content.tag()
 
 
+def parse_datetime(value):
+    try:
+        return long(time_from_datetime(value))
+    except:
+        return 0
+
 class FileDownloadView(silvaviews.View):
     grok.baseclass()
     grok.require('zope2.View')
     grok.name('index.html')
+
+    @Lazy
+    def _modification_datetime(self):
+        return long(self.context.get_modification_datetime())
 
     def is_not_modified(self):
         """Return true if the file was not modified since the date
@@ -125,23 +136,25 @@ class FileDownloadView(silvaviews.View):
         """
         header = self.request.environ.get('HTTP_IF_MODIFIED_SINCE', None)
         if header is not None:
-            header = header.split(';')[0]
-            try:
-                mod_since = long(time_from_datetime(header))
-            except:
-                mod_since = None
-            if mod_since is not None:
-                last_mod = self.context.get_modification_datetime()
-                if last_mod is not None:
-                    last_mod = long(last_mod)
-                    if last_mod > 0 and last_mod <= mod_since:
-                        return True
+            modified_since = parse_datetime(header.split(';')[0])
+            if modified_since and self._modification_datetime:
+                return self._modification_datetime <= modified_since
         return False
 
     def have_ranges(self):
-        header = self.request.environ.get('HTTP_RANGE', None)
-        if header is not None:
-            ranges = parseRange(header)
+        """Return range information if partial content was requested.
+        """
+        range_header = self.request.environ.get('HTTP_RANGE', None)
+        if range_header is not None:
+            range_if_header = self.request.environ.get('HTTP_IF_RANGE', None)
+            if range_if_header:
+                # If there is an If-Range header, with a date
+                # prior to the modification, return all the file.
+                if_date = parse_datetime(range_if_header)
+                if (if_date and self._modification_datetime and
+                    self._modification_datetime > if_date):
+                    return (None, None, None)
+            ranges = parseRange(range_header)
             if len(ranges) == 1:
                 size = self.context.get_file_size()
                 satisfiable = expandRanges(ranges, size)
