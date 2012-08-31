@@ -98,7 +98,7 @@ def install_mockers(root):
     root.manage_permission(
         'Add Mockup VersionedContents', roleinfo.AUTHOR_ROLES)
     root.service_metadata.addTypesMapping(
-        ['Mockup Version'], ('silva-content', 'silva-extra',))
+        ['Mockup Version'], ('silva-content', 'silva-extra', 'silva-settings'))
     root.service_metadata.addTypesMapping(
         ['Mockup Asset'], ('silva-content', 'silva-extra',))
 

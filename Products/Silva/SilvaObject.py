@@ -2,7 +2,6 @@
 # See also LICENSE.txt
 # $Id$
 
-
 # Zope 3
 from five import grok
 from zope.component import getUtility
@@ -27,10 +26,9 @@ from Products.Silva import SilvaPermissions
 from Products.Silva.Security import Security
 
 # Silva adapters
-from Products.SilvaMetadata.interfaces import IMetadataService
-
 from silva.core.interfaces import ISilvaObject, IVersionedContent
 from silva.core.services.interfaces import ICataloging
+from silva.core.services.interfaces import IMetadataService
 
 
 class TitledObject(object):
@@ -48,11 +46,6 @@ class TitledObject(object):
         """Set the title of the silva object.
         """
         if title is not None:
-            # FIXME: Ugh. I get unicode from formulator but this will
-            # not validate when using the metadata system. So first
-            # make it into utf-8 again..
-            if isinstance(title, unicode):
-                title = title.encode('utf-8')
             binding = getUtility(IMetadataService).getMetadata(self)
             binding.setValues('silva-content', {'maintitle': title}, reindex=1)
 
