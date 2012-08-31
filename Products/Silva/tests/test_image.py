@@ -10,11 +10,14 @@ except ImportError:
 import unittest
 import io
 
+from DateTime import DateTime
+
 from zope.interface.verify import verifyObject
 from zope.component import getUtility
 
 from silva.core import interfaces
 from silva.core.services.interfaces import ICatalogService
+from silva.core.services.interfaces import IMetadataService
 
 from Products.Silva import File
 from Products.Silva.testing import FunctionalLayer, TestCase
@@ -46,6 +49,10 @@ class DefaultImageTestCase(TestCase):
             image.seek(0, 0)
 
             factory.manage_addImage('test_image', u'Image élaboré', image)
+        image = self.root._getOb('test_image')
+        metadata = getUtility(IMetadataService).getMetadata(image)
+        metadata.setValues('silva-extra', {
+                'modificationtime': DateTime('2010-04-25T12:00:00Z')})
 
     def test_image(self):
         """Test image content.
@@ -162,7 +169,9 @@ class DefaultImageTestCase(TestCase):
             self.assertEquals(
                 browser.headers['Content-Length'],
                 str(data.get_file_size()))
-            self.assertTrue('Last-Modified' in browser.headers)
+            self.assertEquals(
+                browser.headers['Last-Modified'],
+                'Sun, 25 Apr 2010 12:00:00 GMT')
             self.assertIn(
                 browser.headers['Accept-Ranges'],
                 ('none', 'bytes'))
@@ -183,7 +192,9 @@ class DefaultImageTestCase(TestCase):
             self.assertEquals(
                 browser.headers['Content-Type'],
                 'image/tiff')
-            self.assertTrue('Last-Modified' in browser.headers)
+            self.assertEquals(
+                browser.headers['Last-Modified'],
+                'Sun, 25 Apr 2010 12:00:00 GMT')
             self.assertIn(
                 browser.headers['Accept-Ranges'],
                 ('none', 'bytes'))
@@ -204,7 +215,9 @@ class DefaultImageTestCase(TestCase):
             self.assertEqual(
                 browser.headers['Content-Type'],
                 'image/jpeg')
-            self.assertTrue('Last-Modified' in browser.headers)
+            self.assertEquals(
+                browser.headers['Last-Modified'],
+                'Sun, 25 Apr 2010 12:00:00 GMT')
             self.assertIn(
                 browser.headers['Accept-Ranges'],
                 ('none', 'bytes'))
@@ -230,7 +243,9 @@ class DefaultImageTestCase(TestCase):
             self.assertEquals(
                 browser.headers['Content-Length'],
                 str(data.get_file_size()))
-            self.assertTrue('Last-Modified' in browser.headers)
+            self.assertEquals(
+                browser.headers['Last-Modified'],
+                'Sun, 25 Apr 2010 12:00:00 GMT')
             self.assertIn(
                 browser.headers['Accept-Ranges'],
                 ('none', 'bytes'))
@@ -252,7 +267,9 @@ class DefaultImageTestCase(TestCase):
             self.assertNotEqual(
                 browser.headers['Content-Length'],
                 '0')
-            self.assertTrue('Last-Modified' in browser.headers)
+            self.assertEquals(
+                browser.headers['Last-Modified'],
+                'Sun, 25 Apr 2010 12:00:00 GMT')
             self.assertIn(
                 browser.headers['Accept-Ranges'],
                 ('none', 'bytes'))
@@ -272,7 +289,9 @@ class DefaultImageTestCase(TestCase):
             self.assertEqual(
                 browser.headers['Content-Length'],
                 str(self.image_size))
-            self.assertTrue('Last-Modified' in browser.headers)
+            self.assertEquals(
+                browser.headers['Last-Modified'],
+                'Sun, 25 Apr 2010 12:00:00 GMT')
             self.assertIn(
                 browser.headers['Accept-Ranges'],
                 ('none', 'bytes'))
@@ -334,7 +353,9 @@ class BlobImageTestCase(DefaultImageTestCase):
                 browser.headers['Content-Range'],
                 'bytes 100-500/%s' % file_size)
             self.assertEqual(browser.headers['Accept-Ranges'], 'bytes')
-            self.assertTrue('Last-Modified' in browser.headers)
+            self.assertEquals(
+                browser.headers['Last-Modified'],
+                'Sun, 25 Apr 2010 12:00:00 GMT')
             self.assertEqual(
                 browser.headers['Content-Disposition'],
                 'inline;filename=test_image.jpeg')
@@ -353,7 +374,9 @@ class BlobImageTestCase(DefaultImageTestCase):
                 browser.headers['Content-Range'],
                 'bytes */%s' % file_size)
             self.assertEqual(browser.headers['Accept-Ranges'], 'bytes')
-            self.assertTrue('Last-Modified' in browser.headers)
+            self.assertEquals(
+                browser.headers['Last-Modified'],
+                'Sun, 25 Apr 2010 12:00:00 GMT')
             self.assertEqual(
                 browser.headers['Content-Disposition'],
                 'inline;filename=test_image.jpeg')
