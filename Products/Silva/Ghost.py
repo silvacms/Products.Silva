@@ -21,7 +21,7 @@ from Products.Silva import SilvaPermissions
 
 from zeam.form import silva as silvaforms
 from zeam.form.base.errors import Error
-from zeam.form.base.widgets import widget_id
+from zeam.form.base.widgets import widgetId
 
 from silva.core.views.interfaces import IPreviewLayer
 from silva.core import conf as silvaconf
@@ -274,7 +274,7 @@ def TargetValidator(field_name, is_folderish=False, adding=False):
                 is_folderish,
                 adding)
             if error is not None:
-                identifier = widget_id(self.form, self.fields[field_name])
+                identifier = widgetId(self.form, self.fields[field_name])
                 return [Error(error.doc(), identifier)]
             return []
 

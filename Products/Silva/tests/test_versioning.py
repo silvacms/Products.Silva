@@ -33,7 +33,6 @@ class MockupVersionedContent(VersionedContent):
             self._getOb(str(version)).title = 'Version %d' % version
 
 
-
 class VersioningTestCase(unittest.TestCase):
     layer = FunctionalLayer
 
@@ -41,10 +40,9 @@ class VersioningTestCase(unittest.TestCase):
         self.root = self.layer.get_application()
         self.layer.login('manager')
         self.root._setObject('versioning', MockupVersionedContent('versioning'))
-        self.versioning = self.root.versioning
 
     def test_approve_publish(self):
-        versioning = self.versioning
+        versioning = self.root.versioning
         # no version available
         self.assertEqual(versioning.get_public_version(),None)
         self.assertEqual(versioning.get_approved_version(), None)
@@ -97,7 +95,7 @@ class VersioningTestCase(unittest.TestCase):
         self.assertEqual(versioning.get_last_closed_version(), '0')
 
     def test_approve_unapprove(self):
-        versioning = self.versioning
+        versioning = self.root.versioning
 
         # no version yet
         self.assertEqual(versioning.get_public_version(), None)
@@ -147,7 +145,7 @@ class VersioningTestCase(unittest.TestCase):
         self.assertEqual(versioning.is_approved(), False)
 
     def test_create_new_version_published(self):
-        versioning = self.versioning
+        versioning = self.root.versioning
 
         # create new version
         versioning.create_version('0', DateTime() - 10, DateTime() + 20)
@@ -218,7 +216,7 @@ class VersioningTestCase(unittest.TestCase):
 
     def test_close_two_versions(self):
         # test manual close
-        versioning = self.versioning
+        versioning = self.root.versioning
 
         # create new version, publish it
         versioning.create_version('0', DateTime() - 10, DateTime() + 20)
@@ -250,7 +248,7 @@ class VersioningTestCase(unittest.TestCase):
         self.assertEqual(versioning.get_last_closed_version(), '1')
 
     def test_consistency(self):
-        versioning = self.versioning
+        versioning = self.root.versioning
 
         def _check_state(approved=0, approval_request=0, published=0):
             # helper method to check consistency of the version state
@@ -258,7 +256,7 @@ class VersioningTestCase(unittest.TestCase):
                 approved, versioning.is_approved())
             self.assertEqual(
                 approved and versioning.get_next_version() or None,
-                self.versioning.get_approved_version())
+                versioning.get_approved_version())
             self.assertEqual(
                 published, versioning.is_published())
             self.assertEqual(
@@ -294,7 +292,7 @@ class VersioningTestCase(unittest.TestCase):
         _check_state()
 
     def test_request_approval_approved(self):
-        versioning = self.versioning
+        versioning = self.root.versioning
 
         # Cannot ask approval if there is no version to approve
         self.assertRaises(
@@ -350,7 +348,7 @@ class VersioningTestCase(unittest.TestCase):
             versioning.request_version_approval, 'Request message')
 
     def test_request_approval_withdraw(self):
-        versioning = self.versioning
+        versioning = self.root.versioning
 
         # Cannot ask/cancel approval if there is no version to approve
         self.assertRaises(
@@ -391,7 +389,7 @@ class VersioningTestCase(unittest.TestCase):
             versioning.withdraw_version_approval, 'Withdraw message')
 
     def test_request_approval_reject(self):
-        versioning = self.versioning
+        versioning = self.root.versioning
 
         # Cannot reject approval if there is no version to approve
         self.assertRaises(
@@ -432,7 +430,7 @@ class VersioningTestCase(unittest.TestCase):
             versioning.reject_version_approval, 'Reject message')
 
     def test_request_approval_invalid(self):
-        versioning = self.versioning
+        versioning = self.root.versioning
 
         versioning.create_version('0', DateTime() + 10, None)
         versioning.approve_version()
@@ -453,7 +451,7 @@ class VersioningTestCase(unittest.TestCase):
             versioning.reject_version_approval, 'Reject message')
         self.assertEqual(versioning.is_approval_requested(), False)
 
-        self.versioning.set_approved_version_publication_datetime(
+        versioning.set_approved_version_publication_datetime(
             DateTime() - 10)
         self.assertEqual(versioning.get_public_version(), '0')
         self.assertEqual(versioning.get_approved_version(), None)
