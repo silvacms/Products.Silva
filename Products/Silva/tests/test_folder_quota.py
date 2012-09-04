@@ -10,12 +10,21 @@ from zipfile import ZipFile
 from zope.interface.verify import verifyObject
 from zope.component import getUtility
 
+from Products.Silva.Publication import OverQuotaException
 from Products.Silva.silvaxml import xmlimport
 from Products.Silva.tests.helpers import open_test_file
 from Products.Silva.testing import FunctionalLayer, TestRequest
-from silva.core.interfaces import IArchiveFileImporter, IAsset
+from silva.core.interfaces import IArchiveFileImporter, IAsset, IPublication
 from silva.core.interfaces import IContainerManager
-from silva.core.services.interfaces import IExtensionService
+from silva.core.services.interfaces import IExtensionService, IMetadataService
+
+
+def set_quota(content, size_in_megabytes):
+    if not IPublication.providedBy(content):
+        raise ValueError('cannot set quota content on %r' % content)
+    service = getUtility(IMetadataService)
+    binding = service.getMetadata(content)
+    binding.setValues('silva-quota', {'quota': size_in_megabytes})
 
 
 def test_file_size(filename):
@@ -297,6 +306,78 @@ class QuotaTestCase(unittest.TestCase):
         with IContainerManager(self.root).deleter() as deleter:
             deleter(self.root.folder)
         self.assertEqual(self.root.used_space, 0)
+
+    def test_add_file_over_quota(self):
+        """ Test an exception is raised when adding a file will
+        put the folder over quota
+        """
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addFolder('folder', 'Folder')
+        self.assertEqual(self.root.folder.used_space, 0)
+
+        set_quota(self.root, 1) # 1M
+
+        factory = self.root.folder.manage_addProduct['Silva']
+        with open_test_file('test3.zip') as test_file:
+            factory.manage_addFile(
+                'zipfile1.zip', 'Zip File', test_file)
+            test_file.seek(0)
+            with self.assertRaises(OverQuotaException):
+                factory.manage_addFile(
+                    'zipfile2.zip', 'Zip File', test_file)
+
+    def test_copy_paste_over_quota(self):
+        """ Test an exception is raised when a copy is made.
+        """
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addFolder('folder', 'Folder')
+        self.assertEqual(self.root.folder.used_space, 0)
+
+        factory = self.root.folder.manage_addProduct['Silva']
+        with open_test_file('test3.zip') as test_file:
+            factory.manage_addFile(
+                'zipfile1.zip', 'Zip File', test_file)
+            test_file.seek(0)
+            factory.manage_addFile(
+                'zipfile2.zip', 'Zip File', test_file)
+
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addPublication('pub', 'Publication')
+        set_quota(self.root.pub, 1) # 1M
+
+        with self.assertRaises(OverQuotaException):
+            with IContainerManager(self.root.pub).copier() as copier:
+                copier(self.root.folder)
+
+    def test_cut_and_paste_do_not_raise_over_quota(self):
+        """ Test than moving to a folder would not exceed the quota.
+        """
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addFolder('folder', 'Folder')
+        self.assertEqual(self.root.folder.used_space, 0)
+
+        set_quota(self.root, 2)
+
+        factory = self.root.folder.manage_addProduct['Silva']
+        with open_test_file('test3.zip') as test_file:
+            factory.manage_addFile(
+                'zipfile1.zip', 'Zip File', test_file)
+            test_file.seek(0)
+            factory.manage_addFile(
+                'zipfile2.zip', 'Zip File', test_file)
+
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addPublication('pub', 'Publication')
+        set_quota(self.root.pub, 1) # 1M
+        factory = self.root.pub.manage_addProduct['Silva']
+
+        with IContainerManager(self.root.pub).mover() as mover:
+            with self.assertRaises(OverQuotaException):
+                mover(self.root.folder)
+
+        set_quota(self.root.pub, 0)
+        with IContainerManager(self.root.pub).mover() as mover:
+            mover(self.root.folder)
 
 
 def test_suite():
