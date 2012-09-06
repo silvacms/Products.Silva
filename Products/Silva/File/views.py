@@ -128,7 +128,10 @@ class FileDownloadView(silvaviews.View):
 
     @Lazy
     def _modification_datetime(self):
-        return long(self.context.get_modification_datetime())
+        date = self.context.get_modification_datetime()
+        if date is None:
+            return 0
+        return long(date)
 
     def is_not_modified(self):
         """Return true if the file was not modified since the date
