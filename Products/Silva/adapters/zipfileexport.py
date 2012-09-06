@@ -55,7 +55,9 @@ class ZipFileExportAdapter(grok.Adapter):
         archive = ZipFile(archive_file, "w", ZIP_DEFLATED)
 
         # export context to xml and add xml to zip
-        xml, info = xmlexport.exportToString(self.context, settings)
+        xml, info = xmlexport.exportToString(self.context,
+            request=options.get('request', None),
+            settings=settings)
         archive.writestr('silva.xml', xml)
 
         # process data from the export, i.e. export binaries

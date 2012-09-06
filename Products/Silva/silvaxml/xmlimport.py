@@ -59,6 +59,9 @@ def resolve_path(setter, info, target_path):
     target = info.root.unrestrictedTraverse(path)
     setter(target)
 
+def warning(path_or_traversable, message):
+    raise ImportWarning(path_or_traversable, message)
+
 
 class SilvaBaseHandler(xmlimport.BaseHandler):
     """Base class to writer an XML importer for a Silva content. It
