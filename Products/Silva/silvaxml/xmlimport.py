@@ -22,7 +22,7 @@ from silva.core.upgrade.silvaxml import upgradeXMLOnFD
 from silva.translations import translate as _
 from silva.core.messages.interfaces import IMessageService
 from sprout.saxext import xmlimport, collapser
-from Products.Silva.silvaxml import NS_SILVA_URI
+from Products.Silva.silvaxml import NS_SILVA_URI, ImportExportMessaging
 from Products.Silva.Ghost import validate_target
 
 
@@ -403,9 +403,9 @@ class GhostVersionHandler(SilvaBaseHandler):
     def endElementNS(self, name, qname):
         if name == (NS_SILVA_URI, 'content'):
             haunted = self.getData('haunted')
+            info = self.getInfo()
             if haunted is None:
-                logger.error(u'Invalid ghost at %s' %
-                             '/'.join(self.result().getPhysicalPath()))
+                info.reportError(_(u'Invalid ghost'), content=self.result())
             else:
                 info = self.getInfo()
 
@@ -439,11 +439,10 @@ class GhostFolderHandler(SilvaBaseHandler):
         if name == (NS_SILVA_URI, 'ghost_folder'):
             folder = self.result()
             haunted = self.getData('haunted')
+            info = self.getInfo()
             if haunted is None:
-                logger.error(u'Invalid ghost folder at %s' %
-                             '/'.join(folder.getPhysicalPath()))
+                info.reportError(_(u'Invalid ghost folder'), content=folder)
             else:
-                info = self.getInfo()
 
                 def set_target(target):
                     ghost = self.result()
@@ -642,7 +641,7 @@ class ImportSettings(xmlimport.BaseSettings):
         return self._replace_objects
 
 
-class ImportContext(object):
+class ImportContext(ImportExportMessaging):
     """Manage information about the import.
     """
 

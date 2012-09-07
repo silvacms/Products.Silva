@@ -26,6 +26,7 @@ from Products.Silva.ExtensionRegistry import extensionRegistry
 from Products.Silva.ExtensionRegistry import meta_types_for_interface
 from Products.Silva.silvaxml import NS_SILVA_URI
 from Products.Silva.silvaxml import NS_SILVA_CONTENT_URI, NS_SILVA_EXTRA_URI
+from Products.Silva.silvaxml import ImportExportMessaging
 
 
 class SilvaProducer(xmlexport.Producer):
@@ -471,7 +472,7 @@ class ExportSettings(xmlexport.BaseSettings):
         return self._render_external
 
 
-class ExportContext(object):
+class ExportContext(ImportExportMessaging):
 
     def __init__(self, root, request=None):
         self.__root = root
