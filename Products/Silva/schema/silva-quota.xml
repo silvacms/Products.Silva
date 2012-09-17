@@ -45,7 +45,7 @@
      <value key="display_width"></value>
      <value key="unicode"></value>
      <value key="max_length"></value>
-     <value key="external_validator">python:here.REQUEST.PARENTS[0].get_wanted_quota_validator()</value>
+     <value key="external_validator">nocall:context/validate_wanted_quota</value>
      <value key="display_maxwidth"></value>
      <value key="required"></value>
      <value key="css_class"></value>

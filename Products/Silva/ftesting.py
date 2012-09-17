@@ -6,6 +6,15 @@
 import time
 from Products.Silva.testing import tests
 
+
+def rest_settings(browser):
+    """Settings to test rest APIs.
+    """
+    # Cookie and redirect are required for the login form.
+    browser.options.cookie_support = True
+    browser.set_request_header('X-Requested-With', 'XMLHttpRequest')
+
+
 def public_settings(browser):
     """Settings to test public views, using the standard issue skin.
     """
