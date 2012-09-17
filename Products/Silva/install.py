@@ -12,11 +12,12 @@ from Products.SilvaMetadata.interfaces import IMetadataService
 from five import grok
 from silva.core.interfaces import IInstallRootEvent
 from silva.core.interfaces import IInstalledServiceEvent
-from silva.core.interfaces import IRoot
+from silva.core.interfaces import IRoot, IPublication
 from silva.core.services.interfaces import IContainerPolicyService
 
 from Products.Silva import roleinfo
 from Products.Silva import MAILDROPHOST_AVAILABLE, MAILHOST_ID
+from Products.Silva.ExtensionRegistry import extensionRegistry
 
 
 def install(root, extension):
@@ -76,7 +77,7 @@ def configure_metadata(service, event):
         with open(xml_file, 'r') as fh:
             collection.importSet(fh)
         service.addTypesMapping(
-            ('Silva Root', 'Silva Publication', ),
+            [c['name'] for c in extensionRegistry.get_contents(requires=[IPublication])],
             ('silva-quota',))
 
     service.initializeMetadata()

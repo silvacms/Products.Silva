@@ -21,6 +21,7 @@ from Products.Silva.ExtensionRegistry import extensionRegistry
 
 from silva.core import conf as silvaconf
 from silva.core import interfaces
+from silva.core.interfaces import IPublication
 from silva.core.services.base import SilvaService
 from silva.core.services.interfaces import ICataloging, IExtensionService
 from silva.core.services.utils import walk_silva_tree
@@ -212,7 +213,7 @@ class ExtensionService(SilvaService, Folder):
         collection.importSet(fh)
 
         setids = ('silva-quota',)
-        types = ('Silva Root', 'Silva Publication', )
+        types = [c['name'] for c in extensionRegistry.get_contents(requires=[IPublication])]
         root.service_metadata.addTypesMapping(types, setids)
         root.service_metadata.initializeMetadata()
 
