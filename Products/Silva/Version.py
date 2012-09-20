@@ -181,7 +181,7 @@ def version_created(version, event):
 
     service = getUtility(IMetadataService)
     binding = service.getMetadata(version)
-    if binding is not None:
+    if binding is not None and not binding.read_only:
         binding.setValues('silva-extra', {'creationtime': DateTime()})
     version.update_last_author_info()
     ICataloging(version).index()

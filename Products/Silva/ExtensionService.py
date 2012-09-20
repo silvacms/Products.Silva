@@ -209,8 +209,8 @@ class ExtensionService(SilvaService, Folder):
             collection.manage_delObjects(['silva-quota'])
 
         xml_file = os.path.join(schema, 'silva-quota.xml')
-        fh = open(xml_file, 'r')
-        collection.importSet(fh)
+        with open(xml_file, 'r') as fh:
+            collection.importSet(fh)
 
         setids = ('silva-quota',)
         types = [c['name'] for c in extensionRegistry.get_contents(requires=[IPublication])]

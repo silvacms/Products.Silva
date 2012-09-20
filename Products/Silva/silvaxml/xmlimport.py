@@ -143,7 +143,7 @@ class SilvaBaseHandler(xmlimport.BaseHandler):
         content = self.result()
         metadata_service = content.service_metadata
         binding = metadata_service.getMetadata(content)
-        if binding is not None:
+        if binding is not None and not binding.read_only:
             set_names = binding.getSetNames()
             for set_id, elements in self._metadata.items():
                 if set_id not in set_names:
