@@ -194,6 +194,12 @@ class SimpleMemberService(SilvaService):
             member = members._getOb(userid)
         return member
 
+    def get_display_usernames(self):
+        return False
+
+    def get_redirect_to_root(self):
+        return False
+
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'get_cached_member')
     def get_cached_member(self, userid, location=None):
