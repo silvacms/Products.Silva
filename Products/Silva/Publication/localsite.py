@@ -1,6 +1,6 @@
-# Copyright (c) 2003-2010 Infrae. All rights reserved.
+# -*- coding: utf-8 -*-
+# Copyright (c) 2003-2012 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id$
 
 from five import grok
 from five.localsitemanager import make_objectmanager_site

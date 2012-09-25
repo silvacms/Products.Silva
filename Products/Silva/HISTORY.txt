@@ -1,10 +1,22 @@
 Changes
 =======
 
-Silva 3.0 (unreleased)
-----------------------
+Silva 3.0c1 (2012/09/25)
+------------------------
 
-- ...
+- Split apart some more code in other packages. Reformat some API to
+  follow pep8.
+
+- Use ``grokcore.chameleon``.
+
+- Usuability fixes.
+
+- Add support for a ``VersionedObject`` (and
+  ``VersionedNonPublishable``).
+
+- Improve test coverage.
+
+- Fix various bugs from the beta.
 
 Silva 3.0b1 (2011/11/11)
 ------------------------

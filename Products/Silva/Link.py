@@ -1,6 +1,6 @@
-# Copyright (c) 2003-2010 Infrae. All rights reserved.
+# -*- coding: utf-8 -*-
+# Copyright (c) 2003-2012 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id$
 
 # Zope 3
 from five import grok
