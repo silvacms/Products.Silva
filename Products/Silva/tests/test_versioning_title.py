@@ -89,7 +89,6 @@ class VersioningTitleTestCase(unittest.TestCase):
         self.assertEqual(document.get_short_title_editable(), 'Title')
 
 
-
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(VersioningTitleTestCase))

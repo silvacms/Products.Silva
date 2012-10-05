@@ -6,7 +6,7 @@ import unittest
 
 from Products.Silva.testing import FunctionalLayer, tests
 
-from silva.core.interfaces import IPublicationWorkflow
+from silva.core.interfaces import IPublicationWorkflow, IMember
 from silva.core.interfaces import IFolder
 from zope.interface.verify import verifyObject
 
@@ -24,14 +24,20 @@ class FolderTestCase(unittest.TestCase):
         self.assertTrue(verifyObject(IFolder, self.root.folder))
 
     def test_get_creation_datetime(self):
-        """Test get_creation_datetime
+        """Test get_creation_datetime. It should be set by default.
         """
-        self.assertNotEqual(
-            self.root.folder.get_creation_datetime(),
-            None)
-        self.assertNotEqual(
-            self.root.get_creation_datetime(),
-            None)
+        self.assertNotEqual(self.root.folder.get_creation_datetime(), None)
+        self.assertNotEqual(self.root.get_creation_datetime(), None)
+
+    def test_creator_and_author_info(self):
+        """Test get_creator_info and get_last_author_info.
+        """
+        creator = self.root.folder.get_creator_info()
+        self.assertTrue(verifyObject(IMember, creator))
+        self.assertEqual(creator.userid(), 'editor')
+        author = self.root.folder.get_last_author_info()
+        self.assertTrue(verifyObject(IMember, author))
+        self.assertEqual(author.userid(), 'editor')
 
     def test_get_modification_datetime(self):
         """Test get_creation_datetime

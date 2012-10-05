@@ -63,7 +63,7 @@ class VersionManagerTestCase(unittest.TestCase):
         """Return the last author who change the version.
         """
         manager = IVersionManager(self.root.test.get_viewable())
-        self.assertNotEqual(manager.get_last_author(), None)
+        self.assertNotEqual(manager.get_last_author(), 'editor')
 
     def test_delete_unapproved_version(self):
         """Delete an unapproved version.

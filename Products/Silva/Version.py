@@ -175,17 +175,18 @@ _i18n_markers = (_('unapproved'), _('approved'), _('last_closed'),
 @grok.subscribe(IVersion, IObjectCreatedEvent)
 @grok.subscribe(IVersion, IObjectClonedEvent)
 def version_created(version, event):
-    if ((version != event.object) or
-        IObjectCopiedEvent.providedBy(event)):
+    if IObjectCopiedEvent.providedBy(event):
         return
 
-    service = getUtility(IMetadataService)
-    binding = service.getMetadata(version)
-    if binding is not None and not binding.read_only:
-        binding.setValues('silva-extra', {'creationtime': DateTime()})
+    if version == event.object:
+        service = getUtility(IMetadataService)
+        binding = service.getMetadata(version)
+        if binding is not None and not binding.read_only:
+            binding.setValues('silva-extra', {'creationtime': DateTime()})
     version.update_last_author_info()
-    ICataloging(version).index()
-    ICataloging(version.get_silva_object()).index(with_versions=False)
+    if version == event.object:
+        ICataloging(version).index()
+        ICataloging(version.get_silva_object()).index(with_versions=False)
 
 
 @grok.subscribe(IVersion, IApprovalEvent)
@@ -214,9 +215,8 @@ def version_modified(version, event):
 
 @grok.subscribe(IVersion, IObjectWillBeRemovedEvent)
 def version_removed(version, event):
-    if version != event.object:
+    if version == event.object:
         # Only interested about version removed by hand.
-        return
-    ICataloging(version).unindex()
+        ICataloging(version).unindex()
 
 

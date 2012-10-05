@@ -5,10 +5,67 @@
 import unittest
 
 from zope.component import getUtility
+from zope.interface.verify import verifyObject
 
 from Products.Silva.testing import FunctionalLayer
 from Products.SilvaMetadata.interfaces import ReadOnlyError
 from silva.core.services.interfaces import IMetadataService
+from silva.core.interfaces import IMember, IContainerManager, IVersionedContent
+
+
+class VersioningAuthorAndCreationTestCase(unittest.TestCase):
+    layer = FunctionalLayer
+
+    def setUp(self):
+        self.root = self.layer.get_application()
+        self.layer.login('editor')
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addMockupVersionedContent('document', 'Document')
+
+    def test_created_information(self):
+        """Test that default information is properly filled on a
+        recently created versioned content.
+        """
+        document = self.root._getOb('document', None)
+        self.assertIsNot(document, None)
+        creator = document.get_creator_info()
+        self.assertTrue(verifyObject(IMember, creator))
+        self.assertEqual(creator.userid(), 'editor')
+        author = document.get_last_author_info()
+        self.assertTrue(verifyObject(IMember, author))
+        self.assertEqual(author.userid(), 'editor')
+        self.assertNotEqual(document.get_creation_datetime(), None)
+        self.assertNotEqual(document.get_modification_datetime(), None)
+
+        version = document.get_editable()
+        self.assertIsNot(version, None)
+        creator = version.get_creator_info()
+        self.assertTrue(verifyObject(IMember, creator))
+        self.assertEqual(creator.userid(), 'editor')
+        author = version.get_last_author_info()
+        self.assertTrue(verifyObject(IMember, author))
+        self.assertEqual(author.userid(), 'editor')
+        self.assertNotEqual(version.get_creation_datetime(), None)
+        self.assertNotEqual(version.get_modification_datetime(), None)
+
+    def test_copy_information(self):
+        """Test that the information on a copy is properly
+        filled. Although the document have been created by editor, the
+        copy have been created by author.
+        """
+        self.layer.login('author')
+        with IContainerManager(self.root).copier() as copier:
+            copy = copier(self.root.document)
+        self.assertTrue(verifyObject(IVersionedContent, copy))
+
+        creator = copy.get_creator_info()
+        self.assertTrue(verifyObject(IMember, creator))
+        self.assertEqual(creator.userid(), 'author')
+        author = copy.get_last_author_info()
+        self.assertTrue(verifyObject(IMember, author))
+        self.assertEqual(author.userid(), 'author')
+        self.assertNotEqual(copy.get_creation_datetime(), None)
+        self.assertNotEqual(copy.get_modification_datetime(), None)
 
 
 class MetadataVersioningTestCase(unittest.TestCase):
@@ -17,7 +74,6 @@ class MetadataVersioningTestCase(unittest.TestCase):
     def setUp(self):
         self.root = self.layer.get_application()
         self.layer.login('editor')
-
         factory = self.root.manage_addProduct['Silva']
         factory.manage_addMockupVersionedContent('document', 'Document')
 
@@ -115,4 +171,5 @@ class MetadataVersioningTestCase(unittest.TestCase):
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(MetadataVersioningTestCase))
+    suite.addTest(unittest.makeSuite(VersioningAuthorAndCreationTestCase))
     return suite
