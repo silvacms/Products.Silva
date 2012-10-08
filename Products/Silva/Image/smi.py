@@ -103,8 +103,10 @@ class ImageFormatAndScalingForm(silvaforms.SMISubForm):
     fields['web_format'].mode = 'radio'
     fields['web_scale'].defaultValue = '100%'
 
-    @silvaforms.action(title=_('Change'),
-                       implements=silvaforms.IDefaultAction)
+    @silvaforms.action(
+        title=_(u'Change'),
+        description=_(u'Scale and/or crop the image with the new settings'),
+        implements=silvaforms.IDefaultAction)
     def set_properties(self):
         data, errors = self.extractData()
         if errors:
