@@ -63,6 +63,7 @@ class IAutoTOCSchema(ITitledContent):
             u"(-1 means unlimited depth.)"),
         default=-1,
         min=-1,
+        max=99,
         required=True)
     _display_desc_flag = schema.Bool(
         title=_(u"Display description"),
@@ -90,6 +91,11 @@ class IAutoTOCSchema(ITitledContent):
         source=sort_order_source,
         default='silva',
         required=True)
+
+
+@silvaforms.customize(name='_toc_depth', schema=IAutoTOCSchema)
+def customize_toc_depth(field):
+    field.htmlAttributes['style'] = 'width: 4em;'
 
 
 class AutoTOCAddForm(silvaforms.SMIAddForm):
