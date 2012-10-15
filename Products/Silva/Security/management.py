@@ -122,6 +122,12 @@ class Authorization(object):
         self._local_roles = silva_roles(local_roles)
 
     @property
+    def email(self):
+        if not interfaces.IMember.providedBy(self.source):
+            return None
+        return self.source.email()
+
+    @property
     def local_role(self):
         roles = self._local_roles
         return roles[0] if len(roles) else None

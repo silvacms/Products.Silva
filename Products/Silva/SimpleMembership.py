@@ -197,6 +197,9 @@ class SimpleMemberService(SilvaService):
     def get_display_usernames(self):
         return False
 
+    def get_display_emails(self):
+        return False
+
     def get_redirect_to_root(self):
         return False
 

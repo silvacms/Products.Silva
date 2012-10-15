@@ -7,6 +7,7 @@ import unittest
 from silva.core.interfaces import IAccessSecurity
 from silva.core.interfaces import IAuthorization, IAuthorizationManager
 from silva.core.interfaces import UnauthorizedRoleAssignement
+from silva.core.services.interfaces import IMemberService
 from zope import component
 from zope.interface.verify import verifyObject
 
@@ -100,7 +101,7 @@ class AccessSecurityTestCase(unittest.TestCase):
         self.assertEqual(access.acquired, True)
         self.assertEqual(access.get_minimum_role(), None)
         self.assertEqual(access.minimum_role, None)
-
+        
 
 class RootAccessSecurityTestCase(AccessSecurityTestCase):
     """Test Access Security.
@@ -140,6 +141,7 @@ class UserAccessSecurityTestCase(unittest.TestCase):
             self.assertEqual(authorization.identifier, user_id)
             self.assertEqual(authorization.role.lower(), user_id)
             self.assertEqual(authorization.type, 'user')
+            self.assertEqual(authorization.email, None)
             # By default users don't have a local here. Their role is
             # acquired.
             self.assertEqual(authorization.local_role, None)
@@ -253,6 +255,19 @@ class UserAccessSecurityTestCase(unittest.TestCase):
         # Nothing changed
         self.assertEqual(authorization.local_role, None)
         self.assertEqual(authorization.role, 'Reader')
+
+    def test_authorization_email_user(self):
+        """ Test email property on authorization object.
+        """
+        member_service = component.getUtility(IMemberService)
+        member = member_service.get_member('viewer')
+        member.set_email('viewer@silva.org')
+
+        access = IAuthorizationManager(self.root.folder)
+        authorization = access.get_authorization('viewer')
+        self.assertEqual('viewer@silva.org', authorization.email)
+        authorization = access.get_authorization('reader')
+        self.assertEqual(None, authorization.email)
 
 
 class AcquiredUserAccessSecurityTestCase(unittest.TestCase):
