@@ -230,7 +230,7 @@ else
                 'type': 'form',
                 'unique': True},
             'actions': {
-                'css': 'div.form-controls a',
+                'css': '.form-controls a',
                 'type': 'clickable'}})
 
 
