@@ -37,6 +37,7 @@ class IndexerTestCase(unittest.TestCase):
         factory.manage_addMockupVersionedContent('gamma', 'Gamma')
         factory.manage_addMockupVersionedContent('omega', 'Omega')
         factory.manage_addMockupVersionedContent('kappa', 'Kappa')
+        factory.manage_addMockupVersionedContent('ultra', None) # no title
         factory.manage_addGhost('ghost', None, haunted=self.root.folder.kappa)
 
         # Add some anchors.
@@ -46,12 +47,14 @@ class IndexerTestCase(unittest.TestCase):
                                  ('anchor_beta', 'Anchor Tetra')])
         folder.gamma.set_entries([('anchor_gamma', 'Anchor Gamma')])
         folder.kappa.set_entries([('anchor_kappa', 'Anchor Tetra')])
+        folder.ultra.set_entries([('anchor_ultra', 'Anchor Ultra')])
 
         # Publish some documents.
         IPublicationWorkflow(folder.alpha).publish()
         IPublicationWorkflow(folder.beta).publish()
         IPublicationWorkflow(folder.kappa).publish()
         IPublicationWorkflow(folder.ghost).publish()
+        IPublicationWorkflow(folder.ultra).publish()
 
         # now create the indexer itself
         factory.manage_addIndexer('indexer', 'Indexer of letters')
@@ -79,6 +82,9 @@ class IndexerTestCase(unittest.TestCase):
         folder = self.root.folder
         self.assertItemsEqual(
             folder.indexer.get_index_entry('Anchor Zeta'),
+            [])
+        self.assertItemsEqual(
+            folder.indexer.get_index_entry('Anchor Ultra'),
             [])
         self.assertItemsEqual(
             folder.indexer.get_index_entry('Anchor Alpha'),

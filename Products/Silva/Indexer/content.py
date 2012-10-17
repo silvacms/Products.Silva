@@ -103,11 +103,13 @@ class Indexer(Content, SimpleItem):
                 continue
 
             indexable = IIndexEntries(content)
+            title = indexable.get_title()
+            if not title:
+                continue
             indexes = indexable.get_entries()
             if not indexes:
                 continue
 
-            title = indexable.get_title()
             references = reference_service.get_references_between(
                 self, content, name="indexer")
             try:
@@ -116,9 +118,9 @@ class Indexer(Content, SimpleItem):
                 reference = reference_service.new_reference(
                     self, name=u"indexer", factory=IndexerReferenceValue)
                 reference.set_target(content)
-            for indexName, indexTitle in indexes:
-                result.setdefault(indexTitle, {})[reference.__name__] = \
-                    (indexName, title)
+            for index_name, index_title in indexes:
+                result.setdefault(index_title, {})[reference.__name__] = \
+                    (index_name, title)
 
         self._index = result
 
