@@ -2,7 +2,12 @@
 # Copyright (c) 2002-2012 Infrae. All rights reserved.
 # See also LICENSE.txt
 
-import os, tempfile, subprocess
+import os
+import tempfile
+import subprocess
+import logging
+
+logger = logging.getLogger('silva.file')
 
 
 def execute(cmd):
@@ -14,10 +19,21 @@ def execute(cmd):
     return process.communicate()
 
 
-def have_command(cmd):
+def have_command(cmd, flag='-v'):
     """Test if the given command is available.
     """
-    return not execute('%s -v' % cmd)[1].strip().endswith('%s: not found' % cmd)
+    try:
+        process = subprocess.Popen(
+            [cmd, flag],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE)
+    except OSError as error:
+        if error.args[0] == 2:
+            logger.error('External command %s is not available.', cmd)
+        return False
+    stdout, stderr = process.communicate()
+    logger.info('Found %s.', stderr.strip().split('\n')[0])
+    return True
 
 
 PDF_TO_TEXT_AVAILABLE = have_command('pdftotext')

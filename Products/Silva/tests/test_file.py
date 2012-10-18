@@ -3,6 +3,7 @@
 # See also LICENSE.txt
 
 import unittest
+import sys
 
 from DateTime import DateTime
 
@@ -10,9 +11,21 @@ from zope.component import getUtility
 from zope.interface.verify import verifyObject
 
 from Products.Silva import File
+from Products.Silva.File.converters import have_command
 from Products.Silva.testing import FunctionalLayer, TestCase, tests
 from silva.core import interfaces
 from silva.core.services.interfaces import IMetadataService
+
+
+class ConverterTestCase(unittest.TestCase):
+    """Test file converter utilities
+    """
+
+    def test_have_command(self):
+        # Should not have a command that doesn't exist
+        self.assertFalse(have_command('i_do_not_exists_silva_test'))
+        # But you should have the python interpretor you are using
+        self.assertTrue(have_command(sys.executable, '--version'))
 
 
 class DefaultFileImplementationTestCase(TestCase):
@@ -417,6 +430,7 @@ class ZODBFileImplementationTestCase(DefaultFileImplementationTestCase):
 
 def test_suite():
     suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(ConverterTestCase))
     suite.addTest(unittest.makeSuite(DefaultFileImplementationTestCase))
     suite.addTest(unittest.makeSuite(BlobFileImplementationTestCase))
     suite.addTest(unittest.makeSuite(ZODBFileImplementationTestCase))
