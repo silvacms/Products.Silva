@@ -115,14 +115,25 @@ else
             control.value = callback(dt)
 
     def assert_feedback(browser, message):
-        # Verify the message and close it.
-        tests.assertEqual(browser.inspect.feedback, [{'message': message}])
+        # Verify we don't see any error message.
+        tests.assertEqual(browser.inspect.error, [])
+        # Verify we see the feedback message. click on it to close it.
+        tests.assertEqual(browser.inspect.feedback, [message])
         tests.assertEqual(browser.inspect.feedback[0].close.click(), 200)
         tests.assertEqual(browser.inspect.feedback, [])
+
+    def assert_error(browser, message):
+        # Verify we don't see any feedback message.
+        tests.assertEqual(browser.inspect.feedback, [])
+        # Verify we see the error message. click on it to close it.
+        tests.assertEqual(browser.inspect.error, [message])
+        tests.assertEqual(browser.inspect.error[0].close.click(), 200)
+        tests.assertEqual(browser.inspect.error, [])
 
 
     browser.macros.add('setDatetime', set_datetime)
     browser.macros.add('assertFeedback', assert_feedback)
+    browser.macros.add('assertError', assert_error)
 
     # SMI
     browser.inspect.add(
@@ -158,6 +169,18 @@ else
     browser.inspect.add(
         'feedback',
         css='div.jGrowl-feedback',
+        nested={
+            None: ('message',),
+            'message': {
+                'css': 'div.jGrowl-message',
+                'unique': True},
+            'close': {
+                'css': 'div.jGrowl-close',
+                'type': 'clickable',
+                'unique': True}})
+    browser.inspect.add(
+        'error',
+        css='div.jGrowl-error',
         nested={
             None: ('message',),
             'message': {
