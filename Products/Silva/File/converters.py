@@ -17,7 +17,7 @@ def execute(cmd):
 def have_command(cmd):
     """Test if the given command is available.
     """
-    return execute('%s -v' % cmd)[1].strip() != '%s: not found' % cmd
+    return not execute('%s -v' % cmd)[1].strip().endswith('%s: not found' % cmd)
 
 
 PDF_TO_TEXT_AVAILABLE = have_command('pdftotext')
