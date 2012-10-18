@@ -138,12 +138,16 @@ else
     # SMI
     browser.inspect.add(
         'tabs',
-        css='div.metadata ol.content-tabs a.top-entry',
-        type='link')
-    browser.inspect.add(
-        'subtabs',
-        css='div.metadata ol.content-tabs ol a.open-screen',
-        type='link')
+        css='div.metadata ol.content-tabs li.top-level',
+        nested={None: ('name',),
+                'name': {'css': 'a.top-entry',
+                         'type': 'clickable',
+                         'unique': True},
+                'open': {'css': 'div.subtab-icon ins',
+                         'type': 'clickable',
+                         'unique': True},
+                'entries': {'css': 'ol.subtabs li.sub-level a',
+                            'type': 'clickable'}})
     browser.inspect.add(
         'activetabs',
         css="div.metadata ol.content-tabs a.active",
@@ -251,6 +255,9 @@ else
                 'unique': True},
             'form': {
                 'type': 'form',
+                'unique': True},
+            'fields': {
+                'type': 'form-fields',
                 'unique': True},
             'actions': {
                 'css': '.form-controls a',
