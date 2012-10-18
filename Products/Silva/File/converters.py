@@ -7,7 +7,7 @@ import tempfile
 import subprocess
 import logging
 
-logger = logging.getLogger('silva.file')
+logger = logging.getLogger('silva.core')
 
 
 def execute(cmd):
@@ -29,7 +29,7 @@ def have_command(cmd, flag='-v'):
             stderr=subprocess.PIPE)
     except OSError as error:
         if error.args[0] == 2:
-            logger.error('External command %s is not available.', cmd)
+            logger.warn('External command %s is not available.', cmd)
         return False
     stdout, stderr = process.communicate()
     logger.info('Found %s.', stderr.strip().split('\n')[0])
