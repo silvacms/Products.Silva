@@ -195,9 +195,9 @@ else
                 'type': 'clickable',
                 'unique': True}})
 
-    # Content actions
+    # Content toolbar actions
     browser.inspect.add(
-        'actions',
+        'toolbar',
         css='div.toolbar div.actions li a',
         type='clickable')
     # Folder listing
@@ -207,31 +207,35 @@ else
         nested={
             None:  ('title', 'identifier', 'author'),
             'title': {
-                'xpath': '//td[5]',
+                'xpath': 'descendant::td[5]',
                 'unique': True},
             'identifier': {
-                'xpath': '//td[4]',
+                'xpath': 'descendant::td[4]',
                 'type': 'clickable',
                 'unique': True},
             'modified': {
-                'xpath': '//td[6]',
+                'xpath': 'descendant::td[6]',
                 'unique': True},
             'author': {
-                'xpath': '//td[7]',
+                'xpath': 'descendant::td[7]',
                 'unique': True},
             'goto': {
-                'xpath': '//td[8]/div/ol/li/a/span',
+                'xpath': 'descendant::td[8]/div/ol/li/a/span',
                 'type': 'clickable',
                 'unique': True},
             'goto_dropdown': {
-                'xpath': '//td[8]//div[@class="dropdown-icon"]',
+                'xpath': 'descendant::td[8]//div[@class="dropdown-icon"]',
                 'type': 'clickable',
                 'unique': True},
             'goto_actions': {
-                'xpath': '//td[8]//div[@class="dropdown"]//a',
+                'xpath': 'descendant::td[8]//div[@class="dropdown"]//a',
                 'type': 'clickable'}})
 
     # jQuery UI dialogs
+    browser.inspect.add(
+        'reference',
+        css="a.reference-dialog-trigger",
+        type='clickable')
     browser.inspect.add(
         'dialog',
         css="div.ui-dialog",
@@ -242,7 +246,23 @@ else
                 'unique': True},
             'buttons': {
                 'css': 'div.ui-dialog-buttonpane button.ui-button',
-                'type': 'clickable'}})
+                'type': 'clickable'},
+            'listing': {
+                'css': 'table.source-list tr.item',
+                'nested': {
+                    None: ('identifier',),
+                    'identifier': {
+                        'css': 'td.item-id',
+                        'type': 'clickable',
+                        'unique': True},
+                    'title': {
+                        'css': 'td.item-title',
+                        'unique': True},
+                    'select': {
+                        'css': 'td.actions img',
+                        'type': 'clickable',
+                        'unique': True}
+                    }}})
 
     # Form
     browser.inspect.add(

@@ -10,6 +10,7 @@
 
   <!-- Include dependencies -->
   <include package="zope.annotation" />
+  <include package="silva.ui" />
   <include package="silva.core.conf" />
   <include package="silva.core.views" />
   <include package="silva.core.layout" />
@@ -17,10 +18,7 @@
   <include package="silva.core.services" />
   <include package="silva.core.upgrade" />
   <include package="silva.core.references" />
-  <include package="infrae.rest" />
   <include package="silva.translations" />
-  <include package="zeam.form.silva" />
-  <include package="silva.ui" />
 
   <include package="Products.SilvaMetadata" />
 

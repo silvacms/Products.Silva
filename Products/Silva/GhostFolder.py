@@ -349,7 +349,7 @@ class SyncAction(silvaforms.Action):
         if folder.get_link_status() is None:
             folder.haunt()
             form.send_message(
-                _(u'Ghost Folder synchronized'), type='feedback')
+                _(u'Ghost Folder synchronized.'), type='feedback')
             return silvaforms.SUCCESS
         form.send_message(
             _(u'Ghost Folder was not synchronized, because the target is invalid.'),
