@@ -34,11 +34,17 @@ def silva_roles(roles):
 
 def is_role_greater(role1, role2):
     index = roleinfo.ASSIGNABLE_ROLES.index
-    return index(role1) > index(role2)
+    try:
+        return index(role1) > index(role2)
+    except ValueError:
+        return False
 
 def is_role_greater_or_equal(role1, role2):
     index = roleinfo.ASSIGNABLE_ROLES.index
-    return index(role1) >= index(role2)
+    try:
+        return index(role1) >= index(role2)
+    except ValueError:
+        return False
 
 def minimum_role(role):
     all_roles = list(roleinfo.ALL_ROLES)

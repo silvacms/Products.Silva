@@ -12,8 +12,31 @@ from zope import component
 from zope.interface.verify import verifyObject
 
 from AccessControl import getSecurityManager
+from Products.Silva.Security.management import is_role_greater_or_equal
+from Products.Silva.Security.management import is_role_greater
 from Products.Silva.testing import FunctionalLayer
 from Products.Silva.testing import assertNotTriggersEvents, assertTriggersEvents
+
+
+class UtilitiesTestCase(unittest.TestCase):
+
+    def test_role_greater(self):
+        self.assertFalse(is_role_greater('Editor', 'Manager'))
+        self.assertFalse(is_role_greater('Reader', 'Editor'))
+        self.assertFalse(is_role_greater('Viewer', 'Reader'))
+        self.assertFalse(is_role_greater('Editor', 'Editor'))
+        self.assertTrue(is_role_greater('Editor', 'Reader'))
+        self.assertTrue(is_role_greater('Manager', 'Editor'))
+        self.assertFalse(is_role_greater('Chinese', 'Editor'))
+
+    def test_role_greater_or_equal(self):
+        self.assertFalse(is_role_greater_or_equal('Editor', 'Manager'))
+        self.assertFalse(is_role_greater_or_equal('Reader', 'Editor'))
+        self.assertFalse(is_role_greater_or_equal('Viewer', 'Reader'))
+        self.assertTrue(is_role_greater_or_equal('Editor', 'Editor'))
+        self.assertTrue(is_role_greater_or_equal('Manager', 'Manager'))
+        self.assertTrue(is_role_greater_or_equal('Manager', 'Editor'))
+        self.assertFalse(is_role_greater_or_equal('Chinese', 'Editor'))
 
 
 class AccessSecurityTestCase(unittest.TestCase):
@@ -101,7 +124,7 @@ class AccessSecurityTestCase(unittest.TestCase):
         self.assertEqual(access.acquired, True)
         self.assertEqual(access.get_minimum_role(), None)
         self.assertEqual(access.minimum_role, None)
-        
+
 
 class RootAccessSecurityTestCase(AccessSecurityTestCase):
     """Test Access Security.
@@ -503,6 +526,7 @@ class AcquiredUserAccessSecurityTestCase(unittest.TestCase):
 
 def test_suite():
     suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(UtilitiesTestCase))
     suite.addTest(unittest.makeSuite(AccessSecurityTestCase))
     suite.addTest(unittest.makeSuite(RootAccessSecurityTestCase))
     suite.addTest(unittest.makeSuite(UserAccessSecurityTestCase))
