@@ -11,6 +11,7 @@ from zope.container.contained import notifyContainerModified
 from zope.event import notify
 from zope.lifecycleevent import ObjectRemovedEvent
 from zope.lifecycleevent import ObjectMovedEvent
+from zope.app.container.interfaces import INameChooser
 
 from Acquisition import aq_parent, aq_inner, aq_base
 from OFS.CopySupport import sanity_check as move_check
@@ -190,8 +191,11 @@ class ContainerManager(grok.Adapter):
             if to_identifier is not None and from_identifier != to_identifier:
                 result = self.__verify_moveable(content)
                 if result is None:
-                    result = mangle.Id(
-                        self.context, to_identifier, instance=content).verify()
+                    try:
+                        INameChooser(self.context).checkName(
+                            to_identifier, content)
+                    except ContentError as e:
+                        result = e
                 if result is None:
                     content = self.__move(
                         content, self.context, from_identifier, to_identifier)

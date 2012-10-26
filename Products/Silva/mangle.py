@@ -2,6 +2,9 @@
 # Copyright (c) 2002-2012 Infrae. All rights reserved.
 # See also LICENSE.txt
 
+from five import grok
+from zope.app.container.interfaces import INameChooser
+
 # Python
 import string
 import re
@@ -15,13 +18,34 @@ from Acquisition import aq_inner
 
 # Silva
 from silva.translations import translate as _
-from silva.core.interfaces import ISilvaObject, IAsset, ContentError
+from silva.core.interfaces import ISilvaObject, IAsset, IContainer, ContentError
 from Products.Silva import characters
 
 module_security = ModuleSecurityInfo('Products.Silva.mangle')
 
 
 _marker = object()
+
+
+class SilvaNameChooser(grok.Adapter):
+    grok.context(IContainer)
+    grok.implements(INameChooser)
+
+    def __init__(self, container):
+        self.container = container
+
+    def checkName(self, name, content):
+        mangle_id = Id(self.container, name, instance=content)
+        error = mangle_id.verify()
+        if error is not None:
+            raise error
+        return True
+
+    def chooseName(self, name, content):
+        mangle_id = Id(self.container, name, instance=content)
+        final_id = mangle_id.cook()
+        return str(final_id)
+
 
 module_security.declarePublic('Id')
 class Id(object):
