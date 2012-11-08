@@ -43,8 +43,7 @@ class SilvaNameChooser(grok.Adapter):
 
     def chooseName(self, name, content):
         mangle_id = Id(self.container, name, instance=content)
-        final_id = mangle_id.cook()
-        return str(final_id)
+        return str(mangle_id)
 
 
 module_security.declarePublic('Id')
