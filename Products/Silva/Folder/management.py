@@ -20,7 +20,7 @@ from OFS.event import ObjectWillBeRemovedEvent
 from OFS.event import ObjectClonedEvent
 from OFS.subscribers import compatibilityCall
 
-from Products.Silva import helpers, mangle
+from Products.Silva import helpers
 from Products.Silva.Ghost import ghost_factory
 
 from infrae.comethods import cofunction
