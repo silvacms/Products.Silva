@@ -6,12 +6,12 @@ import re
 
 from five import grok
 from zope.cachedescriptors.property import CachedProperty
-from zope.lifecycleevent import ObjectCopiedEvent
 from zope.container.contained import notifyContainerModified
+from zope.container.interfaces import INameChooser
 from zope.event import notify
-from zope.lifecycleevent import ObjectRemovedEvent
+from zope.lifecycleevent import ObjectCopiedEvent
 from zope.lifecycleevent import ObjectMovedEvent
-from zope.app.container.interfaces import INameChooser
+from zope.lifecycleevent import ObjectRemovedEvent
 
 from Acquisition import aq_parent, aq_inner, aq_base
 from OFS.CopySupport import sanity_check as move_check

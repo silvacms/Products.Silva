@@ -2,21 +2,19 @@
 # Copyright (c) 2002-2012 Infrae. All rights reserved.
 # See also LICENSE.txt
 
-from five import grok
-from zope.app.container.interfaces import INameChooser
-
 # Python
 import string
 import re
 from types import StringType, UnicodeType
 
-# Zope
+from five import grok
+from zope.container.interfaces import INameChooser
+
 from AccessControl import ModuleSecurityInfo
+from Acquisition import aq_inner
 from OFS.ObjectManager import checkValidId
 from zExceptions import BadRequest
-from Acquisition import aq_inner
 
-# Silva
 from silva.translations import translate as _
 from silva.core.interfaces import ISilvaObject, IAsset, IContainer, ContentError
 from Products.Silva import characters
