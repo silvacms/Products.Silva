@@ -18,5 +18,3 @@ ReadSilvaContent = 'Read Silva content'
 ChangeSilvaContent = 'Change Silva content'
 ApproveSilvaContent = 'Approve Silva content'
 ChangeSilvaAccess = 'Change Silva access'
-
-

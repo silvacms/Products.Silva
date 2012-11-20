@@ -22,13 +22,15 @@ from App.class_init import InitializeClass
 
 # Silva
 from silva.core import conf as silvaconf
+from silva.core.conf.utils import ISilvaFactoryDispatcher
 from silva.core import interfaces
-from silva.core.interfaces import IMimeTypeClassifier
+from silva.core.interfaces import IMimeTypeClassifier, ISilvaNameChooser
+from silva.core.interfaces import ContentError
 from silva.core.services.interfaces import IFilesService
 from silva.translations import translate as _
 from silva.core.views.interfaces import IContentURL
 
-from .. import mangle, SilvaPermissions
+from .. import SilvaPermissions
 from ..Asset import Asset
 from ..MimetypeRegistry import mimetypeRegistry
 from .utils import Rect, Size, Format, Point
@@ -67,10 +69,17 @@ def manage_addImage(context, identifier, title=None, file=None):
     filename = None
     if hasattr(file, 'name'):
         filename = os.path.basename(file.name)
-    identifier = mangle.Id(
-        context, identifier or filename, file=file, interface=interfaces.IAsset)
-    identifier.cook()
-    if not identifier.isValid():
+
+    container = context
+    if ISilvaFactoryDispatcher.providedBy(container):
+        container = container.Destination()
+
+    name_chooser = ISilvaNameChooser(container)
+    identifier = name_chooser.chooseName(
+        identifier or filename, None, file=file, interface=interfaces.IAsset)
+    try:
+        name_chooser.checkName(identifier, None)
+    except ContentError:
         raise ValueError(_(u"Invalid computed identifier."))
     identifier = str(identifier)
     if identifier in context.objectIds():
@@ -663,11 +672,14 @@ def image_factory(self, id, content_type, file):
     filename = None
     if hasattr(file, 'name'):
         filename = os.path.basename(file.name)
-    id = mangle.Id(self, id or filename,
+    name_chooser = ISilvaNameChooser(self)
+    id = name_chooser.chooseName(id or filename, None,
         file=file, interface=interfaces.IAsset)
-    id.cook()
-    if not id.isValid():
+    try:
+        name_chooser.checkName(id, None)
+    except ContentError:
         return None
+
     img = Image(str(id)).__of__(self)
     return img
 

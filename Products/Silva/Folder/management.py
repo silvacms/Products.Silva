@@ -7,7 +7,6 @@ import re
 from five import grok
 from zope.cachedescriptors.property import CachedProperty
 from zope.container.contained import notifyContainerModified
-from zope.container.interfaces import INameChooser
 from zope.event import notify
 from zope.lifecycleevent import ObjectCopiedEvent
 from zope.lifecycleevent import ObjectMovedEvent
@@ -29,6 +28,7 @@ from silva.core.interfaces import IContainerManager
 from silva.core.interfaces import IAddableContents
 from silva.core.interfaces import IContainer, IAsset
 from silva.core.interfaces import ContainerError, ContentError
+from silva.core.interfaces import ISilvaNameChooser
 from silva.translations import translate as _
 
 
@@ -192,7 +192,7 @@ class ContainerManager(grok.Adapter):
                 result = self.__verify_moveable(content)
                 if result is None:
                     try:
-                        INameChooser(self.context).checkName(
+                        ISilvaNameChooser(self.context).checkName(
                             to_identifier, content)
                     except ContentError as e:
                         result = e

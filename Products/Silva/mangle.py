@@ -2,13 +2,12 @@
 # Copyright (c) 2002-2012 Infrae. All rights reserved.
 # See also LICENSE.txt
 
+from five import grok
+
 # Python
 import string
 import re
 from types import StringType, UnicodeType
-
-from five import grok
-from zope.container.interfaces import INameChooser
 
 from AccessControl import ModuleSecurityInfo
 from Acquisition import aq_inner
@@ -17,6 +16,7 @@ from zExceptions import BadRequest
 
 from silva.translations import translate as _
 from silva.core.interfaces import ISilvaObject, IAsset, IContainer, ContentError
+from silva.core.interfaces import ISilvaNameChooser
 from Products.Silva import characters
 
 module_security = ModuleSecurityInfo('Products.Silva.mangle')
@@ -25,23 +25,48 @@ module_security = ModuleSecurityInfo('Products.Silva.mangle')
 _marker = object()
 
 
-class SilvaNameChooser(grok.Adapter):
+class NameValidator(grok.Subscription):
+    grok.implements(ISilvaNameChooser)
     grok.context(IContainer)
-    grok.implements(INameChooser)
+    grok.order(10)
 
-    def __init__(self, container):
-        self.container = container
+    def __init__(self, context):
+        self.context = context
 
     def checkName(self, name, content):
-        mangle_id = Id(self.container, name, instance=content)
+        mangle_id = Id(self.context, name, instance=content)
         error = mangle_id.verify()
         if error is not None:
             raise error
         return True
 
-    def chooseName(self, name, content):
-        mangle_id = Id(self.container, name, instance=content)
+    def chooseName(self, name, content, file=None, interface=None):
+        mangle_id = Id(self.context, name,
+            instance=content, file=file, interface=interface)
+        mangle_id = mangle_id.cook()
         return str(mangle_id)
+
+
+class SilvaNameChooserDispatcher(grok.Adapter):
+    grok.context(IContainer)
+    grok.implements(ISilvaNameChooser)
+
+    def __init__(self, container):
+        self.container = container
+        self.subscribers = grok.queryOrderedSubscriptions(
+            self.container, ISilvaNameChooser)
+
+    def checkName(self, name, content):
+        for checker in self.subscribers:
+            checker.checkName(name, content)
+
+    def chooseName(self, name, content, file=None, interface=None):
+        for chooser in self.subscribers:
+            chosen = chooser.chooseName(name, content,
+                file=file, interface=interface)
+            if chosen is not None:
+                name = chosen
+        return name
 
 
 module_security.declarePublic('Id')
