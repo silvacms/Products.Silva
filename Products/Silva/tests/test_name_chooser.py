@@ -12,10 +12,10 @@ class TestNameChooser(unittest.TestCase):
         self.factory = self.root.manage_addProduct['Silva']
 
     def test_create_invalid_characters(self):
-        """ Invalid characters raise error.
+        """ Invalid characters a replaced.
         """
-        with self.assertRaises(ValueError):
-            self.factory.manage_addMockupVersionedContent('it*em', 'Item')
+        self.factory.manage_addMockupVersionedContent('it*em', 'Item')
+        self.assertTrue('it_em' in self.root.objectIds())
 
     def test_create_already_exists(self):
         """ A content with the same name is present in the folder.
