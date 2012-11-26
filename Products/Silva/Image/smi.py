@@ -15,7 +15,7 @@ from Products.Silva.Asset import SMIAssetPortlet
 from silva.core.conf import schema as silvaschema
 from silva.core.conf.interfaces import ITitledContent
 from silva.core.interfaces import IImage
-from silva.core.smi.preview import DirectlyRenderedPreview
+from silva.core.smi.preview import Preview
 from silva.translations import translate as _
 from silva.ui.rest import PageREST
 from silva.ui.rest.container import ListingPreview
@@ -160,7 +160,7 @@ class InfoPortlet(SMIAssetPortlet):
 
 
 class ImageHiresPreview(PageREST):
-    grok.adapts(DirectlyRenderedPreview, IImage)
+    grok.adapts(Preview, IImage)
     grok.name('hires')
     grok.require('silva.ReadSilvaContent')
 
