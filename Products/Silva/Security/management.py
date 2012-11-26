@@ -263,7 +263,10 @@ class AuthorizationManager(grok.Adapter):
         self._group = queryUtility(IGroupService)
 
     def get_user_role(self, identifier=None):
-        return self.get_authorization(identifier=identifier).role
+        authorization = self.get_authorization(identifier=identifier)
+        if authorization is None:
+            return None
+        return authorization.role
 
     def get_user_id(self, identifier=None):
         if identifier is None:
