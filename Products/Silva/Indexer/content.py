@@ -85,7 +85,7 @@ class Indexer(Content, SimpleItem):
         """
         result = {}
         want_next = None
-        reference_service = getUtility(IReferenceService)
+        service = getUtility(IReferenceService)
         walker = advanced_walk_silva_tree(self.get_container(), IPublishable)
 
         # get tree of all subobjects
@@ -110,17 +110,18 @@ class Indexer(Content, SimpleItem):
             if not indexes:
                 continue
 
-            references = reference_service.get_references_between(
+            references = service.get_references_between(
                 self, content, name="indexer")
             try:
                 reference = references.next()
             except StopIteration:
-                reference = reference_service.new_reference(
+                reference = service.new_reference(
                     self, name=u"indexer", factory=IndexerReferenceValue)
                 reference.set_target(content)
-            for index_name, index_title in indexes:
-                result.setdefault(index_title, {})[reference.__name__] = \
-                    (index_name, title)
+            for name, label in indexes:
+                if label:
+                    entry = result.setdefault(label, {})
+                    entry[reference.__name__] = (name, title)
 
         self._index = result
 

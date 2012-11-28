@@ -42,7 +42,8 @@ class IndexerTestCase(unittest.TestCase):
 
         # Add some anchors.
         folder = self.root.folder
-        folder.alpha.set_entries([('anchor_alpha', 'Anchor Alpha')])
+        folder.alpha.set_entries([('anchor_alpha', 'Anchor Alpha'),
+                                  ('anchor_empty', '')])
         folder.beta.set_entries([('anchor_alpha', 'Anchor Beta'),
                                  ('anchor_beta', 'Anchor Tetra')])
         folder.gamma.set_entries([('anchor_gamma', 'Anchor Gamma')])
@@ -80,6 +81,9 @@ class IndexerTestCase(unittest.TestCase):
 
     def test_get_index_entry(self):
         folder = self.root.folder
+        self.assertItemsEqual(
+            folder.indexer.get_index_entry(''),
+            [])
         self.assertItemsEqual(
             folder.indexer.get_index_entry('Anchor Zeta'),
             [])
