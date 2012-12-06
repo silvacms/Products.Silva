@@ -8,6 +8,7 @@ import logging
 import mimetypes
 import os.path
 import re
+import time
 
 # Zope 3
 from five import grok
@@ -458,10 +459,17 @@ class Image(Asset):
         if request is None:
             request = self.REQUEST
         url = getMultiAdapter((self, request), IContentURL).url(preview=preview)
+        more = '?'
         if hires:
             url += '?hires'
+            more = '&'
         elif thumbnail:
             url += '?thumbnail'
+            more = '&'
+        if preview:
+            # In case of preview we add something that change at the
+            # end of the url to prevent caching from the browser.
+            url += more + str(int(time.time()))
         return url
 
     security.declareProtected(SilvaPermissions.View, 'get_web_format')

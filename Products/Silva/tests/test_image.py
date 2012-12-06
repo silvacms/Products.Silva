@@ -154,7 +154,8 @@ class DefaultImageTestCase(TestCase):
         self.assertEquals(self.image_data, asset_data.getData())
 
     def test_http_download(self):
-        """Retrieve the image, check the headers.
+        """Retrieve the image, check the headers. Image headers should
+        permit to cache the image.
         """
         data = self.root.test_image.image
         with self.layer.get_browser() as browser:
@@ -174,6 +175,9 @@ class DefaultImageTestCase(TestCase):
             self.assertIn(
                 browser.headers['Accept-Ranges'],
                 ('none', 'bytes'))
+            self.assertEquals(
+                browser.headers['Cache-Control'],
+                'max-age=86400, must-revalidate')
             image_data = browser.contents
             pil_image = PILImage.open(io.BytesIO(image_data))
             self.assertEqual((960, 1280), pil_image.size)
@@ -181,7 +185,7 @@ class DefaultImageTestCase(TestCase):
             self.assertHashEqual(data.get_file(), image_data)
 
     def test_http_download_hires(self):
-        """Retrieve the image, check the headers.
+        """Retrieve the image, check the headers. Image should be cached.
         """
         with self.layer.get_browser() as browser:
             self.assertEquals(browser.open('/root/test_image?hires'), 200)
@@ -197,6 +201,9 @@ class DefaultImageTestCase(TestCase):
             self.assertIn(
                 browser.headers['Accept-Ranges'],
                 ('none', 'bytes'))
+            self.assertEquals(
+                browser.headers['Cache-Control'],
+                'max-age=86400, must-revalidate')
             image_data = browser.contents
             pil_image = PILImage.open(io.BytesIO(image_data))
             self.assertEquals((960, 1280), pil_image.size)
@@ -204,7 +211,8 @@ class DefaultImageTestCase(TestCase):
             self.assertHashEqual(self.image_data, image_data)
 
     def test_http_download_thumbnail(self):
-        """Retrieve image thumbnail, check the headers.
+        """Retrieve image thumbnail, check the headers. Caching should
+        be enabled.
         """
         with self.layer.get_browser() as browser:
             self.assertEqual(browser.open('/root/test_image?thumbnail'), 200)
@@ -220,6 +228,38 @@ class DefaultImageTestCase(TestCase):
             self.assertIn(
                 browser.headers['Accept-Ranges'],
                 ('none', 'bytes'))
+            self.assertEquals(
+                browser.headers['Cache-Control'],
+                'max-age=86400, must-revalidate')
+            body = browser.contents
+            self.assertEqual(browser.headers['Content-Length'], str(len(body)))
+            pil_image = PILImage.open(io.BytesIO(body))
+            self.assertEqual((90, 120), pil_image.size)
+            self.assertEqual('JPEG', pil_image.format)
+
+    def test_http_preview_thumbnail(self):
+        """If you access the preview of an image, the cache should be disabled.
+        """
+        with self.layer.get_browser() as browser:
+            self.assertEqual(browser.open('/root/++preview++/test_image?thumbnail'), 200)
+            self.assertEqual(
+                browser.headers['Content-Disposition'],
+                'inline;filename=test_image.jpeg')
+            self.assertEqual(
+                browser.headers['Content-Type'],
+                'image/jpeg')
+            self.assertEquals(
+                browser.headers['Last-Modified'],
+                'Sun, 25 Apr 2010 12:00:00 GMT')
+            self.assertIn(
+                browser.headers['Accept-Ranges'],
+                ('none', 'bytes'))
+            self.assertEquals(
+                browser.headers['Pragma'],
+                'no-cache')
+            self.assertEquals(
+                browser.headers['Cache-Control'],
+                'no-cache, must-revalidate, post-check=0, pre-check=0')
             body = browser.contents
             self.assertEqual(browser.headers['Content-Length'], str(len(body)))
             pil_image = PILImage.open(io.BytesIO(body))
