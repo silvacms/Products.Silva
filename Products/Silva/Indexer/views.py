@@ -59,25 +59,12 @@ class IndexerView(silvaviews.View):
     """
     grok.context(IIndexer)
 
-    def update(self):
-        cache = {}
-        references = getUtility(IReferenceService).references
-
-        def resolver(cid):
-            if cid in cache:
-                return cache[cid]
-            reference = references.get(cid, None)
-            if reference is not None:
-                url = absoluteURL(reference.target, self.request)
-                cache[cid] = url
-                return url
-            return ''
-
-        self.__resolver = resolver
-
     def links(self, links):
-        for title, cid, name in links:
-            url = self.__resolver(cid)
+        for title, content, name in links:
+            if content is not None:
+                url = absoluteURL(content, self.request)
+            else:
+                url = ""
             yield '<a class="indexer" href="%s#%s">%s</a>' % (url, name, title)
 
 

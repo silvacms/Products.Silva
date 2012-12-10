@@ -4,15 +4,13 @@
 
 import unittest
 
-from zope.component import getUtility
 from zope.interface.verify import verifyObject
 
 from Products.Silva.ftesting import public_settings
 from Products.Silva.testing import FunctionalLayer
 
-from silva.core.interfaces import IPublicationWorkflow
+from silva.core.interfaces import IPublicationWorkflow, IContainerManager
 from silva.core.interfaces import IIndexer
-from silva.core.references.interfaces import IReferenceService
 
 
 class IndexerTestCase(unittest.TestCase):
@@ -61,14 +59,6 @@ class IndexerTestCase(unittest.TestCase):
         factory.manage_addIndexer('indexer', 'Indexer of letters')
         self.root.folder.indexer.update()
 
-        # Helper for the test.
-        service = getUtility(IReferenceService)
-        def resolver(obj):
-            return list(service.get_references_between(
-                    self.root.folder.indexer, obj, name="indexer"))[0].__name__
-
-        self.resolver = resolver
-
     def test_indexer(self):
         """Verify interface.
         """
@@ -92,37 +82,64 @@ class IndexerTestCase(unittest.TestCase):
             [])
         self.assertItemsEqual(
             folder.indexer.get_index_entry('Anchor Alpha'),
-            [(u'Alpha', self.resolver(folder.alpha), 'anchor_alpha')])
+            [(u'Alpha', folder.alpha, 'anchor_alpha')])
         self.assertItemsEqual(
             folder.indexer.get_index_entry('Anchor Beta'),
-            [(u'Beta', self.resolver(folder.beta), 'anchor_alpha')])
+            [(u'Beta', folder.beta, 'anchor_alpha')])
         self.assertItemsEqual(
             folder.indexer.get_index_entry('Anchor Tetra'),
-            [(u'Beta', self.resolver(folder.beta), 'anchor_beta'),
-             (u'Kappa', self.resolver(folder.kappa), 'anchor_kappa'),
-             (u'Kappa', self.resolver(folder.ghost), 'anchor_kappa')])
+            [(u'Beta', folder.beta, 'anchor_beta'),
+             (u'Kappa', folder.kappa, 'anchor_kappa'),
+             (u'Kappa', folder.ghost, 'anchor_kappa')])
 
-    def test_remove_entry_when_remove_object(self):
+    def test_remove_entry_when_remove_target(self):
         """Verify that a corresponding entry is removed when the
         object is removed.
         """
         folder = self.root.folder
-
         self.assertItemsEqual(
             folder.indexer.get_index_entry('Anchor Alpha'),
-            [(u'Alpha', self.resolver(folder.alpha), u'anchor_alpha')])
+            [(u'Alpha', folder.alpha, u'anchor_alpha')])
 
-        folder.manage_delObjects(['alpha'])
-
+        with IContainerManager(folder).deleter() as deleter:
+            deleter(folder.alpha)
         self.assertItemsEqual(
             folder.indexer.get_index_entry('Anchor Alpha'),
             [])
 
-    def test_remove_everything(self):
+    def test_remove_indexer(self):
         """Verify that can remove everything without errors.
         """
-        self.root.manage_delObjects(['folder'])
+        with IContainerManager(self.root).deleter() as deleter:
+            deleter(self.root.folder)
         self.assertFalse('folder' in self.root.objectIds())
+
+    def test_copy_indexer(self):
+        """Verify you can copy an indexer.
+        """
+        folder = self.root.folder
+        # You can copy an indexer.
+        with IContainerManager(folder).copier() as copier:
+            copy = copier(folder.indexer)
+        self.assertTrue(verifyObject(IIndexer, copy))
+        self.assertEqual(copy.getId(), 'copy_of_indexer')
+        self.assertItemsEqual(
+            copy.get_index_entry('Anchor Tetra'),
+            [(u'Beta', folder.beta, 'anchor_beta'),
+             (u'Kappa', folder.kappa, 'anchor_kappa'),
+             (u'Kappa', folder.ghost, 'anchor_kappa')])
+
+        # If you delete a content it won't be listing in the copy either.
+        with IContainerManager(folder).deleter() as deleter:
+            deleter(folder.ghost)
+        self.assertItemsEqual(
+            folder.indexer.get_index_entry('Anchor Tetra'),
+            [(u'Beta', folder.beta, 'anchor_beta'),
+             (u'Kappa', folder.kappa, 'anchor_kappa')])
+        self.assertItemsEqual(
+            copy.get_index_entry('Anchor Tetra'),
+            [(u'Beta', folder.beta, 'anchor_beta'),
+             (u'Kappa', folder.kappa, 'anchor_kappa')])
 
     def test_view(self):
         """Test the public view of an indexer.
