@@ -2,6 +2,8 @@
 # Copyright (c) 2002-2012 Infrae. All rights reserved.
 # See also LICENSE.txt
 
+import uuid
+
 # Zope 3
 from five import grok
 from zope.component import getUtility
@@ -23,17 +25,14 @@ from silva.core.references.reference import ReferenceValue
 from silva.core.services.utils import advanced_walk_silva_tree
 from silva.translations import translate as _
 
+REFERENCE_TAG = u'indexer'
+
 
 class IndexerReferenceValue(ReferenceValue):
 
-    def __init__(self, *args, **kwargs):
-        super(IndexerReferenceValue, self).__init__(*args, **kwargs)
-        if not IIndexer.providedBy(self.source):
-            raise TypeError('Indexer only accepts IIndexer as source')
-
     def cleanup(self):
         source = self.source
-        if source is not None:
+        if source is not None and IIndexer.providedBy(source):
             source._remove_reference_related_entries(self)
 
 
@@ -73,7 +72,16 @@ class Indexer(Content, SimpleItem):
         """Returns a list of (title, path) tuples for an entry name in the
         index, sorted alphabetically on title
         """
-        result = [(title, path, name) for path, (name, title) in
+        get_references = getUtility(IReferenceService).get_references_from
+        contents = dict(
+            map(
+                lambda r: (r.tags[1], r.target),
+                filter(
+                    lambda r: r.tags[0] == REFERENCE_TAG,
+                    get_references(self, name=REFERENCE_TAG))))
+
+        result = [(title, contents.get(path), name)
+                  for path, (name, title) in
                   self._index.get(entry, {}).items()]
         result.sort(key=lambda i: i[0].lower())
         return result
@@ -111,23 +119,32 @@ class Indexer(Content, SimpleItem):
                 continue
 
             references = service.get_references_between(
-                self, content, name="indexer")
+                self, content, name=REFERENCE_TAG)
             try:
                 reference = references.next()
             except StopIteration:
+                reference_name = unicode(uuid.uuid1())
                 reference = service.new_reference(
-                    self, name=u"indexer", factory=IndexerReferenceValue)
+                    self, name=REFERENCE_TAG, factory=IndexerReferenceValue)
                 reference.set_target(content)
+                reference.add_tag(reference_name)
+            else:
+                if len(reference.tags) > 1:
+                    reference_name = reference.tags[1]
+                else:
+                    # Upgrade existing references
+                    reference_name = unicode(uuid.uuid1())
+                    reference.add_tag(reference_name)
             for name, label in indexes:
                 if label:
                     entry = result.setdefault(label, {})
-                    entry[reference.__name__] = (name, title)
+                    entry[reference_name] = (name, title)
 
         self._index = result
 
     def _remove_reference_related_entries(self, reference):
         if IReferenceValue.providedBy(reference):
-            reference_name = reference.__name__
+            reference_name = reference.tags[1]
         else:
             reference_name = reference
         for indexes in self._index.itervalues():
