@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 
 import unittest
 from Products.Silva.testing import FunctionalLayer
@@ -23,6 +24,16 @@ class TestNameChooser(unittest.TestCase):
         self.factory.manage_addMockupVersionedContent('item', 'Item')
         with self.assertRaises(ValueError):
             self.factory.manage_addMockupVersionedContent('item', 'Item')
+
+    def test_unicode(self):
+        self.factory.manage_addMockupVersionedContent(u'item', u'Title')
+        item = self.root._getOb('item', None)
+        self.assertTrue(item)
+
+    def test_unicode_invalid_characters(self):
+        with self.assertRaises(ValueError):
+            self.factory.manage_addMockupVersionedContent(u'itéám', u'Title')
+
 
 
 def test_suite():
