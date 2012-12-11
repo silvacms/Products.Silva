@@ -2,7 +2,10 @@
 # Copyright (c) 2002-2012 Infrae. All rights reserved.
 # See also LICENSE.txt
 
+import threading
 import logging
+
+from zope import component
 
 # Zope
 from AccessControl import ClassSecurityInfo
@@ -12,15 +15,134 @@ from App.class_init import InitializeClass
 from Products.Silva import SilvaPermissions
 from Products.Silva.mail import sendmail
 
+import transaction
+from transaction.interfaces import ISavepointDataManager, IDataManagerSavepoint
+
 from five import grok
 from zope import schema, interface
 from silva.core import conf as silvaconf
 from silva.core import interfaces
+from silva.core.services.interfaces import IMemberService
 from silva.core.services.base import SilvaService
 from silva.translations import translate as _
 from zeam.form import silva as silvaforms
 
 logger = logging.getLogger('silva.email')
+
+
+class EmailQueueSavepoint(object):
+    grok.implements(IDataManagerSavepoint)
+
+    def __init__(self, email_queue_transaction):
+        self.email_queue_transaction = email_queue_transaction
+
+    def rollback(self):
+        self.email_queue_transaction._rollback_queue()
+
+
+class EmailQueueTransaction(threading.local):
+    """ Email queue transaction.
+    """
+    grok.implements(ISavepointDataManager)
+
+    _followed = False
+    _active = True
+
+    def __init__(self, manager):
+        self.transaction_manager = manager
+        self._reset()
+
+    def activate(self):
+        if not self._active:
+            self._follow()
+            self._active = True
+
+    def deactivate(self):
+        self._active = False
+
+    def clear(self):
+        self._reset()
+
+    def _reset(self):
+        self._current_queue = {}
+        self._queues = [self._current_queue]
+
+    def _start_queue(self):
+        if self._current_queue:
+            self._current_queue = {}
+            self._queues.append(self._current_queue)
+
+    def _rollback_queue(self):
+        if self._current_queue:
+            self._queues.pop()
+            self._current_queue = {}
+            self._queues.append(self._current_queue)
+
+    def _follow(self):
+        if not self._followed:
+            transaction = self.transaction_manager.get()
+            transaction.join(self)
+            service = component.getUtility(interfaces.IMessageService)
+            transaction.addBeforeCommitHook(service.send_pending_messages)
+            self._followed = True
+
+    def enqueue_email(self, from_memberid, to_memberid, subject, message):
+        if self._active:
+            self._follow()
+            self._current_queue.setdefault(to_memberid, {}).setdefault(
+                from_memberid, []).append((subject, message))
+
+    def __iter__(self):
+        members = set()
+        for queue in self._queues:
+            members |= set(queue.iterkeys())
+        for member in members:
+            message_dict = {}
+            for queue in self._queues:
+                messages = queue.get(member)
+                if messages is not None:
+                    for from_member, message_list in messages.iteritems():
+                        message_dict.setdefault(
+                            from_member, []).extend(message_list)
+            yield (member, message_dict)
+
+    def sortKey(self):
+        # This should let us appear after the Data.fs ...
+        return 'z' * 50
+
+    def savepoint(self):
+        self._start_queue()
+        return EmailQueueSavepoint(self)
+
+    def tpc_begin(self, transaction):
+        pass
+
+    def commit(self, transaction):
+        pass
+
+    def abort(self, transaction):
+        self._reset()
+
+    def tpc_vote(self, transaction):
+        pass
+
+    def tpc_finish(self, transaction):
+        pass
+
+    def tpc_abort(self, transaction):
+        pass
+
+
+email_queue = EmailQueueTransaction(transaction.manager)
+
+
+@grok.subscribe(interfaces.IUpgradeStartedEvent)
+def deactivate_before_upgrade(event):
+    email_queue.deactivate()
+
+@grok.subscribe(interfaces.IUpgradeFinishedEvent)
+def activate_after_upgrader(event):
+    email_queue.activate()
 
 
 class EmailMessageService(SilvaService):
@@ -47,22 +169,17 @@ class EmailMessageService(SilvaService):
     security.declareProtected(
         SilvaPermissions.ChangeSilvaAccess, 'send_message')
     def send_message(self, from_memberid, to_memberid, subject, message):
-        if not hasattr(self.aq_base, '_v_messages'):
-            self._v_messages = {}
-        self._v_messages.setdefault(to_memberid, {}).setdefault(
-            from_memberid, []).append((subject, message))
+        email_queue.enqueue_email(
+            from_memberid, to_memberid, subject, message)
 
-    # XXX have to open this up to the world, unfortunately..
-    security.declareProtected(
-        SilvaPermissions.AccessContentsInformation, 'send_pending_messages')
+    security.declarePublic('send_pending_messages')
     def send_pending_messages(self):
         logger.debug("Sending pending messages...")
-        get_member = self.service_members.get_member
 
-        if not hasattr(self.aq_base, '_v_messages'):
-            self._v_messages = {}
+        service_members = component.getUtility(IMemberService)
+        get_member = service_members.get_member
 
-        for to_memberid, message_dict in self._v_messages.items():
+        for to_memberid, message_dict in email_queue:
             to_member = get_member(to_memberid)
             if to_member is None:
                 # XXX get_member should return a NoneMember, not just None
@@ -120,7 +237,7 @@ class EmailMessageService(SilvaService):
 
         # XXX if above raises exception: mail queue is not flushed
         # as this line is not reached. bug or feature ?
-        self._v_messages = {}
+        email_queue.clear()
 
     # ACCESSORS
     security.declareProtected(SilvaPermissions.ViewManagementScreens,
@@ -158,7 +275,7 @@ InitializeClass(EmailMessageService)
 
 
 class IEmailMessageSettings(interface.Interface):
-    _enable = schema.Bool(
+    _enabled = schema.Bool(
         title=_(u'Enable'),
         description=_(u'Send emails when asked to.'),
         required=True)
