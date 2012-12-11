@@ -10,6 +10,7 @@ import sys
 from AccessControl.SecurityManagement import newSecurityManager
 from OFS.SimpleItem import SimpleItem
 from Products.Silva import MAILHOST_ID
+from Products.Silva.EmailMessageService import email_queue
 from Products.Silva.tests.mockers import install_mockers
 from silva.core.services import task_queue
 import Products.Silva
@@ -114,7 +115,7 @@ class MockMailHost(SimpleItem):
 
 
 testCleanUp.add(MockMailHost.reset)
-
+testCleanUp.add(email_queue.clear)
 
 class SilvaLayer(BrowserLayer):
     """Test layer inside Silva.
