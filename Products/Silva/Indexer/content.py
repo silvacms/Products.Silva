@@ -96,7 +96,13 @@ class Indexer(Content, SimpleItem):
         service = getUtility(IReferenceService)
         walker = advanced_walk_silva_tree(self.get_container(), IPublishable)
 
-        # get tree of all subobjects
+        # Collect references to cleanup later.
+        used_references = set([])
+        existing_references = set([])
+        for reference in service.get_references_from(self, name=REFERENCE_TAG):
+            existing_references.add(reference.__name__)
+
+        # Walk through the Silva tree to search for indexes.
         while True:
             try:
                 content = walker.send(want_next)
@@ -111,34 +117,30 @@ class Indexer(Content, SimpleItem):
                 continue
 
             indexable = IIndexEntries(content)
+            # No title, we skip
             title = indexable.get_title()
+            if not title:
+                continue
+            # No indexes, we skip
             indexes = indexable.get_entries()
-            references = list(service.get_references_between(
-                    self, content, name=REFERENCE_TAG))
-
-            if (not title) or (not indexes):
-                if len(references):
-                    # There used to have indexes, but it is no
-                    # longer the case.
-                    for reference in references:
-                        service.delete_reference_by_name(reference.__name__)
+            if not indexes:
                 continue
 
-            # Inspect or update references.
-            if len(references) > 0:
-                # Reuse existing references.
+            # Inspect or update a references.
+            references = list(service.get_references_between(
+                    self, content, name=REFERENCE_TAG))
+            if len(references):
+                # Reuse existing an reference.
                 reference = references[0]
                 if len(reference.tags) > 1:
                     reference_name = reference.tags[1]
                 else:
-                    # Upgrade existing references
+                    # Upgrade existing reference to add a tag
                     reference_name = unicode(uuid.uuid1())
                     reference.add_tag(reference_name)
-                # More that one reference, this should not happens. Delete them.
-                for reference in references[1:]:
-                    service.delete_reference_by_name(reference.__name__)
+                used_references.add(reference.__name__)
             else:
-                # There is reference, create a new one.
+                # There is no reference, create a new one.
                 reference_name = unicode(uuid.uuid1())
                 reference = service.new_reference(
                     self, name=REFERENCE_TAG, factory=IndexerReferenceValue)
@@ -150,6 +152,9 @@ class Indexer(Content, SimpleItem):
                 if label:
                     entry = result.setdefault(label, {})
                     entry[reference_name] = (name, title)
+
+        for name in existing_references.difference(used_references):
+            service.delete_reference_by_name(name)
 
         self._index = result
 
