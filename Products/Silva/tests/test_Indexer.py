@@ -5,10 +5,12 @@
 import unittest
 
 from zope.interface.verify import verifyObject
+from zope.component import getUtility
 
 from Products.Silva.ftesting import public_settings
 from Products.Silva.testing import FunctionalLayer
 
+from silva.core.references.interfaces import IReferenceService
 from silva.core.interfaces import IPublicationWorkflow, IContainerManager
 from silva.core.interfaces import IIndexer
 
@@ -65,6 +67,8 @@ class IndexerTestCase(unittest.TestCase):
         self.assertTrue(verifyObject(IIndexer, self.root.folder.indexer))
 
     def test_get_index_names(self):
+        """get_index_names should return the name of all indexes.
+        """
         self.assertEqual(
             self.root.folder.indexer.get_index_names(),
             ['Anchor Alpha', 'Anchor Beta', 'Anchor Tetra'])
@@ -92,6 +96,34 @@ class IndexerTestCase(unittest.TestCase):
              (u'Kappa', folder.kappa, 'anchor_kappa'),
              (u'Kappa', folder.ghost, 'anchor_kappa')])
 
+    def test_remove_entry_when_remove_indexes(self):
+        """Verify that corresponding entries and references are
+        removed when indexes are removed from an object, but not the
+        object.
+        """
+        folder = self.root.folder
+        service = getUtility(IReferenceService)
+        self.assertItemsEqual(
+            folder.indexer.get_index_entry('Anchor Alpha'),
+            [(u'Alpha', folder.alpha, u'anchor_alpha')])
+        self.assertEqual(
+            len(list(service.get_references_between(
+                        folder.indexer, folder.alpha))),
+            1)
+
+        # Remove entries and update indexer.
+        folder.alpha.set_entries([])
+        folder.indexer.update()
+
+        # Entries are gones.
+        self.assertItemsEqual(
+            folder.indexer.get_index_entry('Anchor Alpha'),
+            [])
+        self.assertEqual(
+            len(list(service.get_references_between(
+                        folder.indexer, folder.alpha))),
+            0)
+
     def test_remove_entry_when_remove_target(self):
         """Verify that a corresponding entry is removed when the
         object is removed.
@@ -118,6 +150,8 @@ class IndexerTestCase(unittest.TestCase):
         """Verify you can copy an indexer.
         """
         folder = self.root.folder
+        service = getUtility(IReferenceService)
+
         # You can copy an indexer.
         with IContainerManager(folder).copier() as copier:
             copy = copier(folder.indexer)
@@ -128,6 +162,10 @@ class IndexerTestCase(unittest.TestCase):
             [(u'Beta', folder.beta, 'anchor_beta'),
              (u'Kappa', folder.kappa, 'anchor_kappa'),
              (u'Kappa', folder.ghost, 'anchor_kappa')])
+        self.assertEqual(
+            len(list(service.get_references_between(
+                        copy, folder.beta))),
+            1)
 
         # If you delete a content it won't be listing in the copy either.
         with IContainerManager(folder).deleter() as deleter:

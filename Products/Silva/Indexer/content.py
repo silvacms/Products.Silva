@@ -112,29 +112,40 @@ class Indexer(Content, SimpleItem):
 
             indexable = IIndexEntries(content)
             title = indexable.get_title()
-            if not title:
-                continue
             indexes = indexable.get_entries()
-            if not indexes:
+            references = list(service.get_references_between(
+                    self, content, name=REFERENCE_TAG))
+
+            if (not title) or (not indexes):
+                if len(references):
+                    # There used to have indexes, but it is no
+                    # longer the case.
+                    for reference in references:
+                        service.delete_reference_by_name(reference.__name__)
                 continue
 
-            references = service.get_references_between(
-                self, content, name=REFERENCE_TAG)
-            try:
-                reference = references.next()
-            except StopIteration:
-                reference_name = unicode(uuid.uuid1())
-                reference = service.new_reference(
-                    self, name=REFERENCE_TAG, factory=IndexerReferenceValue)
-                reference.set_target(content)
-                reference.add_tag(reference_name)
-            else:
+            # Inspect or update references.
+            if len(references) > 0:
+                # Reuse existing references.
+                reference = references[0]
                 if len(reference.tags) > 1:
                     reference_name = reference.tags[1]
                 else:
                     # Upgrade existing references
                     reference_name = unicode(uuid.uuid1())
                     reference.add_tag(reference_name)
+                # More that one reference, this should not happens. Delete them.
+                for reference in references[1:]:
+                    service.delete_reference_by_name(reference.__name__)
+            else:
+                # There is reference, create a new one.
+                reference_name = unicode(uuid.uuid1())
+                reference = service.new_reference(
+                    self, name=REFERENCE_TAG, factory=IndexerReferenceValue)
+                reference.set_target(content)
+                reference.add_tag(reference_name)
+
+            # Construct index
             for name, label in indexes:
                 if label:
                     entry = result.setdefault(label, {})
