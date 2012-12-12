@@ -76,9 +76,7 @@ class Indexer(Content, SimpleItem):
         contents = dict(
             map(
                 lambda r: (r.tags[1], r.target),
-                filter(
-                    lambda r: r.tags[0] == REFERENCE_TAG,
-                    get_references(self, name=REFERENCE_TAG))))
+                get_references(self, name=REFERENCE_TAG)))
 
         result = [(title, contents.get(path), name)
                   for path, (name, title) in
@@ -126,32 +124,30 @@ class Indexer(Content, SimpleItem):
             if not indexes:
                 continue
 
-            # Inspect or update a references.
+            # Find a reference to use.
+            identifier = None
             references = list(service.get_references_between(
                     self, content, name=REFERENCE_TAG))
-            if len(references):
-                # Reuse existing an reference.
+            if len(references) == 1:
                 reference = references[0]
                 if len(reference.tags) > 1:
-                    reference_name = reference.tags[1]
-                else:
-                    # Upgrade existing reference to add a tag
-                    reference_name = unicode(uuid.uuid1())
-                    reference.add_tag(reference_name)
-                used_references.add(reference.__name__)
-            else:
+                    # Don't use a reference that doesn't have the required tag.
+                    identifier = reference.tags[1]
+                    used_references.add(reference.__name__)
+
+            if identifier is None:
                 # There is no reference, create a new one.
-                reference_name = unicode(uuid.uuid1())
+                identifier = unicode(uuid.uuid1())
                 reference = service.new_reference(
                     self, name=REFERENCE_TAG, factory=IndexerReferenceValue)
                 reference.set_target(content)
-                reference.add_tag(reference_name)
+                reference.add_tag(identifier)
 
             # Construct index
             for name, label in indexes:
                 if label:
                     entry = result.setdefault(label, {})
-                    entry[reference_name] = (name, title)
+                    entry[identifier] = (name, title)
 
         for name in existing_references.difference(used_references):
             service.delete_reference_by_name(name)

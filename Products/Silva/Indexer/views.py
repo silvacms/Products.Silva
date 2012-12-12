@@ -4,14 +4,12 @@
 
 from five import grok
 from zope.traversing.browser import absoluteURL
-from zope.component import getUtility
 from zope.event import notify
 from zope.lifecycleevent import ObjectModifiedEvent
 
 from AccessControl.security import checkPermission
 
 from silva.core.interfaces import IIndexer
-from silva.core.references.interfaces import IReferenceService
 from silva.core.smi.content import IEditScreen
 from silva.core.views import views as silvaviews
 from silva.translations import translate as _
