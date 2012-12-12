@@ -1,11 +1,18 @@
 Changes
 =======
 
-
-Silva 3.0 (unreleased)
+Silva 3.0 (2012/12/12)
 ----------------------
 
-- ...
+- Fix various issues (email notifications, indexer, image preview).
+
+- Add a pluggable API to choose and validation content identifiers.
+
+- Add contextual help.
+
+- Update user documentation.
+
+- Improve tests.
 
 Silva 3.0c1 (2012/09/25)
 ------------------------
