@@ -12,6 +12,7 @@ from types import StringType, UnicodeType
 from AccessControl import ModuleSecurityInfo
 from Acquisition import aq_inner
 from OFS.ObjectManager import checkValidId
+from OFS.interfaces import IObjectManager
 from zExceptions import BadRequest
 
 from silva.translations import translate as _
@@ -59,6 +60,7 @@ class SilvaNameChooserDispatcher(grok.Adapter):
     def checkName(self, name, content):
         for checker in self.subscribers:
             checker.checkName(name, content)
+        return True
 
     def chooseName(self, name, content, file=None, interface=None):
         for chooser in self.subscribers:
@@ -67,6 +69,24 @@ class SilvaNameChooserDispatcher(grok.Adapter):
             if chosen is not None:
                 name = chosen
         return name
+
+
+class ZopeNameChooser(grok.Adapter):
+    grok.context(IObjectManager)
+    grok.implements(ISilvaNameChooser)
+
+    def __init__(self, container):
+        self.container = container
+
+    def checkName(self, name, content):
+        try:
+            checkValidId(self.container, str(name))
+        except BadRequest as error:
+            raise ContentError(error.args[0], self.container)
+        return True
+
+    def chooseName(self, name, content, file=None, interface=None):
+        return str(name)
 
 
 module_security.declarePublic('Id')
@@ -230,7 +250,7 @@ class Id(object):
             content = self._folder
             if self._instance is not None:
                 content = self._instance
-            return ContentError(self._report(status), content)
+            return ContentError(self._status_to_string(status), content)
         return None
 
     def _validate(self):
@@ -301,7 +321,7 @@ class Id(object):
 
         return self.OK
 
-    def _report(self, status):
+    def _status_to_string(self, status):
         if status == self.CONTAINS_BAD_CHARS:
             return _(u'The id contains strange characters. It should only '
                      u'contain letters, digits and ‘_’ or ‘-’ or ‘.’ '
