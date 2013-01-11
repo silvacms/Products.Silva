@@ -10,24 +10,34 @@ from zope.interface import Interface
 from zope import schema
 
 from silva.core import interfaces
+from silva.core.xml import Exporter
 from silva.translations import translate as _
 
 import transaction
 
-from Products.Silva.silvaxml import xmlexport
-
 
 class IExportOptions(Interface):
-    include_sub_publications = schema.Bool(
+    publications = schema.Bool(
         title=_(u"Include sub publications?"),
         description=_(u"Check to export all sub publications. "),
         default=False,
         required=False)
-
-    export_newest_version_only = schema.Bool(
+    others = schema.Bool(
+        title=_(u"Include other contents?"),
+        description=_(u"Check to export content not providing an XML "
+                      u"export functionality. This can cause problems."),
+        default=True,
+        required=False)
+    previewable = schema.Bool(
         title=_(u"Export only newest versions?"),
         description=_(u"If not checked all versions are exported."),
         default=True,
+        required=False)
+    references = schema.Bool(
+        title=_(u'Export content refering non-exported one?'),
+        description=_(u"If checked, export content refering "
+                      u"not exported one without error."),
+        default=False,
         required=False)
 
 
@@ -44,29 +54,25 @@ class ZipFileExportAdapter(grok.Adapter):
     extension = "zip"
     options = IExportOptions
 
-    def export(self, **options):
-        settings = xmlexport.ExportSettings()
-        settings.setWithSubPublications(
-            options.get('include_sub_publications', False))
-        settings.setLastVersion(
-            options.get('export_newest_version_only', False))
+    def export(self, request, stream=None, in_memory=False, **options):
+        if stream is None:
+            stream = io.BytesIO()
+            in_memory = True
+        archive = ZipFile(stream, "w", ZIP_DEFLATED)
 
-        archive_file = io.BytesIO()
-        archive = ZipFile(archive_file, "w", ZIP_DEFLATED)
-
-        # export context to xml and add xml to zip
-        xml, info = xmlexport.exportToString(self.context,
-            request=options.get('request', None),
-            settings=settings)
-        archive.writestr('silva.xml', xml)
+        exporter = Exporter(self.context, request, options)
+        # Export context to xml and add xml to zip
+        export = exporter.getStream()
+        archive.write(export.filename, 'silva.xml')
+        export.close()
 
         # process data from the export, i.e. export binaries
-        for path, id in info.getAssetPaths():
+        for path, id in exporter.getAssetPaths():
             asset = self.context.restrictedTraverse(path)
             adapter = interfaces.IAssetData(asset)
             archive.writestr('assets/' + id, adapter.getData())
 
-        unknowns = info.getZexpPaths()
+        unknowns = exporter.getZexpPaths()
         if unknowns:
             # This is required is exported content have been created
             # in the same transaction than the export. They need to be
@@ -80,7 +86,9 @@ class ZipFileExportAdapter(grok.Adapter):
                 export.close()
 
         archive.close()
-        return archive_file.getvalue()
+        if in_memory:
+            return stream.getvalue()
+        return stream
 
 
 

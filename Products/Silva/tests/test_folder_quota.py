@@ -11,9 +11,8 @@ from zope.interface.verify import verifyObject
 from zope.component import getUtility
 
 from Products.Silva.Publication import OverQuotaException
-from Products.Silva.silvaxml import xmlimport
-from Products.Silva.tests.helpers import open_test_file
 from Products.Silva.testing import FunctionalLayer, TestRequest
+from silva.core.xml import ZipImporter
 from silva.core.interfaces import IArchiveFileImporter, IAsset, IPublication
 from silva.core.interfaces import IContainerManager
 from silva.core.services.interfaces import IExtensionService, IMetadataService
@@ -25,14 +24,6 @@ def set_quota(content, size_in_megabytes):
     service = getUtility(IMetadataService)
     binding = service.getMetadata(content)
     binding.setValues('silva-quota', {'quota': size_in_megabytes})
-
-
-def test_file_size(filename):
-    """Return the size of a file.
-    """
-    with open_test_file(filename, mode='rb') as file_handle:
-        file_handle.seek(0, 2)
-        return file_handle.tell()
 
 
 class ActivationQuotaTestCase(unittest.TestCase):
@@ -69,13 +60,14 @@ class ActivationQuotaTestCase(unittest.TestCase):
         factory.manage_addFolder('subfolder', 'Sub FooFolder')
         subfolder1 = folder1._getOb('subfolder')
         factory = subfolder1.manage_addProduct['Silva']
-        with open_test_file('test1.zip') as source_file:
-            factory.manage_addFile('zipfile1.zip', 'Zip File', source_file)
-        zip1_size = test_file_size('test1.zip')
+        with self.layer.open_fixture('test1.zip') as source:
+            factory.manage_addFile('zipfile1.zip', 'Zip File', source)
+            # After reading the file, position should be end of file
+            zip1_size = source.tell()
         factory = folder2.manage_addProduct['Silva']
-        with open_test_file('torvald.jpg') as source_file:
-            factory.manage_addImage('image1.jpg', 'Image File', source_file)
-        image1_size = test_file_size('torvald.jpg')
+        with self.layer.open_fixture('torvald.jpg') as source:
+            factory.manage_addImage('image1.jpg', 'Image File', source)
+            image1_size = source.tell()
 
         # No counting should be done (extensions not activated)
         self.assertEqual(self.root.used_space, 0)
@@ -112,7 +104,6 @@ class ActivationQuotaTestCase(unittest.TestCase):
         self.assertEqual(self.root.used_space, (2 * image1_size))
         self.assertEqual(folder1.used_space, image1_size)
         self.assertEqual(folder2.used_space, image1_size)
-
 
 
 class QuotaTestCase(unittest.TestCase):
@@ -277,8 +268,8 @@ class QuotaTestCase(unittest.TestCase):
         self.assertEqual(self.root.used_space, 0)
         self.assertEqual(self.root.folder.used_space, 0)
 
-        with open_test_file('test1.zip') as source_file:
-            IArchiveFileImporter(self.root.folder).importArchive(source_file)
+        with self.layer.open_fixture('test1.zip') as source:
+            IArchiveFileImporter(self.root.folder).importArchive(source)
         self.assertEqual(self.root.folder.used_space, 10950)
         self.assertEqual(self.root.used_space, 10950)
 
@@ -294,12 +285,9 @@ class QuotaTestCase(unittest.TestCase):
         self.assertEqual(self.root.used_space, 0)
         self.assertEqual(self.root.folder.used_space, 0)
 
-        with open_test_file('test_import_file.zip') as source_file:
-            source_zip = ZipFile(source_file)
-            import_file = StringIO(source_zip.read('silva.xml'))
-            xmlimport.importFromFile(
-                import_file, self.root.folder, TestRequest(),
-                zip_file=source_zip)
+        with self.layer.open_fixture('test_import_file.zip') as source:
+            importer = ZipImporter(self.root.folder, TestRequest())
+            importer.importStream(source)
         self.assertEqual(self.root.folder.used_space, 35512)
         self.assertEqual(self.root.used_space, 35512)
 
@@ -316,15 +304,12 @@ class QuotaTestCase(unittest.TestCase):
         self.assertEqual(self.root.folder.used_space, 0)
 
         set_quota(self.root, 1) # 1M
-
         factory = self.root.folder.manage_addProduct['Silva']
-        with open_test_file('test3.zip') as test_file:
-            factory.manage_addFile(
-                'zipfile1.zip', 'Zip File', test_file)
-            test_file.seek(0)
+        with self.layer.open_fixture('test3.zip') as source:
+            factory.manage_addFile('zipfile1.zip', 'Zip File', source)
+            source.seek(0)
             with self.assertRaises(OverQuotaException):
-                factory.manage_addFile(
-                    'zipfile2.zip', 'Zip File', test_file)
+                factory.manage_addFile('zipfile2.zip', 'Zip File', source)
 
     def test_copy_paste_over_quota(self):
         """ Test an exception is raised when a copy is made.
@@ -334,12 +319,10 @@ class QuotaTestCase(unittest.TestCase):
         self.assertEqual(self.root.folder.used_space, 0)
 
         factory = self.root.folder.manage_addProduct['Silva']
-        with open_test_file('test3.zip') as test_file:
-            factory.manage_addFile(
-                'zipfile1.zip', 'Zip File', test_file)
-            test_file.seek(0)
-            factory.manage_addFile(
-                'zipfile2.zip', 'Zip File', test_file)
+        with self.layer.open_fixture('test3.zip') as source:
+            factory.manage_addFile('zipfile1.zip', 'Zip File', source)
+            source.seek(0)
+            factory.manage_addFile('zipfile2.zip', 'Zip File', source)
 
         factory = self.root.manage_addProduct['Silva']
         factory.manage_addPublication('pub', 'Publication')
@@ -357,20 +340,17 @@ class QuotaTestCase(unittest.TestCase):
         self.assertEqual(self.root.folder.used_space, 0)
 
         set_quota(self.root, 2)
-
         factory = self.root.folder.manage_addProduct['Silva']
-        with open_test_file('test3.zip') as test_file:
-            factory.manage_addFile(
-                'zipfile1.zip', 'Zip File', test_file)
-            test_file.seek(0)
-            factory.manage_addFile(
-                'zipfile2.zip', 'Zip File', test_file)
+        with self.open_fixture('test3.zip') as source:
+            factory.manage_addFile('zipfile1.zip', 'Zip File', source)
+            source.seek(0)
+            factory.manage_addFile('zipfile2.zip', 'Zip File', source)
 
         factory = self.root.manage_addProduct['Silva']
         factory.manage_addPublication('pub', 'Publication')
+
         set_quota(self.root.pub, 1) # 1M
         factory = self.root.pub.manage_addProduct['Silva']
-
         with IContainerManager(self.root.pub).mover() as mover:
             with self.assertRaises(OverQuotaException):
                 mover(self.root.folder)

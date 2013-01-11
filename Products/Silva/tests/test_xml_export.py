@@ -3,20 +3,20 @@
 # See also LICENSE.txt
 
 # Python
-from cStringIO import StringIO
 from zipfile import ZipFile
 import re
+import io
 import unittest
 
 from zope.component import getAdapter, getUtility
 
 # Silva
-from Products.Silva.silvaxml import xmlexport
-from Products.Silva.testing import FunctionalLayer, TestCase
-from Products.Silva.tests.helpers import open_test_file
-from Products.SilvaMetadata.interfaces import IMetadataService
+from Products.Silva.testing import FunctionalLayer, TestCase, TestRequest
+
 from silva.core import interfaces
 from silva.core.interfaces.errors import ExternalReferenceError
+from silva.core.services.interfaces import IMetadataService
+from silva.core.xml.xmlexport import Exporter, registry
 
 
 DATETIME_RE = re.compile(
@@ -32,37 +32,41 @@ class SilvaXMLTestCase(TestCase):
         self.root = self.layer.get_application()
         self.layer.login('author')
 
-    def get_namespaces(self):
+    def getNamespaces(self):
         # this is needed because we don't know the namespaces registered
         # with the exported.  These are dynamic and depend on the extensions
         # which are using the exporter.  This function is an attempt at
         # dynamically inserting the namespaces, and hopefully gets the
         # order correct.
         nss = []
-        items = xmlexport.theXMLExporter._namespaces.items()
-        items.sort()
-        for prefix, uri in items:
+        for prefix, uri in sorted(registry.getNamespaces(True)):
             nss.append('xmlns:%s="%s"' % (prefix, uri))
         return ' '.join(nss)
 
-    def get_version(self):
+    def getVersion(self):
         return 'Silva %s' % self.root.get_silva_software_version()
 
     def genericize(self, string):
         return DATETIME_RE.sub(r'YYYY-MM-DDTHH:MM:SS', string)
 
-    def assertExportEqual(self, xml, filename, globs=None):
+    def assertExportFail(self, content, error=ExternalReferenceError):
+        exporter = Exporter(content, TestRequest())
+        with self.assertRaises(error):
+            exporter.getString()
+        return exporter
+
+    def assertExportEqual(self, content, filename):
         """Verify that the xml result of an export is the same than
         the one contained in a test file.
         """
-        if globs is None:
-            globs = globals()
-        with open_test_file(filename, globs) as xml_file:
+        exporter = Exporter(content, TestRequest())
+        with self.layer.open_fixture(filename) as xml_file:
             expected_xml = xml_file.read().format(
-                namespaces=self.get_namespaces(),
-                version=self.get_version())
-            actual_xml = self.genericize(xml)
+                namespaces=self.getNamespaces(),
+                version=self.getVersion())
+            actual_xml = self.genericize(exporter.getString())
             self.assertXMLEqual(expected_xml, actual_xml)
+        return exporter
 
 
 class XMLExportTestCase(SilvaXMLTestCase):
@@ -71,7 +75,8 @@ class XMLExportTestCase(SilvaXMLTestCase):
 
     def setUp(self):
         super(XMLExportTestCase, self).setUp()
-        self.root.manage_addProduct['Silva'].manage_addFolder(
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addFolder(
             'folder', 'This is <boo>a</boo> folder',
             policy_name='Silva AutoTOC')
 
@@ -83,10 +88,11 @@ class XMLExportTestCase(SilvaXMLTestCase):
         factory = self.root.folder.folder.manage_addProduct['Silva']
         factory.manage_addAutoTOC('index', 'This is &another; a subfolder')
 
-        xml, info = xmlexport.exportToString(self.root.folder)
-        self.assertExportEqual(xml, 'test_export_folder.silvaxml')
-        self.assertEqual(info.getZexpPaths(), [])
-        self.assertEqual(info.getAssetPaths(), [])
+        exporter = self.assertExportEqual(
+            self.root.folder,
+            'test_export_folder.silvaxml')
+        self.assertEqual(exporter.getZexpPaths(), [])
+        self.assertEqual(exporter.getAssetPaths(), [])
 
     def test_fallback(self):
         """Test the fallback exporter: create a Zope 2 folder in a
@@ -95,18 +101,24 @@ class XMLExportTestCase(SilvaXMLTestCase):
         factory = self.root.folder.manage_addProduct['Silva']
         factory.manage_addMockupVersionedContent('mockup', 'Mockup Content')
 
-        xml, info = xmlexport.exportToString(self.root.folder)
-        self.assertExportEqual(xml, 'test_export_fallback.silvaxml')
+        exporter = self.assertExportEqual(
+            self.root.folder,
+            'test_export_fallback.silvaxml')
         self.assertEqual(
-            info.getZexpPaths(),
+            exporter.getZexpPaths(),
             [(('', 'root', 'folder', 'mockup'), '1.zexp')])
-        self.assertEqual(info.getAssetPaths(), [])
+        self.assertEqual(
+            exporter.getAssetPaths(),
+            [])
+        self.assertEqual(
+            exporter.getProblems(),
+            [])
 
     def test_indexer(self):
         """Export an indexer.
         """
-        self.root.folder.manage_addProduct['Silva'].manage_addIndexer(
-            'indexer', 'Index of this site')
+        factory = self.root.folder.manage_addProduct['Silva']
+        factory.manage_addIndexer('indexer', 'Index of this site')
 
         metadata = getUtility(IMetadataService).getMetadata(
             self.root.folder.indexer)
@@ -115,10 +127,12 @@ class XMLExportTestCase(SilvaXMLTestCase):
             {'content_description': 'Index the content of your website.',
              'comment': 'Nothing special is required.'})
 
-        xml, info = xmlexport.exportToString(self.root.folder)
-        self.assertExportEqual(xml, 'test_export_indexer.silvaxml')
-        self.assertEqual(info.getZexpPaths(), [])
-        self.assertEqual(info.getAssetPaths(), [])
+        exporter = self.assertExportEqual(
+            self.root.folder,
+            'test_export_indexer.silvaxml')
+        self.assertEqual(exporter.getZexpPaths(), [])
+        self.assertEqual(exporter.getAssetPaths(), [])
+        self.assertEqual(exporter.getProblems(), [])
 
     def test_ghost(self):
         """Export a ghost.
@@ -129,23 +143,26 @@ class XMLExportTestCase(SilvaXMLTestCase):
         factory.manage_addGhost(
             'ghost', None, haunted=self.root.folder.link)
 
-        xml, info = xmlexport.exportToString(self.root.folder)
-        self.assertExportEqual(xml, 'test_export_ghost.silvaxml')
-        self.assertEqual(info.getZexpPaths(), [])
-        self.assertEqual(info.getAssetPaths(), [])
+        exporter = self.assertExportEqual(
+            self.root.folder,
+            'test_export_ghost.silvaxml')
+        self.assertEqual(exporter.getZexpPaths(), [])
+        self.assertEqual(exporter.getAssetPaths(), [])
+        self.assertEqual(exporter.getProblems(), [])
 
     def test_ghost_outside_of_export(self):
         """Export a ghost that link something outside of export tree.
         """
-        self.root.manage_addProduct['Silva'].manage_addLink(
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addLink(
             'link', 'New website', url='http://infrae.com/', relative=False)
-        self.root.folder.manage_addProduct['Silva'].manage_addGhost(
+        factory = self.root.folder.manage_addProduct['Silva']
+        factory.manage_addGhost(
             'ghost', None, haunted=self.root.folder.link)
 
-        self.assertRaises(
-            ExternalReferenceError, xmlexport.exportToString, self.root.folder)
+        self.assertExportFail(self.root.folder)
 
-    def test_ghostfolder(self):
+    def test_ghost_folder(self):
         """Export a ghost folder.
         """
         self.layer.login('chiefeditor')
@@ -162,14 +179,20 @@ class XMLExportTestCase(SilvaXMLTestCase):
         self.root.folder.ghost.haunt()
         self.layer.login('author')
 
-        xml, info = xmlexport.exportToString(self.root.folder)
-        self.assertExportEqual(xml, 'test_export_ghostfolder.silvaxml')
-        self.assertEqual(info.getZexpPaths(), [])
+        exporter = self.assertExportEqual(
+            self.root.folder,
+            'test_export_ghostfolder.silvaxml')
         self.assertEqual(
-            info.getAssetPaths(),
+            exporter.getZexpPaths(),
+            [])
+        self.assertEqual(
+            exporter.getAssetPaths(),
             [(('', 'root', 'folder', 'container', 'file'), '1')])
+        self.assertEqual(
+            exporter.getProblems(),
+            [])
 
-    def test_ghostfolder_outside_of_export(self):
+    def test_ghost_folder_outside_of_export(self):
         """Export a ghost folder but not the ghosted folder.
         """
         self.layer.login('chiefeditor')
@@ -185,9 +208,7 @@ class XMLExportTestCase(SilvaXMLTestCase):
 
         self.root.ghost.haunt()
         self.layer.login('author')
-
-        self.assertRaises(
-            ExternalReferenceError, xmlexport.exportToString, self.root.ghost)
+        self.assertExportFail(self.root.ghost)
 
     def test_link_relative(self):
         """Export a link with to an another Silva object.
@@ -200,12 +221,18 @@ class XMLExportTestCase(SilvaXMLTestCase):
             'link', 'Last file',
             relative=True, target=self.root.folder.file)
 
-        xml, info = xmlexport.exportToString(self.root.folder)
-        self.assertExportEqual(xml, 'test_export_link.silvaxml')
-        self.assertEqual(info.getZexpPaths(), [])
+        exporter = self.assertExportEqual(
+            self.root.folder,
+            'test_export_link.silvaxml')
         self.assertEqual(
-            info.getAssetPaths(),
+            exporter.getZexpPaths(),
+            [])
+        self.assertEqual(
+            exporter.getAssetPaths(),
             [(('', 'root', 'folder', 'file'), '1')])
+        self.assertEqual(
+            exporter.getProblems(),
+            [])
 
     def test_link_relative_outside_of_export(self):
         """Export a link with to an another Silva object.
@@ -216,8 +243,7 @@ class XMLExportTestCase(SilvaXMLTestCase):
         factory.manage_addLink(
             'link', 'Last file', relative=True, target=self.root.file)
 
-        self.assertRaises(
-            ExternalReferenceError, xmlexport.exportToString, self.root.folder)
+        self.assertExportFail(self.root.folder)
 
     def test_broken_references(self):
         """Test export of broken references.
@@ -226,10 +252,11 @@ class XMLExportTestCase(SilvaXMLTestCase):
         factory.manage_addLink('link', 'Broken Link', relative=True)
         factory.manage_addGhost('ghost', None)
 
-        xml, info = xmlexport.exportToString(self.root.folder)
-        self.assertExportEqual(xml, 'test_export_broken_references.silvaxml')
-        self.assertEqual(info.getZexpPaths(), [])
-        self.assertEqual(info.getAssetPaths(), [])
+        exporter = self.assertExportEqual(
+            self.root.folder, 'test_export_broken_references.silvaxml')
+        self.assertEqual(exporter.getZexpPaths(), [])
+        self.assertEqual(exporter.getAssetPaths(), [])
+        self.assertEqual(exporter.getProblems(), [])
 
 
 class ZipTestCase(TestCase):
@@ -239,17 +266,17 @@ class ZipTestCase(TestCase):
 
     def setUp(self):
         self.root = self.layer.get_application()
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addFolder('folder', 'Folder')
 
     def test_zip_export(self):
         """Import/export a Zip file.
         """
         # XXX This test needs improvement.
-        self.root.manage_addProduct['Silva'].manage_addFolder(
-            'folder', 'Folder')
+        with self.layer.open_fixture('test1.zip') as zip_import:
+            importer = interfaces.IArchiveFileImporter(self.root.folder)
+            succeeded, failed = importer.importArchive(zip_import)
 
-        zip_import = open_test_file('test1.zip')
-        importer = interfaces.IArchiveFileImporter(self.root.folder)
-        succeeded, failed = importer.importArchive(zip_import)
         self.assertItemsEqual(
             succeeded,
             ['testzip/Clock.swf', 'testzip/bar/image2.jpg',
@@ -260,7 +287,8 @@ class ZipTestCase(TestCase):
 
         exporter = getAdapter(
             self.root.folder, interfaces.IContentExporter, name='zip')
-        export = StringIO(exporter.export())
+        export = exporter.export(TestRequest(), stream=io.BytesIO())
+        export.seek(0)
 
         zip_export = ZipFile(export, 'r')
         self.assertItemsEqual(

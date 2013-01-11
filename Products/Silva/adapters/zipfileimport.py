@@ -3,15 +3,10 @@
 # See also LICENSE.txt
 
 from zipfile import ZipFile
-from cStringIO import StringIO
 
 from five import grok
-
-# Silva
-from Products.Silva.silvaxml import xmlimport
-
 from silva.core.interfaces import IZipFileImporter, IContainer
-
+from silva.core.xml import ZipImporter
 
 class ZipFileImporter(grok.Adapter):
     """ Adapter for silva objects to facilitate
@@ -35,22 +30,6 @@ class ZipFileImporter(grok.Adapter):
     def importFromZip(self, input_archive, request, replace=0):
         """ imports fullmedia zipfile
         """
-        existing_objects = self.context.objectIds()
-
-        archive = ZipFile(input_archive, 'r')
-        source_file = StringIO(archive.read('silva.xml'))
-        try:
-            imported = xmlimport.importFromFile(
-                source_file, self.context, request,
-                zip_file=archive, replace=replace)
-
-            succeeded = []
-            failed = []
-            for id in imported.objectIds():
-                if id not in existing_objects:
-                    succeeded.append(id)
-            return succeeded, failed
-        finally:
-            source_file.close()
-            archive.close()
+        importer = ZipImporter(self.context, request, {'replace': replace})
+        importer.importStream(input_archive)
 

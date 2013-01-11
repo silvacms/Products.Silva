@@ -25,15 +25,6 @@ class ImportExportTripTestCase(TestCase):
         self.root = self.layer.get_application()
         self.layer.login('editor')
 
-    def test_round_trip(self):
-        """Make a trip:
-        1. Create items.
-        2. Export them.
-        3. Import them.
-        4. Export them.
-        5. Check that export created at 2. and 4. are identical.
-        """
-        # 1. create content
         factory = self.root.manage_addProduct['Silva']
         factory.manage_addPublication('publication', 'Publication')
 
@@ -55,20 +46,29 @@ class ImportExportTripTestCase(TestCase):
         factory.manage_addGhost(
             'nice', None, haunted=self.root.publication.infrae)
 
+    def test_round_trip(self):
+        """Make a trip:
+        1. Create items.
+        2. Export them.
+        3. Import them.
+        4. Export them.
+        5. Check that export created at 2. and 4. are identical.
+        """
+        # 1. create content
         # 2. export
         exporter1 = getAdapter(
             self.root.publication,
             interfaces.IContentExporter, name='zip')
-        self.failUnless(verifyObject(interfaces.IContentExporter, exporter1))
+        self.assertTrue(verifyObject(interfaces.IContentExporter, exporter1))
 
-        export1 = exporter1.export()
+        export1 = exporter1.export(TestRequest())
 
         # 3. import
         factory = self.root.manage_addProduct['Silva']
         factory.manage_addFolder('folder', 'Import Folder')
         importer = getAdapter(
             self.root.folder, interfaces.IZipFileImporter)
-        self.failUnless(verifyObject(interfaces.IZipFileImporter, importer))
+        self.assertTrue(verifyObject(interfaces.IZipFileImporter, importer))
 
         clearEvents()
         importer.importFromZip(StringIO(export1), TestRequest())
@@ -96,7 +96,7 @@ class ImportExportTripTestCase(TestCase):
             self.root.folder.publication,
             interfaces.IContentExporter, name='zip')
 
-        export2 = exporter2.export()
+        export2 = exporter2.export(TestRequest())
 
         # 5. compare the two exports
         zip_export1 = ZipFile(StringIO(export1))
