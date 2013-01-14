@@ -232,17 +232,24 @@ class SilvaLayer(BrowserLayer):
         self._browsers.append(browser)
         return browser
 
-    def open_fixture(self, filename, globs=None, mode='rb'):
-        """Open the given test file. If globs is not given, it will
-        look inside a directory located in tests/data relatively from
-        the definition of the test layer.
+    def get_fixture(self, filename, globs=None):
+        """Return the full path to the given fixure. If globs is not
+        given, the base path will a directory tests/data defined
+        relatively from the definition of the test layer.
         """
         if globs is None:
             module = sys.modules[self.__class__.__module__]
             base_path = os.path.join(os.path.dirname(module.__file__), 'tests')
         else:
             base_path = os.path.dirname(globs['__file__'])
-        return open(os.path.join(base_path, 'data', filename), mode)
+        return os.path.join(base_path, 'data', filename)
+
+    def open_fixture(self, filename, globs=None, mode='rb'):
+        """Open the given test file. If globs is not given, it will
+        look inside a directory located in tests/data relatively from
+        the definition of the test layer.
+        """
+        return open(self.get_fixture(filename, globs), mode)
 
 
 FunctionalLayer = SilvaLayer(Products.Silva)

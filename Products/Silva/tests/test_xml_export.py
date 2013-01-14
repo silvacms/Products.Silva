@@ -15,6 +15,7 @@ from Products.Silva.testing import FunctionalLayer, TestCase, TestRequest
 
 from silva.core import interfaces
 from silva.core.interfaces.errors import ExternalReferenceError
+from silva.core.interfaces import IPublicationWorkflow
 from silva.core.services.interfaces import IMetadataService
 from silva.core.xml.xmlexport import Exporter, registry
 
@@ -49,17 +50,17 @@ class SilvaXMLTestCase(TestCase):
     def genericize(self, string):
         return DATETIME_RE.sub(r'YYYY-MM-DDTHH:MM:SS', string)
 
-    def assertExportFail(self, content, error=ExternalReferenceError):
-        exporter = Exporter(content, TestRequest())
+    def assertExportFail(self, content, error=ExternalReferenceError, options={}):
+        exporter = Exporter(content, TestRequest(), options.copy())
         with self.assertRaises(error):
             exporter.getString()
         return exporter
 
-    def assertExportEqual(self, content, filename):
+    def assertExportEqual(self, content, filename, options={}):
         """Verify that the xml result of an export is the same than
         the one contained in a test file.
         """
-        exporter = Exporter(content, TestRequest())
+        exporter = Exporter(content, TestRequest(), options.copy())
         with self.layer.open_fixture(filename) as xml_file:
             expected_xml = xml_file.read().format(
                 namespaces=self.getNamespaces(),
@@ -150,17 +151,44 @@ class XMLExportTestCase(SilvaXMLTestCase):
         self.assertEqual(exporter.getAssetPaths(), [])
         self.assertEqual(exporter.getProblems(), [])
 
-    def test_ghost_outside_of_export(self):
-        """Export a ghost that link something outside of export tree.
+    def test_ghost_external_reference(self):
+        """Export a ghost that link something outside of export
+        tree. It should error by default.
         """
         factory = self.root.manage_addProduct['Silva']
         factory.manage_addLink(
             'link', 'New website', url='http://infrae.com/', relative=False)
         factory = self.root.folder.manage_addProduct['Silva']
         factory.manage_addGhost(
-            'ghost', None, haunted=self.root.folder.link)
+            'ghost', None, haunted=self.root.link)
 
         self.assertExportFail(self.root.folder)
+
+    def test_ghost_external_reference_force(self):
+        """Export a ghost that link something outside of export
+        tree with the option external_references set to True.
+        """
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addLink(
+            'link', 'New website', url='http://infrae.com/', relative=False)
+        factory = self.root.folder.manage_addProduct['Silva']
+        factory.manage_addGhost(
+            'ghost', None, haunted=self.root.link)
+        version = self.root.folder.ghost.get_editable()
+
+        exporter = self.assertExportEqual(
+            self.root.folder,
+            'test_export_ghost_external.silvaxml',
+            options={'external_references': True})
+        self.assertEqual(
+            exporter.getZexpPaths(),
+            [])
+        self.assertEqual(
+            exporter.getAssetPaths(),
+            [])
+        self.assertEqual(
+            exporter.getProblems(),
+            [(u'Content refers to an another content outside of the export (../link).', version)])
 
     def test_ghost_folder(self):
         """Export a ghost folder.
@@ -192,7 +220,7 @@ class XMLExportTestCase(SilvaXMLTestCase):
             exporter.getProblems(),
             [])
 
-    def test_ghost_folder_outside_of_export(self):
+    def test_ghost_folder_external_reference(self):
         """Export a ghost folder but not the ghosted folder.
         """
         self.layer.login('chiefeditor')
@@ -234,7 +262,7 @@ class XMLExportTestCase(SilvaXMLTestCase):
             exporter.getProblems(),
             [])
 
-    def test_link_relative_outside_of_export(self):
+    def test_link_relative_external_reference(self):
         """Export a link with to an another Silva object.
         """
         factory = self.root.manage_addProduct['Silva']
@@ -245,8 +273,8 @@ class XMLExportTestCase(SilvaXMLTestCase):
 
         self.assertExportFail(self.root.folder)
 
-    def test_broken_references(self):
-        """Test export of broken references.
+    def test_missing_references(self):
+        """Test export of missing references.
         """
         factory = self.root.folder.manage_addProduct['Silva']
         factory.manage_addLink('link', 'Broken Link', relative=True)
@@ -257,6 +285,84 @@ class XMLExportTestCase(SilvaXMLTestCase):
         self.assertEqual(exporter.getZexpPaths(), [])
         self.assertEqual(exporter.getAssetPaths(), [])
         self.assertEqual(exporter.getProblems(), [])
+
+
+class XMLExportVersionsTestCase(SilvaXMLTestCase):
+    """Test a couple more of edge-cases during XML export using links.
+    """
+
+    def setUp(self):
+        super(XMLExportVersionsTestCase, self).setUp()
+        self.layer.login('editor')
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addFolder('folder', 'Export Folder')
+        factory = self.root.folder.manage_addProduct['Silva']
+        factory.manage_addFile('file', 'Torvald file')
+        factory.manage_addFolder('new', 'New changes')
+        factory = self.root.folder.new.manage_addProduct['Silva']
+        factory.manage_addLink(
+            'link', 'Initial file',
+            relative=True, target=self.root.folder.file)
+        link = self.root.folder.new.link
+        IPublicationWorkflow(link).publish()
+        IPublicationWorkflow(link).new_version()
+        link.get_editable().set_title('Updated file')
+        IPublicationWorkflow(link).publish()
+        IPublicationWorkflow(link).new_version()
+        link.get_editable().set_title('Final version of the file')
+
+    def test_link_relative_only_previewable(self):
+        """Export only the previewable version of a a link that have
+        multiple versions available.
+        """
+        exporter = self.assertExportEqual(
+            self.root.folder,
+            'test_export_link_previewable.silvaxml',
+            options={'only_previewable': True})
+        self.assertEqual(
+            exporter.getZexpPaths(),
+            [])
+        self.assertEqual(
+            exporter.getAssetPaths(),
+            [(('', 'root', 'folder', 'file'), '1')])
+        self.assertEqual(
+            exporter.getProblems(),
+            [])
+
+    def test_link_relative_only_viewable(self):
+        """Export only the viewable version of a link that have
+        multiple versions available.
+        """
+        exporter = self.assertExportEqual(
+            self.root.folder,
+            'test_export_link_viewable.silvaxml',
+            options={'only_viewable': True})
+        self.assertEqual(
+            exporter.getZexpPaths(),
+            [])
+        self.assertEqual(
+            exporter.getAssetPaths(),
+            [(('', 'root', 'folder', 'file'), '1')])
+        self.assertEqual(
+            exporter.getProblems(),
+            [])
+
+    def test_link_relative_all_versions(self):
+        """Export a link that have multiple versions.
+        """
+        exporter = self.assertExportEqual(
+            self.root.folder,
+            'test_export_link_versions.silvaxml')
+        self.assertEqual(
+            exporter.getZexpPaths(),
+            [])
+        self.assertEqual(
+            exporter.getAssetPaths(),
+            [(('', 'root', 'folder', 'file'), '1')])
+        self.assertEqual(
+            exporter.getProblems(),
+            [])
+
 
 
 class ZipTestCase(TestCase):
@@ -303,4 +409,5 @@ def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(ZipTestCase))
     suite.addTest(unittest.makeSuite(XMLExportTestCase))
+    suite.addTest(unittest.makeSuite(XMLExportVersionsTestCase))
     return suite
