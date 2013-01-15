@@ -63,7 +63,7 @@
       </ghost>
     </content>
   </folder>
-  <problem path="ghost/0">
+  <problem path="folder/ghost/0">
     Content refers to an another content outside of the export (../link).
   </problem>
 </silva>

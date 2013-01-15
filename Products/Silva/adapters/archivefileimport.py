@@ -38,8 +38,6 @@ class ZipFileImporter(grok.Adapter):
 
         # Extract filenames, not directories.
         for name in zip.namelist():
-            extracted_file = StringIO(zip.read(name))
-            mimetype, enc = contenttype.guess_content_type(name)
             path, filename = os.path.split(name)
             if not filename:
                 # Its a directory entry
@@ -65,8 +63,10 @@ class ZipFileImporter(grok.Adapter):
                 container = self.context
 
             # Actually add object...
+            mimetype, enc = contenttype.guess_content_type(name)
             factory = mimetypeRegistry.get(mimetype)
 
+            extracted_file = StringIO(zip.read(name))
             id = self._makeId(filename, container, extracted_file, replace)
             added_object = factory(
                 container, id, assettitle, extracted_file)

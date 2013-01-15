@@ -8,6 +8,7 @@ from five import grok
 from silva.core.interfaces import IZipFileImporter, IContainer
 from silva.core.xml import ZipImporter
 
+
 class ZipFileImporter(grok.Adapter):
     """ Adapter for silva objects to facilitate
     the full media import from zipfiles.
@@ -33,3 +34,4 @@ class ZipFileImporter(grok.Adapter):
         importer = ZipImporter(self.context, request, {'replace': replace})
         importer.importStream(input_archive)
 
+        return importer

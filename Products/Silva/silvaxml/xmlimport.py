@@ -22,16 +22,6 @@ def reindex_import_content(content, event):
     ICataloging(content).index()
 
 
-class SilvaExportRootHandler(handlers.SilvaHandler):
-    grok.name('silva')
-
-    def getResultPhysicalPath(self):
-        return []
-
-    def getOriginalPhysicalPath(self):
-        return []
-
-
 class FolderHandler(handlers.SilvaHandler):
     grok.name('folder')
 
@@ -108,62 +98,6 @@ class IndexerHandler(handlers.SilvaHandler):
             self.storeMetadata()
             self.getExtra().addAction(self.result().update, [])
             self.notifyImport()
-
-
-class VersionHandler(handlers.SilvaHandler):
-    grok.name('version')
-
-    def getOverrides(self):
-        return {
-            (NS_SILVA_URI, 'status'):
-                self.handlerFactories.contentHandler('status'),
-            (NS_SILVA_URI, 'publication_datetime'):
-                self.handlerFactories.contentHandler('publication_datetime'),
-            (NS_SILVA_URI, 'expiration_datetime'):
-                self.handlerFactories.contentHandler('expiration_datetime'),
-            }
-
-    def startElementNS(self, name, qname, attrs):
-        if name == (NS_SILVA_URI, 'version'):
-            self.setData('id', attrs[(None, 'id')])
-
-    def endElementNS(self, name, qname):
-        self.setWorkflowVersion(
-            self.getData('id'),
-            self.getData('publication_datetime'),
-            self.getData('expiration_datetime'),
-            self.getData('status'))
-
-
-class MetadataSetHandler(handlers.SilvaHandler):
-    grok.name('set')
-
-    def startElementNS(self, name, qname, attrs):
-        if name == (NS_SILVA_URI, 'set'):
-            self.parentHandler().setMetadataSet(attrs[(None, 'id')])
-        elif name != (NS_SILVA_URI, 'value'):
-            self.parentHandler().setMetadataKey(name[1])
-        else:
-            self.parentHandler().setMetadataMultiValue(True)
-        self.setResult(None)
-
-    def characters(self, chars):
-        if self.parentHandler().metadataKey() is not None:
-            self._chars = chars.strip()
-
-    def endElementNS(self, name, qname):
-        if name != (NS_SILVA_URI, 'set'):
-            value = getattr(self, '_chars', None)
-
-            if self.parentHandler().metadataKey() is not None:
-                self.parentHandler().setMetadata(
-                    self.parentHandler().metadataSet(),
-                    self.parentHandler().metadataKey(),
-                    value)
-        if name != (NS_SILVA_URI, 'value'):
-            self.parentHandler().setMetadataKey(None)
-            self.parentHandler().setMetadataMultiValue(False)
-        self._chars = None
 
 
 class GhostHandler(handlers.SilvaHandler):

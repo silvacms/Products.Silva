@@ -761,7 +761,7 @@ class XMLImportTestCase(SilvaXMLTestCase):
             [(u'Ghost target creates a circular reference.', folder)])
 
     def test_autotoc(self):
-        """Import some autotoc.
+        """Import an AutoTOC.
         """
         importer = self.assertImportFile(
             'test_import_autotoc.silvaxml',
@@ -796,6 +796,23 @@ class XMLImportTestCase(SilvaXMLTestCase):
         self.assertEqual(
             get_metadata('silva-extra', 'content_description'),
             u'Report local assets.')
+
+    def test_problems(self):
+        """Import a Silva content that few problems advertised in the
+        XML.
+        """
+        importer = self.assertImportFile(
+            'test_import_problems.silvaxml',
+            ['/root/folder',
+             '/root/folder/link',
+             '/root/folder/index'])
+
+        folder = self.root.folder
+        version = folder.link.get_viewable()
+        self.assertEqual(
+            importer.getProblems(),
+            [(u'Spaceship life support is failing.', version),
+             (u'Spaceship is out of fuel.', folder)])
 
 
 def test_suite():
