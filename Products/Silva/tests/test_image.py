@@ -146,12 +146,12 @@ class DefaultImageTestCase(TestCase):
             ['/root/folder',
              '/root/folder/image'])
 
-    def test_asset_data(self):
-        """Test AssetData adapter.
+    def test_asset_payload(self):
+        """Test AssetPayload adapter.
         """
-        asset_data = interfaces.IAssetData(self.root.test_image)
-        self.assertTrue(verifyObject(interfaces.IAssetData, asset_data))
-        self.assertEquals(self.image_data, asset_data.getData())
+        payload = interfaces.IAssetPayload(self.root.test_image)
+        self.assertTrue(verifyObject(interfaces.IAssetPayload, payload))
+        self.assertEqual(payload.get_payload(), self.image_data)
 
     def test_http_download(self):
         """Retrieve the image, check the headers. Image headers should
@@ -443,6 +443,10 @@ class MiscellaneousImageTestCase(unittest.TestCase):
         self.assertEqual(image.get_content_type(), 'application/octet-stream')
         self.assertEqual(image.get_filename(), 'image')
         self.assertEqual(image.get_file_size(), 0)
+
+        payload = interfaces.IAssetPayload(image)
+        self.assertTrue(verifyObject(interfaces.IAssetPayload, payload))
+        self.assertEqual(payload.get_payload(), None)
 
     def test_invalid_image(self):
         """Try to add an non-image.

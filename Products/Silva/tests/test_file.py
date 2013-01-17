@@ -306,13 +306,13 @@ class DefaultFileImplementationTestCase(TestCase):
                 'Sun, 25 Apr 2010 12:00:00 GMT')
             self.assertEqual(len(browser.contents), 0)
 
-    def test_asset_data(self):
+    def test_asset_payload(self):
         """Test asset data adapter implementation.
         """
         content = self.create_test_file()
-        assetdata = interfaces.IAssetData(content)
-        self.assertTrue(verifyObject(interfaces.IAssetData, assetdata))
-        self.assertHashEqual(self.file_data, assetdata.getData())
+        payload = interfaces.IAssetPayload(content)
+        self.assertTrue(verifyObject(interfaces.IAssetPayload, payload))
+        self.assertHashEqual(self.file_data, payload.get_payload())
 
     def test_rename_filename(self):
         """If you rename the file, the filename gets updated, and

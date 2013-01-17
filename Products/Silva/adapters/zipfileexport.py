@@ -9,7 +9,8 @@ from five import grok
 from zope.interface import Interface
 from zope import schema
 
-from silva.core import interfaces
+from silva.core.interfaces import IDefaultContentExporter, IContentExporter
+from silva.core.interfaces import ISilvaObject, IAssetPayload
 from silva.core.xml import Exporter
 from silva.translations import translate as _
 
@@ -45,9 +46,9 @@ class ZipFileExportAdapter(grok.Adapter):
     """ Adapter for silva objects to facilitate
     the export to zipfiles.
     """
-    grok.implements(interfaces.IDefaultContentExporter)
-    grok.provides(interfaces.IContentExporter)
-    grok.context(interfaces.ISilvaObject)
+    grok.implements(IDefaultContentExporter)
+    grok.provides(IContentExporter)
+    grok.context(ISilvaObject)
     grok.name('zip')
 
     name = "Full Media (zip)"
@@ -69,8 +70,11 @@ class ZipFileExportAdapter(grok.Adapter):
         # process data from the export, i.e. export binaries
         for path, id in exporter.getAssetPaths():
             asset = self.context.restrictedTraverse(path)
-            adapter = interfaces.IAssetData(asset)
-            archive.writestr('assets/' + id, adapter.getData())
+            payload = IAssetPayload(asset, None)
+            if payload is not None:
+                payload = payload.get_payload()
+                if payload is not None:
+                    archive.writestr('assets/' + id, payload)
 
         unknowns = exporter.getZexpPaths()
         if unknowns:

@@ -631,6 +631,22 @@ class Image(Asset):
 InitializeClass(Image)
 
 
+class ImagePayload(grok.Adapter):
+    grok.implements(interfaces.IAssetPayload)
+    grok.context(interfaces.IImage)
+
+    def get_payload(self):
+        image = getattr(self.context, 'hires_image', None)
+        if image is None:
+            # Fallback to 'normal' image, which, if there isn't a hires
+            # version, should be the original.
+            image = self.context.image
+        if image is None:
+            # There is not image.
+            return None
+        return image.get_file()
+
+
 # Management helpers
 
 class ImageStorageConverter(object):

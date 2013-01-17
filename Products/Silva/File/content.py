@@ -418,6 +418,14 @@ class BlobFile(File):
 InitializeClass(BlobFile)
 
 
+class FilePayload(grok.Adapter):
+    grok.implements(interfaces.IAssetPayload)
+    grok.context(interfaces.IFile)
+
+    def get_payload(self):
+        return self.context.get_file()
+
+
 @grok.subscribe(
     interfaces.IFile, zope.lifecycleevent.interfaces.IObjectModifiedEvent)
 def file_modified(content, event):
