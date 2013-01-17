@@ -11,7 +11,7 @@ from silva.core.interfaces import IZipFileImporter, IContentExporter
 from zope.component import getAdapter
 from zope.interface.verify import verifyObject
 
-from Products.Silva.testing import FunctionalLayer
+from Products.Silva.testing import FunctionalLayer, TestRequest
 
 
 class ZipTestCase(unittest.TestCase):
@@ -69,7 +69,7 @@ class ZipTestCase(unittest.TestCase):
         self.assertItemsEqual(failed, [])
 
         exporter = getAdapter(self.root.folder, IContentExporter, name='zip')
-        data = io.BytesIO(exporter.export())
+        data = exporter.export(TestRequest(), stream=io.BytesIO())
 
         export = zipfile.ZipFile(data, 'r')
         self.assertItemsEqual(

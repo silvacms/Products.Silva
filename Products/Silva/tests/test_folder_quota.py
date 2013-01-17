@@ -4,8 +4,6 @@
 
 # Python
 import unittest
-from StringIO import StringIO
-from zipfile import ZipFile
 
 from zope.interface.verify import verifyObject
 from zope.component import getUtility
@@ -173,45 +171,49 @@ class QuotaTestCase(unittest.TestCase):
 
         # Add a file
         factory = subfolder1.manage_addProduct['Silva']
-        factory.manage_addFile(
-            'zipfile1.zip', 'Zip File', open_test_file('test2.zip'))
-        zip1 = subfolder1._getOb('zipfile1.zip')
+        with self.layer.open_fixture('test2.zip') as source:
+            factory.manage_addFile('file.zip', 'Zip File', source)
+            zipfile_size = source.tell()
+            zipfile = subfolder1._getOb('file.zip')
 
-        self.assertTrue(verifyObject(IAsset, zip1))
-        zip2_size = test_file_size('test2.zip')
-        self.assertEqual(zip1.get_file_size(), zip2_size)
+        self.assertTrue(verifyObject(IAsset, zipfile))
+        self.assertEqual(zipfile.get_file_size(), zipfile_size)
         # And check used space
-        self.assertEqual(subfolder1.used_space, zip2_size)
-        self.assertEqual(self.root.used_space, zip2_size)
+        self.assertEqual(subfolder1.used_space, zipfile_size)
+        self.assertEqual(self.root.used_space, zipfile_size)
 
         # Change file data
-        zip1.set_file(open_test_file('test1.zip'))
-        zip1_size = test_file_size('test1.zip')
-        self.assertEqual(zip1.get_file_size(), zip1_size)
+        with self.layer.open_fixture('test1.zip') as source:
+            zipfile.set_file(source)
+            zipfile_size = source.tell()
+        self.assertEqual(zipfile.get_file_size(), zipfile_size)
         # And check used space
-        self.assertEqual(subfolder1.used_space, zip1_size)
-        self.assertEqual(self.root.used_space, zip1_size)
+        self.assertEqual(subfolder1.used_space, zipfile_size)
+        self.assertEqual(self.root.used_space, zipfile_size)
         self.assertEqual(folder2.used_space, 0)
 
         # Add an image
         factory = folder2.manage_addProduct['Silva']
-        factory.manage_addImage(
-            'image1.jpg', 'Image File', open_test_file('torvald.jpg'))
-        image1 = folder2._getOb('image1.jpg')
-        verifyObject(IAsset, image1)
-        image2_size = test_file_size('torvald.jpg')
-        self.assertEqual(image1.get_file_size(), image2_size)
+        with self.layer.open_fixture('torvald.jpg') as source:
+            factory.manage_addImage('image1.jpg', 'Image File', source)
+            image_size = source.tell()
+
+        # Verify added image
+        image = folder2._getOb('image1.jpg')
+        self.assertTrue(verifyObject(IAsset, image))
+        self.assertEqual(image.get_file_size(), image_size)
         # And check used space
-        self.assertEqual(self.root.used_space, zip1_size + image2_size)
-        self.assertEqual(folder2.used_space, image2_size)
+        self.assertEqual(self.root.used_space, zipfile_size + image_size)
+        self.assertEqual(folder2.used_space, image_size)
         # Change image and check size
-        image1.set_image(open_test_file('testimage.gif'))
-        image1_size = test_file_size('testimage.gif')
-        self.assertEqual(image1.get_file_size(), image1_size)
+        with self.layer.open_fixture('testimage.gif') as source:
+            image.set_image(source)
+            image_size = source.tell()
         # And check used space
-        self.assertEqual(subfolder1.used_space, zip1_size)
-        self.assertEqual(self.root.used_space, zip1_size + image1_size)
-        self.assertEqual(folder2.used_space, image1_size)
+        self.assertEqual(image.get_file_size(), image_size)
+        self.assertEqual(subfolder1.used_space, zipfile_size)
+        self.assertEqual(self.root.used_space, zipfile_size + image_size)
+        self.assertEqual(folder2.used_space, image_size)
 
         # Try cut and paste
         manager2 = IContainerManager(folder2)
@@ -220,8 +222,8 @@ class QuotaTestCase(unittest.TestCase):
 
         # And check used space
         self.assertEqual(folder1.used_space, 0)
-        self.assertEqual(self.root.used_space, zip1_size + image1_size)
-        self.assertEqual(folder2.used_space, zip1_size + image1_size)
+        self.assertEqual(self.root.used_space, zipfile_size + image_size)
+        self.assertEqual(folder2.used_space, zipfile_size + image_size)
 
         # Try cut and ghost paste
         manager1 = IContainerManager(folder1)
@@ -229,9 +231,9 @@ class QuotaTestCase(unittest.TestCase):
             ghoster(folder2['subfolder1'])
 
         # And check used space
-        self.assertEqual(folder1.used_space, zip1_size)
-        self.assertEqual(self.root.used_space, (2 * zip1_size) + image1_size)
-        self.assertEqual(folder2.used_space, zip1_size + image1_size)
+        self.assertEqual(folder1.used_space, zipfile_size)
+        self.assertEqual(self.root.used_space, (2 * zipfile_size) + image_size)
+        self.assertEqual(folder2.used_space, zipfile_size + image_size)
 
         # Delete the ghost
         with manager1.deleter() as deleter:
@@ -239,23 +241,23 @@ class QuotaTestCase(unittest.TestCase):
 
         # And check used space
         self.assertEqual(folder1.used_space, 0)
-        self.assertEqual(self.root.used_space, zip1_size + image1_size)
-        self.assertEqual(folder2.used_space, zip1_size + image1_size)
+        self.assertEqual(self.root.used_space, zipfile_size + image_size)
+        self.assertEqual(folder2.used_space, zipfile_size + image_size)
 
         # Try copy and paste
         with manager1.copier() as copier:
             copier(folder2['image1.jpg'])
 
         # And check used space
-        self.assertEqual(folder1.used_space, image1_size)
-        self.assertEqual(self.root.used_space, zip1_size + (2 * image1_size))
-        self.assertEqual(folder2.used_space, zip1_size + image1_size)
+        self.assertEqual(folder1.used_space, image_size)
+        self.assertEqual(self.root.used_space, zipfile_size + (2 * image_size))
+        self.assertEqual(folder2.used_space, zipfile_size + image_size)
 
         # Clean, and check each time
         manager = IContainerManager(self.root)
         with manager.deleter() as deleter:
             deleter(self.root['folder2'])
-        self.assertEqual(self.root.used_space, image1_size)
+        self.assertEqual(self.root.used_space, image_size)
         with manager.deleter() as deleter:
             deleter(self.root['folder1'])
         self.assertEqual(self.root.used_space, 0)
@@ -341,7 +343,7 @@ class QuotaTestCase(unittest.TestCase):
 
         set_quota(self.root, 2)
         factory = self.root.folder.manage_addProduct['Silva']
-        with self.open_fixture('test3.zip') as source:
+        with self.layer.open_fixture('test3.zip') as source:
             factory.manage_addFile('zipfile1.zip', 'Zip File', source)
             source.seek(0)
             factory.manage_addFile('zipfile2.zip', 'Zip File', source)
