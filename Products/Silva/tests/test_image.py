@@ -448,6 +448,10 @@ class MiscellaneousImageTestCase(unittest.TestCase):
         self.assertTrue(verifyObject(interfaces.IAssetPayload, payload))
         self.assertEqual(payload.get_payload(), None)
 
+        # Since the image is empty, a request to it will trigger a 404
+        with self.layer.get_browser() as browser:
+            self.assertEqual(browser.open('/root/image'), 404)
+
     def test_invalid_image(self):
         """Try to add an non-image.
         """
@@ -477,8 +481,6 @@ class MiscellaneousImageTestCase(unittest.TestCase):
         self.assertRaises(
             ValueError,
             self.root.image.get_crop_box, crop="santa clauss")
-
-
 
 
 def test_suite():

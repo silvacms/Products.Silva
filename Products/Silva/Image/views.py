@@ -7,6 +7,7 @@ from zope.publisher.interfaces.browser import IBrowserRequest
 from zope.component import getMultiAdapter
 
 from webdav.common import rfc1123_date
+from zExceptions import NotFound
 
 from Products.Silva.File.views import FileDownloadView
 from silva.core.views import views as silvaviews
@@ -39,14 +40,17 @@ class ImageDownloadView(FileDownloadView):
 
     def payload(self):
         query = self.request.QUERY_STRING
+        image = None
         if query == 'hires':
-            img = self.context.hires_image
+            image = self.context.hires_image
         elif query == 'thumbnail':
-            img = self.context.thumbnail_image
-        else:
-            img = self.context.image
+            image = self.context.thumbnail_image
+        if image is None:
+            image = self.context.image
 
-        view = getMultiAdapter((img, self.request), name='index.html')
+        if image is None:
+            raise NotFound('Image resolution unavailable')
+        view = getMultiAdapter((image, self.request), name='index.html')
         return view.payload()
 
 
