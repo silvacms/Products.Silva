@@ -63,16 +63,20 @@ class ImageResponseHeaders(HTTPResponseHeaders):
     def other_headers(self, headers):
         image = self.context
         query = self.request.QUERY_STRING
+        asset = None
         if query == 'hires':
             asset = image.hires_image
         elif query == 'thumbnail':
             asset = image.thumbnail_image
-        else:
+        if asset is None:
             asset = image.image
 
         self.response.setHeader(
             'Last-Modified',
             rfc1123_date(image.get_modification_datetime()))
+        if asset is None:
+            # No asset, just return.
+            return
         self.response.setHeader(
             'Content-Disposition',
             'inline;filename=%s' % (asset.get_filename()))
