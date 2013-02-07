@@ -5,7 +5,9 @@
 import threading
 import logging
 
-from zope import component
+from zope.component import queryUtility, getUtility
+from five import grok
+from zope import schema, interface
 
 # Zope
 from AccessControl import ClassSecurityInfo
@@ -18,8 +20,6 @@ from Products.Silva.mail import sendmail
 import transaction
 from transaction.interfaces import ISavepointDataManager, IDataManagerSavepoint
 
-from five import grok
-from zope import schema, interface
 from silva.core import conf as silvaconf
 from silva.core import interfaces
 from silva.core.services.interfaces import IMemberService
@@ -80,9 +80,11 @@ class EmailQueueTransaction(threading.local):
 
     def _follow(self):
         if not self._followed:
+            service = queryUtility(interfaces.IMessageService)
+            if service is None:
+                return
             transaction = self.transaction_manager.get()
             transaction.join(self)
-            service = component.getUtility(interfaces.IMessageService)
             transaction.addBeforeCommitHook(service.send_pending_messages)
             self._followed = True
 
@@ -176,7 +178,7 @@ class EmailMessageService(SilvaService):
     def send_pending_messages(self):
         logger.debug("Sending pending messages...")
 
-        service_members = component.getUtility(IMemberService)
+        service_members = getUtility(IMemberService)
         get_member = service_members.get_member
 
         for to_memberid, message_dict in email_queue:
