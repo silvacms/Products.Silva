@@ -211,6 +211,11 @@ class ExtensionRegistry(object):
             module_path = install_module.__module__
             path = resolve(module_path).__file__
 
+        assert os.path.exists(path)
+
+        # Remove any symbolic links encountered (like setuptools)
+        path = os.path.realpath(path)
+
         # Search throught eggs to see if extension is an egg.
         ext = None
         for egg in pkg_resources.working_set:
