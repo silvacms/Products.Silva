@@ -286,6 +286,12 @@ class Folder(Publishable, BaseFolder):
         for content in self.get_ordered_publishables():
             content.is_deletable()
 
+
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'fulltext')
+    def fulltext(self):
+        return [self.id, self.get_title()]
+
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'get_default')
     def get_default(self):
