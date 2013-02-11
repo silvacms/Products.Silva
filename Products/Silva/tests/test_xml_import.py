@@ -30,12 +30,13 @@ class SilvaXMLTestCase(TestCase):
         self.layer.login('editor')
         self.metadata = getUtility(IMetadataService)
 
-    def assertImportFile(self, filename, imported, replace=False):
+    def assertImportFile(self, filename, imported, replace=False, update=False):
         """Import an XML file.
         """
         clearEvents()
         request = TestRequest()
-        importer = Importer(self.root, request, {'replace_content': replace})
+        importer = Importer(self.root, request, {'replace_content': replace,
+                                                 'update_content': update})
         with self.layer.open_fixture(filename) as source:
             importer.importStream(source)
         self.assertItemsEqual(
@@ -44,12 +45,13 @@ class SilvaXMLTestCase(TestCase):
             imported)
         return importer
 
-    def assertImportZip(self, filename, imported, replace=False):
+    def assertImportZip(self, filename, imported, replace=False, update=False):
         """Import a ZIP file.
         """
         clearEvents()
         request = TestRequest()
-        importer = ZipImporter(self.root, request, {'replace_content': replace})
+        importer = ZipImporter(self.root, request, {'replace_content': replace,
+                                                    'update_content': update})
         with self.layer.open_fixture(filename) as source:
             importer.importStream(source)
         self.assertItemsEqual(
@@ -102,6 +104,49 @@ class XMLImportTestCase(SilvaXMLTestCase):
             u'This folder have been created only in testing purpose.')
         self.assertEqual(
             binding.get('silva-content', 'maintitle'), u'Test Folder')
+
+        subfolder = folder.subfolder
+        self.assertEqual(subfolder.get_title(), u'Second test folder')
+
+    def test_folder_update(self):
+        """Test folder import over an existing folder, with update on.
+        """
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addFolder('folder', 'Existing folder')
+        folder = self.root.folder
+        binding = self.metadata.getMetadata(folder)
+
+        self.assertTrue(interfaces.IFolder.providedBy(folder))
+        self.assertItemsEqual(self.root.folder.objectIds(), [])
+        self.assertEqual(folder.get_title(), u'Existing folder')
+        self.assertEqual(binding.get('silva-extra', 'contactname'), u'')
+        self.assertEqual(
+            binding.get('silva-content', 'maintitle'),
+            u'Existing folder')
+
+        # We now import with update on
+        importer = self.assertImportFile(
+            'test_import_folder.silvaxml',
+            ['/root/folder',
+             '/root/folder/subfolder'],
+            update=True)
+        self.assertEqual(importer.getProblems(), [])
+        self.assertItemsEqual(self.root.folder.objectIds(), ['subfolder'])
+
+        folder = self.root.folder
+        binding = self.metadata.getMetadata(folder)
+
+        self.assertTrue(interfaces.IFolder.providedBy(folder))
+        self.assertEqual(folder.get_title(), u'Test Folder')
+        self.assertEqual(
+            binding.get('silva-extra', 'contactname'),
+            u'Henri McArthur')
+        self.assertEqual(
+            binding.get('silva-extra', 'content_description'),
+            u'This folder have been created only in testing purpose.')
+        self.assertEqual(
+            binding.get('silva-content', 'maintitle'),
+            u'Test Folder')
 
         subfolder = folder.subfolder
         self.assertEqual(subfolder.get_title(), u'Second test folder')
@@ -189,6 +234,61 @@ class XMLImportTestCase(SilvaXMLTestCase):
         self.assertEqual(version.get_relative(), True)
         self.assertEqual(version.get_target(), datafile)
         self.assertEqual(aq_chain(version.get_target()), aq_chain(datafile))
+
+    def test_link_to_file_update(self):
+        """Import a link that is linked to a file.
+        """
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addFolder('folder', 'Existing folder')
+        factory = self.root.folder.manage_addProduct['Silva']
+        factory.manage_addFolder('new', 'Existing new folder')
+        factory = self.root.folder.new.manage_addProduct['Silva']
+        factory.manage_addLink('link', 'Link to Silva', url='http://silvacms.org')
+
+        importer = self.assertImportZip(
+            'test_import_link.zip',
+            ['/root/folder',
+             '/root/folder/file',
+             '/root/folder/index',
+             '/root/folder/new',
+             '/root/folder/new/link'],
+            update=True)
+        self.assertEqual(importer.getProblems(), [])
+        self.assertItemsEqual(
+            self.root.folder.objectIds(),
+            ['file', 'index', 'new'])
+        self.assertItemsEqual(
+            self.root.folder.new.objectIds(),
+            ['link'])
+
+        link = self.root.folder.new.link
+        datafile = self.root.folder.file
+
+        self.assertTrue(interfaces.ILink.providedBy(link))
+        self.assertTrue(interfaces.IFile.providedBy(datafile))
+        self.assertEqual(datafile.get_title(),  u'Torvald file')
+
+        version = link.get_editable()
+        self.assertFalse(version is None)
+        self.assertEqual(link.get_viewable(), None)
+        self.assertEqual(version.get_title(), u'Last file')
+        self.assertEqual(
+            DateTime('2004-04-23T16:13:39Z'),
+            version.get_modification_datetime())
+
+        binding = self.metadata.getMetadata(version)
+        self.assertEqual(
+            binding.get('silva-extra', 'content_description'),
+            u'Link to the lastest file.')
+
+        self.assertEqual(version.get_relative(), True)
+        self.assertEqual(version.get_target(), datafile)
+        self.assertEqual(aq_chain(version.get_target()), aq_chain(datafile))
+
+        binding = self.metadata.getMetadata(datafile)
+        self.assertEqual(
+            binding.get('silva-extra', 'comment'),
+            u'This file contains Torvald lastest whereabouts.')
 
     def test_link_to_file_existing_rename(self):
         """Import a link to file in a folder that already exists. The

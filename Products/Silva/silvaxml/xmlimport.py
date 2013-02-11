@@ -25,12 +25,13 @@ def reindex_import_content(content, event):
 class FolderHandler(handlers.SilvaHandler):
     grok.name('folder')
 
+    def _createContent(self, identifier):
+        factory = self.parent().manage_addProduct['Silva']
+        factory.manage_addFolder(identifier, '', no_default_content=True)
+
     def startElementNS(self, name, qname, attrs):
         if name == (NS_SILVA_URI, 'folder'):
-            identifier = self.generateIdentifier(attrs)
-            factory = self.parent().manage_addProduct['Silva']
-            factory.manage_addFolder(identifier, '', no_default_content=True)
-            self.setResultId(identifier)
+            self.createContent(attrs)
 
     def endElementNS(self, name, qname):
         if name == (NS_SILVA_URI, 'folder'):
@@ -41,13 +42,13 @@ class FolderHandler(handlers.SilvaHandler):
 class PublicationHandler(handlers.SilvaHandler):
     grok.name('publication')
 
+    def _createContent(self, identifier):
+        factory = self.parent().manage_addProduct['Silva']
+        factory.manage_addPublication(identifier, '', no_default_content=True)
+
     def startElementNS(self, name, qname, attrs):
         if name == (NS_SILVA_URI, 'publication'):
-            identifier = self.generateIdentifier(attrs)
-            factory = self.parent().manage_addProduct['Silva']
-            factory.manage_addPublication(
-                identifier, '', no_default_content=True)
-            self.setResultId(identifier)
+            self.createContent(attrs)
 
     def endElementNS(self, name, qname):
         if name == (NS_SILVA_URI, 'publication'):
@@ -58,12 +59,13 @@ class PublicationHandler(handlers.SilvaHandler):
 class AutoTOCHandler(handlers.SilvaHandler):
     grok.name('auto_toc')
 
+    def _createContent(self, identifier):
+        factory = self.parent().manage_addProduct['Silva']
+        factory.manage_addAutoTOC(identifier, '')
+
     def startElementNS(self, name, qname, attrs):
         if name == (NS_SILVA_URI, 'auto_toc'):
-            identifier = self.generateIdentifier(attrs)
-            factory = self.parent().manage_addProduct['Silva']
-            factory.manage_addAutoTOC(identifier, '')
-            toc = self.setResultId(identifier)
+            toc = self.createContent(attrs)
             #not all imported TOCs will have these, so only set if they do
             if (attrs.get((None,'depth'),None)):
                 toc.set_toc_depth(int(attrs[(None,'depth')]))
@@ -85,12 +87,13 @@ class AutoTOCHandler(handlers.SilvaHandler):
 class IndexerHandler(handlers.SilvaHandler):
     grok.name('indexer')
 
+    def _createContent(self, identifier):
+        factory = self.parent().manage_addProduct['Silva']
+        factory.manage_addIndexer(identifier, '')
+
     def startElementNS(self, name, qname, attrs):
         if name == (NS_SILVA_URI, 'indexer'):
-            identifier = self.generateIdentifier(attrs)
-            factory = self.parent().manage_addProduct['Silva']
-            factory.manage_addIndexer(identifier, '')
-            self.setResultId(identifier)
+            self.createContent(attrs)
 
     def endElementNS(self, name, qname):
         if name == (NS_SILVA_URI, 'indexer'):
@@ -106,12 +109,13 @@ class GhostHandler(handlers.SilvaHandler):
     def getOverrides(self):
         return {(NS_SILVA_URI, 'content'): GhostVersionHandler}
 
+    def _createContent(self, identifier):
+        factory = self.parent().manage_addProduct['Silva']
+        factory.manage_addGhost(identifier, None, no_default_version=True)
+
     def startElementNS(self, name, qname, attrs):
         if name == (NS_SILVA_URI, 'ghost'):
-            identifier = self.generateIdentifier(attrs)
-            factory = self.parent().manage_addProduct['Silva']
-            factory.manage_addGhost(identifier, None, no_default_version=True)
-            self.setResultId(identifier)
+            self.createContent(attrs)
 
     def endElementNS(self, name, qname):
         if name == (NS_SILVA_URI, 'ghost'):
@@ -125,13 +129,13 @@ class GhostVersionHandler(handlers.SilvaVersionHandler):
             (NS_SILVA_URI, 'haunted'):
                 self.handlerFactories.contentHandler('haunted'),}
 
+    def _createVersion(self, identifier):
+        factory = self.parent().manage_addProduct['Silva']
+        factory.manage_addGhostVersion(identifier, None)
+
     def startElementNS(self, name, qname, attrs):
         if name == (NS_SILVA_URI, 'content'):
-            if attrs.has_key((None, 'version_id')):
-                uid = attrs[(None, 'version_id')].encode('utf8')
-                factory = self.parent().manage_addProduct['Silva']
-                factory.manage_addGhostVersion(uid, None)
-                self.setResultId(uid)
+            self.createVersion(attrs)
 
     def endElementNS(self, name, qname):
         if name == (NS_SILVA_URI, 'content'):
@@ -162,13 +166,13 @@ class GhostFolderHandler(handlers.SilvaHandler):
             (NS_SILVA_URI, 'haunted'):
                 self.handlerFactories.contentHandler('haunted'),}
 
+    def _createContent(self, identifier):
+        factory = self.parent().manage_addProduct['Silva']
+        factory.manage_addGhostFolder(identifier, None, no_default_content=True)
+
     def startElementNS(self, name, qname, attrs):
         if name == (NS_SILVA_URI, 'ghost_folder'):
-            identifier = self.generateIdentifier(attrs)
-            factory = self.parent().manage_addProduct['Silva']
-            factory.manage_addGhostFolder(
-                identifier, None, no_default_content=True)
-            self.setResultId(identifier)
+            self.createContent(attrs)
 
     def endElementNS(self, name, qname):
         if name == (NS_SILVA_URI, 'ghost_folder'):
@@ -197,12 +201,13 @@ class LinkHandler(handlers.SilvaHandler):
     def getOverrides(self):
         return {(NS_SILVA_URI, 'content'): LinkVersionHandler}
 
+    def _createContent(self, identifier):
+        factory = self.parent().manage_addProduct['Silva']
+        factory.manage_addLink(identifier, '', no_default_version=True)
+
     def startElementNS(self, name, qname, attrs):
         if name == (NS_SILVA_URI, 'link'):
-            identifier = self.generateIdentifier(attrs)
-            factory = self.parent().manage_addProduct['Silva']
-            factory.manage_addLink(identifier, '', no_default_version=True)
-            self.setResultId(identifier)
+            self.createContent(attrs)
 
     def endElementNS(self, name, qname):
         if name == (NS_SILVA_URI, 'link'):
@@ -218,13 +223,13 @@ class LinkVersionHandler(handlers.SilvaVersionHandler):
             (NS_SILVA_URI, 'target'):
                 self.handlerFactories.contentHandler('target'),}
 
+    def _createVersion(self, identifier):
+        factory = self.parent().manage_addProduct['Silva']
+        factory.manage_addLinkVersion(identifier, '')
+
     def startElementNS(self, name, qname, attrs):
         if name == (NS_SILVA_URI, 'content'):
-            if attrs.has_key((None, 'version_id')):
-                uid = attrs[(None, 'version_id')].encode('utf8')
-                factory = self.parent().manage_addProduct['Silva']
-                factory.manage_addLinkVersion(uid, '')
-                self.setResultId(uid)
+            self.createVersion(attrs)
 
     def endElementNS(self, name, qname):
         if name == (NS_SILVA_URI, 'content'):
@@ -256,12 +261,13 @@ class ImageHandler(handlers.SilvaHandler):
             (NS_SILVA_URI, 'asset'):
                 self.handlerFactories.tagHandler('asset')}
 
+    def _createContent(self, identifier):
+        factory = self.parent().manage_addProduct['Silva']
+        factory.manage_addImage(identifier, '', None)
+
     def startElementNS(self, name, qname, attrs):
         if name == (NS_SILVA_URI, 'image'):
-            identifier = self.generateIdentifier(attrs)
-            factory = self.parent().manage_addProduct['Silva']
-            factory.manage_addImage(identifier, '', None)
-            self.setResultId(identifier)
+            self.createContent(attrs)
             self.setData('web_format', attrs.get((None, 'web_format')))
             self.setData('web_scale', attrs.get((None, 'web_scale')))
             self.setData('web_crop', attrs.get((None, 'web_crop')))
@@ -301,12 +307,13 @@ class FileHandler(handlers.SilvaHandler):
             (NS_SILVA_URI, 'asset'):
                 self.handlerFactories.tagHandler('asset')}
 
+    def _createContent(self, identifier):
+        factory = self.parent().manage_addProduct['Silva']
+        factory.manage_addFile(identifier, '', None)
+
     def startElementNS(self, name, qname, attrs):
         if name == (NS_SILVA_URI, 'file'):
-            identifier = self.generateIdentifier(attrs)
-            factory = self.parent().manage_addProduct['Silva']
-            factory.manage_addFile(identifier, '', None)
-            self.setResultId(identifier)
+            self.createContent(attrs)
 
     def endElementNS(self, name, qname):
         if name == (NS_SILVA_URI, 'file'):
