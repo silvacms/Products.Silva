@@ -35,7 +35,7 @@ class SilvaXMLTestCase(TestCase):
         """
         clearEvents()
         request = TestRequest()
-        importer = Importer(self.root, request, {'replace': replace})
+        importer = Importer(self.root, request, {'replace_content': replace})
         with self.layer.open_fixture(filename) as source:
             importer.importStream(source)
         self.assertItemsEqual(
