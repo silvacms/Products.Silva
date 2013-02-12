@@ -443,6 +443,7 @@ class MiscellaneousImageTestCase(unittest.TestCase):
         self.assertEqual(image.get_content_type(), 'application/octet-stream')
         self.assertEqual(image.get_filename(), 'image')
         self.assertEqual(image.get_file_size(), 0)
+        self.assertEqual(image.get_image(), None)
 
         payload = interfaces.IAssetPayload(image)
         self.assertTrue(verifyObject(interfaces.IAssetPayload, payload))

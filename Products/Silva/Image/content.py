@@ -323,20 +323,27 @@ class Image(Asset):
     def get_image(self, hires=True, webformat=False):
         """Return image data.
         """
-        if hires and not webformat:
+        image = None
+        if hires:
+            # You want hires
             image = self.hires_image
-        elif not hires and webformat:
-            image = self.image
-        elif hires and webformat:
-            with ImageFile(self.hires_image) as image:
-                data = image.save(self.web_format)
-            if data is not None:
-                return data.getvalue()
-            image = self.hires_image
-        elif not hires and not webformat:
-            raise ValueError(_(u"Low resolution image in original format is "
-                               u"not supported"))
-        return image.get_file()
+            if webformat and image is not None:
+                # Hires in webformat
+                with ImageFile(image) as working:
+                    data = working.save(self.web_format)
+                if data is not None:
+                    return data.getvalue()
+        else:
+            # Resized version
+            if webformat:
+                image = self.image
+            else:
+                raise ValueError(
+                    _(u"Low resolution image in original format is "
+                      u"not supported"))
+        if image is not None:
+            return image.get_file()
+        return None
 
     security.declareProtected(SilvaPermissions.View, 'get_canonical_web_scale')
     def get_canonical_web_scale(self, scale=None):
