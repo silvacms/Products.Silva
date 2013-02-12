@@ -543,6 +543,24 @@ class XMLImportTestCase(SilvaXMLTestCase):
 
         image = self.root.folder.torvald
         self.assertTrue(interfaces.IFile.providedBy(image))
+        self.assertNotEqual(image.get_file_size(), 0)
+        self.assertEqual(image.get_filename(), 'torvald.jpeg')
+
+    def test_file_bad_asset(self):
+        """Test importing a file with a ZIP where the related file is
+        missing.
+        """
+        importer = self.assertImportZip(
+            'test_import_file_bad_asset.zip',
+            ['/root/folder',
+             '/root/folder/torvald'])
+        self.assertEqual(
+            importer.getProblems(),
+            [('Missing file content.', self.root.folder.torvald)])
+
+        image = self.root.folder.torvald
+        self.assertTrue(interfaces.IFile.providedBy(image))
+        self.assertEqual(image.get_file_size(), 0)
 
     def test_ghost_to_link(self):
         """Import a ghost to link.
