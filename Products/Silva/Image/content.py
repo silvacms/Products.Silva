@@ -516,7 +516,9 @@ class Image(Asset):
         SilvaPermissions.ChangeSilvaContent, 'get_file_system_path')
     def get_file_system_path(self):
         """return path on filesystem for containing image"""
-        return self.hires_image.get_file_system_path()
+        if self.hires_image is not None:
+            return self.hires_image.get_file_system_path()
+        return None
 
     security.declareProtected(SilvaPermissions.View, 'get_format')
     def get_format(self):
