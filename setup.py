@@ -5,7 +5,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '3.0.1dev'
+version = '3.0.1'
 
 tests_require = [
     'silva.pas.base',

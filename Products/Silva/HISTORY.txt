@@ -1,10 +1,25 @@
 Changes
 =======
 
-Silva 3.0.1 (unreleased)
+Silva 3.0.1 (2013/03/06)
 ------------------------
 
-- ...
+- Update Silva XML import and export feature to a new API that
+  tolerate and report problems during the import. Performances of the
+  export and import have been improved in order to consume less
+  memory, to allow larger exports and imports.
+
+- Fix various bugs when an Image doesn't have any payload (meaning the
+  image is missing).
+
+- Add a name chooser for Zope contents, that is used by the Silva Root
+  add form.
+
+- Support symbolic links for extensions (meaning the path Zope see is
+  a symbolic link to a real extension).
+
+- Silva Containers (Folder, Publications...) now provides a
+  ``fulltext`` method.
 
 Silva 3.0 (2012/12/12)
 ----------------------
