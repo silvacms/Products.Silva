@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (c) 2002-2012 Infrae. All rights reserved.
+# Copyright (c) 2002-2013 Infrae. All rights reserved.
 # See also LICENSE.txt
 
 #### Hack of the day: don't fuck up your all DB if an interface is broken.

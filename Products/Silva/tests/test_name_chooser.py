@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # Copyright (c) 2013 Infrae. All rights reserved.
-# -*- coding: utf-8 -*-
+# See also LICENSE.txt
 
 import unittest
 
