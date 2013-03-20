@@ -70,6 +70,7 @@ class LinkTestCase(unittest.TestCase):
         browser = self.layer.get_browser()
         browser.options.follow_redirect = False
         self.assertEqual(browser.open('/root/infrae'), 302)
+        self.assertTrue('Last-Modified' in browser.headers)
         self.assertTrue('Location' in browser.headers)
         self.assertEqual(
             browser.headers['Location'],
@@ -80,6 +81,7 @@ class LinkTestCase(unittest.TestCase):
         self.root.folder.manage_pasteObjects(token)
 
         self.assertEqual(browser.open('/root/infrae'), 302)
+        self.assertTrue('Last-Modified' in browser.headers)
         self.assertTrue('Location' in browser.headers)
         self.assertEqual(
             browser.headers['Location'],

@@ -8,6 +8,7 @@ from zope.interface.verify import verifyObject
 from zope.component import getUtility
 
 from Acquisition import aq_chain
+from DateTime import DateTime
 from Products.Silva.testing import FunctionalLayer
 from Products.SilvaMetadata.interfaces import IMetadataService, ReadOnlyError
 
@@ -29,6 +30,10 @@ class GhostTestCase(unittest.TestCase):
 
         factory = self.root.manage_addProduct['Silva']
         factory.manage_addMockupVersionedContent('document', 'Document')
+        editable = self.root.document.get_editable()
+        metadata = getUtility(IMetadataService).getMetadata(editable)
+        metadata.setValues('silva-extra', {
+                'modificationtime': DateTime('2011-04-25T12:00:00Z')})
         factory.manage_addFolder('folder', 'Folder')
         factory.manage_addImage('image', 'Image')
 
@@ -58,7 +63,7 @@ class GhostTestCase(unittest.TestCase):
         self.assertEqual(version.get_haunted(), None)
         self.assertEqual(version.get_link_status(), errors.EmptyInvalidTarget())
 
-    def test_ghost_reference(self):
+    def test_reference(self):
         """Test the reference created by the ghost.
         """
         factory = self.root.manage_addProduct['Silva']
@@ -83,7 +88,7 @@ class GhostTestCase(unittest.TestCase):
             ghost, name=u"haunted")
         self.assertEqual(reference, None)
 
-    def test_ghost_metadata(self):
+    def test_metadata(self):
         """If you ask metadata about a ghost, you should get the
         metadata about the haunted content, if available.
         """
@@ -139,7 +144,7 @@ class GhostTestCase(unittest.TestCase):
             service.getMetadataValue(ghost, 'silva-content', 'maintitle'),
             u"Changed")
 
-    def test_ghost_version_metadata(self):
+    def test_version_metadata(self):
         """If you ask metadata about a ghost version, you should get
         the metadata about the haunted content, if available.
         """
@@ -195,7 +200,7 @@ class GhostTestCase(unittest.TestCase):
             service.getMetadataValue(ghost, 'silva-content', 'maintitle'),
             u"Changed")
 
-    def test_ghost_set_title(self):
+    def test_set_title(self):
         """Test ghost set_title. It should just trigger an error.
         """
         factory = self.root.manage_addProduct['Silva']
@@ -221,7 +226,7 @@ class GhostTestCase(unittest.TestCase):
                 renamer((self.root.ghost, 'ghost', 'Ghost')),
                 ContentError)
 
-    def test_ghost_get_title(self):
+    def test_get_title(self):
         """Test ghost get_title. It should return the title of the target.
         """
         factory = self.root.manage_addProduct['Silva']
@@ -264,7 +269,7 @@ class GhostTestCase(unittest.TestCase):
         self.assertEqual(ghost.get_title(), 'Ghost target is broken')
         self.assertEqual(ghost.get_title_or_id(), 'Ghost target is broken')
 
-    def test_ghost_is_published(self):
+    def test_is_published(self):
         """Test whenever a Ghost is published or not. This depends if
         the ghosted content is published or not.
         """
@@ -326,7 +331,7 @@ class GhostTestCase(unittest.TestCase):
             version.get_link_status(),
             errors.EmptyInvalidTarget())
 
-    def test_ghost_modification_time(self):
+    def test_modification_time(self):
         """Test that the ghost modification_time is the same than the
         document.
         """
@@ -352,6 +357,32 @@ class GhostTestCase(unittest.TestCase):
 
         IPublicationWorkflow(ghost).publish()
         self.assertEqual(ghost.get_modification_datetime(), None)
+
+    def test_head_request(self):
+        """Test HEAD requests on Ghosts.
+        """
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addGhost('ghost', None, haunted=self.root.document)
+
+        with self.layer.get_browser() as browser:
+            self.assertEqual(browser.open('/root/ghost', method='HEAD'), 200)
+            self.assertEqual(
+                browser.headers['Content-Type'],
+                'text/html;charset=utf-8')
+            # The ghost is broken, there is no modification date.
+            self.assertNotIn('Last-Modified', browser.headers)
+
+        IPublicationWorkflow(self.root.ghost).publish()
+        with self.layer.get_browser() as browser:
+            self.assertEqual(browser.open('/root/ghost', method='HEAD'), 200)
+            self.assertEqual(
+                browser.headers['Content-Type'],
+                'text/html;charset=utf-8')
+            # We see the modification date from the document.
+            self.assertEqual(
+                browser.headers['Last-Modified'],
+                'Mon, 25 Apr 2011 12:00:00 GMT')
+            self.assertEqual(len(browser.contents), 0)
 
 
 def test_suite():
