@@ -75,6 +75,7 @@ class HTTPHeadersSettings(grok.Annotation):
     """Settings used to manage regular headers on Silva content.
     """
     grok.provides(IHTTPHeadersSettings)
+    grok.implements(IHTTPHeadersSettings)
     grok.context(IFile)
 
     http_disable_cache = False

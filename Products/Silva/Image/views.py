@@ -59,6 +59,7 @@ class HTTPHeadersSettings(grok.Annotation):
     """
     grok.provides(IHTTPHeadersSettings)
     grok.context(IImage)
+    grok.implements(IHTTPHeadersSettings)
 
     http_disable_cache = False
     http_max_age = 86400
