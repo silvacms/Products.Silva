@@ -12,7 +12,7 @@ from zExceptions import NotFound
 from Products.Silva.File.views import FileDownloadView
 from silva.core.views import views as silvaviews
 from silva.core.views.httpheaders import HTTPResponseHeaders
-from silva.core.interfaces import IImage
+from silva.core.interfaces import IImage, IHTTPHeadersSettings
 
 
 class ImageView(silvaviews.View):
@@ -54,6 +54,17 @@ class ImageDownloadView(FileDownloadView):
         return view.payload()
 
 
+class HTTPHeadersSettings(grok.Annotation):
+    """Settings used to manage regular headers on Silva content.
+    """
+    grok.provides(IHTTPHeadersSettings)
+    grok.context(IImage)
+
+    http_disable_cache = False
+    http_max_age = 86400
+    http_last_modified = True
+
+
 class ImageResponseHeaders(HTTPResponseHeaders):
     """This reliably set HTTP headers on file serving, for GET and
     HEAD requests.
@@ -71,9 +82,10 @@ class ImageResponseHeaders(HTTPResponseHeaders):
         if asset is None:
             asset = image.image
 
-        self.response.setHeader(
-            'Last-Modified',
-            rfc1123_date(image.get_modification_datetime()))
+        if self._include_last_modified:
+            self.response.setHeader(
+                'Last-Modified',
+                rfc1123_date(image.get_modification_datetime()))
         if asset is None:
             # No asset, just return.
             return

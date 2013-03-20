@@ -81,7 +81,7 @@ class OrderManager(grok.Annotation):
     def __len__(self):
         return len(self.order)
 
-    def _fix(self, folder):
+    def _repair(self, folder):
         # Maintenance method that remove id that have been removed
         # from the folder.
         folder_ids = folder.objectIds()

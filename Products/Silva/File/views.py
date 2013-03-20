@@ -13,7 +13,7 @@ from ZPublisher.HTTPRangeSupport import parseRange, expandRanges
 
 from Products.Silva.File.content import CHUNK_SIZE
 from Products.Silva.File.content import File, BlobFile, ZODBFile
-from silva.core import interfaces
+from silva.core.interfaces import IHTTPHeadersSettings, IFile
 from silva.core.views import views as silvaviews
 from silva.core.views.httpheaders import HTTPResponseHeaders
 
@@ -71,16 +71,28 @@ class OFSPayloadIterator(object):
         raise StopIteration
 
 
+class HTTPHeadersSettings(grok.Annotation):
+    """Settings used to manage regular headers on Silva content.
+    """
+    grok.provides(IHTTPHeadersSettings)
+    grok.context(IFile)
+
+    http_disable_cache = False
+    http_max_age = 86400
+    http_last_modified = True
+
+
 class FileResponseHeaders(HTTPResponseHeaders):
     """This reliably set HTTP headers on file serving, for GET and
     HEAD requests.
     """
-    grok.adapts(IBrowserRequest, interfaces.IFile)
+    grok.adapts(IBrowserRequest, IFile)
 
     def other_headers(self, headers):
-        self.response.setHeader(
-            'Last-Modified',
-            rfc1123_date(self.context.get_modification_datetime()))
+        if self._include_last_modified:
+            self.response.setHeader(
+                'Last-Modified',
+                rfc1123_date(self.context.get_modification_datetime()))
         self.response.setHeader(
             'Content-Disposition',
             'inline;filename=%s' % (self.context.get_filename()))

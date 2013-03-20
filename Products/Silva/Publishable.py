@@ -12,6 +12,7 @@ from Products.Silva.SilvaObject import SilvaObject, ViewableObject
 
 from five import grok
 from silva.core.interfaces.content import IPublishable, INonPublishable
+from silva.core.interfaces import IHTTPHeadersSettings
 
 
 class NonPublishable(SilvaObject):
@@ -50,4 +51,15 @@ class Publishable(SilvaObject, ViewableObject):
 
 
 InitializeClass(Publishable)
+
+
+class HTTPHeadersSettings(grok.Annotation):
+    """Settings used to manage regular headers on Silva content.
+    """
+    grok.provides(IHTTPHeadersSettings)
+    grok.context(IPublishable)
+
+    http_disable_cache = False
+    http_max_age = 86400
+    http_last_modified = True
 
