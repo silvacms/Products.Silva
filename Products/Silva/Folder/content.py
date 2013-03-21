@@ -29,7 +29,7 @@ from Products.Silva import helpers
 
 from silva.core.interfaces import (
     IContentImporter, INonPublishable, IPublishable, IOrderManager,
-    IVersionedContent, IFolder, IRoot)
+    IVersionedContent, IFolder, IRoot, IContent)
 from silva.core import conf as silvaconf
 from silva.core.interfaces import ContentError
 from silva.core.services.interfaces import IExtensionService
@@ -297,7 +297,10 @@ class Folder(Publishable, BaseFolder):
     def get_default(self):
         """Get the default content object of the folder.
         """
-        return self._getOb('index', None)
+        content = self._getOb('index', None)
+        if IContent.providedBy(content):
+            return content
+        return None
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_ordered_publishables')

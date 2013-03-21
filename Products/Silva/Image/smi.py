@@ -35,6 +35,7 @@ class ImageAddForm(silvaforms.SMIAddForm):
 
     fields = silvaforms.Fields(IImageAddFields)
     fields['id'].required = False
+    fields['id'].validateForInterface = IImage
     fields['image'].fileNotSetLabel = _(
         u"Click the Upload button to select an image.")
 

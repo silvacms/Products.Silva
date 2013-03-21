@@ -7,7 +7,8 @@ import unittest
 from Products.Silva.testing import FunctionalLayer
 from Products.Silva import mangle
 
-from silva.core.interfaces import IAsset, ISilvaNameChooser, ContentError
+from silva.core.interfaces import IFolder, IAsset
+from silva.core.interfaces import ISilvaNameChooser, ContentError
 from zope.interface.verify import verifyObject
 
 
@@ -18,14 +19,22 @@ class NameChooserTestCase(unittest.TestCase):
         self.root = self.layer.get_application()
 
     def test_create_invalid_characters(self):
-        """Invalid characters a replaced.
+        """Invalid characters triggers an error.
         """
         factory = self.root.manage_addProduct['Silva']
         with self.assertRaises(ValueError):
             factory.manage_addMockupVersionedContent('it*em', 'Item')
 
+    def test_create_folder_index(self):
+        """You can't create a folder called index.
+        """
+        factory = self.root.manage_addProduct['Silva']
+        with self.assertRaises(ValueError):
+            factory.manage_addFolder('index', 'Index Folder')
+
     def test_create_already_exists(self):
-        """A content with the same name is present in the folder.
+        """A content with the same name is present in the folder. This
+        triggers an error.
         """
         factory = self.root.manage_addProduct['Silva']
         factory.manage_addMockupVersionedContent('item', 'Item')
@@ -57,8 +66,10 @@ class NameChooserTestCase(unittest.TestCase):
         chooser = ISilvaNameChooser(self.root)
         self.assertTrue(verifyObject(ISilvaNameChooser, chooser))
 
-        # checkName
+        # simple case
         self.assertTrue(chooser.checkName('valid_id', None))
+        # index is valid by default
+        self.assertTrue(chooser.checkName('index', None))
         with self.assertRaises(ContentError):
             chooser.checkName('service_check', None)
         with self.assertRaises(ContentError):
@@ -69,6 +80,12 @@ class NameChooserTestCase(unittest.TestCase):
             chooser.checkName('document__', None)
         with self.assertRaises(ContentError):
             chooser.checkName('__document', None)
+        with self.assertRaises(ContentError):
+            # index is not valid for folders
+            chooser.checkName('index', None, interface=IFolder)
+        with self.assertRaises(ContentError):
+            # index is not valid for assets
+            chooser.checkName('index', None, interface=IAsset)
 
     def test_zope_name_chooser(self):
         """Test name chooser implementation for Zope contents. This is
@@ -162,10 +179,6 @@ class MangleIdTestCase(unittest.TestCase):
         self.assertEqual(id.validate(), id.OK)
 
         id = mangle.Id(self.root.folder, 'index', interface=IAsset)
-        self.assertEqual(id.validate(), id.RESERVED)
-
-        data = self.root.folder.data
-        id = mangle.Id(self.root.folder, 'index', instance=data)
         self.assertEqual(id.validate(), id.RESERVED)
 
         #test IN_USE_ZOPE, by adding a non-reserved object to self.root.folder

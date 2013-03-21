@@ -2,18 +2,16 @@
 # Copyright (c) 2002-2013 Infrae. All rights reserved.
 # See also LICENSE.txt
 
-from five import grok
-
-# Python
 import string
 import re
-from types import StringType, UnicodeType
 
 from AccessControl import ModuleSecurityInfo
 from Acquisition import aq_inner
 from OFS.ObjectManager import checkValidId
 from OFS.interfaces import IObjectManager
+from five import grok
 from zExceptions import BadRequest
+from zope.interface import providedBy
 
 from silva.translations import translate as _
 from silva.core.interfaces import ISilvaObject, IAsset, IContainer, ContentError
@@ -21,8 +19,6 @@ from silva.core.interfaces import ISilvaNameChooser
 from Products.Silva import characters
 
 module_security = ModuleSecurityInfo('Products.Silva.mangle')
-
-
 _marker = object()
 
 
@@ -34,18 +30,21 @@ class NameValidator(grok.Subscription):
     def __init__(self, context):
         self.context = context
 
-    def checkName(self, name, content):
-        mangle_id = Id(self.context, name, instance=content)
-        error = mangle_id.verify()
+    def checkName(self, identifier, content, file=None, interface=None):
+        if content is not None:
+            interface = providedBy(content)
+        mangle = Id(self.context, identifier, file=file, interface=interface)
+        error = mangle.verify()
         if error is not None:
             raise error
         return True
 
-    def chooseName(self, name, content, file=None, interface=None):
-        mangle_id = Id(self.context, name,
-            instance=content, file=file, interface=interface)
-        mangle_id = mangle_id.cook()
-        return str(mangle_id)
+    def chooseName(self, identifier, content, file=None, interface=None):
+        if content is not None:
+            interface = providedBy(content)
+        mangle = Id(self.context, identifier, file=file, interface=interface)
+        mangle = mangle.cook()
+        return str(mangle)
 
 
 class SilvaNameChooserDispatcher(grok.Adapter):
@@ -57,18 +56,19 @@ class SilvaNameChooserDispatcher(grok.Adapter):
         self.subscribers = grok.queryOrderedSubscriptions(
             self.container, ISilvaNameChooser)
 
-    def checkName(self, name, content):
+    def checkName(self, identifier, content, file=None, interface=None):
         for checker in self.subscribers:
-            checker.checkName(name, content)
+            checker.checkName(
+                identifier, content, file=file, interface=interface)
         return True
 
-    def chooseName(self, name, content, file=None, interface=None):
+    def chooseName(self, identifier, content, file=None, interface=None):
         for chooser in self.subscribers:
-            chosen = chooser.chooseName(name, content,
-                file=file, interface=interface)
+            chosen = chooser.chooseName(
+                identifier, content, file=file, interface=interface)
             if chosen is not None:
-                name = chosen
-        return name
+                identifier = chosen
+        return identifier
 
 
 class ZopeNameChooser(grok.Adapter):
@@ -78,9 +78,9 @@ class ZopeNameChooser(grok.Adapter):
     def __init__(self, container):
         self.container = container
 
-    def checkName(self, name, content):
+    def checkName(self, identifier, content, file=None, interface=None):
         try:
-            checkValidId(self.container, str(name))
+            checkValidId(self.container, str(identifier))
         except BadRequest as error:
             raise ContentError(error.args[0], self.container)
         return True
@@ -114,7 +114,7 @@ class Id(object):
     IN_USE_ASSET = 5
     RESERVED_POSTFIX = 6
     IN_USE_ZOPE = 7
-
+    RESERVED_FOR_CONTENT = 8
 
     # does only match strings containig valid chars
     _valid_id = re.compile(r'^[a-zA-Z0-9][a-zA-Z0-9_\.\-]*$')
@@ -148,7 +148,6 @@ class Id(object):
         'email',
         'form',
         'fulltext',
-        'globals',
         'home',
         'index_html',
         'insert',
@@ -176,13 +175,13 @@ class Id(object):
          ])
 
     _reserved_ids_for_interface = {
-        IAsset: ('index', )
+        IAsset: ('index', ),
+        IContainer: ('index', )
     }
 
     _validation_result = None
 
-    def __init__(self, folder, maybe_id, allow_dup=0, file=None, instance=None,
-            interface=None):
+    def __init__(self, context, maybe_id, allow_dup=0, file=None, interface=None):
         """
             folder: container where the id should be valid
             maybe_id: the id (str) to be mangled
@@ -196,21 +195,17 @@ class Id(object):
         orig_id = maybe_id
         if maybe_id is None:
             maybe_id = ""
-        if type(maybe_id) == StringType:
+        if isinstance(maybe_id, str):
             try:
                 maybe_id = unicode(maybe_id, 'utf-8')
             except UnicodeError:
                 maybe_id = unicode(maybe_id, 'latin-1', 'replace')
-        if type(maybe_id) != UnicodeType:
-            msg = "id must be str or unicode (%r)" % orig_id
-            raise ValueError, msg
-        if interface not in self._reserved_ids_for_interface.keys():
-            interface = None
-        self._folder = folder
+        if not isinstance(maybe_id, unicode):
+            raise ValueError("id must be str or unicode (%r)" % orig_id)
+        self._context = context
         self._maybe_id = maybe_id
         self._allow_dup = allow_dup
         self._file = file
-        self._instance = instance
         self._interface = interface
 
     def cook(self):
@@ -223,12 +218,12 @@ class Id(object):
         """
         from OFS import Image
         id, unused_title = Image.cookId(self._maybe_id, "", self._file)
-        if type(id) == StringType:
+        if isinstance(id, str):
             try:
                 id = unicode(id, 'utf-8')
             except UnicodeError:
                 pass
-        if type(id) == UnicodeType:
+        if isinstance(id, unicode):
             id = id.encode('latin1', 'replace')
         id = string.translate(id, characters.char_transmap)
         self._maybe_id = id
@@ -247,17 +242,14 @@ class Id(object):
     def verify(self):
         status = self.validate()
         if status != self.OK:
-            content = self._folder
-            if self._instance is not None:
-                content = self._instance
-            return ContentError(self._status_to_string(status), content)
+            return ContentError(self._status_to_string(status), self._context)
         return None
 
     def _validate(self):
         """ test if the given id is valid, returning a status code
             about its validity or reason of invalidity
         """
-        folder = self._folder
+        folder = self._context
         maybe_id = self._maybe_id
         allow_dup = self._allow_dup
         if self._valid_id.match(maybe_id) is None:
@@ -272,15 +264,12 @@ class Id(object):
         if maybe_id in self._reserved_ids:
             return self.RESERVED
 
-        if self._instance is not None:
+        if self._interface is not None:
             for interface, prefixes in \
                     self._reserved_ids_for_interface.items():
-                if interface.providedBy(self._instance):
+                if self._interface.isOrExtends(interface):
                     if maybe_id in prefixes:
-                        return self.RESERVED
-        if self._interface is not None:
-            if maybe_id in self._reserved_ids_for_interface[self._interface]:
-                return self.RESERVED
+                        return self.RESERVED_FOR_CONTENT
 
         attr = getattr(aq_inner(folder), maybe_id, _marker)
         if attr is not _marker:
@@ -348,6 +337,9 @@ class Id(object):
         elif status == self.IN_USE_ZOPE:
             return _(u"The id ${id} is already in use by a Zope object.",
                      mapping={'id': self._maybe_id})
+        elif status == self.RESERVED_FOR_CONTENT:
+            return _("The id ${id} cannot be used for a content of this "
+                     u"type.", mapping={'id': self._maybe_id})
         return _(u"(Internal Error): An invalid status ${status_code} occured "
                  u"while checking the id ${id}.",
                  mapping={'status_code': status, 'id': self._maybe_id})
@@ -381,7 +373,7 @@ class Id(object):
             returns self
             raises ValueError if id is not valid
         """
-        used_ids = self._folder.objectIds()
+        used_ids = self._context.objectIds()
         while self._maybe_id in used_ids:
             self.new()
         return self

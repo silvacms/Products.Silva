@@ -46,6 +46,8 @@ class FolderAddForm(silvaforms.SMIAddForm):
     grok.name(u'Silva Folder')
 
     fields = silvaforms.Fields(IContainerSchema)
+    # Prevent to call a folder index.
+    fields['id'].validateForInterface = IFolder
 
     def _edit(self, parent, content, data):
         policies = getUtility(IContainerPolicyService)

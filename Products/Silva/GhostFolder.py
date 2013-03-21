@@ -6,12 +6,14 @@
 from five import grok
 from zope.component import getUtility
 from zope.lifecycleevent.interfaces import IObjectCreatedEvent
+from zope.lifecycleevent.interfaces import IObjectCopiedEvent
 
 # Zope 2
 from AccessControl import ClassSecurityInfo
 from AccessControl.security import checkPermission
-from Acquisition import aq_parent
+from Acquisition import aq_parent, aq_chain
 from App.class_init import InitializeClass
+from OFS.interfaces import IObjectClonedEvent
 
 # silva
 from Products.Silva.Folder import Folder
@@ -394,9 +396,13 @@ class GhostFolderEditMenu(MenuItem):
 
 
 @grok.subscribe(IGhostFolder, IObjectCreatedEvent)
+@grok.subscribe(IGhostFolder, IObjectClonedEvent)
 def haunt_created_folder(folder, event):
-    # If the ghost folder is in a valid state after creation, haunt
-    # its content.
+    if (folder != event.object or
+        IObjectCopiedEvent.providedBy(event)):
+        return
+    # If the ghost folder is in a valid state after creation or copy,
+    # haunt its content.
     if folder.get_link_status() is None:
         folder.haunt()
 

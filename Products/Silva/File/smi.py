@@ -10,7 +10,7 @@ from zope.interface import Interface
 
 from Products.Silva.Asset import SMIAssetPortlet
 from Products.Silva.Asset import AssetEditTab
-from silva.core import interfaces
+from silva.core.interfaces import IFile
 from silva.core.conf.interfaces import ITitledContent
 from silva.core.conf import schema as silvaschema
 from silva.translations import translate as _
@@ -27,11 +27,12 @@ class IFileAddFields(ITitledContent):
 class FileAddForm(silvaforms.SMIAddForm):
     """Add form for a file.
     """
-    grok.context(interfaces.IFile)
+    grok.context(IFile)
     grok.name(u'Silva File')
 
     fields = silvaforms.Fields(IFileAddFields)
     fields['id'].required = False
+    fields['id'].validateForInterface = IFile
     fields['title'].required = False
     fields['file'].fileNotSetLabel = _(
         u"Click the Upload button to select a file.")
@@ -47,7 +48,7 @@ class FileAddForm(silvaforms.SMIAddForm):
 class FileEditForm(silvaforms.SMISubForm):
     """Edit file.
     """
-    grok.context(interfaces.IFile)
+    grok.context(IFile)
     grok.view(AssetEditTab)
     grok.order(10)
 
@@ -74,7 +75,7 @@ class IFileTextFields(Interface):
 class FileTextEditForm(silvaforms.SMISubForm):
     """Edit content as a text file.
     """
-    grok.context(interfaces.IFile)
+    grok.context(IFile)
     grok.view(AssetEditTab)
     grok.order(20)
 
@@ -98,7 +99,7 @@ class FileTextEditForm(silvaforms.SMISubForm):
 
 
 class InfoPortlet(SMIAssetPortlet):
-    grok.context(interfaces.IFile)
+    grok.context(IFile)
 
     def update(self):
         self.mime_type = self.context.get_mime_type()

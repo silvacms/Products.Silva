@@ -40,6 +40,7 @@ class GhostFolderTestCase(unittest.TestCase):
 
         factory = self.root.folder.folder.manage_addProduct['Silva']
         factory.manage_addMockupVersionedContent('document', 'Document')
+        factory.manage_addMockupAsset('asset', 'Asset')
 
         factory = self.root.folder.publication.manage_addProduct['Silva']
         factory.manage_addMockupVersionedContent('document', 'Document')
@@ -94,9 +95,9 @@ class GhostFolderTestCase(unittest.TestCase):
         self.assertEqual(ghost.document.get_viewable().get_link_status(), None)
 
         # Ghost is done recursively
-        self.assertEqual(
+        self.assertItemsEqual(
             ghost.folder.objectIds(),
-            ['document'])
+            ['asset', 'document'])
 
         # Ghosted target of this subfodler was not published, so his the ghost
         self.assertFalse(ghost.folder.is_published())
@@ -105,6 +106,37 @@ class GhostFolderTestCase(unittest.TestCase):
         # itself (it is not a publication).
         self.assertEqual(ghost.get_publication(), self.root)
         self.assertEqual(ghost.folder.get_publication(), self.root)
+
+    def test_copy_outdated_ghost_folder(self):
+        """Test creating a Ghost Folder and copying it when it is
+        outdated. We should get a new ghost folder, that is fully
+        ghost.
+        """
+        factory = self.root.target.manage_addProduct['Silva']
+        factory.manage_addGhostFolder('ghost', None, haunted=self.root.folder)
+        self.assertEqual(self.root.target.ghost.get_link_status(), None)
+
+        # We delete something from the ghost
+        manager = IContainerManager(self.root.target.ghost)
+        with manager.deleter() as deleter:
+            deleter(self.root.target.ghost.index)
+        self.assertNotIn('index', self.root.target.ghost.objectIds())
+
+        # Copy the ghost in the root folder
+        with IContainerManager(self.root).copier() as copier:
+            self.assertNotEqual(copier(self.root.target.ghost), None)
+
+        # We should have a copy
+        self.assertIn('ghost', self.root.objectIds())
+        self.assertTrue(verifyObject(IGhostFolder, self.root.ghost))
+        self.assertEqual(self.root.ghost.get_link_status(), None)
+        self.assertEqual(self.root.ghost.get_haunted(), self.root.folder)
+        self.assertIn('index', self.root.ghost.objectIds())
+        self.assertTrue(verifyObject(IGhost, self.root.ghost.index))
+        self.assertEqual(self.root.ghost.index.get_link_status(), None)
+        self.assertEqual(
+            self.root.ghost.index.get_haunted(),
+            self.root.folder.index)
 
     def test_ghost_publication(self):
         """Test a Ghost Folder haunting to a Publication.
@@ -644,6 +676,7 @@ class GhostFolderTestCase(unittest.TestCase):
             self.root.folder.backup.get_link_status(),
             errors.EmptyInvalidTarget())
         self.assertFalse('backup' in ghost.objectIds())
+
 
 def test_suite():
     suite = unittest.TestSuite()
