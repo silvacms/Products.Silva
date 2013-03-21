@@ -179,7 +179,7 @@ class MangleIdTestCase(unittest.TestCase):
         self.assertEqual(id.validate(), id.OK)
 
         id = mangle.Id(self.root.folder, 'index', interface=IAsset)
-        self.assertEqual(id.validate(), id.RESERVED)
+        self.assertEqual(id.validate(), id.RESERVED_FOR_CONTENT)
 
         #test IN_USE_ZOPE, by adding a non-reserved object to self.root.folder
         id = mangle.Id(self.root.folder, 'pt_test')
