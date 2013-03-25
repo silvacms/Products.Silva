@@ -67,12 +67,15 @@ class PublicationWorkflowTestCase(unittest.TestCase):
         self.assertTrue(content.is_published())
 
         self.assertEqual(content.get_public_version(), '0')
-        self.assertEqual(
-            content.get_unapproved_version_expiration_datetime(),
-            None)
         self.assertEqual(content.get_approved_version(), None)
         self.assertEqual(content.get_unapproved_version(), '1')
         self.assertEqual(content.get_last_closed_version(), None)
+        self.assertEqual(
+            content.get_unapproved_version_expiration_datetime(),
+            None)
+        self.assertEqual(
+            content.get_unapproved_version_publication_datetime(),
+            None)
 
     def test_new_version_pusblish_with_expiration_datetime_in_future(self):
         """If you make a new version of a published version that have
@@ -101,6 +104,9 @@ class PublicationWorkflowTestCase(unittest.TestCase):
         self.assertEqual(
             content.get_unapproved_version_expiration_datetime(),
             expiration_time)
+        self.assertEqual(
+            content.get_unapproved_version_publication_datetime(),
+            None)
 
     def test_new_version_closed_with_expiration_datetime_in_past(self):
         """If you make a new version out of a published version that
@@ -129,6 +135,9 @@ class PublicationWorkflowTestCase(unittest.TestCase):
         self.assertEqual(content.get_last_closed_version(), '0')
         self.assertEqual(
             content.get_unapproved_version_expiration_datetime(),
+            None)
+        self.assertEqual(
+            content.get_unapproved_version_publication_datetime(),
             None)
 
     def test_publish_unapproved(self):
