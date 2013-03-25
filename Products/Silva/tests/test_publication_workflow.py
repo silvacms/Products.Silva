@@ -4,6 +4,7 @@
 
 import unittest
 from datetime import datetime, timedelta
+from DateTime import DateTime
 
 from Products.Silva.testing import FunctionalLayer
 
@@ -55,6 +56,35 @@ class PublicationWorkflowTestCase(unittest.TestCase):
         content = self.root.test
         publisher = IPublicationWorkflow(content)
         publisher.publish()
+        self.assertTrue(content.is_published())
+
+        self.assertEqual(content.get_public_version(), '0')
+        self.assertEqual(content.get_approved_version(), None)
+        self.assertEqual(content.get_unapproved_version(), None)
+        self.assertEqual(content.get_last_closed_version(), None)
+
+        publisher.new_version()
+        self.assertTrue(content.is_published())
+
+        self.assertEqual(content.get_public_version(), '0')
+        self.assertEqual(
+            content.get_unapproved_version_expiration_datetime(),
+            None)
+        self.assertEqual(content.get_approved_version(), None)
+        self.assertEqual(content.get_unapproved_version(), '1')
+        self.assertEqual(content.get_last_closed_version(), None)
+
+    def test_new_version_pusblish_with_expiration_datetime_in_future(self):
+        """If you make a new version of a published version that have
+        an expiration date in the future it is kept.
+        """
+        content = self.root.test
+        expiration_time = DateTime() + 30
+        content.set_unapproved_version_expiration_datetime(expiration_time)
+
+        publisher = IPublicationWorkflow(content)
+        publisher.publish()
+        self.assertTrue(content.is_published())
 
         self.assertEqual(content.get_public_version(), '0')
         self.assertEqual(content.get_approved_version(), None)
@@ -68,6 +98,38 @@ class PublicationWorkflowTestCase(unittest.TestCase):
         self.assertEqual(content.get_approved_version(), None)
         self.assertEqual(content.get_unapproved_version(), '1')
         self.assertEqual(content.get_last_closed_version(), None)
+        self.assertEqual(
+            content.get_unapproved_version_expiration_datetime(),
+            expiration_time)
+
+    def test_new_version_closed_with_expiration_datetime_in_past(self):
+        """If you make a new version out of a published version that
+        have an expiration date in the past, it is not kept.
+        """
+        content = self.root.test
+        expiration_time = DateTime() - 30
+        content.set_unapproved_version_expiration_datetime(expiration_time)
+
+        publisher = IPublicationWorkflow(content)
+        publisher.publish()
+        self.assertFalse(content.is_published())
+
+        # The version is directly closed, because it is expired.
+        self.assertEqual(content.get_public_version(), None)
+        self.assertEqual(content.get_approved_version(), None)
+        self.assertEqual(content.get_unapproved_version(), None)
+        self.assertEqual(content.get_last_closed_version(), '0')
+
+        publisher.new_version()
+        self.assertFalse(content.is_published())
+
+        self.assertEqual(content.get_public_version(), None)
+        self.assertEqual(content.get_approved_version(), None)
+        self.assertEqual(content.get_unapproved_version(), '1')
+        self.assertEqual(content.get_last_closed_version(), '0')
+        self.assertEqual(
+            content.get_unapproved_version_expiration_datetime(),
+            None)
 
     def test_publish_unapproved(self):
         """Publish an unapproved content.

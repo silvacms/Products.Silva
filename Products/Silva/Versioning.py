@@ -65,6 +65,9 @@ class Versioning(object):
     grok.implements(IVersioning)
     security = ClassSecurityInfo()
 
+    # TODO: Silva 3.1: The datetime expiration and publication are
+    # currently stored inside the VersionedContent. Moving it to the
+    # Version would simplify a lot the management of the versions.
     _unapproved_version = empty_version
     _approved_version = empty_version
     _public_version = empty_version
@@ -179,42 +182,46 @@ class Versioning(object):
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'create_copy')
-    def create_copy(self, from_version_id=None):
+    def create_copy(self, version_id=None):
         """Create new version of public version.
         """
         if self.get_approved_version() is not None:
             raise VersioningError(
-                _('An approvaed version is already available.'),
+                _('An approved version is already available.'),
                 self)
         if self.get_unapproved_version() is not None:
             raise VersioningError(
                 _('An new version is already available.'),
                 self)
 
-        if from_version_id is None:
+        expiration_time = None
+        if version_id is None:
             # get id of public version to copy
-            from_version_id = self.get_public_version()
+            version_id, ignored_time, expiration_time = self._public_version
             # if there is no public version, get id of last closed version
             # (which should always be there)
-            if from_version_id is None:
-                from_version_id = self.get_last_closed_version()
-                # there is no old version left!
-                if from_version_id is None:
-                    # FIXME: could create new empty version..
+            if version_id is None:
+                if self._previous_versions:
+                    version_id, ignored_time, expiration_time = \
+                        self._previous_versions[0]
+                if version_id is None:
                     raise VersioningError(
                         _(u"There is no version to create a version form."),
                         self)
+        if expiration_time is not None and not expiration_time.isFuture():
+            # Reset expiration time if it is in the past.
+            expiration_time = None
 
         # Copy given version
         new_version_id = self.get_new_version_id()
-        self.manage_clone(self._getOb(from_version_id), new_version_id)
+        self.manage_clone(self._getOb(version_id), new_version_id)
 
         # The version might have been copied. Clear its data.
         version = self._getOb(new_version_id)
         IRequestForApprovalStatus(version).reset()
 
         # Register it
-        self.create_version(new_version_id, None, None)
+        self.create_version(new_version_id, None, expiration_time)
 
     security.declarePrivate('get_new_version_id')
     def get_new_version_id(self):
@@ -586,8 +593,7 @@ class Versioning(object):
         """
         if self._previous_versions is None:
             return []
-        else:
-            return [version for version in self._previous_versions]
+        return [version for version in self._previous_versions]
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_last_closed_version')

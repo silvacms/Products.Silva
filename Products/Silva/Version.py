@@ -79,7 +79,7 @@ class VersionManager(grok.Adapter):
             self.content._previous_versions.append(version_tuple)
             self.content._unapproved_version = (None, None, None)
 
-        self.content.create_copy(from_version_id=self.version.id)
+        self.content.create_copy(version_id=self.version.id)
         return True
 
     def delete(self):
@@ -103,6 +103,7 @@ class VersionManager(grok.Adapter):
             for version in self.content._previous_versions:
                 if version[0] == versionid:
                     self.content._previous_versions.remove(version)
+                    break
         self.content.manage_delObjects([versionid])
         return True
 
