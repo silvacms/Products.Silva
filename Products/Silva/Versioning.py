@@ -102,7 +102,6 @@ class Versioning(object):
                                     publication_datetime,
                                     expiration_datetime)
 
-
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'approve_version')
     def approve_version(self):
@@ -203,7 +202,7 @@ class Versioning(object):
             if version_id is None:
                 if self._previous_versions:
                     version_id, ignored_time, expiration_time = \
-                        self._previous_versions[0]
+                        self._previous_versions[-1]
                 if version_id is None:
                     raise VersioningError(
                         _(u"There is no version to create a version form."),
