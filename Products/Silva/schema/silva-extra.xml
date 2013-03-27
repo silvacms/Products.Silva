@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <metadata_set id="silva-extra" ns_uri="http://infrae.com/namespace/metadata/silva-extra" ns_prefix="silva-extra">
 <title>Content metadata</title>
-<description></description>
+<description>DUMMY CHANGE ME</description>
 <i18n_domain>silva</i18n_domain>
 <metadata_element id="subject">
    <index_type>ZCTextIndex</index_type>

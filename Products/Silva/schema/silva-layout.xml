@@ -2,7 +2,7 @@
 <metadata_set id="silva-layout" ns_uri="http://infrae.com/namespace/metadata/silva-layout" ns_prefix="silvalayout">
 <title>Layout settings</title>
 <category>settings</category>
-<description>Layout settings</description>
+<description>DUMMY CHANGE ME</description>
 <minimalrole></minimalrole>
   <metadata_element id="skin">
    <index_type>FieldIndex</index_type>
