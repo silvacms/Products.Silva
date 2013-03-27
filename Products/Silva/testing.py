@@ -30,20 +30,28 @@ import transaction
 SENT_MAILS = []
 
 
-class CatalogTransaction(object):
-    """Commit the code executed, using a catalog queue
+class Transaction(object):
+    """Commit the code executed.
     """
 
     def __enter__(self):
         transaction.abort()
         transaction.begin()
-        task_queue.activate()
 
     def __exit__(self, t, v, tb):
         if v is None and not transaction.isDoomed():
             transaction.commit()
         else:
             transaction.abort()
+
+
+class CatalogTransaction(Transaction):
+    """Commit the code executed, using a catalog queue
+    """
+
+    def __enter__(self):
+        super(CatalogTransaction, self).__enter__()
+        task_queue.activate()
 
 
 class MockMail(object):

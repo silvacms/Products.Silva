@@ -5,7 +5,8 @@
 import unittest
 
 from Products.Silva import File
-from Products.Silva.testing import FunctionalLayer, CatalogTransaction
+from Products.Silva.testing import FunctionalLayer
+from Products.Silva.testing import CatalogTransaction, Transaction
 
 
 class DefaultFileCatalogTestCase(unittest.TestCase):
@@ -19,7 +20,7 @@ class DefaultFileCatalogTestCase(unittest.TestCase):
         if self.implementation is not None:
             self.root.service_files.storage = self.implementation
 
-        with CatalogTransaction():
+        with Transaction():
             with self.layer.open_fixture('dark_energy.txt') as data:
                 factory = self.root.manage_addProduct['Silva']
                 factory.manage_addFile(
@@ -38,11 +39,58 @@ class DefaultFileCatalogTestCase(unittest.TestCase):
         self.assertItemsEqual(
             self.search(fulltext='silva'),
             [('/root/universe', 'public')])
+        self.assertItemsEqual(
+            self.search(fulltext='zope'),
+            [])
+
+    def test_replaced(self):
+        """A file is replaced. The new file should still be in the
+        catalog.
+        """
+        with Transaction():
+            self.root.manage_delObjects(['universe'])
+            with self.layer.open_fixture('dark_energy.txt') as data:
+                factory = self.root.manage_addProduct['Silva']
+                factory.manage_addFile(
+                    'universe', u'It is all about updates', data)
+
+        self.assertItemsEqual(
+            self.search(fulltext='dark energy'),
+            [('/root/universe', 'public')])
+        self.assertItemsEqual(
+            self.search(fulltext='updates'),
+            [('/root/universe', 'public')])
+        self.assertItemsEqual(
+            self.search(fulltext='silva'),
+            [])
+
+    def test_replaced_transaction(self):
+        """A file is replaced. The new file should still be in the
+        catalog.
+        """
+        with CatalogTransaction():
+            self.root.manage_delObjects(['universe'])
+            with self.layer.open_fixture('dark_energy.txt') as data:
+                factory = self.root.manage_addProduct['Silva']
+                factory.manage_addFile(
+                    'universe', u'It is all about updates', data)
+
+        self.assertItemsEqual(
+            self.search(fulltext='dark energy'),
+            [('/root/universe', 'public')])
+        self.assertItemsEqual(
+            self.search(fulltext='updates'),
+            [('/root/universe', 'public')])
+        self.assertItemsEqual(
+            self.search(fulltext='silva'),
+            [])
 
     def test_rename(self):
         """A file is reindexed if it is renamed.
         """
-        self.root.manage_renameObject('universe', 'renamed_universe')
+        with Transaction():
+            self.root.manage_renameObject('universe', 'renamed_universe')
+
         self.assertItemsEqual(
             self.search(fulltext='dark energy'),
             [('/root/renamed_universe', 'public')])
@@ -67,7 +115,9 @@ class DefaultFileCatalogTestCase(unittest.TestCase):
     def test_rename_title(self):
         """A file whose the title changed is reindexed.
         """
-        self.root.universe.set_title(u'All true in Zope')
+        with Transaction():
+            self.root.universe.set_title(u'All true in Zope')
+
         self.assertItemsEqual(
             self.search(fulltext='silva'),
             [])
@@ -78,11 +128,12 @@ class DefaultFileCatalogTestCase(unittest.TestCase):
     def test_moving(self):
         """A moved filed is reindexed.
         """
-        factory = self.root.manage_addProduct['Silva']
-        factory.manage_addPublication('publication', 'Publication')
-        token = self.root.manage_cutObjects(['universe'])
+        with Transaction():
+            factory = self.root.manage_addProduct['Silva']
+            factory.manage_addPublication('publication', 'Publication')
+            token = self.root.manage_cutObjects(['universe'])
+            self.root.publication.manage_pasteObjects(token)
 
-        self.root.publication.manage_pasteObjects(token)
         self.assertItemsEqual(
             self.search(path='/root'),
             [('/root', 'unapproved'),
@@ -107,8 +158,9 @@ class DefaultFileCatalogTestCase(unittest.TestCase):
     def test_copy(self):
         """A copy of a file is indexed.
         """
-        token = self.root.manage_copyObjects(['universe'])
-        self.root.manage_pasteObjects(token)
+        with Transaction():
+            token = self.root.manage_copyObjects(['universe'])
+            self.root.manage_pasteObjects(token)
 
         self.assertItemsEqual(
             self.search(fulltext='dark energy'),
@@ -130,7 +182,8 @@ class DefaultFileCatalogTestCase(unittest.TestCase):
     def test_deletion(self):
         """A file is unindex when it is removed.
         """
-        self.root.manage_delObjects(['universe'])
+        with Transaction():
+            self.root.manage_delObjects(['universe'])
 
         self.assertItemsEqual(
             self.search(path='/root'),
