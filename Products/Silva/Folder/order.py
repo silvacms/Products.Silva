@@ -81,18 +81,25 @@ class OrderManager(grok.Annotation):
     def __len__(self):
         return len(self.order)
 
-    def _repair(self, folder):
-        # Maintenance method that remove id that have been removed
-        # from the folder.
-        folder_ids = folder.objectIds()
-        remove_ids = []
-        for id in self.order:
-            if id not in folder_ids:
-                remove_ids.append(id)
-        if remove_ids:
-            for id in remove_ids:
-                self.order.remove(id)
-            self._p_changed = True
+    def repair(self, contents):
+        # Must be called like this:
+        # IObjectManager(folder).repair(folder.objectValues())
+        valid_ids = set([])
+        for content in contents:
+            if self._is_valid(content):
+                valid_ids.add(self._get_id(content))
+        order = []
+        seen_ids = set([])      # Check for duplicates
+        changed = False
+        for identifier in self.order:
+            if identifier in valid_ids and identifier not in seen_ids:
+                order.append(identifier)
+                seen_ids.add(identifier)
+            else:
+                changed = True
+        if changed:
+            self.order = order
+        return changed
 
 
 @grok.subscribe(ISilvaObject, IObjectMovedEvent)

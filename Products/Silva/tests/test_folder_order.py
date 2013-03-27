@@ -55,6 +55,9 @@ class OrderManagerTestCase(unittest.TestCase):
         self.assertEqual(manager.get_position(item2), 1)
         self.assertEqual(len(manager), 2)
 
+        # The order is valid, repair return False.
+        self.assertEqual(manager.repair(self.root.folder.objectValues()), False)
+
     def test_add_nonorderable(self):
         """We add non-orderable content in the folder. It is not added
         to the order manager.
@@ -103,6 +106,33 @@ class OrderManagerModificationTestCase(unittest.TestCase):
         factory = self.root.target.manage_addProduct['Silva']
         factory.manage_addMockupVersionedContent('base1', 'Item target 1')
 
+    def test_repair_broken_order(self):
+        """We repair a broken order.
+        """
+        source = self.root.source
+        manager = IOrderManager(source)
+        # We add invalid ids to the order
+        manager.order.insert(1, 'foo')
+        manager.order.insert(3, 'bar')
+        manager.order.insert(4, manager.order[0])
+
+        # Order is now messed up
+        self.assertEqual(manager.get_position(source.item1), 0)
+        self.assertEqual(manager.get_position(source.item2), 2)
+        self.assertEqual(manager.get_position(source.item3), 5)
+        self.assertEqual(manager.get_position(source.asset1), -1)
+        self.assertEqual(len(manager), 6)
+
+        # repair return True.
+        self.assertEqual(manager.repair(source.objectValues()), True)
+
+        # Invalid ids have been removed
+        self.assertEqual(manager.get_position(source.item1), 0)
+        self.assertEqual(manager.get_position(source.item2), 1)
+        self.assertEqual(manager.get_position(source.item3), 2)
+        self.assertEqual(manager.get_position(source.asset1), -1)
+        self.assertEqual(len(manager), 3)
+
     def test_reorder_orderable(self):
         """You can change the position of an orderable content.
         """
@@ -142,6 +172,9 @@ class OrderManagerModificationTestCase(unittest.TestCase):
         self.assertEqual(manager.get_position(source.asset1), -1)
         self.assertEqual(len(manager), 3)
 
+        # The order is valid, repair return False.
+        self.assertEqual(manager.repair(source.objectValues()), False)
+
     def test_rename_orderable(self):
         """If you rename a content, its order must be keept (and not
         changed).
@@ -163,6 +196,9 @@ class OrderManagerModificationTestCase(unittest.TestCase):
         self.assertEqual(manager.get_position(source.item3), 2)
         self.assertEqual(manager.get_position(source.asset1), -1)
         self.assertEqual(len(manager), 3)
+
+        # The order is valid, repair return False.
+        self.assertEqual(manager.repair(source.objectValues()), False)
 
     def test_remove_orderable(self):
         """If we remove an orderable, it is no longer available in the
@@ -186,6 +222,9 @@ class OrderManagerModificationTestCase(unittest.TestCase):
         self.assertEqual(manager.get_position(source.item3), 1)
         self.assertEqual(manager.get_position(item2), -1)
         self.assertEqual(len(manager), 2)
+
+        # The order is valid, repair return False.
+        self.assertEqual(manager.repair(source.objectValues()), False)
 
     def test_move_orderable(self):
         """If you move an orderable, it is removed from the source
@@ -218,6 +257,10 @@ class OrderManagerModificationTestCase(unittest.TestCase):
         self.assertEqual(manager_target.get_position(target.item2), 1)
         self.assertEqual(len(manager_target), 2)
 
+        # The order is valid, repair return False.
+        self.assertEqual(manager_source.repair(source.objectValues()), False)
+        self.assertEqual(manager_target.repair(target.objectValues()), False)
+
     def test_copy_orderable(self):
         """If we copy a orderable content, the copy is added to the
         order manager, and the other order are not touched.
@@ -240,6 +283,9 @@ class OrderManagerModificationTestCase(unittest.TestCase):
         self.assertEqual(manager.get_position(source.item3), 2)
         self.assertEqual(manager.get_position(source.copy_of_item2), 3)
         self.assertEqual(len(manager), 4)
+
+        # The order is valid, repair return False.
+        self.assertEqual(manager.repair(source.objectValues()), False)
 
     def test_remove_nonorderable(self):
         """If we remove an nonorderable content nothing is changed.
