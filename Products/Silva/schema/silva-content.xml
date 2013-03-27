@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 
 <metadata_set id="silva-content" ns_uri="http://infrae.com/namespace/metadata/silva-content" ns_prefix="silva">
-<title>Silva Content</title>
+<title>Content titles</title>
 <description></description>
 <i18n_domain>silva</i18n_domain>
  <metadata_element id="maintitle">

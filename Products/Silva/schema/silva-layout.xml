@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <metadata_set id="silva-layout" ns_uri="http://infrae.com/namespace/metadata/silva-layout" ns_prefix="silvalayout">
-<title>Layout Settings</title>
+<title>Layout settings</title>
 <category>settings</category>
 <description>Layout settings</description>
 <minimalrole></minimalrole>
