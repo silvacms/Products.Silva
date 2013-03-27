@@ -21,6 +21,8 @@ class VersionedContentPublicationWorkflow(grok.Adapter):
     grok.implements(IPublicationWorkflow)
     grok.provides(IPublicationWorkflow)
 
+    # TODO: Silva 3.1 add a method purge_old_versions.
+
     @silvaconf.protect('silva.ChangeSilvaContent')
     def new_version(self):
         self.context.create_copy()
