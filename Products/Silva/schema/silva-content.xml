@@ -2,7 +2,7 @@
 
 <metadata_set id="silva-content" ns_uri="http://infrae.com/namespace/metadata/silva-content" ns_prefix="silva">
 <title>Content titles</title>
-<description>Title metadata. An empty short title will fall back to the title.</description>
+<description></description>
 <i18n_domain>silva</i18n_domain>
  <metadata_element id="maintitle">
    <index_type>ZCTextIndex</index_type>

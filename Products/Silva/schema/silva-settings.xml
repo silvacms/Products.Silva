@@ -2,7 +2,7 @@
 <metadata_set id="silva-settings" ns_uri="http://infrae.com/namespace/metadata/silva-settings" ns_prefix="silvasettings">
 <title>Content settings</title>
 <category>settings</category>
-<description>DUMMY CHANGE ME</description>
+<description></description>
 <minimalrole></minimalrole>
   <metadata_element id="hide_from_tocs">
     <index_type>ZCTextIndex</index_type>

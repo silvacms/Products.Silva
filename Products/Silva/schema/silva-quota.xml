@@ -3,7 +3,7 @@
 <metadata_set id="silva-quota" ns_uri="http://infrae.com/namespace/metadata/silva-quota" ns_prefix="silva-quota">
 <title>Container quota</title>
 <category>settings</category>
-<description>DUMMY CHANGE ME</description>
+<description>A quota restriction can be set which limits the allowed size of a container's contents. If a user attempts to exceed the limit, a message will appear stating that the quota has been reached.</description>
 <i18n_domain>silva</i18n_domain>
 <minimalrole>Manager</minimalrole>
  <metadata_element id="quota">
