@@ -29,6 +29,10 @@ def public_settings(browser):
         'navigation',
         css="div#sidebar a",
         type='link')
+    browser.inspect.add(
+        'content',
+        css="div#content div.entry",
+        type='text')
 
 
 def zmi_settings(browser):
