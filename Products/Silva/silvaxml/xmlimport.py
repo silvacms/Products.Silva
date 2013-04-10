@@ -6,7 +6,7 @@ from five import grok
 
 from Products.Silva.Ghost import validate_target
 from silva.core import conf as silvaconf
-from silva.core.interfaces import ISilvaObject
+from silva.core import interfaces
 from silva.core.interfaces.events import IContentImported
 from silva.core.services.interfaces import ICataloging
 from silva.core.xml import NS_SILVA_URI, handlers
@@ -15,19 +15,22 @@ from silva.translations import translate as _
 silvaconf.namespace(NS_SILVA_URI)
 
 
-@grok.subscribe(ISilvaObject, IContentImported)
+@grok.subscribe(interfaces.ISilvaObject, IContentImported)
 def reindex_import_content(content, event):
     """Re-index imported content.
     """
     ICataloging(content).index()
 
 
-class FolderHandler(handlers.SilvaHandler):
+class FolderHandler(handlers.SilvaContainerHandler):
     grok.name('folder')
 
     def _createContent(self, identifier):
         factory = self.parent().manage_addProduct['Silva']
         factory.manage_addFolder(identifier, '', no_default_content=True)
+
+    def _verifyContent(self, content):
+        return interfaces.IFolder.providedBy(content)
 
     def startElementNS(self, name, qname, attrs):
         if name == (NS_SILVA_URI, 'folder'):
@@ -39,12 +42,15 @@ class FolderHandler(handlers.SilvaHandler):
             self.notifyImport()
 
 
-class PublicationHandler(handlers.SilvaHandler):
+class PublicationHandler(handlers.SilvaContainerHandler):
     grok.name('publication')
 
     def _createContent(self, identifier):
         factory = self.parent().manage_addProduct['Silva']
         factory.manage_addPublication(identifier, '', no_default_content=True)
+
+    def _verifyContent(self, content):
+        return interfaces.IPublication.providedBy(content)
 
     def startElementNS(self, name, qname, attrs):
         if name == (NS_SILVA_URI, 'publication'):
@@ -62,6 +68,9 @@ class AutoTOCHandler(handlers.SilvaHandler):
     def _createContent(self, identifier):
         factory = self.parent().manage_addProduct['Silva']
         factory.manage_addAutoTOC(identifier, '')
+
+    def _verifyContent(self, content):
+        return interfaces.IAutoTOC.providedBy(content)
 
     def startElementNS(self, name, qname, attrs):
         if name == (NS_SILVA_URI, 'auto_toc'):
@@ -91,6 +100,9 @@ class IndexerHandler(handlers.SilvaHandler):
         factory = self.parent().manage_addProduct['Silva']
         factory.manage_addIndexer(identifier, '')
 
+    def _verifyContent(self, content):
+        return interfaces.IIndexer.providedBy(content)
+
     def startElementNS(self, name, qname, attrs):
         if name == (NS_SILVA_URI, 'indexer'):
             self.createContent(attrs)
@@ -112,6 +124,9 @@ class GhostHandler(handlers.SilvaHandler):
     def _createContent(self, identifier):
         factory = self.parent().manage_addProduct['Silva']
         factory.manage_addGhost(identifier, None, no_default_version=True)
+
+    def _verifyContent(self, content):
+        return interfaces.IGhost.providedBy(content)
 
     def startElementNS(self, name, qname, attrs):
         if name == (NS_SILVA_URI, 'ghost'):
@@ -158,7 +173,7 @@ class GhostVersionHandler(handlers.SilvaVersionHandler):
             self.storeWorkflow()
 
 
-class GhostFolderHandler(handlers.SilvaHandler):
+class GhostFolderHandler(handlers.SilvaContainerHandler):
     grok.name('ghost_folder')
 
     def getOverrides(self):
@@ -169,6 +184,9 @@ class GhostFolderHandler(handlers.SilvaHandler):
     def _createContent(self, identifier):
         factory = self.parent().manage_addProduct['Silva']
         factory.manage_addGhostFolder(identifier, None, no_default_content=True)
+
+    def _verifyContent(self, content):
+        return interfaces.IGhostFolder.providedBy(content)
 
     def startElementNS(self, name, qname, attrs):
         if name == (NS_SILVA_URI, 'ghost_folder'):
@@ -204,6 +222,9 @@ class LinkHandler(handlers.SilvaHandler):
     def _createContent(self, identifier):
         factory = self.parent().manage_addProduct['Silva']
         factory.manage_addLink(identifier, '', no_default_version=True)
+
+    def _verifyContent(self, content):
+        return interfaces.ILink.providedBy(content)
 
     def startElementNS(self, name, qname, attrs):
         if name == (NS_SILVA_URI, 'link'):
@@ -265,6 +286,9 @@ class ImageHandler(handlers.SilvaHandler):
         factory = self.parent().manage_addProduct['Silva']
         factory.manage_addImage(identifier, '', None)
 
+    def _verifyContent(self, content):
+        return interfaces.IImage.providedBy(content)
+
     def startElementNS(self, name, qname, attrs):
         if name == (NS_SILVA_URI, 'image'):
             self.createContent(attrs)
@@ -310,6 +334,9 @@ class FileHandler(handlers.SilvaHandler):
     def _createContent(self, identifier):
         factory = self.parent().manage_addProduct['Silva']
         factory.manage_addFile(identifier, '', None)
+
+    def _verifyContent(self, content):
+        return interfaces.IFile.providedBy(content)
 
     def startElementNS(self, name, qname, attrs):
         if name == (NS_SILVA_URI, 'file'):

@@ -30,13 +30,16 @@ class SilvaXMLTestCase(TestCase):
         self.layer.login('editor')
         self.metadata = getUtility(IMetadataService)
 
-    def assertImportFile(self, filename, imported, replace=False, update=False):
+    def assertImportFile(self, filename, imported, replace=False, update=False,
+                         ignore_top_level=False):
         """Import an XML file.
         """
         clearEvents()
         request = TestRequest()
-        importer = Importer(self.root, request, {'replace_content': replace,
-                                                 'update_content': update})
+        importer = Importer(self.root, request, {
+                'replace_content': replace,
+                'update_content': update,
+                'ignore_top_level_content': ignore_top_level})
         with self.layer.open_fixture(filename) as source:
             importer.importStream(source)
         self.assertItemsEqual(
@@ -45,13 +48,16 @@ class SilvaXMLTestCase(TestCase):
             imported)
         return importer
 
-    def assertImportZip(self, filename, imported, replace=False, update=False):
+    def assertImportZip(self, filename, imported, replace=False, update=False,
+                        ignore_top_level=False):
         """Import a ZIP file.
         """
         clearEvents()
         request = TestRequest()
-        importer = ZipImporter(self.root, request, {'replace_content': replace,
-                                                    'update_content': update})
+        importer = ZipImporter(self.root, request, {
+                'replace_content': replace,
+                'update_content': update,
+                'ignore_top_level_content': ignore_top_level})
         with self.layer.open_fixture(filename) as source:
             importer.importStream(source)
         self.assertItemsEqual(
@@ -150,6 +156,169 @@ class XMLImportTestCase(SilvaXMLTestCase):
 
         subfolder = folder.subfolder
         self.assertEqual(subfolder.get_title(), u'Second test folder')
+
+    def test_ignore_top_level_content(self):
+        """Import a container with items without creating the container.
+        """
+        importer = self.assertImportZip(
+            'test_import_link.zip',
+            ['/root/file',
+             '/root/index',
+             '/root/new',
+             '/root/new/link'], ignore_top_level=True)
+        self.assertEqual(importer.getProblems(), [])
+
+        index = self.root.index
+        link = self.root.new.link
+        datafile = self.root.file
+
+        self.assertTrue(interfaces.IAutoTOC.providedBy(index))
+        self.assertTrue(interfaces.ILink.providedBy(link))
+        self.assertTrue(interfaces.IFile.providedBy(datafile))
+
+        self.assertEqual(self.root.get_title(), u'root')
+        self.assertEqual(index.get_title_editable(), u'Imported Index')
+        self.assertEqual(datafile.get_title_editable(),  u'Torvald file')
+        self.assertEqual(link.get_viewable(), None)
+        self.assertEqual(link.get_title_editable(), u'Last file')
+        self.assertEqual(
+            DateTime('2004-04-23T16:13:39Z'),
+            link.get_modification_datetime())
+
+    def test_ignore_top_level_content_existing_rename(self):
+        """Import a container with data without the container, but
+        some items with the same ids already exists in the import
+        folder. The new items get imported under a different id.
+        """
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addMockupVersionedContent('index', 'Existing Index')
+        importer = self.assertImportZip(
+            'test_import_link.zip',
+            ['/root/file',
+             '/root/import_of_index',
+             '/root/new',
+             '/root/new/link'], ignore_top_level=True)
+        self.assertEqual(importer.getProblems(), [])
+
+        index = self.root.index
+        new_index = self.root.import_of_index
+        link = self.root.new.link
+        datafile = self.root.file
+
+        self.assertFalse(interfaces.IAutoTOC.providedBy(index))
+        self.assertTrue(interfaces.IAutoTOC.providedBy(new_index))
+        self.assertTrue(interfaces.ILink.providedBy(link))
+        self.assertTrue(interfaces.IFile.providedBy(datafile))
+
+        self.assertEqual(self.root.get_title(), u'root')
+        self.assertEqual(index.get_title_editable(), u'Existing Index')
+        self.assertEqual(new_index.get_title_editable(), u'Imported Index')
+        self.assertEqual(datafile.get_title(),  u'Torvald file')
+        self.assertEqual(link.get_viewable(), None)
+        self.assertEqual(link.get_title_editable(), u'Last file')
+        self.assertEqual(
+            DateTime('2004-04-23T16:13:39Z'),
+            link.get_modification_datetime())
+
+    def test_ignore_top_level_content_existing_replace(self):
+        """Import a container with data without the container, but
+        some items with the same ids already exists in the import
+        folder. We replace the existing items.
+        """
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addMockupVersionedContent('index', 'Existing Index')
+        importer = self.assertImportZip(
+            'test_import_link.zip',
+            ['/root/file',
+             '/root/index',
+             '/root/new',
+             '/root/new/link'], ignore_top_level=True, replace=True)
+        self.assertEqual(importer.getProblems(), [])
+
+        index = self.root.index
+        link = self.root.new.link
+        datafile = self.root.file
+
+        self.assertTrue(interfaces.IAutoTOC.providedBy(index))
+        self.assertTrue(interfaces.ILink.providedBy(link))
+        self.assertTrue(interfaces.IFile.providedBy(datafile))
+
+        self.assertEqual(self.root.get_title(), u'root')
+        self.assertEqual(index.get_title_editable(), u'Imported Index')
+        self.assertEqual(datafile.get_title(),  u'Torvald file')
+        self.assertEqual(link.get_viewable(), None)
+        self.assertEqual(link.get_title_editable(), u'Last file')
+        self.assertEqual(
+            DateTime('2004-04-23T16:13:39Z'),
+            link.get_modification_datetime())
+
+    def test_ignore_top_level_content_existing_update(self):
+        """Import a container with data without the container, but
+        some items with the same ids already exists in the import
+        folder. We update the existing items.
+        """
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addAutoTOC('index', 'Existing Index')
+        importer = self.assertImportZip(
+            'test_import_link.zip',
+            ['/root/file',
+             '/root/index',
+             '/root/new',
+             '/root/new/link'], ignore_top_level=True, update=True)
+        self.assertEqual(importer.getProblems(), [])
+
+        index = self.root.index
+        link = self.root.new.link
+        datafile = self.root.file
+
+        self.assertTrue(interfaces.IAutoTOC.providedBy(index))
+        self.assertTrue(interfaces.ILink.providedBy(link))
+        self.assertTrue(interfaces.IFile.providedBy(datafile))
+
+        self.assertEqual(self.root.get_title(), u'root')
+        self.assertEqual(index.get_title_editable(), u'Imported Index')
+        self.assertEqual(datafile.get_title(),  u'Torvald file')
+        self.assertEqual(link.get_viewable(), None)
+        self.assertEqual(link.get_title_editable(), u'Last file')
+        self.assertEqual(
+            DateTime('2004-04-23T16:13:39Z'),
+            link.get_modification_datetime())
+
+    def test_ignore_top_level_content_existing_update_incompatible(self):
+        """Import a container with data without the container, but
+        some items with the same ids already exists in the import
+        folder. We can't update the items so we recreate them under a
+        different id.
+        """
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addMockupVersionedContent('index', 'Existing Index')
+        importer = self.assertImportZip(
+            'test_import_link.zip',
+            ['/root/file',
+             '/root/import_of_index',
+             '/root/new',
+             '/root/new/link'], ignore_top_level=True, update=True)
+        self.assertEqual(importer.getProblems(), [])
+
+        index = self.root.index
+        new_index = self.root.import_of_index
+        link = self.root.new.link
+        datafile = self.root.file
+
+        self.assertFalse(interfaces.IAutoTOC.providedBy(index))
+        self.assertTrue(interfaces.IAutoTOC.providedBy(new_index))
+        self.assertTrue(interfaces.ILink.providedBy(link))
+        self.assertTrue(interfaces.IFile.providedBy(datafile))
+
+        self.assertEqual(self.root.get_title(), u'root')
+        self.assertEqual(index.get_title_editable(), u'Existing Index')
+        self.assertEqual(new_index.get_title_editable(), u'Imported Index')
+        self.assertEqual(datafile.get_title(),  u'Torvald file')
+        self.assertEqual(link.get_viewable(), None)
+        self.assertEqual(link.get_title_editable(), u'Last file')
+        self.assertEqual(
+            DateTime('2004-04-23T16:13:39Z'),
+            link.get_modification_datetime())
 
     def test_link_to_file(self):
         """Import a link that is linked to a file.
