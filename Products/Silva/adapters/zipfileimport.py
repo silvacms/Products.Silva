@@ -28,11 +28,9 @@ class ZipFileImporter(grok.Adapter):
         finally:
             archive.close()
 
-    def importFromZip(self, input_archive, request, replace=0):
+    def importFromZip(self, input_archive, request, options={}):
         """ imports fullmedia zipfile
         """
-        importer = ZipImporter(
-            self.context, request, {'replace_content': replace})
+        importer = ZipImporter(self.context, request, options)
         importer.importStream(input_archive)
-
         return importer
