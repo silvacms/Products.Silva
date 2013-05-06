@@ -311,7 +311,7 @@ class XMLExportVersionsTestCase(SilvaXMLTestCase):
         IPublicationWorkflow(link).new_version()
         link.get_editable().set_title('Final version of the file')
 
-    def test_link_relative_only_previewable(self):
+    def test_link_editable_only_previewable(self):
         """Export only the previewable version of a a link that have
         multiple versions available.
         """
@@ -329,7 +329,7 @@ class XMLExportVersionsTestCase(SilvaXMLTestCase):
             exporter.getProblems(),
             [])
 
-    def test_link_relative_only_viewable(self):
+    def test_link_editable_only_viewable(self):
         """Export only the viewable version of a link that have
         multiple versions available.
         """
@@ -337,6 +337,52 @@ class XMLExportVersionsTestCase(SilvaXMLTestCase):
             self.root.folder,
             'test_export_link_viewable.silvaxml',
             options={'only_viewable': True})
+        self.assertEqual(
+            exporter.getZexpPaths(),
+            [])
+        self.assertEqual(
+            exporter.getAssetPaths(),
+            [(('', 'root', 'folder', 'file'), '1')])
+        self.assertEqual(
+            exporter.getProblems(),
+            [])
+
+    def test_link_closed_only_viewable(self):
+        """Export only the viewable version of a link that have
+        multiple versions available, but none published.
+        """
+        link = self.root.folder.new.link
+        IPublicationWorkflow(link).publish()
+        IPublicationWorkflow(link).close()
+
+        # XXX This will trigger a bug on import. We need to find a
+        # solution that doesn't imply to change all importers again.
+        exporter = self.assertExportEqual(
+            self.root.folder,
+            'test_export_link_closed.silvaxml',
+            options={'only_viewable': True})
+        self.assertEqual(
+            exporter.getZexpPaths(),
+            [])
+        self.assertEqual(
+            exporter.getAssetPaths(),
+            [(('', 'root', 'folder', 'file'), '1')])
+        self.assertEqual(
+            exporter.getProblems(),
+            [(u'No versions are exportable for this content.', link)])
+
+    def test_link_closed_only_previewable(self):
+        """Export only the previewable version of a link that have
+        multiple versions available, but none published.
+        """
+        link = self.root.folder.new.link
+        IPublicationWorkflow(link).publish()
+        IPublicationWorkflow(link).close()
+
+        exporter = self.assertExportEqual(
+            self.root.folder,
+            'test_export_link_closed_2.silvaxml',
+            options={'only_previewable': True})
         self.assertEqual(
             exporter.getZexpPaths(),
             [])

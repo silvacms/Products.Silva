@@ -619,6 +619,30 @@ class XMLImportTestCase(SilvaXMLTestCase):
             [('Missing relative link target.', link_version),
              (u'Missing ghost target.', ghost_version)])
 
+    def test_broken_workflow(self):
+        """Import a link that have an invalid workflow declaration.
+        """
+        importer = self.assertImportFile(
+            'test_import_broken_workflow.silvaxml',
+            ['/root/folder',
+             '/root/folder/index',
+             '/root/folder/link'])
+        self.assertItemsEqual(
+            self.root.folder.objectIds(),
+            ['index', 'link'])
+        link = self.root.folder.link
+        self.assertEqual(
+            importer.getProblems(),
+            [(u'Missing workflow information for version 0.', link)])
+
+        self.assertFalse(link.is_published())
+        self.assertIs(link.get_viewable(), None)
+        self.assertIs(link.get_editable(), None)
+
+        version = link.get_previewable()
+        self.assertIsNot(version, None)
+        self.assertEqual(version.get_title(), u'Best website')
+
     def test_fallback(self):
         """Import an archive that contain a ZEXP.
         """

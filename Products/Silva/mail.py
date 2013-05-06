@@ -21,7 +21,8 @@ def sendmail(context, message, mto=None, mfrom=None, subject=None):
     """
 
     mh = getattr(context.get_root(), MAILHOST_ID)
-    messageText, mto, mfrom = _mungeHeaders(message, mto, mfrom, subject, charset='utf-8')
+    messageText, mto, mfrom = _mungeHeaders(
+        message, mto, mfrom, subject, charset='utf-8')
     try:
         mh._send(mfrom, mto, messageText)
     except SMTPException as error:

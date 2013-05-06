@@ -203,7 +203,7 @@ def index_and_update_author_modified_content(content, event):
     information.
     """
     # In the same way, we discard event on versioned content if they
- # are about adding or removing a version.
+    # are about adding or removing a version.
     if (IVersionedContent.providedBy(content) and
         IContainerModifiedEvent.providedBy(event)):
         return
