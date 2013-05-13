@@ -390,7 +390,7 @@ class GhostFolderEditForm(silvaforms.SMIEditForm):
 
 class GhostFolderEditMenu(MenuItem):
     grok.adapts(ContentMenu, IGhostFolder)
-    grok.order(15)
+    grok.order(10.1)            # Goes right after the content tab.
     name = _(u'Edit')
     screen = GhostFolderEditForm
 
