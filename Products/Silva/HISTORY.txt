@@ -1,10 +1,26 @@
 Changes
 =======
 
-Silva 3.0.2 (unreleased)
+Silva 3.0.2 (2013/05/24)
 ------------------------
 
-- ...
+- Fix various bugs:
+
+  - You can no longer create a folder called index,
+
+  - You can synchronise a copy of an outdated ghost folder,
+
+  - Keep expiration date of a version if you make a new copy of it and
+    the date is in the future.
+
+- Add support for customizing HTTP headers on most of the default
+  Silva contents.
+
+- Rename metadata sets.
+
+- Add a method to repair the order of the ordered container.
+
+- Improve tests.
 
 Silva 3.0.1 (2013/03/06)
 ------------------------
