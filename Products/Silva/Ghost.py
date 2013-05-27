@@ -4,7 +4,7 @@
 
 # Zope 3
 from five import grok
-from zope.component import getUtility, getMultiAdapter
+from zope.component import getUtility, queryMultiAdapter
 
 # Zope 2
 from Acquisition import aq_inner, aq_base
@@ -25,6 +25,7 @@ from zeam.form.base.widgets import widgetId
 from silva.core.views.interfaces import IPreviewLayer
 from silva.core import conf as silvaconf
 from silva.core.conf.interfaces import IIdentifiedContent
+from silva.core.interfaces import errors
 from silva.core.interfaces.errors import ContentError
 from silva.core.interfaces import (
     IContainer, IContent, IGhost, IGhostAware, IGhostVersion)
@@ -34,8 +35,8 @@ from silva.core.references.reference import WeakReferenceValue
 from silva.core.references.reference import get_content_id, get_content_from_id
 from silva.core.references.interfaces import IReferenceService
 from silva.core.views import views as silvaviews
+from silva.core.views.interfaces import IView
 from silva.translations import translate as _
-from silva.core.interfaces import errors
 
 
 def validate_target(ghost, target, is_folderish=False, adding=False):
@@ -318,12 +319,16 @@ class GhostView(silvaviews.View):
         if content is None:
             return self.broken_message
         permission = self.is_preview and 'Read Silva content' or 'View'
-        if getSecurityManager().checkPermission(permission, content):
-            return getMultiAdapter(
-                (content, self.request), name="content.html")()
-        raise Unauthorized(
-            u"You do not have permission to "
-            u"see the target of this ghost")
+        if not getSecurityManager().checkPermission(permission, content):
+            raise Unauthorized(
+                u"You do not have permission to "
+                u"see the target of this ghost")
+        view = queryMultiAdapter((content, self.request), name="content.html")
+        if view is None:
+            return self.broken_message
+        if IView.providedBy(view) and view.content is None:
+            return self.broken_message
+        return view()
 
 
 def ghost_factory(container, identifier, target):

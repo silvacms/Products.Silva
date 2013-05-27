@@ -1,0 +1,17 @@
+<tal:view i18n:domain="silva">
+  <h1 tal:define="title content.get_title()"
+      tal:condition="title"
+      tal:content="title">
+    Index
+  </h1>
+  <p tal:condition="view.url"
+     i18n:translate="">
+    This link redirects to
+    <a href="${view.url}" i18n:name="link"
+       tal:content="view.url">URL</a>.
+  </p>
+  <p tal:condition="not view.url"
+     i18n:translate="">
+    This link is currently broken. Please inform the site manager.
+  </p>
+</tal:view>

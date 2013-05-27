@@ -157,12 +157,10 @@ class LinkView(silvaviews.View):
     def update(self):
         self.url = None
         if self.content.get_relative():
-            self.url = absoluteURL(self.content.get_target(), self.request)
+            target = self.content.get_target()
+            if target is not None:
+                self.url = absoluteURL(target, self.request)
         else:
             self.url = self.content.get_url()
-        if not self.is_preview:
+        if not self.is_preview and self.url is not None:
             self.response.redirect(self.url)
-
-    def render(self):
-        return u'Link &laquo;%s&raquo; redirects to: <a href="%s">%s</a>' % (
-            self.content.get_title(), self.url, self.url)

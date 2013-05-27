@@ -10,11 +10,12 @@ from zope.component import getUtility
 from Acquisition import aq_chain
 from DateTime import DateTime
 from Products.Silva.testing import FunctionalLayer
+from Products.Silva.ftesting import public_settings
 from Products.SilvaMetadata.interfaces import IMetadataService, ReadOnlyError
 
 from silva.core.interfaces.errors import ContentError
 from silva.core.interfaces import errors
-from silva.core.interfaces import IGhost, IGhostVersion
+from silva.core.interfaces import IGhost, IGhostVersion, IAccessSecurity
 from silva.core.interfaces import IContainerManager, IPublicationWorkflow
 from silva.core.references.interfaces import IReferenceService, IReferenceValue
 
@@ -383,6 +384,65 @@ class GhostTestCase(unittest.TestCase):
                 browser.headers['Last-Modified'],
                 'Mon, 25 Apr 2011 12:00:00 GMT')
             self.assertEqual(len(browser.contents), 0)
+
+    def test_render_protected_content(self):
+        """Test rendering a protected content.
+        """
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addLink(
+            'link', 'Infrae', relative=False, url='http://infrae.com')
+        factory.manage_addGhost('ghost', None, haunted=self.root.link)
+
+        IAccessSecurity(self.root.link).minimum_role = 'Viewer'
+        IPublicationWorkflow(self.root.link).publish()
+        IPublicationWorkflow(self.root.ghost).publish()
+
+        with self.layer.get_browser(public_settings) as browser:
+            browser.options.follow_redirect = False
+            self.assertEqual(
+                browser.open('/root/ghost'),
+                401)
+            self.assertEqual(
+                browser.inspect.title,
+                ['Protected area'])
+            browser.login('viewer')
+            self.assertEqual(
+                browser.open('/root/ghost'),
+                302)
+            self.assertEqual(
+                browser.headers['Location'],
+                'http://infrae.com')
+
+    def test_render_closed_content(self):
+        """Test rendering a ghost that points to a content that is
+        closed.
+        """
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addLink(
+            'link', 'Infrae', relative=False, url='http://infrae.com')
+        factory.manage_addGhost('ghost', None, haunted=self.root.link)
+
+        IPublicationWorkflow(self.root.link).publish()
+        IPublicationWorkflow(self.root.ghost).publish()
+
+        with self.layer.get_browser(public_settings) as browser:
+            browser.options.follow_redirect = False
+            self.assertEqual(
+                browser.open('/root/ghost'),
+                302)
+            self.assertEqual(
+                browser.headers['Location'],
+                'http://infrae.com')
+
+        IPublicationWorkflow(self.root.link).close()
+        with self.layer.get_browser(public_settings) as browser:
+            browser.options.follow_redirect = False
+            self.assertEqual(
+                browser.open('/root/ghost'),
+                200)
+            self.assertEqual(
+                browser.inspect.content,
+                ["This 'ghost' is unavailable. Please inform the site manager."])
 
 
 def test_suite():

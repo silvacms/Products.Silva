@@ -4,11 +4,12 @@
 
 import unittest
 
-from silva.core import interfaces
+from silva.core.interfaces import ILink, ILinkVersion, IPublicationWorkflow
 from zope.interface.verify import verifyObject
 
 from Acquisition import aq_chain
 from Products.Silva.testing import FunctionalLayer, assertTriggersEvents
+from Products.Silva.ftesting import public_settings
 
 
 class LinkTestCase(unittest.TestCase):
@@ -28,30 +29,34 @@ class LinkTestCase(unittest.TestCase):
             factory.manage_addLink('link', 'Link')
 
         link = self.root.link
-        self.failUnless(verifyObject(interfaces.ILink, link))
+        self.assertTrue(verifyObject(ILink, link))
+        editable = link.get_editable()
+        self.assertTrue(verifyObject(ILinkVersion, editable))
 
-    def test_link_absolute(self):
-        """Test absolute links.
+    def test_absolute_link(self):
+        """Test creating and access an absolute link that point to
+        user specified URL.
         """
         factory = self.root.manage_addProduct['Silva']
         factory.manage_addLink(
             'infrae', 'Infrae', relative=False, url='http://infrae.com')
 
-        interfaces.IPublicationWorkflow(self.root.infrae).publish()
+        IPublicationWorkflow(self.root.infrae).publish()
         link = self.root.infrae.get_viewable()
         self.assertEqual(link.get_url(), 'http://infrae.com')
         self.assertEqual(link.get_relative(), False)
 
-        browser = self.layer.get_browser()
-        browser.options.follow_redirect = False
-        self.assertEqual(browser.open('/root/infrae'), 302)
-        self.assertTrue('Location' in browser.headers)
-        self.assertEqual(
-            browser.headers['Location'],
-            'http://infrae.com')
+        with self.layer.get_browser() as browser:
+            browser.options.follow_redirect = False
+            self.assertEqual(browser.open('/root/infrae'), 302)
+            self.assertTrue('Location' in browser.headers)
+            self.assertEqual(
+                browser.headers['Location'],
+                'http://infrae.com')
 
-    def test_link_relative(self):
-        """Test absolute links.
+    def test_relative_link(self):
+        """Test creating and accessing a relative link to an another
+        content in Silva.
         """
         factory = self.root.manage_addProduct['Silva']
         factory.manage_addMockupVersionedContent('test', 'Test Content')
@@ -59,7 +64,7 @@ class LinkTestCase(unittest.TestCase):
         factory.manage_addLink(
             'infrae', 'Infrae', relative=True, target=self.root.test)
 
-        interfaces.IPublicationWorkflow(self.root.infrae).publish()
+        IPublicationWorkflow(self.root.infrae).publish()
         link = self.root.infrae.get_viewable()
         self.assertEqual(link.get_target(), self.root.test)
         self.assertEqual(
@@ -67,25 +72,79 @@ class LinkTestCase(unittest.TestCase):
             aq_chain(self.root.test))
         self.assertEqual(link.get_relative(), True)
 
-        browser = self.layer.get_browser()
-        browser.options.follow_redirect = False
-        self.assertEqual(browser.open('/root/infrae'), 302)
-        self.assertTrue('Last-Modified' in browser.headers)
-        self.assertTrue('Location' in browser.headers)
-        self.assertEqual(
-            browser.headers['Location'],
-            'http://localhost/root/test')
+        with self.layer.get_browser() as browser:
+            browser.options.follow_redirect = False
+            self.assertEqual(browser.open('/root/infrae'), 302)
+            self.assertTrue('Last-Modified' in browser.headers)
+            self.assertTrue('Location' in browser.headers)
+            self.assertEqual(
+                browser.headers['Location'],
+                'http://localhost/root/test')
 
         # If we move the document around, the link will still work
         token = self.root.manage_cutObjects(['test'])
         self.root.folder.manage_pasteObjects(token)
 
-        self.assertEqual(browser.open('/root/infrae'), 302)
-        self.assertTrue('Last-Modified' in browser.headers)
-        self.assertTrue('Location' in browser.headers)
-        self.assertEqual(
-            browser.headers['Location'],
-            'http://localhost/root/folder/test')
+        with self.layer.get_browser() as browser:
+            browser.options.follow_redirect = False
+            self.assertEqual(browser.open('/root/infrae'), 302)
+            self.assertTrue('Last-Modified' in browser.headers)
+            self.assertTrue('Location' in browser.headers)
+            self.assertEqual(
+                browser.headers['Location'],
+                'http://localhost/root/folder/test')
+
+    def test_broken_relative_link(self):
+        """Test rendering a broken relative link.
+        """
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addLink('borken', 'Infrae', relative=True)
+
+        IPublicationWorkflow(self.root.borken).publish()
+        with self.layer.get_browser(public_settings) as browser:
+            browser.options.follow_redirect = False
+            browser.options.handle_errors = False
+            self.assertEqual(
+                browser.open('/root/borken'),
+                200)
+            self.assertEqual(
+                browser.inspect.title,
+                ['Infrae'])
+            self.assertIn(
+                'This link is currently broken.',
+                browser.inspect.content[0])
+
+    def test_closed(self):
+        """Test viewing a closed link. You should get a message that
+        it isn't viewable.
+        """
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addMockupVersionedContent('test', 'Test Content')
+        factory.manage_addFolder('folder', 'Folder')
+        factory.manage_addLink(
+            'infrae', 'Infrae', relative=True, target=self.root.test)
+
+        IPublicationWorkflow(self.root.infrae).publish()
+        IPublicationWorkflow(self.root.infrae).close()
+
+        with self.layer.get_browser(public_settings) as browser:
+            browser.options.follow_redirect = False
+            self.assertEqual(
+                browser.open('/root/infrae'),
+                200)
+            self.assertEqual(
+                browser.inspect.content,
+                ['Sorry, this Silva Link is not viewable.'])
+            browser.login('editor')
+            self.assertEqual(
+                browser.open('/root/++preview++/infrae'),
+                200)
+            self.assertEqual(
+                browser.inspect.title,
+                ['Infrae'])
+            self.assertIn(
+                'This link redirects to http://localhost/root/++preview++/test.',
+                browser.inspect.content[0])
 
 
 def test_suite():
