@@ -311,7 +311,7 @@ class GhostEditForm(silvaforms.SMIEditForm):
 class GhostView(silvaviews.View):
     grok.context(IGhost)
 
-    broken_message = _(u"This 'ghost' is unavailable. "
+    broken_message = _(u"This content is unavailable. "
                        u"Please inform the site manager.")
 
     def render(self):

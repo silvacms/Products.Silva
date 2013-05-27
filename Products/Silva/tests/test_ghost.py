@@ -442,7 +442,7 @@ class GhostTestCase(unittest.TestCase):
                 200)
             self.assertEqual(
                 browser.inspect.content,
-                ["This 'ghost' is unavailable. Please inform the site manager."])
+                ["This content is unavailable. Please inform the site manager."])
 
 
 def test_suite():
