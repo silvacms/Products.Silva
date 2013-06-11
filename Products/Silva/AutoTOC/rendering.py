@@ -119,7 +119,8 @@ class TOCRendering(silvaviews.ContentProvider):
         # XXX This code should be made readable.
         is_displayable = public and self.is_public_displayable or self.is_preview_displayable
         html = []
-        a_templ = '<a href="%s">%s</a>'
+        a_templ = '<a href="%s">%s %s</a>'
+        img_tag = ''
 
         depth = -1
         prev_depth = [-1]
@@ -139,9 +140,9 @@ class TOCRendering(silvaviews.ContentProvider):
                 html.append('</li>')
             html.append('<li>')
             if self.toc_show_icon:
-                html.append(get_icon_tag(item))
+                img_tag = get_icon_tag(item)
             title = (public and item.get_title() or item.get_title_editable()) or item.id
-            html.append(a_templ % (absoluteURL(item, self.request), escape(title)))
+            html.append(a_templ % (absoluteURL(item, self.request), img_tag, escape(title)))
             if self.toc_show_description:
                 v = public and item.get_viewable() or item.get_previewable()
                 desc = v and gmv(v,'silva-extra','content_description', acquire=0)
