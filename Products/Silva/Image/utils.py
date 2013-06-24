@@ -2,9 +2,6 @@
 # Copyright (c) 2012-2013 Infrae. All rights reserved.
 # See also LICENSE.txt
 
-from AccessControl import ClassSecurityInfo
-from App.class_init import InitializeClass
-
 from collections import namedtuple
 import re
 
@@ -12,16 +9,12 @@ Point = namedtuple('Point', ('x', 'y'))
 
 class Size(namedtuple('Size', ('width', 'height'))):
     __slots__ = ()
-    security = ClassSecurityInfo()
-
-    security.declarePublic('width')
-    security.declarePublic('height')
+    __allow_access_to_unprotected_subobjects__ = True
 
     @classmethod
     def from_points(cls, p1, p2):
         return cls(abs(p1.x - p2.x), abs(p1.y - p2.y))
 
-    security.declarePublic('surface')
     @property
     def surface(self):
         return self.width * self.height
@@ -37,8 +30,6 @@ class Size(namedtuple('Size', ('width', 'height'))):
 
     def __gte__(self, other):
         return self.surface >= other.surface
-
-InitializeClass(Size)
 
 
 class Rect(object):
