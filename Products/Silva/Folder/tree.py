@@ -85,7 +85,7 @@ class TreeContent(grok.Adapter):
                 l.append((indent, item))
                 if depth == -1 or indent < depth:
                     ITreeContents(item)._get_public_tree_helper(
-                        l, indent + 1, depth, include_non_transparent_containers)
+                        l, indent + 1, depth, include_non_transparent_containers, filters)
             else:
                 l.append((indent, item))
 
