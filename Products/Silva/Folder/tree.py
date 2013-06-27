@@ -4,6 +4,8 @@
 
 from five import grok
 from silva.core.interfaces import ITreeContents, IContainer
+from silva.core.interfaces import IContentFilteringService
+from zope.component import getUtility
 
 
 class TreeContent(grok.Adapter):
@@ -28,16 +30,18 @@ class TreeContent(grok.Adapter):
         """Get flattened tree with public content, excluding subpublications.
         The 'depth' argument limits the number of levels, defaults to unlimited
         """
+        filters = getUtility(IContentFilteringService).filter(None)
         l = []
-        self._get_public_tree_helper(l, 0, depth)
+        self._get_public_tree_helper(l, 0, depth, 0, filters)
         return l
 
     def get_public_tree_all(self, depth=-1):
         """Get flattened tree with public content, including subpublications.
         The 'depth' argument limits the number of levels, defaults to unlimited
         """
+        filters = getUtility(IContentFilteringService).filter(None)
         l = []
-        self._get_public_tree_helper(l, 0, depth, 1)
+        self._get_public_tree_helper(l, 0, depth, 1, filters)
         return l
 
 
@@ -72,9 +76,9 @@ class TreeContent(grok.Adapter):
             else:
                 l.append((indent, item))
 
-    def _get_public_tree_helper(self, l, indent, depth, include_non_transparent_containers=0):
+    def _get_public_tree_helper(self, l, indent, depth, include_non_transparent_containers, filters):
         for item in self.context.get_ordered_publishables():
-            if not item.is_published():
+            if filters(item):
                 continue
             if (IContainer.providedBy(item) and
                 (item.is_transparent() or include_non_transparent_containers)):
