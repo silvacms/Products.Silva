@@ -30,7 +30,7 @@ class TreeContent(grok.Adapter):
         """Get flattened tree with public content, excluding subpublications.
         The 'depth' argument limits the number of levels, defaults to unlimited
         """
-        filters = getUtility(IContentFilteringService).filter(None)
+        filters = getUtility(IContentFilteringService).filter(None).filter
         l = []
         self._get_public_tree_helper(l, 0, depth, 0, filters)
         return l
@@ -39,7 +39,7 @@ class TreeContent(grok.Adapter):
         """Get flattened tree with public content, including subpublications.
         The 'depth' argument limits the number of levels, defaults to unlimited
         """
-        filters = getUtility(IContentFilteringService).filter(None)
+        filters = getUtility(IContentFilteringService).filter(None).filter
         l = []
         self._get_public_tree_helper(l, 0, depth, 1, filters)
         return l
