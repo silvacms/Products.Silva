@@ -4,7 +4,7 @@
 
 from five import grok
 from silva.core.interfaces import ITreeContents, IContainer
-from silva.core.interfaces import IContentFilteringService
+from silva.core.services.interfaces import IContentFilteringService
 from zope.component import getUtility
 
 
