@@ -76,18 +76,17 @@ class TreeContent(grok.Adapter):
             else:
                 l.append((indent, item))
 
-    def _get_public_tree_helper(self, l, indent, depth, include_non_transparent_containers, filters):
+    def _get_public_tree_helper(self, l, indent, depth, include_publications, filters):
         for item in self.context.get_ordered_publishables():
-            if filters(item):
+            if not filters(item):
                 continue
+            l.append((indent, item))
             if (IContainer.providedBy(item) and
-                (item.is_transparent() or include_non_transparent_containers)):
-                l.append((indent, item))
+                (item.is_transparent() or include_publications)):
                 if depth == -1 or indent < depth:
                     ITreeContents(item)._get_public_tree_helper(
-                        l, indent + 1, depth, include_non_transparent_containers, filters)
-            else:
-                l.append((indent, item))
+                        l, indent + 1, depth, include_publications, filters)
+
 
     def _get_status_tree_helper(self, l, indent, depth):
         default = self.context.get_default()

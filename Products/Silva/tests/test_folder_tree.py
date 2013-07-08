@@ -4,6 +4,7 @@
 
 import unittest
 
+from silva.core.interfaces import IAccessSecurity
 from silva.core.interfaces import ITreeContents, IPublicationWorkflow
 from zope.interface.verify import verifyObject
 
@@ -79,12 +80,32 @@ class FolderTreeTestCase(unittest.TestCase):
             ITreeContents(self.root).get_public_tree(0),
             [(0, self.root.folder),
              (0, self.root.publication)])
+        IPublicationWorkflow(self.root.document).publish()
+        IPublicationWorkflow(self.root.publication.document).publish()
+        self.assertEqual(
+            ITreeContents(self.root).get_public_tree(),
+            [(0, self.root.document),
+             (0, self.root.folder),
+             (1, self.root.folder.folder),
+             (0, self.root.publication)])
+        IAccessSecurity(self.root.folder).minimum_role = 'Manager'
+        self.assertEqual(
+            ITreeContents(self.root).get_public_tree(),
+            [(0, self.root.document),
+             (0, self.root.publication)])
 
     def test_get_public_tree_all(self):
-        IPublicationWorkflow(self.root.publication.document).publish()
         self.assertEqual(
             ITreeContents(self.root).get_public_tree_all(),
             [(0, self.root.folder),
+             (1, self.root.folder.folder),
+             (0, self.root.publication)])
+        IPublicationWorkflow(self.root.document).publish()
+        IPublicationWorkflow(self.root.publication.document).publish()
+        self.assertEqual(
+            ITreeContents(self.root).get_public_tree_all(),
+            [(0, self.root.document),
+             (0, self.root.folder),
              (1, self.root.folder.folder),
              (0, self.root.publication),
              (1, self.root.publication.document)])
