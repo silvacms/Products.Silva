@@ -315,15 +315,15 @@ class GhostView(silvaviews.View):
                        u"Please inform the site manager.")
 
     def render(self):
-        content = self.content.get_haunted()
-        if content is None:
+        haunted = self.content.get_haunted()
+        if haunted is None:
             return self.broken_message
         permission = self.is_preview and 'Read Silva content' or 'View'
-        if not getSecurityManager().checkPermission(permission, content):
+        if not getSecurityManager().checkPermission(permission, haunted):
             raise Unauthorized(
                 u"You do not have permission to "
                 u"see the target of this ghost")
-        view = queryMultiAdapter((content, self.request), name="content.html")
+        view = queryMultiAdapter((haunted, self.request), name="content.html")
         if view is None:
             return self.broken_message
         if IView.providedBy(view) and view.content is None:

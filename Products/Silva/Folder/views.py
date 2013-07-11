@@ -5,7 +5,7 @@
 
 from five import grok
 from zope import schema
-from zope.component import getUtility, getMultiAdapter
+from zope.component import getUtility, queryMultiAdapter
 from zope.schema.interfaces import IContextSourceBinder
 from zope.schema.vocabulary import SimpleVocabulary, SimpleTerm
 
@@ -13,6 +13,7 @@ from silva.core.conf.interfaces import ITitledContent
 from silva.core.interfaces import IContainer, IFolder
 from silva.core.services.interfaces import IContainerPolicyService
 from silva.core.views import views as silvaviews
+from silva.core.views.interfaces import IView
 from silva.translations import translate as _
 from zeam.form import silva as silvaforms
 
@@ -59,12 +60,17 @@ class ContainerView(silvaviews.View):
     """Default view for containers.
     """
     grok.context(IContainer)
+    unavailable_message = _(u'This container has no index.')
 
     def render(self):
         default = self.context.get_default()
-        if default is not None:
-            return getMultiAdapter(
-                (default, self.request), name="content.html")()
-        return _(u'This container has no index.')
+        if default is None:
+            return self.unavailable_message
+        view = queryMultiAdapter((default, self.request), name="content.html")
+        if view is None:
+            return self.unavailable_message
+        if IView.providedBy(view) and view.content is None:
+            return self.unavailable_message
+        return view()
 
 

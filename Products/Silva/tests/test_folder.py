@@ -4,6 +4,7 @@
 
 import unittest
 
+from Products.Silva.ftesting import public_settings
 from Products.Silva.testing import FunctionalLayer, tests
 
 from silva.core.interfaces import IPublicationWorkflow, IMember
@@ -124,6 +125,36 @@ class FolderWithContentTestCase(unittest.TestCase):
         with self.layer.open_fixture('test_document.xml') as data:
             factory.manage_addFile('data_file.xml', 'Data file', data)
         factory.manage_addPublication('publication', 'Publication')
+
+    def test_public_view(self):
+        """Render a folder publicly.
+        """
+        with self.layer.get_browser(public_settings) as browser:
+            self.assertEqual(
+                browser.open('http://localhost/root/folder'),
+                200)
+            self.assertEqual(
+                browser.inspect.content,
+                ['This container has no index.'])
+
+        factory = self.root.folder.manage_addProduct['Silva']
+        factory.manage_addMockupVersionedContent('index', 'Index')
+        with self.layer.get_browser(public_settings) as browser:
+            self.assertEqual(
+                browser.open('http://localhost/root/folder'),
+                200)
+            self.assertEqual(
+                browser.inspect.content,
+                ['This container has no index.'])
+
+        IPublicationWorkflow(self.root.folder.index).publish()
+        with self.layer.get_browser(public_settings) as browser:
+            self.assertEqual(
+                browser.open('http://localhost/root/folder'),
+                200)
+            self.assertEqual(
+                browser.inspect.content,
+                ['Index'])
 
     def test_get_ordered_publishables(self):
         """Test get_ordered_publishables with content.
