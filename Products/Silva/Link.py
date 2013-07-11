@@ -1,3 +1,4 @@
+
 # -*- coding: utf-8 -*-
 # Copyright (c) 2003-2013 Infrae. All rights reserved.
 # See also LICENSE.txt
@@ -59,10 +60,13 @@ class LinkVersion(Version):
 
     security.declareProtected(SilvaPermissions.View, 'get_target')
     def get_target(self):
-        service = getUtility(IReferenceService)
-        reference = service.get_reference(
-            aq_inner(self), name=u'link', add=True)
-        return reference.target
+        if self._relative:
+            service = getUtility(IReferenceService)
+            reference = service.get_reference(
+                aq_inner(self), name=u'link')
+            if reference is not None:
+                return reference.target
+        return None
 
     security.declareProtected(SilvaPermissions.View, 'get_url')
     def get_url(self):
@@ -78,11 +82,15 @@ class LinkVersion(Version):
         SilvaPermissions.ChangeSilvaContent, 'set_target')
     def set_target(self, target):
         service = getUtility(IReferenceService)
-        reference = service.get_reference(
-            aq_inner(self), name=u'link', add=True)
         if not isinstance(target, int):
             target = get_content_id(target)
-        reference.set_target_id(target)
+        if target:
+            reference = service.get_reference(
+                aq_inner(self), name=u'link', add=True)
+            reference.set_target_id(target)
+        else:
+            reference = service.delete_reference(
+                aq_inner(self), name=u'link')
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'set_url')

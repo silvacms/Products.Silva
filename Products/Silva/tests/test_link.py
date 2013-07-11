@@ -5,7 +5,9 @@
 import unittest
 
 from silva.core.interfaces import ILink, ILinkVersion, IPublicationWorkflow
+from silva.core.references.interfaces import IReferenceService
 from zope.interface.verify import verifyObject
+from zope.component import getUtility
 
 from Acquisition import aq_chain
 from Products.Silva.testing import FunctionalLayer, assertTriggersEvents
@@ -45,6 +47,10 @@ class LinkTestCase(unittest.TestCase):
         link = self.root.infrae.get_viewable()
         self.assertEqual(link.get_url(), 'http://infrae.com')
         self.assertEqual(link.get_relative(), False)
+        self.assertEqual(link.get_target(), None)
+        reference = getUtility(IReferenceService).get_reference(
+            link, name=u"link")
+        self.assertEqual(reference, None)
 
         with self.layer.get_browser() as browser:
             browser.options.follow_redirect = False
@@ -66,11 +72,15 @@ class LinkTestCase(unittest.TestCase):
 
         IPublicationWorkflow(self.root.infrae).publish()
         link = self.root.infrae.get_viewable()
+        self.assertEqual(link.get_relative(), True)
         self.assertEqual(link.get_target(), self.root.test)
         self.assertEqual(
             aq_chain(link.get_target()),
             aq_chain(self.root.test))
-        self.assertEqual(link.get_relative(), True)
+        reference = getUtility(IReferenceService).get_reference(
+            link, name=u"link")
+        self.assertNotEqual(reference, None)
+        self.assertEqual(reference.target, self.root.test)
 
         with self.layer.get_browser() as browser:
             browser.options.follow_redirect = False
@@ -93,6 +103,12 @@ class LinkTestCase(unittest.TestCase):
             self.assertEqual(
                 browser.headers['Location'],
                 'http://localhost/root/folder/test')
+
+        # If you set the target to 0 the reference should be gone
+        link.set_target(0)
+        reference = getUtility(IReferenceService).get_reference(
+            link, name=u"link")
+        self.assertEqual(reference, None)
 
     def test_broken_relative_link(self):
         """Test rendering a broken relative link.
