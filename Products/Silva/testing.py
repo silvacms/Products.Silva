@@ -217,8 +217,7 @@ class SilvaLayer(BrowserLayer):
         """
         return Fanstatic(
             self._test_wsgi_application,
-            publisher_signature='++static++',
-            debug=True)
+            publisher_signature='++static++')
 
     def get_browser(self, settings=None):
         """A lxml-based based-browser, that case be used for simple
