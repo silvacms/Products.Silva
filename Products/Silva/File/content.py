@@ -65,17 +65,14 @@ def manage_addFile(context, identifier, title=None, file=None):
     if ISilvaFactoryDispatcher.providedBy(container):
         container = container.Destination()
 
-    name_chooser = ISilvaNameChooser(container)
-    identifier = name_chooser.chooseName(
+    chooser = ISilvaNameChooser(container)
+    identifier = chooser.chooseName(
         identifier or filename, None, file=file, interface=interfaces.IAsset)
     try:
-        name_chooser.checkName(identifier, None)
-    except ContentError:
-        raise ValueError(_(u"Invalid computed identifier."))
-    identifier = str(identifier)
-    if identifier in context.objectIds():
-        raise ValueError(
-            _(u"Duplicate id. Please provide an explicit id."))
+        chooser.checkName(identifier, None)
+    except ContentError as e:
+        raise ValueError(_(u"Please provide a unique id: ${reason}",
+            mapping=dict(reason=e.reason)))
     service = getUtility(IFilesService)
     context._setObject(identifier, service.new_file(identifier))
     content = context._getOb(identifier)

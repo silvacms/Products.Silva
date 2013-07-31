@@ -7,7 +7,7 @@ import unittest
 from silva.core.interfaces import IContainerManager
 from silva.core.interfaces import IPublicationWorkflow
 from silva.core.interfaces import IAutoTOC, ILink, IFolder
-from silva.core.interfaces import ContentError
+from silva.core.interfaces import ContentError, ContainerError
 from zope.interface.verify import verifyObject
 
 from Products.Silva.testing import FunctionalLayer
@@ -94,7 +94,7 @@ class AuthorFolderRenameTestCase(unittest.TestCase):
             with manager.renamer() as renamer:
                 self.assertIsInstance(
                     renamer((self.root.folder.toc, 'link', None)),
-                    ContentError)
+                    ContainerError)
 
         self.assertTrue('toc' in self.root.folder.objectIds())
         self.assertTrue('link' in self.root.folder.objectIds())

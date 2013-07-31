@@ -151,7 +151,7 @@ class FolderCatalogTestCase(unittest.TestCase):
             self.search(path='/root'),
             [('/root', 'unapproved')])
 
-    def test_add_deletion_translaction(self):
+    def test_add_deletion_transaction(self):
         """Add an remove a folder The catalog content should not change.
         """
         with CatalogTransaction():

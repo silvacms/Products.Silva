@@ -90,6 +90,16 @@ class DefaultImageTestCase(TestCase):
         self.assertEquals((960, 1280), pil_image.size)
         self.assertEquals('JPEG', pil_image.format)
 
+    def test_upload_image_with_existing_id(self):
+        factory = self.root.manage_addProduct['Silva']
+
+        with self.layer.open_fixture('photo.tif') as image:
+            factory.manage_addImage('test_image_id', 'Test Image 1', image)
+            with self.assertRaises(ValueError) as error:
+                factory.manage_addImage('test_image_id', 'Test Image 2', image)
+
+        self.assertEqual(str(error.exception), "Please provide a unique id: ${reason}")
+
     def test_rename_image(self):
         """Move an image and check that the filename is updated correctly.
         """

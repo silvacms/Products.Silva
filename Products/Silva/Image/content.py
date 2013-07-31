@@ -80,12 +80,9 @@ def manage_addImage(context, identifier, title=None, file=None):
         identifier or filename, None, file=file, interface=interfaces.IAsset)
     try:
         name_chooser.checkName(identifier, None)
-    except ContentError:
-        raise ValueError(_(u"Invalid computed identifier."))
-    identifier = str(identifier)
-    if identifier in context.objectIds():
-        raise ValueError(
-            _(u"Duplicate id. Please provide an explicit id."))
+    except ContentError as e:
+        raise ValueError(_(u"Please provide a unique id: ${reason}",
+            mapping=dict(reason=e.reason)))
     context._setObject(identifier, Image(identifier))
     content = context._getOb(identifier)
     if title is not None:

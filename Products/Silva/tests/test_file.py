@@ -56,6 +56,13 @@ class DefaultFileImplementationTestCase(TestCase):
                 'modificationtime': DateTime('2010-04-25T12:00:00Z')})
         return content
 
+    def test_duplicate_id(self):
+        """Test whether a file upload with a duplicate ID throws a ValueError
+        """
+        self.create_test_file('test1.zip')
+        with self.assertRaises(ValueError):
+            self.create_test_file('test1.zip')
+
     def test_content_image(self):
         """Test base content methods on a file that contains an image.
         """

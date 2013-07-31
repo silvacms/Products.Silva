@@ -195,7 +195,8 @@ class ContainerManager(grok.Adapter):
                         ISilvaNameChooser(self.context).checkName(
                             to_identifier, content)
                     except ContentError as e:
-                        result = e
+                        result = ContainerError(reason=e.reason,
+                                content=content)
                 if result is None:
                     content = self.__move(
                         content, self.context, from_identifier, to_identifier)
