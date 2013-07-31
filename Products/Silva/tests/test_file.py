@@ -56,12 +56,25 @@ class DefaultFileImplementationTestCase(TestCase):
                 'modificationtime': DateTime('2010-04-25T12:00:00Z')})
         return content
 
-    def test_duplicate_id(self):
+    def test_upload_file_with_existing_id(self):
         """Test whether a file upload with a duplicate ID throws a ValueError
         """
-        self.create_test_file('test1.zip')
-        with self.assertRaises(ValueError):
-            self.create_test_file('test1.zip')
+        factory = self.root.manage_addProduct['Silva']
+
+        with self.layer.open_fixture('photo.tif') as test_file:
+            factory.manage_addFile('test_file_id', 'Test File 1', test_file)
+            with self.assertRaises(ValueError) as error:
+                factory.manage_addImage('test_file_id', 'Test File 2',
+                        test_file)
+
+        self.assertEqual(str(error.exception), "Please provide a unique id: ${reason}")
+
+        with self.layer.open_fixture('photo.tif') as test_file:
+            factory.manage_addFile('test_file_unique_id', 'Test File 3', test_file)
+
+        content = self.root._getOb('test_file_unique_id')
+        self.assertTrue(verifyObject(interfaces.IAsset, content))
+        self.assertTrue(verifyObject(interfaces.IFile, content))
 
     def test_content_image(self):
         """Test base content methods on a file that contains an image.
