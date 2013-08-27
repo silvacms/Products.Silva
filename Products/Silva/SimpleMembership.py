@@ -2,6 +2,9 @@
 # Copyright (c) 2003-2013 Infrae. All rights reserved.
 # See also LICENSE.txt
 
+import urllib
+import hashlib
+
 from five import grok
 
 # zope
@@ -13,6 +16,7 @@ from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 # silva
 from Products.Silva import SilvaPermissions
 from Products.Silva import roleinfo
+from Products.Silva.icon import Icon
 from Products.Silva.Membership import cloneMember, Member
 from Products.Silva.Security import Security
 from Products.Silva.helpers import add_and_edit
@@ -22,6 +26,25 @@ from silva.core.services.base import SilvaService, ZMIObject
 from silva.core import interfaces
 from silva.core import conf as silvaconf
 from silva.translations import translate as _
+
+# This is not yet in use.
+GRAVATAR_URL = "https://secure.gravatar.com/avatar/"
+
+class GravatarIcon(Icon):
+
+    def __init__(self, icon):
+        self.icon = icon
+
+    def url(self, resolver, content):
+        if content is not None:
+            if interfaces.IAuthorization.providedBy(content):
+                content = content.source
+            email = content.avatar()
+            if email:
+                return (GRAVATAR_URL +
+                        hashlib.md5(email.lower()).hexdigest() +
+                        urllib.urlencode({'default': 'default', 'size': 16}))
+        return super(GravatarIcon, self).url(resolver, content)
 
 
 class SimpleMember(Member, Security, ZMIObject):
