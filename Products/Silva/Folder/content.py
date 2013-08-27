@@ -51,7 +51,7 @@ class Folder(Publishable, BaseFolder):
     meta_type = "Silva Folder"
 
     grok.implements(IFolder)
-    silvaconf.icon('www/silvafolder.gif')
+    silvaconf.icon('icons/folder.gif')
     silvaconf.priority(-5)
 
     security = ClassSecurityInfo()

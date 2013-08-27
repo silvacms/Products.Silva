@@ -48,7 +48,7 @@ class Indexer(Content, SimpleItem):
 
     meta_type = "Silva Indexer"
     grok.implements(IIndexer)
-    silvaconf.icon('www/silvaindexer.png')
+    silvaconf.icon('icons/indexer.png')
 
     def __init__(self, id):
         super(Indexer, self).__init__(id)

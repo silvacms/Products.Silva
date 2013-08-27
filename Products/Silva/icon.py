@@ -3,7 +3,7 @@
 # See also LICENSE.txt
 
 from five import grok
-from zope.cachedescriptors.property import CachedProperty
+from zope.cachedescriptors.property import Lazy
 from zope.publisher.interfaces.browser import IBrowserRequest
 
 # Silva
@@ -90,22 +90,93 @@ class IconRegistry(object):
 
         NOTE: this will overwrite previous icon declarations
         """
+        assert isinstance(identifier, tuple) and len(identifier) == 2, \
+            'Invalid icon identifier'
         self._icons[identifier] = icon_name
 
 
-registry = IconRegistry()
+@apply
+def registry():
+    """Create and initialize icon registry with Silva defaults.
+    """
+    registry = IconRegistry()
+
+    mime_icons = [
+        ('application/msword', 'file_doc.png'),
+        ('application/pdf', 'file_pdf.png'),
+        ('application/postscript', 'file_illustrator.png'),
+        ('application/sdp', 'file_quicktime.png'),
+        ('application/vnd.ms-excel', 'file_xls.png'),
+        ('application/vnd.ms-powerpoint', 'file_ppt.png'),
+        ('application/vnd.openxmlformats-officedocument.presentationml.presentation', 'file_ppt.png'),
+        ('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'file_xls.png'),
+        ('application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'file_doc.png'),
+        ('application/x-javascript', 'file_js.png'),
+        ('application/x-rtsp', 'file_quicktime.png'),
+        ('application/x-sdp', 'file_quicktime.png'),
+        ('application/x-zip-compressed', 'file_zip.png'),
+        ('audio/aiff', 'file_aiff.png'),
+        ('audio/basic', 'file_aiff.png'),
+        ('audio/mid', 'file_aiff.png'),
+        ('audio/midi', 'file_aiff.png'),
+        ('audio/mp3', 'file_aiff.png'),
+        ('audio/mp4', 'file_aiff.png'),
+        ('audio/mpeg', 'file_aiff.png'),
+        ('audio/mpeg3', 'file_aiff.png'),
+        ('audio/wav', 'file_aiff.png'),
+        ('audio/x-aiff', 'file_aiff.png'),
+        ('audio/x-gsm', 'file_aiff.png'),
+        ('audio/x-m4a', 'file_aiff.png'),
+        ('audio/x-m4p', 'file_aiff.png'),
+        ('audio/x-midi', 'file_aiff.png'),
+        ('audio/x-mp3', 'file_aiff.png'),
+        ('audio/x-mpeg', 'file_aiff.png'),
+        ('audio/x-mpeg3', 'file_aiff.png'),
+        ('audio/x-wav', 'file_aiff.png'),
+        ('text/css', 'file_css.png'),
+        ('text/html', 'file_html.png'),
+        ('text/plain', 'file_txt.png'),
+        ('text/xml', 'file_xml.png'),
+        ('video/avi', 'file_quicktime.png'),
+        ('video/mp4', 'file_quicktime.png'),
+        ('video/mpeg', 'file_quicktime.png'),
+        ('video/msvideo', 'file_quicktime.png'),
+        ('video/quicktime', 'file_quicktime.png'),
+        ('video/x-dv', 'file_quicktime.png'),
+        ('video/x-mpeg', 'file_quicktime.png'),
+        ('video/x-msvideo', 'file_quicktime.png'),
+        ]
+    for mimetype, icon_name in mime_icons:
+        registry.register(
+            ('mime_type', mimetype),
+            '++static++/silva.icons/%s' % icon_name)
+
+    misc_icons = [
+        ('meta_type', None, 'missing.png'),
+        ('ghostfolder', 'folder', 'ghost_folder.gif'),
+        ('ghostfolder', 'publication', 'ghost_publication.gif'),
+        ('ghostfolder', 'link_broken', 'ghost_broken.png'),
+        ('ghost', 'link_ok', 'ghost.gif'),
+        ('ghost', 'link_broken', 'ghost_broken.png'),
+    ]
+    for cls, kind, icon_name in misc_icons:
+        registry.register(
+            (cls, kind),
+            '++static++/silva.icons/%s' % icon_name)
+
+    return registry
 
 
 class IconResolver(grok.Adapter):
     grok.context(IBrowserRequest)
     grok.implements(IIconResolver)
 
-    default = '++static++/silva.icons/silvageneric.gif'
+    default = '++static++/silva.icons/generic.gif'
 
     def __init__(self, request):
         self.request = request
 
-    @CachedProperty
+    @Lazy
     def _base_url(self):
         site = IVirtualSite(self.request)
         return site.get_root_url()

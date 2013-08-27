@@ -45,7 +45,7 @@ class Publication(Folder):
 
     grok.implements(IPublication)
     silvaconf.priority(-5)
-    silvaconf.icon('www/silvapublication.gif')
+    silvaconf.icon('icons/publication.gif')
 
     @property
     def manage_options(self):

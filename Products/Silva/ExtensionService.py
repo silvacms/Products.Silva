@@ -108,7 +108,7 @@ class ExtensionService(SilvaService, Folder):
     grok.implements(IExtensionService)
     grok.name('service_extensions')
     silvaconf.default_service()
-    silvaconf.icon('www/silva.png')
+    silvaconf.icon('icons/service_extension.png')
 
     security = ClassSecurityInfo()
     manage_options = (

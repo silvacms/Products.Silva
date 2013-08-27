@@ -11,7 +11,7 @@ from zope.lifecycleevent.interfaces import IObjectCopiedEvent
 # Zope 2
 from AccessControl import ClassSecurityInfo
 from AccessControl.security import checkPermission
-from Acquisition import aq_parent, aq_chain
+from Acquisition import aq_parent
 from App.class_init import InitializeClass
 from OFS.interfaces import IObjectClonedEvent
 
@@ -170,7 +170,7 @@ class GhostFolder(GhostBase, Folder):
     meta_type = 'Silva Ghost Folder'
 
     grok.implements(IGhostFolder)
-    silvaconf.icon('icons/silvaghost_folder.gif')
+    silvaconf.icon('icons/ghost_folder.gif')
     silvaconf.priority(0)
 
     security = ClassSecurityInfo()

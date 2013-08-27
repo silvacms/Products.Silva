@@ -40,7 +40,7 @@ class Link(VersionedContent):
     meta_type = "Silva Link"
 
     grok.implements(interfaces.ILink)
-    silvaconf.icon('www/link.png')
+    silvaconf.icon('icons/link.png')
     silvaconf.versionClass('LinkVersion')
 
 

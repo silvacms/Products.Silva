@@ -33,7 +33,7 @@ class AutoTOC(Content, SimpleItem):
     meta_type = "Silva AutoTOC"
 
     grok.implements(IAutoTOC)
-    silvaconf.icon('www/autotoc.png')
+    silvaconf.icon('icons/autotoc.png')
     silvaconf.priority(0.2)
 
     _local_types = ['Silva Document', 'Silva Publication', 'Silva Folder']

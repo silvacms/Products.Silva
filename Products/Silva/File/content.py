@@ -93,7 +93,7 @@ class File(Asset):
     meta_type = "Silva File"
 
     grok.implements(interfaces.IFile)
-    silvaconf.icon('www/silvafile.png')
+    silvaconf.icon('icons/file.png')
     silvaconf.factory('manage_addFile')
 
     # Default values

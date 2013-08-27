@@ -76,7 +76,7 @@ class IconRegistryTestCase(unittest.TestCase):
             '<img height="16" width="16" src="http://localhost/root/++resource++icon-Silva-Root.png" alt="Silva Root" />')
         self.assertEqual(
             resolver.get_tag(identifier='default'),
-            '<img height="16" width="16" src="http://localhost/root/++static++/silva.icons/silvageneric.gif" alt="default" />')
+            '<img height="16" width="16" src="http://localhost/root/++static++/silva.icons/generic.gif" alt="default" />')
         self.assertEqual(
             resolver.get_tag(),
             '<img height="16" width="16" src="http://localhost/root/++static++/silva.icons/missing.png" alt="Missing" />')

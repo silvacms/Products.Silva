@@ -155,7 +155,7 @@ class EmailMessageService(SilvaService):
     grok.implements(interfaces.IMessageService)
     grok.name('service_messages')
     silvaconf.default_service()
-    silvaconf.icon('www/message_service.png')
+    silvaconf.icon('icons/service_message.png')
 
     manage_options = (
         {'label':'Settings', 'action':'manage_settings'},

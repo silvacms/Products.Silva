@@ -32,7 +32,7 @@ class SimpleMember(Member, Security, ZMIObject):
 
     meta_type = 'Silva Simple Member'
 
-    silvaconf.icon('www/member.png')
+    silvaconf.icon('icons/member.png')
     silvaconf.factory('manage_addSimpleMemberForm')
     silvaconf.factory('manage_addSimpleMember')
 
@@ -150,7 +150,7 @@ def manage_addSimpleMember(self, id, REQUEST=None):
 class SimpleMemberService(SilvaService):
     grok.implements(IMemberService)
     grok.baseclass()
-    silvaconf.icon('www/members.png')
+    silvaconf.icon('icons/service_member.png')
     security = ClassSecurityInfo()
     meta_type = 'Silva Simple Member Service'
 
