@@ -108,6 +108,56 @@ class IconRegistryTestCase(unittest.TestCase):
             resolver.get_tag(),
             '<img height="16" width="16" src="http://localhost/root/++static++/silva.icons/missing.png" alt="Missing" />')
 
+    def test_custom_icons(self):
+        """Test registring icons with a custom namespace and looking
+        them up.
+        """
+        registry.register(('test-silva', 'model'), '++custom++foo.png')
+        registry.register(('test-silva', 'page'), '++custom++bar.jpeg')
+        registry.register(('default', 'test-silva'), '++custom++empty.gif')
+
+        resolver = queryAdapter(TestRequest(), IIconResolver)
+        self.assertTrue(verifyObject(IIconResolver, resolver))
+
+        icon = resolver.get_identifier(('test-silva', 'model'))
+        self.assertTrue(verifyObject(IIcon, icon))
+        self.assertEqual(str(icon), '++custom++foo.png')
+        self.assertEqual(
+            resolver.get_identifier_url(('test-silva', 'model')),
+            'http://localhost/root/++custom++foo.png')
+
+        icon = resolver.get_identifier(('test-silva', 'missing'))
+        self.assertTrue(verifyObject(IIcon, icon))
+        self.assertEqual(str(icon), '++static++/silva.icons/generic.gif')
+        self.assertEqual(
+            resolver.get_identifier_url(('test-silva', 'missing')),
+            'http://localhost/root/++static++/silva.icons/generic.gif')
+
+        icon = resolver.get_identifier(
+            ('test-silva', 'missing'), default='test-silva')
+        self.assertTrue(verifyObject(IIcon, icon))
+        self.assertEqual(str(icon), '++custom++empty.gif')
+        self.assertEqual(
+            resolver.get_identifier_url(
+                ('test-silva', 'missing'), default='test-silva'),
+            'http://localhost/root/++custom++empty.gif')
+
+        icon = resolver.get_identifier(
+            ('test-silva', 'missing'), default=('test-silva', 'page'))
+        self.assertTrue(verifyObject(IIcon, icon))
+        self.assertEqual(str(icon), '++custom++bar.jpeg')
+        self.assertEqual(
+            resolver.get_identifier_url(
+                ('test-silva', 'missing'), default=('test-silva', 'page')),
+            'http://localhost/root/++custom++bar.jpeg')
+
+        icon = resolver.get_identifier(
+            ('test-silva', 'missing'), default=('test-silva', 'metoo'))
+        self.assertIs(icon, None)
+        self.assertIs(
+            resolver.get_identifier_url(
+                ('test-silva', 'missing'), default=('test-silva', 'metoo')),
+            None)
 
     def test_default_icons(self):
         """Test default registered icons.

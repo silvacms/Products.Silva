@@ -191,23 +191,29 @@ class IconResolver(grok.Adapter):
         site = IVirtualSite(self.request)
         return site.get_root_url()
 
-    def get_tag(self, content=None, identifier=None):
+    def get_tag(self, content=None, identifier=None, default=_marker):
         if content is not None:
             icon = self.get_content(content)
             alt = getattr(content, 'meta_type', 'Missing')
         else:
-            icon = self.get_identifier(identifier)
+            icon = self.get_identifier(identifier, default=_marker)
             alt = identifier or 'Missing'
         if icon is not None:
             return icon.template.format(
                 url=icon.get_url(self, content), alt=alt)
         return u''
 
-    def get_identifier(self, identifier):
+    def get_identifier(self, identifier, default=_marker):
+        if not isinstance(identifier, tuple):
+            identifier = ('meta_type', identifier)
         try:
-            return self.sprite.get(('meta_type', identifier))
+            return self.sprite.get(identifier)
         except ValueError:
-            return self.sprite.get(('default', None), default=None)
+            if default is _marker:
+                default = ('default', None)
+            elif not isinstance(default, tuple):
+                default = ('default', default)
+            return self.sprite.get(default, default=None)
 
     def get_content(self, content):
         identifier = ('meta_type', None)
@@ -254,10 +260,10 @@ class IconResolver(grok.Adapter):
             return icon.get_url(self, content)
         return None
 
-    def get_identifier_url(self, identifier):
+    def get_identifier_url(self, identifier, default=_marker):
         """Return a URL out of a identifier.
         """
-        icon = self.get_identifier(identifier)
+        icon = self.get_identifier(identifier, default=default)
         if icon is not None:
             return icon.get_url(self, None)
         return None
