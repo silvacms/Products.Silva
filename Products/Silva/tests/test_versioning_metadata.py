@@ -7,7 +7,7 @@ import unittest
 from zope.component import getUtility
 from zope.interface.verify import verifyObject
 
-from Products.Silva.testing import FunctionalLayer
+from Products.Silva.testing import FunctionalLayer, Transaction
 from Products.SilvaMetadata.interfaces import ReadOnlyError
 from silva.core.services.interfaces import IMetadataService
 from silva.core.interfaces import IMember, IContainerManager, IVersionedContent
@@ -17,10 +17,11 @@ class VersioningAuthorAndCreationTestCase(unittest.TestCase):
     layer = FunctionalLayer
 
     def setUp(self):
-        self.root = self.layer.get_application()
-        self.layer.login('editor')
-        factory = self.root.manage_addProduct['Silva']
-        factory.manage_addMockupVersionedContent('document', 'Document')
+        with Transaction():
+            self.root = self.layer.get_application()
+            self.layer.login('editor')
+            factory = self.root.manage_addProduct['Silva']
+            factory.manage_addMockupVersionedContent('document', 'Document')
 
     def test_created_information(self):
         """Test that default information is properly filled on a
@@ -53,9 +54,11 @@ class VersioningAuthorAndCreationTestCase(unittest.TestCase):
         filled. Although the document have been created by editor, the
         copy have been created by author.
         """
-        self.layer.login('author')
-        with IContainerManager(self.root).copier() as copier:
-            copy = copier(self.root.document)
+        with Transaction():
+            self.layer.login('author')
+            with IContainerManager(self.root).copier() as copier:
+                copy = copier(self.root.document)
+
         self.assertTrue(verifyObject(IVersionedContent, copy))
 
         creator = copy.get_creator_info()
@@ -72,10 +75,11 @@ class MetadataVersioningTestCase(unittest.TestCase):
     layer = FunctionalLayer
 
     def setUp(self):
-        self.root = self.layer.get_application()
-        self.layer.login('editor')
-        factory = self.root.manage_addProduct['Silva']
-        factory.manage_addMockupVersionedContent('document', 'Document')
+        with Transaction():
+            self.root = self.layer.get_application()
+            self.layer.login('editor')
+            factory = self.root.manage_addProduct['Silva']
+            factory.manage_addMockupVersionedContent('document', 'Document')
 
     def test_version_metadata(self):
         """Test simple validation on the metadata system while setting

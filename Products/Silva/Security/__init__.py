@@ -3,3 +3,4 @@
 # See also LICENSE.txt
 
 from Products.Silva.Security.content import Security
+from Products.Silva.Security.changes import ChangesTask

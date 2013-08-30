@@ -5,7 +5,7 @@
 import unittest
 
 from Products.Silva.ftesting import public_settings
-from Products.Silva.testing import FunctionalLayer, tests
+from Products.Silva.testing import FunctionalLayer, tests, Transaction
 
 from silva.core.interfaces import IPublicationWorkflow, IMember
 from silva.core.interfaces import IFolder
@@ -18,8 +18,9 @@ class FolderTestCase(unittest.TestCase):
     def setUp(self):
         self.root = self.layer.get_application()
         self.layer.login('editor')
-        factory = self.root.manage_addProduct['Silva']
-        factory.manage_addFolder('folder', 'Folder')
+        with Transaction():
+            factory = self.root.manage_addProduct['Silva']
+            factory.manage_addFolder('folder', 'Folder')
 
     def test_implementation(self):
         self.assertTrue(verifyObject(IFolder, self.root.folder))
@@ -46,9 +47,10 @@ class FolderTestCase(unittest.TestCase):
         current_datetime = self.root.folder.get_modification_datetime()
         self.assertNotEqual(current_datetime, None)
         self.assertNotEqual(self.root.get_modification_datetime(), None)
-        factory = self.root.folder.manage_addProduct['Silva']
-        factory.manage_addAutoTOC('index', 'Index')
-        self.assertNotEqual(
+        with Transaction():
+            factory = self.root.folder.manage_addProduct['Silva']
+            factory.manage_addAutoTOC('index', 'Index')
+        self.assertGreater(
             self.root.folder.get_modification_datetime(),
             current_datetime)
 

@@ -30,6 +30,9 @@ from zeam.form import silva as silvaforms
 logger = logging.getLogger('silva.email')
 
 
+# XXX This should be updated to use silva.core.services.delayed
+
+
 class EmailQueueSavepoint(object):
     grok.implements(IDataManagerSavepoint)
 

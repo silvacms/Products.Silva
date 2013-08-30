@@ -16,14 +16,13 @@ from zope.lifecycleevent.interfaces import IObjectRemovedEvent
 # Zope 2
 from AccessControl import ClassSecurityInfo
 from App.class_init import InitializeClass
-from DateTime import DateTime
 from OFS.interfaces import IObjectClonedEvent
 from OFS.interfaces import IObjectWillBeAddedEvent
 from OFS.interfaces import IObjectWillBeMovedEvent
 
 # Silva
 from Products.Silva import SilvaPermissions
-from Products.Silva.Security import Security
+from Products.Silva.Security import Security, ChangesTask
 
 # Silva adapters
 from silva.core.interfaces import ISilvaObject, IVersionedContent
@@ -190,11 +189,7 @@ def content_created(content, event):
         return
 
     ICataloging(content).index()
-    service = getUtility(IMetadataService)
-    binding = service.getMetadata(content)
-    if binding is not None and not binding.read_only:
-        binding.setValues('silva-extra', {'creationtime': DateTime()})
-    content.update_last_author_info()
+    ChangesTask.get().modified(content, created=True)
 
 
 @grok.subscribe(ISilvaObject, IObjectModifiedEvent)
@@ -209,7 +204,7 @@ def index_and_update_author_modified_content(content, event):
         return
     if getattr(content, '__initialization__', False):
         return
-    content.update_last_author_info()
+    ChangesTask.get().modified(content)
     ICataloging(content).reindex()
 
 

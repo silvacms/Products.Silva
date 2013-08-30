@@ -19,8 +19,8 @@ from silva.core.services.interfaces import ICatalogService
 from silva.core.services.interfaces import IMetadataService
 
 from Products.Silva import File
-from Products.Silva.testing import FunctionalLayer, TestCase
-from Products.Silva.testing import assertTriggersEvents, CatalogTransaction
+from Products.Silva.testing import FunctionalLayer, TestCase, Transaction
+from Products.Silva.testing import assertTriggersEvents
 
 
 def search(**query):
@@ -38,16 +38,18 @@ class DefaultImageTestCase(TestCase):
         self.root = self.layer.get_application()
         self.layer.login('author')
 
-        if self.implementation is not None:
-            self.root.service_files.storage = self.implementation
+        with Transaction():
+            if self.implementation is not None:
+                self.root.service_files.storage = self.implementation
 
-        factory = self.root.manage_addProduct['Silva']
-        with self.layer.open_fixture('photo.tif') as image:
-            self.image_data = image.read()
-            self.image_size = image.tell()
-            image.seek(0, 0)
+            factory = self.root.manage_addProduct['Silva']
+            with self.layer.open_fixture('photo.tif') as image:
+                self.image_data = image.read()
+                self.image_size = image.tell()
+                image.seek(0, 0)
 
-            factory.manage_addImage('test_image', u'Image élaboré', image)
+                factory.manage_addImage('test_image', u'Image élaboré', image)
+
         image = self.root._getOb('test_image')
         metadata = getUtility(IMetadataService).getMetadata(image)
         metadata.setValues('silva-extra', {
@@ -56,59 +58,63 @@ class DefaultImageTestCase(TestCase):
     def test_image(self):
         """Test image content.
         """
-        content = self.root.test_image
-        self.assertTrue(verifyObject(interfaces.IAsset, content))
-        self.assertTrue(verifyObject(interfaces.IImage, content))
+        image = self.root.test_image
+        self.assertTrue(verifyObject(interfaces.IAsset, image))
+        self.assertTrue(verifyObject(interfaces.IImage, image))
+        self.assertNotEqual(image.get_modification_datetime(), None)
+        self.assertNotEqual(image.get_creation_datetime(), None)
 
         # Asset methods
-        self.assertEquals(content.get_content_type(), 'image/tiff')
-        self.assertEquals(content.get_file_size(), self.image_size)
-        self.assertEquals(content.get_filename(), 'test_image.tiff')
-        self.assertEquals(content.get_mime_type(), 'image/tiff')
+        self.assertEquals(image.get_content_type(), 'image/tiff')
+        self.assertEquals(image.get_file_size(), self.image_size)
+        self.assertEquals(image.get_filename(), 'test_image.tiff')
+        self.assertEquals(image.get_mime_type(), 'image/tiff')
 
         # Image methods
-        self.assertEquals(content.get_format(), 'TIFF')
-        self.assertEquals(content.get_web_format(), 'JPEG')
-        self.assertEquals(content.get_dimensions(), (960, 1280))
-        self.assertEquals(str(content.get_orientation()), "portrait")
-        content.set_web_presentation_properties('JPEG', '100x100', '')
+        self.assertEquals(image.get_format(), 'TIFF')
+        self.assertEquals(image.get_web_format(), 'JPEG')
+        self.assertEquals(image.get_dimensions(), (960, 1280))
+        self.assertEquals(str(image.get_orientation()), "portrait")
+        image.set_web_presentation_properties('JPEG', '100x100', '')
         with self.assertRaises(ValueError):
-            content.get_image(hires=False, webformat=False)
-        self.assertTrue(content.tag() is not None)
-        self.assertEquals(content.get_web_format(), 'JPEG')
+            image.get_image(hires=False, webformat=False)
+        self.assertTrue(image.tag() is not None)
+        self.assertEquals(image.get_web_format(), 'JPEG')
 
-        data = io.BytesIO(content.get_image(hires=False, webformat=True))
+        data = io.BytesIO(image.get_image(hires=False, webformat=True))
         pil_image = PILImage.open(data)
         self.assertEquals((100, 100), pil_image.size)
         self.assertEquals('JPEG', pil_image.format)
 
-        data = content.get_image(hires=True, webformat=False)
+        data = image.get_image(hires=True, webformat=False)
         self.assertHashEqual(self.image_data, data)
 
-        data = io.BytesIO(content.get_image(hires=True, webformat=True))
+        data = io.BytesIO(image.get_image(hires=True, webformat=True))
         pil_image = PILImage.open(data)
         self.assertEquals((960, 1280), pil_image.size)
         self.assertEquals('JPEG', pil_image.format)
 
     def test_upload_image_with_existing_id(self):
-        factory = self.root.manage_addProduct['Silva']
+        with Transaction():
+            with self.layer.open_fixture('photo.tif') as image:
+                factory = self.root.manage_addProduct['Silva']
+                factory.manage_addImage('test_image_id', 'Test Image 1', image)
+                with self.assertRaises(ValueError) as error:
+                    factory.manage_addImage('test_image_id', 'Test Image 2', image)
 
-        with self.layer.open_fixture('photo.tif') as image:
-            factory.manage_addImage('test_image_id', 'Test Image 1', image)
-            with self.assertRaises(ValueError) as error:
-                factory.manage_addImage('test_image_id', 'Test Image 2', image)
-
-        self.assertEqual(str(error.exception), "Please provide a unique id: ${reason}")
+        self.assertEqual(
+            str(error.exception),
+            "Please provide a unique id: ${reason}")
 
     def test_rename_image(self):
         """Move an image and check that the filename is updated correctly.
         """
-        content = getattr(self.root, 'test_image')
-        self.assertEquals(content.get_filename(), 'test_image.tiff')
+        image = self.root._getOb('test_image')
+        self.assertEquals(image.get_filename(), 'test_image.tiff')
         self.root.manage_renameObjects(['test_image'], ['new_image.gif'])
 
-        content = getattr(self.root, 'new_image.gif')
-        self.assertEquals(content.get_filename(), 'new_image.tiff')
+        image = self.root._getOb('new_image.gif')
+        self.assertEquals(image.get_filename(), 'new_image.tiff')
 
     def test_copy_paste_image(self):
         """Cut and paste an image. Check the filename is updated.
@@ -125,12 +131,13 @@ class DefaultImageTestCase(TestCase):
     def test_catalog(self):
         """Verify that the image is properly catalogued.
         """
-        factory = self.root.manage_addProduct['Silva']
-        factory.manage_addFolder('folder', 'Folder')
+        with Transaction(catalog=False):
+            factory = self.root.manage_addProduct['Silva']
+            factory.manage_addFolder('folder', 'Folder')
 
-        factory = self.root.folder.manage_addProduct['Silva']
-        with self.layer.open_fixture('photo.tif') as image:
-            factory.manage_addImage('image', 'Test Image', image)
+            factory = self.root.folder.manage_addProduct['Silva']
+            with self.layer.open_fixture('photo.tif') as image:
+                factory.manage_addImage('image', 'Test Image', image)
 
         # Test that the image is catalogued (and not the sub-files)
         self.assertItemsEqual(
@@ -141,11 +148,10 @@ class DefaultImageTestCase(TestCase):
     def test_catalog_transaction(self):
         """Verify that the image is properly catalogued.
         """
-        with CatalogTransaction():
+        with Transaction(catalog=True):
             factory = self.root.manage_addProduct['Silva']
             factory.manage_addFolder('folder', 'Folder')
 
-        with CatalogTransaction():
             factory = self.root.folder.manage_addProduct['Silva']
             with self.layer.open_fixture('photo.tif') as image:
                 factory.manage_addImage('image', 'Test Image', image)
@@ -443,9 +449,10 @@ class MiscellaneousImageTestCase(unittest.TestCase):
     def test_empty_image(self):
         """Test an image that doesn't store an image.
         """
-        factory = self.root.manage_addProduct['Silva']
-        with assertTriggersEvents('ObjectCreatedEvent'):
-            factory.manage_addImage('image', 'Image')
+        with Transaction():
+            factory = self.root.manage_addProduct['Silva']
+            with assertTriggersEvents('ObjectCreatedEvent'):
+                factory.manage_addImage('image', 'Image')
 
         image = self.root.image
         self.assertTrue(verifyObject(interfaces.IImage, image))
@@ -455,6 +462,8 @@ class MiscellaneousImageTestCase(unittest.TestCase):
         self.assertEqual(image.get_file_size(), 0)
         self.assertEqual(image.get_file_system_path(), None)
         self.assertEqual(image.get_image(), None)
+        self.assertNotEqual(image.get_modification_datetime(), None)
+        self.assertNotEqual(image.get_creation_datetime(), None)
 
         payload = interfaces.IAssetPayload(image)
         self.assertTrue(verifyObject(interfaces.IAssetPayload, payload))
@@ -477,9 +486,11 @@ class MiscellaneousImageTestCase(unittest.TestCase):
     def test_get_crop_box(self):
         """Test get_crop_box method that either return or parse a crop_box.
         """
-        factory = self.root.manage_addProduct['Silva']
-        with self.layer.open_fixture('photo.tif') as image:
-            factory.manage_addImage('image', 'Torvald', image)
+        with Transaction():
+            factory = self.root.manage_addProduct['Silva']
+            with self.layer.open_fixture('photo.tif') as image:
+                factory.manage_addImage('image', 'Torvald', image)
+
         self.assertEqual(
             self.root.image.get_crop_box(crop="242x379-392x479"),
             (242, 379, 392, 479))

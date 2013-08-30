@@ -13,7 +13,6 @@ from zope.lifecycleevent.interfaces import IObjectCreatedEvent
 # Zope 2
 from AccessControl import ClassSecurityInfo
 from App.class_init import InitializeClass
-from DateTime import DateTime
 from OFS.SimpleItem import SimpleItem
 from OFS.interfaces import IObjectWillBeRemovedEvent
 
@@ -21,7 +20,7 @@ from OFS.interfaces import IObjectWillBeRemovedEvent
 from Products.Silva import SilvaPermissions
 from Products.Silva.SilvaObject import TitledObject
 from Products.SilvaMetadata.interfaces import IMetadataService
-from Products.Silva.Security import Security
+from Products.Silva.Security import Security, ChangesTask
 
 from silva.core.interfaces import IVersion, VersioningError
 from silva.core.interfaces import IVersionManager
@@ -179,13 +178,9 @@ def version_created(version, event):
     if IObjectCopiedEvent.providedBy(event):
         return
 
-    if version == event.object:
-        service = getUtility(IMetadataService)
-        binding = service.getMetadata(version)
-        if binding is not None and not binding.read_only:
-            binding.setValues('silva-extra', {'creationtime': DateTime()})
-    version.update_last_author_info()
-    if version == event.object:
+    created = version == event.object
+    ChangesTask.get().modified(version, created)
+    if created:
         ICataloging(version).index()
         ICataloging(version.get_silva_object()).index(with_versions=False)
 
@@ -193,14 +188,14 @@ def version_created(version, event):
 @grok.subscribe(IVersion, IApprovalEvent)
 @grok.subscribe(IVersion, IContentPublishedEvent)
 def version_published(version, event):
-    version.update_last_author_info()
+    ChangesTask.get().modified(version)
     ICataloging(version).reindex()
     ICataloging(version.get_silva_object()).reindex(with_versions=False)
 
 
 @grok.subscribe(IVersion, IContentClosedEvent)
 def version_closed(version, event):
-    version.update_last_author_info()
+    ChangesTask.get().modified(version)
     ICataloging(version).unindex()
     ICataloging(version.get_silva_object()).reindex(with_versions=False)
 
@@ -209,7 +204,7 @@ def version_closed(version, event):
 def version_modified(version, event):
     if not IPublishingEvent.providedBy(event):
         # This version have been modified
-        version.update_last_author_info()
+        ChangesTask.get().modified(version)
         ICataloging(version).reindex()
         ICataloging(version.get_silva_object()).reindex(with_versions=False)
 

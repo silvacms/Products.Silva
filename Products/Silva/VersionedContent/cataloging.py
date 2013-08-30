@@ -8,7 +8,7 @@ from five import grok
 from Acquisition import aq_base
 
 from silva.core.interfaces import IVersionedObject
-from silva.core.services.catalog import Cataloging, task_queue
+from silva.core.services.catalog import Cataloging, CatalogingTask
 
 
 class VersionedContentCataloging(Cataloging):
@@ -29,17 +29,20 @@ class VersionedContentCataloging(Cataloging):
     def index(self, indexes=None, with_versions=True):
         super(VersionedContentCataloging, self).index(indexes=indexes)
         if with_versions:
+            task = CatalogingTask.get()
             for version in self.get_indexable_versions():
-                task_queue.index(version, indexes)
+                task.index(version, indexes)
 
     def reindex(self, indexes=None, with_versions=True):
         super(VersionedContentCataloging, self).reindex(indexes=indexes)
         if with_versions:
+            task = CatalogingTask.get()
             for version in self.get_indexable_versions():
-                task_queue.reindex(version, indexes)
+                task.reindex(version, indexes)
 
     def unindex(self, with_versions=True):
         if with_versions:
+            task = CatalogingTask.get()
             for version in self.get_indexable_versions():
-                task_queue.unindex(version)
+                task.unindex(version)
         super(VersionedContentCataloging, self).unindex()

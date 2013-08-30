@@ -12,7 +12,7 @@ from OFS.SimpleItem import SimpleItem
 from Products.Silva import MAILHOST_ID
 from Products.Silva.EmailMessageService import email_queue
 from Products.Silva.tests.mockers import install_mockers
-from silva.core.services import task_queue
+from silva.core.services import CatalogingTask
 import Products.Silva
 
 from infrae.testbrowser.browser import Browser
@@ -34,9 +34,14 @@ class Transaction(object):
     """Commit the code executed.
     """
 
+    def __init__(self, catalog=False):
+        self._catalog = catalog
+
     def __enter__(self):
         transaction.abort()
         transaction.begin()
+        if self._catalog:
+            CatalogingTask.get().activate()
 
     def __exit__(self, t, v, tb):
         if v is None and not transaction.isDoomed():
@@ -49,9 +54,8 @@ class CatalogTransaction(Transaction):
     """Commit the code executed, using a catalog queue
     """
 
-    def __enter__(self):
-        super(CatalogTransaction, self).__enter__()
-        task_queue.activate()
+    def __init__(self):
+        super(CatalogTransaction, self).__init__(catalog=True)
 
 
 class MockMail(object):

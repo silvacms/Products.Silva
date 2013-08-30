@@ -12,7 +12,7 @@ from zope.interface.verify import verifyObject
 
 from Products.Silva import File
 from Products.Silva.File.converters import have_command
-from Products.Silva.testing import FunctionalLayer, TestCase, tests
+from Products.Silva.testing import FunctionalLayer, TestCase, tests, Transaction
 from silva.core import interfaces
 from silva.core.services.interfaces import IMetadataService
 
@@ -35,21 +35,23 @@ class DefaultFileImplementationTestCase(TestCase):
     implementation = None
 
     def setUp(self):
-        self.root = self.layer.get_application()
+        with Transaction():
+            self.root = self.layer.get_application()
+            if self.implementation is not None:
+                self.root.service_files.storage = self.implementation
         self.layer.login('author')
 
     def create_test_file(self, filename='photo.tif'):
-        if self.implementation is not None:
-            self.root.service_files.storage = self.implementation
-        with self.layer.open_fixture(filename) as stream:
-            self.file_data = stream.read()
-            self.file_size = stream.tell()
-            stream.seek(0)
-            with tests.assertTriggersEvents(
-                'ObjectWillBeAddedEvent', 'ObjectAddedEvent',
-                'ContainerModifiedEvent', 'ObjectCreatedEvent'):
-                factory = self.root.manage_addProduct['Silva']
-                factory.manage_addFile(filename, 'Test File', stream)
+        with Transaction():
+            with self.layer.open_fixture(filename) as stream:
+                self.file_data = stream.read()
+                self.file_size = stream.tell()
+                stream.seek(0)
+                with tests.assertTriggersEvents(
+                    'ObjectWillBeAddedEvent', 'ObjectAddedEvent',
+                    'ContainerModifiedEvent', 'ObjectCreatedEvent'):
+                    factory = self.root.manage_addProduct['Silva']
+                    factory.manage_addFile(filename, 'Test File', stream)
         content =  self.root._getOb(filename)
         metadata = getUtility(IMetadataService).getMetadata(content)
         metadata.setValues('silva-extra', {

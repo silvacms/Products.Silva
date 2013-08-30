@@ -3,18 +3,16 @@
 # See also LICENSE.txt
 
 # Zope
-from AccessControl import ClassSecurityInfo, getSecurityManager
+from AccessControl import ClassSecurityInfo
 from Acquisition import aq_base
 from App.class_init import InitializeClass
-from DateTime import DateTime
 
-from zope.component import getUtility
 from five import grok
+from zope.component import getUtility
 
 # Silva
 from Products.Silva.Membership import noneMember
 from Products.Silva import SilvaPermissions as permissions
-from Products.SilvaMetadata.interfaces import IMetadataService
 
 from silva.core.interfaces import ISecurity
 from silva.core.services.interfaces import IMemberService
@@ -49,18 +47,10 @@ class Security(object):
         return info.__of__(self)
 
     security.declareProtected(
-        permissions.ChangeSilvaContent, 'update_last_author_info')
-    def update_last_author_info(self):
-        user_id = getSecurityManager().getUser().getId()
-        user = getUtility(IMemberService).get_cached_member(
-            user_id, location=self)
-        self._last_author_userid = user_id
+        permissions.ChangeSilvaContent, 'set_last_author_info')
+    def set_last_author_info(self, user):
+        self._last_author_userid = user.userid()
         self._last_author_info = aq_base(user)
-        binding = getUtility(IMetadataService).getMetadata(self)
-        if binding is None or binding.read_only:
-            return
-        now = DateTime()
-        binding.setValues('silva-extra', {'modificationtime': now})
 
 
 InitializeClass(Security)

@@ -7,11 +7,13 @@ from zipfile import ZipFile
 import re
 import io
 import unittest
+import transaction
 
 from zope.component import getAdapter, getUtility
 
 # Silva
 from Products.Silva.testing import FunctionalLayer, TestCase, TestRequest
+from Products.Silva.testing import Transaction
 
 from silva.core import interfaces
 from silva.core.interfaces.errors import ExternalReferenceError
@@ -51,6 +53,7 @@ class SilvaXMLTestCase(TestCase):
         return DATETIME_RE.sub(r'YYYY-MM-DDTHH:MM:SS', string)
 
     def assertExportFail(self, content, error=ExternalReferenceError, options={}):
+        #transaction.commit()
         exporter = Exporter(content, TestRequest(), options.copy())
         with self.assertRaises(error):
             exporter.getString()
@@ -60,6 +63,7 @@ class SilvaXMLTestCase(TestCase):
         """Verify that the xml result of an export is the same than
         the one contained in a test file.
         """
+        #transaction.commit()
         exporter = Exporter(content, TestRequest(), options.copy())
         with self.layer.open_fixture(filename) as xml_file:
             expected_xml = xml_file.read().format(
@@ -75,19 +79,21 @@ class XMLExportTestCase(SilvaXMLTestCase):
     """
 
     def setUp(self):
-        super(XMLExportTestCase, self).setUp()
-        factory = self.root.manage_addProduct['Silva']
-        factory.manage_addFolder(
-            'folder', 'This is <boo>a</boo> folder',
-            policy_name='Silva AutoTOC')
+        with Transaction():
+            super(XMLExportTestCase, self).setUp()
+            factory = self.root.manage_addProduct['Silva']
+            factory.manage_addFolder(
+                'folder', 'This is <boo>a</boo> folder',
+                policy_name='Silva AutoTOC')
 
     def test_folder_autotoc_index(self):
         """Export a folder.
         """
-        factory = self.root.folder.manage_addProduct['Silva']
-        factory.manage_addFolder('folder', 'This is &another; a subfolder')
-        factory = self.root.folder.folder.manage_addProduct['Silva']
-        factory.manage_addAutoTOC('index', 'This is &another; a subfolder')
+        with Transaction():
+            factory = self.root.folder.manage_addProduct['Silva']
+            factory.manage_addFolder('folder', 'This is &another; a subfolder')
+            factory = self.root.folder.folder.manage_addProduct['Silva']
+            factory.manage_addAutoTOC('index', 'This is &another; a subfolder')
 
         exporter = self.assertExportEqual(
             self.root.folder,
@@ -99,8 +105,9 @@ class XMLExportTestCase(SilvaXMLTestCase):
         """Test the fallback exporter: create a Zope 2 folder in a
         Silva folder and export it.
         """
-        factory = self.root.folder.manage_addProduct['Silva']
-        factory.manage_addMockupVersionedContent('mockup', 'Mockup Content')
+        with Transaction():
+            factory = self.root.folder.manage_addProduct['Silva']
+            factory.manage_addMockupVersionedContent('mockup', 'Mockup Content')
 
         exporter = self.assertExportEqual(
             self.root.folder,
@@ -118,15 +125,16 @@ class XMLExportTestCase(SilvaXMLTestCase):
     def test_indexer(self):
         """Export an indexer.
         """
-        factory = self.root.folder.manage_addProduct['Silva']
-        factory.manage_addIndexer('indexer', 'Index of this site')
+        with Transaction():
+            factory = self.root.folder.manage_addProduct['Silva']
+            factory.manage_addIndexer('indexer', 'Index of this site')
 
-        metadata = getUtility(IMetadataService).getMetadata(
-            self.root.folder.indexer)
-        metadata.setValues(
-            'silva-extra',
-            {'content_description': 'Index the content of your website.',
-             'comment': 'Nothing special is required.'})
+            metadata = getUtility(IMetadataService).getMetadata(
+                self.root.folder.indexer)
+            metadata.setValues(
+                'silva-extra',
+                {'content_description': 'Index the content of your website.',
+                 'comment': 'Nothing special is required.'})
 
         exporter = self.assertExportEqual(
             self.root.folder,
@@ -138,11 +146,12 @@ class XMLExportTestCase(SilvaXMLTestCase):
     def test_ghost(self):
         """Export a ghost.
         """
-        factory = self.root.folder.manage_addProduct['Silva']
-        factory.manage_addLink(
-            'link', 'New website', url='http://infrae.com/', relative=False)
-        factory.manage_addGhost(
-            'ghost', None, haunted=self.root.folder.link)
+        with Transaction():
+            factory = self.root.folder.manage_addProduct['Silva']
+            factory.manage_addLink(
+                'link', 'New website', url='http://infrae.com/', relative=False)
+            factory.manage_addGhost(
+                'ghost', None, haunted=self.root.folder.link)
 
         exporter = self.assertExportEqual(
             self.root.folder,
@@ -155,12 +164,13 @@ class XMLExportTestCase(SilvaXMLTestCase):
         """Export a ghost that link something outside of export
         tree. It should error by default.
         """
-        factory = self.root.manage_addProduct['Silva']
-        factory.manage_addLink(
-            'link', 'New website', url='http://infrae.com/', relative=False)
-        factory = self.root.folder.manage_addProduct['Silva']
-        factory.manage_addGhost(
-            'ghost', None, haunted=self.root.link)
+        with Transaction():
+            factory = self.root.manage_addProduct['Silva']
+            factory.manage_addLink(
+                'link', 'New website', url='http://infrae.com/', relative=False)
+            factory = self.root.folder.manage_addProduct['Silva']
+            factory.manage_addGhost(
+                'ghost', None, haunted=self.root.link)
 
         self.assertExportFail(self.root.folder)
 
@@ -168,13 +178,14 @@ class XMLExportTestCase(SilvaXMLTestCase):
         """Export a ghost that link something outside of export
         tree with the option external_references set to True.
         """
-        factory = self.root.manage_addProduct['Silva']
-        factory.manage_addLink(
-            'link', 'New website', url='http://infrae.com/', relative=False)
-        factory = self.root.folder.manage_addProduct['Silva']
-        factory.manage_addGhost(
-            'ghost', None, haunted=self.root.link)
-        version = self.root.folder.ghost.get_editable()
+        with Transaction():
+            factory = self.root.manage_addProduct['Silva']
+            factory.manage_addLink(
+                'link', 'New website', url='http://infrae.com/', relative=False)
+            factory = self.root.folder.manage_addProduct['Silva']
+            factory.manage_addGhost(
+                'ghost', None, haunted=self.root.link)
+            version = self.root.folder.ghost.get_editable()
 
         exporter = self.assertExportEqual(
             self.root.folder,
@@ -193,20 +204,20 @@ class XMLExportTestCase(SilvaXMLTestCase):
     def test_ghost_folder(self):
         """Export a ghost folder.
         """
-        self.layer.login('chiefeditor')
-        factory = self.root.folder.manage_addProduct['Silva']
-        factory.manage_addFolder('container', 'Content')
-        factory.manage_addGhostFolder(
-            'ghost', None, haunted=self.root.folder.container)
-        factory = self.root.folder.container.manage_addProduct['Silva']
-        factory.manage_addAutoTOC('index', 'Content')
-        factory.manage_addLink(
-            'link', 'Infrae', url='http://infrae.com', relative=False)
-        factory.manage_addFile('file', 'Torvald blob')
+        with Transaction():
+            self.layer.login('chiefeditor')
+            factory = self.root.folder.manage_addProduct['Silva']
+            factory.manage_addFolder('container', 'Content')
+            factory.manage_addGhostFolder(
+                'ghost', None, haunted=self.root.folder.container)
+            factory = self.root.folder.container.manage_addProduct['Silva']
+            factory.manage_addAutoTOC('index', 'Content')
+            factory.manage_addLink(
+                'link', 'Infrae', url='http://infrae.com', relative=False)
+            factory.manage_addFile('file', 'Torvald blob')
+            self.root.folder.ghost.haunt()
 
-        self.root.folder.ghost.haunt()
         self.layer.login('author')
-
         exporter = self.assertExportEqual(
             self.root.folder,
             'test_export_ghostfolder.silvaxml')
@@ -223,31 +234,33 @@ class XMLExportTestCase(SilvaXMLTestCase):
     def test_ghost_folder_external_reference(self):
         """Export a ghost folder but not the ghosted folder.
         """
-        self.layer.login('chiefeditor')
-        factory = self.root.folder.manage_addProduct['Silva']
-        factory.manage_addFolder('container', 'Content')
-        factory = self.root.manage_addProduct['Silva']
-        factory.manage_addGhostFolder(
-            'ghost', None, haunted=self.root.folder.container)
-        factory = self.root.folder.container.manage_addProduct['Silva']
-        factory.manage_addLink(
-            'link', 'Infrae', url='http://infrae.com', relative=False)
-        factory.manage_addFile('file', 'Torvald blob')
+        with Transaction():
+            self.layer.login('chiefeditor')
+            factory = self.root.folder.manage_addProduct['Silva']
+            factory.manage_addFolder('container', 'Content')
+            factory = self.root.manage_addProduct['Silva']
+            factory.manage_addGhostFolder(
+                'ghost', None, haunted=self.root.folder.container)
+            factory = self.root.folder.container.manage_addProduct['Silva']
+            factory.manage_addLink(
+                'link', 'Infrae', url='http://infrae.com', relative=False)
+            factory.manage_addFile('file', 'Torvald blob')
+            self.root.ghost.haunt()
 
-        self.root.ghost.haunt()
         self.layer.login('author')
         self.assertExportFail(self.root.ghost)
 
     def test_link_relative(self):
         """Export a link with to an another Silva object.
         """
-        factory = self.root.folder.manage_addProduct['Silva']
-        factory.manage_addFile('file', 'Torvald file')
-        factory.manage_addFolder('new', 'New changes')
-        factory = self.root.folder.new.manage_addProduct['Silva']
-        factory.manage_addLink(
-            'link', 'Last file',
-            relative=True, target=self.root.folder.file)
+        with Transaction():
+            factory = self.root.folder.manage_addProduct['Silva']
+            factory.manage_addFile('file', 'Torvald file')
+            factory.manage_addFolder('new', 'New changes')
+            factory = self.root.folder.new.manage_addProduct['Silva']
+            factory.manage_addLink(
+                'link', 'Last file',
+                relative=True, target=self.root.folder.file)
 
         exporter = self.assertExportEqual(
             self.root.folder,
@@ -265,20 +278,22 @@ class XMLExportTestCase(SilvaXMLTestCase):
     def test_link_relative_external_reference(self):
         """Export a link with to an another Silva object.
         """
-        factory = self.root.manage_addProduct['Silva']
-        factory.manage_addFile('file', 'Torvald file')
-        factory = self.root.folder.manage_addProduct['Silva']
-        factory.manage_addLink(
-            'link', 'Last file', relative=True, target=self.root.file)
+        with Transaction():
+            factory = self.root.manage_addProduct['Silva']
+            factory.manage_addFile('file', 'Torvald file')
+            factory = self.root.folder.manage_addProduct['Silva']
+            factory.manage_addLink(
+                'link', 'Last file', relative=True, target=self.root.file)
 
         self.assertExportFail(self.root.folder)
 
     def test_missing_references(self):
         """Test export of missing references.
         """
-        factory = self.root.folder.manage_addProduct['Silva']
-        factory.manage_addLink('link', 'Broken Link', relative=True)
-        factory.manage_addGhost('ghost', None)
+        with Transaction():
+            factory = self.root.folder.manage_addProduct['Silva']
+            factory.manage_addLink('link', 'Broken Link', relative=True)
+            factory.manage_addGhost('ghost', None)
 
         exporter = self.assertExportEqual(
             self.root.folder, 'test_export_broken_references.silvaxml')
@@ -292,24 +307,25 @@ class XMLExportVersionsTestCase(SilvaXMLTestCase):
     """
 
     def setUp(self):
-        super(XMLExportVersionsTestCase, self).setUp()
-        self.layer.login('editor')
-        factory = self.root.manage_addProduct['Silva']
-        factory.manage_addFolder('folder', 'Export Folder')
-        factory = self.root.folder.manage_addProduct['Silva']
-        factory.manage_addFile('file', 'Torvald file')
-        factory.manage_addFolder('new', 'New changes')
-        factory = self.root.folder.new.manage_addProduct['Silva']
-        factory.manage_addLink(
-            'link', 'Initial file',
-            relative=True, target=self.root.folder.file)
-        link = self.root.folder.new.link
-        IPublicationWorkflow(link).publish()
-        IPublicationWorkflow(link).new_version()
-        link.get_editable().set_title('Updated file')
-        IPublicationWorkflow(link).publish()
-        IPublicationWorkflow(link).new_version()
-        link.get_editable().set_title('Final version of the file')
+        with Transaction():
+            super(XMLExportVersionsTestCase, self).setUp()
+            self.layer.login('editor')
+            factory = self.root.manage_addProduct['Silva']
+            factory.manage_addFolder('folder', 'Export Folder')
+            factory = self.root.folder.manage_addProduct['Silva']
+            factory.manage_addFile('file', 'Torvald file')
+            factory.manage_addFolder('new', 'New changes')
+            factory = self.root.folder.new.manage_addProduct['Silva']
+            factory.manage_addLink(
+                'link', 'Initial file',
+                relative=True, target=self.root.folder.file)
+            link = self.root.folder.new.link
+            IPublicationWorkflow(link).publish()
+            IPublicationWorkflow(link).new_version()
+            link.get_editable().set_title('Updated file')
+            IPublicationWorkflow(link).publish()
+            IPublicationWorkflow(link).new_version()
+            link.get_editable().set_title('Final version of the file')
 
     def test_link_editable_only_previewable(self):
         """Export only the previewable version of a a link that have
@@ -351,9 +367,10 @@ class XMLExportVersionsTestCase(SilvaXMLTestCase):
         """Export only the viewable version of a link that have
         multiple versions available, but none published.
         """
-        link = self.root.folder.new.link
-        IPublicationWorkflow(link).publish()
-        IPublicationWorkflow(link).close()
+        with Transaction():
+            link = self.root.folder.new.link
+            IPublicationWorkflow(link).publish()
+            IPublicationWorkflow(link).close()
 
         # XXX This will trigger a bug on import. We need to find a
         # solution that doesn't imply to change all importers again.
@@ -375,9 +392,10 @@ class XMLExportVersionsTestCase(SilvaXMLTestCase):
         """Export only the previewable version of a link that have
         multiple versions available, but none published.
         """
-        link = self.root.folder.new.link
-        IPublicationWorkflow(link).publish()
-        IPublicationWorkflow(link).close()
+        with Transaction():
+            link = self.root.folder.new.link
+            IPublicationWorkflow(link).publish()
+            IPublicationWorkflow(link).close()
 
         exporter = self.assertExportEqual(
             self.root.folder,
@@ -417,17 +435,19 @@ class ZipTestCase(TestCase):
     layer = FunctionalLayer
 
     def setUp(self):
-        self.root = self.layer.get_application()
-        factory = self.root.manage_addProduct['Silva']
-        factory.manage_addFolder('folder', 'Folder')
+        with Transaction():
+            self.root = self.layer.get_application()
+            factory = self.root.manage_addProduct['Silva']
+            factory.manage_addFolder('folder', 'Folder')
 
     def test_zip_export(self):
         """Import/export a Zip file.
         """
         # XXX This test needs improvement.
-        with self.layer.open_fixture('test1.zip') as zip_import:
-            importer = interfaces.IArchiveFileImporter(self.root.folder)
-            succeeded, failed = importer.importArchive(zip_import)
+        with Transaction():
+            with self.layer.open_fixture('test1.zip') as zip_import:
+                importer = interfaces.IArchiveFileImporter(self.root.folder)
+                succeeded, failed = importer.importArchive(zip_import)
 
         self.assertItemsEqual(
             succeeded,

@@ -3,13 +3,14 @@
 # See also LICENSE.txt
 
 import unittest
+import transaction
 
 from zope.interface.verify import verifyObject
 from zope.component import getUtility
 
 from Acquisition import aq_chain
 from DateTime import DateTime
-from Products.Silva.testing import FunctionalLayer
+from Products.Silva.testing import FunctionalLayer, Transaction
 from Products.Silva.ftesting import public_settings
 from Products.SilvaMetadata.interfaces import IMetadataService, ReadOnlyError
 
@@ -29,17 +30,21 @@ class GhostTestCase(unittest.TestCase):
         self.root = self.layer.get_application()
         self.layer.login('editor')
 
-        factory = self.root.manage_addProduct['Silva']
-        factory.manage_addMockupVersionedContent('document', 'Document')
+        with Transaction():
+            factory = self.root.manage_addProduct['Silva']
+            factory.manage_addMockupVersionedContent('document', 'Document')
+            factory.manage_addFolder('folder', 'Folder')
+            factory.manage_addImage('image', 'Image')
+
+            factory = self.root.folder.manage_addProduct['Silva']
+            factory.manage_addGhost('ghost', None)
+
         editable = self.root.document.get_editable()
         metadata = getUtility(IMetadataService).getMetadata(editable)
-        metadata.setValues('silva-extra', {
-                'modificationtime': DateTime('2011-04-25T12:00:00Z')})
-        factory.manage_addFolder('folder', 'Folder')
-        factory.manage_addImage('image', 'Image')
-
-        factory = self.root.folder.manage_addProduct['Silva']
-        factory.manage_addGhost('ghost', None)
+        metadata.setValues(
+            'silva-extra',
+            {'modificationtime': DateTime('2011-04-25T12:00:00Z')})
+        transaction.commit()
 
     def test_ghost(self):
         """Test simple ghost creation and life time.
@@ -336,34 +341,40 @@ class GhostTestCase(unittest.TestCase):
         """Test that the ghost modification_time is the same than the
         document.
         """
-        factory = self.root.manage_addProduct['Silva']
-        factory.manage_addGhost('ghost', None)
+        with Transaction():
+            factory = self.root.manage_addProduct['Silva']
+            factory.manage_addGhost('ghost', None)
         ghost = self.root.ghost
         target = self.root.document
         self.assertEqual(ghost.get_modification_datetime(), None)
 
-        ghost.get_editable().set_haunted(target)
+        with Transaction():
+            ghost.get_editable().set_haunted(target)
         self.assertEqual(ghost.get_modification_datetime(), None)
 
-        IPublicationWorkflow(ghost).publish()
+        with Transaction():
+            IPublicationWorkflow(ghost).publish()
         self.assertEqual(
             ghost.get_modification_datetime(),
             target.get_modification_datetime())
 
-        IPublicationWorkflow(ghost).new_version()
-        ghost.get_editable().set_haunted(0)
+        with Transaction():
+            IPublicationWorkflow(ghost).new_version()
+            ghost.get_editable().set_haunted(0)
         self.assertEqual(       # We still see publlised version
             ghost.get_modification_datetime(),
             target.get_modification_datetime())
 
-        IPublicationWorkflow(ghost).publish()
+        with Transaction():
+            IPublicationWorkflow(ghost).publish()
         self.assertEqual(ghost.get_modification_datetime(), None)
 
     def test_head_request(self):
         """Test HEAD requests on Ghosts.
         """
-        factory = self.root.manage_addProduct['Silva']
-        factory.manage_addGhost('ghost', None, haunted=self.root.document)
+        with Transaction():
+            factory = self.root.manage_addProduct['Silva']
+            factory.manage_addGhost('ghost', None, haunted=self.root.document)
 
         with self.layer.get_browser() as browser:
             self.assertEqual(browser.open('/root/ghost', method='HEAD'), 200)
@@ -373,7 +384,9 @@ class GhostTestCase(unittest.TestCase):
             # The ghost is broken, there is no modification date.
             self.assertNotIn('Last-Modified', browser.headers)
 
-        IPublicationWorkflow(self.root.ghost).publish()
+        with Transaction():
+            IPublicationWorkflow(self.root.ghost).publish()
+
         with self.layer.get_browser() as browser:
             self.assertEqual(browser.open('/root/ghost', method='HEAD'), 200)
             self.assertEqual(
@@ -388,14 +401,15 @@ class GhostTestCase(unittest.TestCase):
     def test_render_protected_content(self):
         """Test rendering a protected content.
         """
-        factory = self.root.manage_addProduct['Silva']
-        factory.manage_addLink(
-            'link', 'Infrae', relative=False, url='http://infrae.com')
-        factory.manage_addGhost('ghost', None, haunted=self.root.link)
+        with Transaction():
+            factory = self.root.manage_addProduct['Silva']
+            factory.manage_addLink(
+                'link', 'Infrae', relative=False, url='http://infrae.com')
+            factory.manage_addGhost('ghost', None, haunted=self.root.link)
 
-        IAccessSecurity(self.root.link).minimum_role = 'Viewer'
-        IPublicationWorkflow(self.root.link).publish()
-        IPublicationWorkflow(self.root.ghost).publish()
+            IAccessSecurity(self.root.link).minimum_role = 'Viewer'
+            IPublicationWorkflow(self.root.link).publish()
+            IPublicationWorkflow(self.root.ghost).publish()
 
         with self.layer.get_browser(public_settings) as browser:
             browser.options.follow_redirect = False
@@ -417,13 +431,14 @@ class GhostTestCase(unittest.TestCase):
         """Test rendering a ghost that points to a content that is
         closed.
         """
-        factory = self.root.manage_addProduct['Silva']
-        factory.manage_addLink(
-            'link', 'Infrae', relative=False, url='http://infrae.com')
-        factory.manage_addGhost('ghost', None, haunted=self.root.link)
+        with Transaction():
+            factory = self.root.manage_addProduct['Silva']
+            factory.manage_addLink(
+                'link', 'Infrae', relative=False, url='http://infrae.com')
+            factory.manage_addGhost('ghost', None, haunted=self.root.link)
 
-        IPublicationWorkflow(self.root.link).publish()
-        IPublicationWorkflow(self.root.ghost).publish()
+            IPublicationWorkflow(self.root.link).publish()
+            IPublicationWorkflow(self.root.ghost).publish()
 
         with self.layer.get_browser(public_settings) as browser:
             browser.options.follow_redirect = False
@@ -434,7 +449,8 @@ class GhostTestCase(unittest.TestCase):
                 browser.headers['Location'],
                 'http://infrae.com')
 
-        IPublicationWorkflow(self.root.link).close()
+        with Transaction():
+            IPublicationWorkflow(self.root.link).close()
         with self.layer.get_browser(public_settings) as browser:
             browser.options.follow_redirect = False
             self.assertEqual(
