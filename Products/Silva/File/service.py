@@ -44,7 +44,7 @@ class FilesService(SilvaService):
     grok.implements(IFilesService)
     grok.name('service_files')
     silvaconf.default_service()
-    silvaconf.icon('icons/service_files.gif')
+    silvaconf.icon('icons/service_files.png')
 
     security = ClassSecurityInfo()
 

@@ -50,7 +50,7 @@ class IconRegistryTestCase(unittest.TestCase):
         self.assertTrue(verifyObject(IIcon, icon))
         self.assertEqual(
             str(icon),
-            '++static++/silva.icons/generic.gif')
+            '++static++/silva.icons/generic.png')
 
         self.assertEqual(
             resolver.get_content_url(self.root),
@@ -66,7 +66,7 @@ class IconRegistryTestCase(unittest.TestCase):
             'http://localhost/root/++static++/silva.icons/missing.png')
         self.assertEqual(
             resolver.get_identifier_url('best content in the world'),
-            'http://localhost/root/++static++/silva.icons/generic.gif')
+            'http://localhost/root/++static++/silva.icons/generic.png')
 
         icon = resolver.get_content(self.root.pdf)
         self.assertTrue(verifyObject(IIcon, icon))
@@ -103,7 +103,7 @@ class IconRegistryTestCase(unittest.TestCase):
             '<img height="16" width="16" src="http://localhost/root/++resource++icon-Silva-Root.png" alt="Silva Root" />')
         self.assertEqual(
             resolver.get_tag(identifier='default'),
-            '<img height="16" width="16" src="http://localhost/root/++static++/silva.icons/generic.gif" alt="default" />')
+            '<img height="16" width="16" src="http://localhost/root/++static++/silva.icons/generic.png" alt="default" />')
         self.assertEqual(
             resolver.get_tag(),
             '<img height="16" width="16" src="http://localhost/root/++static++/silva.icons/missing.png" alt="Missing" />')
@@ -128,10 +128,10 @@ class IconRegistryTestCase(unittest.TestCase):
 
         icon = resolver.get_identifier(('test-silva', 'missing'))
         self.assertTrue(verifyObject(IIcon, icon))
-        self.assertEqual(str(icon), '++static++/silva.icons/generic.gif')
+        self.assertEqual(str(icon), '++static++/silva.icons/generic.png')
         self.assertEqual(
             resolver.get_identifier_url(('test-silva', 'missing')),
-            'http://localhost/root/++static++/silva.icons/generic.gif')
+            'http://localhost/root/++static++/silva.icons/generic.png')
 
         icon = resolver.get_identifier(
             ('test-silva', 'missing'), default='test-silva')

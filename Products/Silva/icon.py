@@ -159,12 +159,12 @@ def registry():
             '++static++/silva.icons/%s' % icon_name)
 
     misc_icons = [
-        ('default', None, 'generic.gif'),
+        ('default', None, 'generic.png'),
         ('meta_type', None, 'missing.png'),
-        ('meta_type', 'Silva Ghost Folder', 'ghost_folder.gif'),
-        ('meta_type', 'Silva Ghost Publication', 'ghost_publication.gif'),
+        ('meta_type', 'Silva Ghost Folder', 'ghost_folder.png'),
+        ('meta_type', 'Silva Ghost Publication', 'ghost_publication.png'),
         ('meta_type', 'Broken Silva Ghost Folder', 'ghost_broken.png'),
-        ('meta_type', 'Silva Ghost', 'ghost.gif'),
+        ('meta_type', 'Silva Ghost', 'ghost.png'),
         ('meta_type', 'Broken Silva Ghost', 'ghost_broken.png'),
     ]
     for cls, kind, icon_name in misc_icons:

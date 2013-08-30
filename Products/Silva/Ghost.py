@@ -187,7 +187,7 @@ class Ghost(VersionedContent):
     security = ClassSecurityInfo()
 
     grok.implements(IGhost)
-    silvaconf.icon('icons/ghost.gif')
+    silvaconf.icon('icons/ghost.png')
     silvaconf.version_class('GhostVersion')
 
     security.declareProtected(
