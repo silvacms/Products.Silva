@@ -10,7 +10,7 @@ from five import grok
 from silva.core.interfaces import IUpgradeTransaction
 from silva.core.services.delayed import Task
 from silva.core.services.interfaces import IMemberService, IMetadataService
-from zope.component import getUtility
+from zope.component import queryUtility
 
 
 class Key(object):
@@ -59,10 +59,12 @@ class ChangesTask(Task):
             # Don't do things.
             pass
 
+        members = queryUtility(IMemberService)
+        if members is None:
+            return
         now = DateTime()
         login = getSecurityManager().getUser().getId()
-        members = getUtility(IMemberService)
-        metadata = getUtility(IMetadataService)
+        metadata = queryUtility(IMetadataService)
 
         for change, created in self._changes.iteritems():
             # Update author
@@ -70,14 +72,15 @@ class ChangesTask(Task):
             user = members.get_cached_member(login, location=change.content)
             change.content.set_last_author_info(user)
 
-            # Update metadata
-            binding = metadata.getMetadata(change.content)
-            if binding is None or binding.read_only:
-                continue
-            values = {'modificationtime': now}
-            if created:
-                values['creationtime'] = now
-            binding.setValues('silva-extra', values)
+            if metadata is not None:
+                # Update metadata
+                binding = metadata.getMetadata(change.content)
+                if binding is None or binding.read_only:
+                    continue
+                values = {'modificationtime': now}
+                if created:
+                    values['creationtime'] = now
+                binding.setValues('silva-extra', values)
 
 
 @grok.subscribe(IUpgradeTransaction)
