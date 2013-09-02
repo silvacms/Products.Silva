@@ -77,7 +77,8 @@ class IFormatAndScalingFields(Interface):
         title=_(u"Scaling"),
         description=_(u'Image scaling for web: use width x  '
                       u'height in pixels, or one axis length, '
-                      u'or a percentage (100x200, 100x*, *x200, 40%).'),
+                      u'or a percentage (100x200, 100x*, *x200, 40%).'
+                      u'Use 100% to scale back to the orginal format.'),
         required=False)
     web_crop = silvaschema.CropCoordinates(
         title=_(u"Cropping"),
