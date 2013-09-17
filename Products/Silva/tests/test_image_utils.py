@@ -15,6 +15,13 @@ class MockImage(object):
 
 class ImageUtilsTestCase(unittest.TestCase):
 
+    def test_size(self):
+        """Test Size.
+        """
+        size = Size(10, 10)
+        self.assertEqual(size, (10, 10)) # You can compare it to a tuple.
+        self.assertNotEqual(size, (15, 10))
+
     def test_percentresizespec(self):
         """Test PercentResizeSpec used to express a resize specification.
         """

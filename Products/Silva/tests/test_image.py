@@ -58,7 +58,7 @@ class DefaultImageTestCase(TestCase):
     def test_image(self):
         """Test image content.
         """
-        image = self.root.test_image
+        image = self.root._getOb('test_image')
         self.assertTrue(verifyObject(interfaces.IAsset, image))
         self.assertTrue(verifyObject(interfaces.IImage, image))
         self.assertNotEqual(image.get_modification_datetime(), None)
@@ -71,14 +71,13 @@ class DefaultImageTestCase(TestCase):
         self.assertEquals(image.get_mime_type(), 'image/tiff')
 
         # Image methods
+        self.assertTrue(image.tag() is not None)
         self.assertEquals(image.get_format(), 'TIFF')
         self.assertEquals(image.get_web_format(), 'JPEG')
         self.assertEquals(image.get_dimensions(), (960, 1280))
         self.assertEquals(str(image.get_orientation()), "portrait")
+
         image.set_web_presentation_properties('JPEG', '100x100', '')
-        with self.assertRaises(ValueError):
-            image.get_image(hires=False, webformat=False)
-        self.assertTrue(image.tag() is not None)
         self.assertEquals(image.get_web_format(), 'JPEG')
 
         data = io.BytesIO(image.get_image(hires=False, webformat=True))
@@ -94,7 +93,18 @@ class DefaultImageTestCase(TestCase):
         self.assertEquals((960, 1280), pil_image.size)
         self.assertEquals('JPEG', pil_image.format)
 
-    def test_upload_image_with_existing_id(self):
+        with self.assertRaises(ValueError) as error:
+            image.get_image(hires=False, webformat=False)
+        self.assertEquals(
+            str(error.exception),
+            'Low resolution image in original format is not supported')
+
+    def test_set_web_presentation_properties(self):
+        """Test set web presentation.
+        """
+        image = self.root._getOb('test_image')
+
+    def test_add_image_with_existing_id(self):
         with Transaction():
             with self.layer.open_fixture('photo.tif') as image:
                 factory = self.root.manage_addProduct['Silva']

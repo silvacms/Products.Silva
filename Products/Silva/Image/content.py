@@ -96,8 +96,6 @@ def manage_addImage(context, identifier, title=None, file=None):
 class ImageFile(object):
 
     def __init__(self, image):
-        if image is None:
-            raise ValueError("Missing image.")
         self._fd = image.get_file_fd()
         self._changed = False
         try:
@@ -274,28 +272,31 @@ class Image(Asset):
 
         Automaticaly updates cached web presentation image.
         """
-        update_cache = False
+        update = False
         if self.hires_image is None:
-            update_cache = True
+            update = True
             self.hires_image = self.image
             self.image = None
-        if web_format != 'unknown':
-            if self.web_format != web_format and \
-                    web_format in self.web_formats:
+
+        # Set web format.
+        if web_format not in ('unknown', '') and self.web_format != web_format:
+            if web_format in self.web_formats:
                 self.web_format = web_format
-                update_cache = True
+                update = True
+            else:
+                raise ValueError('Unknown image format %s' % web_format)
         # check if web_scale can be parsed:
         self.get_canonical_web_scale(web_scale)
         if self.web_scale != web_scale:
-            update_cache = True
             self.web_scale = web_scale
+            update = True
         # check if web_crop can be parsed:
         self.get_crop_box(web_crop)
         if self.web_crop != web_crop:
-            update_cache = True
             # if web_crop is None it should be replaced by an empty string
             self.web_crop = web_crop and web_crop or ''
-        if self.hires_image is not None and update_cache:
+            update = True
+        if update and self.hires_image is not None:
             self._create_derived_images()
 
     security.declareProtected(
@@ -320,26 +321,25 @@ class Image(Asset):
     def get_image(self, hires=True, webformat=False):
         """Return image data.
         """
-        image = None
         if hires:
-            # You want hires
-            image = self.hires_image
-            if webformat and image is not None:
-                # Hires in webformat
-                with ImageFile(image) as working:
-                    data = working.save(self.web_format)
-                if data is not None:
-                    return data.getvalue()
-        else:
-            # Resized version
+            if self.hires_image is not None:
+                if webformat:
+                    # Create web format of original image.
+                    with ImageFile(self.hires_image) as working:
+                        data = working.save(self.web_format)
+                    if data is not None:
+                        return data.getvalue()
+                # Original format of the original image is the orginal.
+                return self.hires_image.get_file()
+            return None
+        if self.image is not None:
             if webformat:
-                image = self.image
-            else:
-                raise ValueError(
-                    _(u"Low resolution image in original format is "
-                      u"not supported"))
-        if image is not None:
-            return image.get_file()
+                # Webformat of the cropped/resized image is already computed.
+                return self.image.get_file()
+            # Original format of the cropped/resize image is not possible.
+            raise ValueError(
+                _(u"Low resolution image in original format is "
+                  u"not supported"))
         return None
 
     security.declareProtected(SilvaPermissions.View, 'get_canonical_web_scale')
@@ -584,11 +584,6 @@ class Image(Asset):
                 self._image_factory('image', image_io, content_type)
             else:
                 self.image = self.hires_image
-        except ValueError as error:
-            logger.error("Web presentation creation failed for %s with %s" %
-                        ('/'.join(self.getPhysicalPath()), str(error)))
-            self.image = self.hires_image
-            return
         except IOError as error:
             logger.error("Web presentation creation failed for %s with %s" %
                         ('/'.join(self.getPhysicalPath()), str(error)))
@@ -596,6 +591,11 @@ class Image(Asset):
                 self.image = self.hires_image
                 return
             raise ValueError(str(error))
+        except ValueError as error:
+            logger.error("Web presentation creation failed for %s with %s" %
+                        ('/'.join(self.getPhysicalPath()), str(error)))
+            self.image = self.hires_image
+            return
 
     def _create_thumbnail(self):
         try:
@@ -605,14 +605,14 @@ class Image(Asset):
             if thumb:
                 content_type = self._web2ct[self.web_format]
                 self._image_factory('thumbnail_image', thumb, content_type)
-        except IOError, e:
+        except IOError as error:
             logger.info("Thumbnail creation failed for %s with %s" %
-                        ('/'.join(self.getPhysicalPath()), str(e)))
-            if str(e.args[0]) == "cannot read interlaced PNG files":
+                        ('/'.join(self.getPhysicalPath()), str(error)))
+            if str(error.args[0]) == "cannot read interlaced PNG files":
                 self.thumbnail_image = None
                 return
             else:
-                raise ValueError(str(e))
+                raise ValueError(str(error))
         except ValueError, e:
             logger.info("Thumbnail creation failed for %s with %s" %
                         ('/'.join(self.getPhysicalPath()), str(e)))
@@ -621,17 +621,12 @@ class Image(Asset):
             return
 
     def _image_factory(self, identifier, stream, content_type=None):
-        service_files = getUtility(IFilesService)
-        new_image = service_files.new_file(identifier)
+        new_image = getUtility(IFilesService).new_file(identifier)
         setattr(self, identifier, new_image)
         new_image = getattr(self, identifier)
         new_image.set_file(stream, content_type)
         getUtility(IMimeTypeClassifier).guess_filename(new_image, self.getId())
         return new_image
-
-    def _image_is_hires(self):
-        return (self.image is not None and
-                self.image.aq_base is self.hires_image.aq_base)
 
 
 InitializeClass(Image)

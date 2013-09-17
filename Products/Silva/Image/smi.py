@@ -133,30 +133,27 @@ class InfoPortlet(SMIAssetPortlet):
     grok.order(10)
 
     def update(self):
-        self.format = self.context.web_format.lower()
-        self.dimensions = None
-        try:
-            dimensions = self.context.get_dimensions()
-            self.dimensions = dict(zip(['width', 'height'], dimensions))
-        except ValueError:
-            dimensions = None
-        self.scaling = None
-        if self.context.hires_image is not None:
-            try:
-                scaled_dimensions = self.context.get_canonical_web_scale()
-                if scaled_dimensions != dimensions:
-                    self.scaling = dict(
-                        zip(['width', 'height'], scaled_dimensions))
-            except ValueError:
-                scaled_dimensions = None
         self.thumbnail = None
+        self.dimensions = None
+        self.original_available = False
+        self.original_dimensions = None
+        self.web_format = self.context.web_format.lower()
+        dimensions = self.context.get_dimensions(hires=False)
+        if dimensions != (0, 0):
+            self.dimensions = dict(zip(['width', 'height'], dimensions))
+
+        if self.context.hires_image is not None:
+            self.original_available = True
+            original_dimensions = self.context.get_dimensions(hires=True)
+            if original_dimensions not in (dimensions, (0, 0)):
+                self.original_dimensions = dict(
+                    zip(['width', 'height'], original_dimensions))
+
         if self.context.thumbnail_image:
             self.thumbnail = self.context.tag(request=self.request,
                                               preview=True,
                                               thumbnail=True)
-        self.original = self.context.url(request=self.request,
-                                         preview=True,
-                                         hires=True)
+
         self.orientation = self.context.get_orientation()
         self.orientation_cls = unicode(self.orientation)
 

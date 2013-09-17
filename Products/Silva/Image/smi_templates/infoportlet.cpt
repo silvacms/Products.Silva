@@ -2,7 +2,7 @@
      i18n:domain="silva">
   <h4 i18n:translate="">Format</h4>
   <p i18n:translate="">
-    <span i18n:name="format" tal:replace="viewlet.format" /> image
+    <span i18n:name="format" tal:replace="viewlet.web_format" /> image
   </p>
 
   <h4 i18n:translate="">Dimensions</h4>
@@ -10,11 +10,9 @@
      i18n:translate="">
     unknown
   </p>
-  <p tal:condition="viewlet.dimensions">
-    <!-- Template is not properly indented to prevent a spaces before 'x' and '.' -->
-    <tal:original i18n:translate="">
-      <span tal:replace="viewlet.dimensions.width" i18n:name="width"/>x<span tal:replace="viewlet.dimensions.height" i18n="height" /> pixels</tal:original><tal:scaled tal:condition="viewlet.scaling" i18n:translate="">
-      scaled to <span tal:replace="viewlet.scaling.width" i18n:name="width"/>x<span tal:replace="viewlet.scaling.height" i18n="height" /> pixels</tal:scaled>
+  <!-- Template is not properly indented to prevent a spaces before 'x'-->
+  <p tal:condition="viewlet.dimensions" i18n:translate="">
+    <span tal:replace="viewlet.dimensions.width" i18n:name="width"/>x<span tal:replace="viewlet.dimensions.height" i18n="height" /> pixels
   </p>
 
   <tal:thumbnail tal:condition="viewlet.thumbnail">
@@ -24,15 +22,24 @@
     </p>
   </tal:thumbnail>
 
-  <h4 i18n:translate="">Original</h4>
-  <div class="external-controls">
-    <a title="View the original image"
-       class="open-screen form-button ui-state-default" rel="preview/hires"
-       i18n:attributes="title">
-      <ins class="ui-icon ui-icon-search"></ins>
-      <tal:msg i18n:translate="">View unscaled image</tal:msg>
-    </a>
-  </div>
+  <tal:original tal:condition="viewlet.original_available">
+    <h4 i18n:translate="">Original</h4>
+    <!-- Template is not properly indented to prevent a spaces before 'x'-->
+    <p tal:condition="viewlet.original_dimensions" i18n:translate="">
+      Original dimensions are <span tal:replace="viewlet.original_dimensions.width" i18n:name="width"/>x<span tal:replace="viewlet.original_dimensions.height" i18n="height" /> pixels.
+    </p>
+    <p tal:condition="not: viewlet.original_dimensions" i18n:translate="">
+      Original image is not resized or cropped.
+    </p>
+    <div class="external-controls">
+      <a title="View the original image"
+         class="open-screen form-button ui-state-default" rel="preview/hires"
+         i18n:attributes="title">
+        <ins class="ui-icon ui-icon-search"></ins>
+        <tal:msg i18n:translate="">View unscaled image</tal:msg>
+      </a>
+    </div>
+  </tal:original>
 
   <h4 i18n:translate="">Orientation</h4>
   <p>
