@@ -268,7 +268,6 @@ class Image(Asset):
         web_scale (str): WidthXHeight or nn.n%.
         web_crop (str): X1xY1-X2xY2, crop-box or empty for no cropping.
 
-        Raises ValueError if web_scale cannot be parsed.
 
         Automaticaly updates cached web presentation image.
         """
@@ -286,7 +285,12 @@ class Image(Asset):
             else:
                 raise ValueError('Unknown image format %s' % web_format)
         # check if web_scale can be parsed:
-        self.get_canonical_web_scale(web_scale)
+        try:
+            self.get_canonical_web_scale(web_scale)
+        except ValueError:
+            # if not, we set web_scale back to default value
+            web_scale = '100%'
+
         if self.web_scale != web_scale:
             self.web_scale = web_scale
             update = True
@@ -719,4 +723,3 @@ def image_added(image, event):
         if image_file is None:
             continue
         guess_filename(image_file, event.newName)
-

@@ -53,7 +53,7 @@ class DefaultImageTestCase(TestCase):
         image = self.root._getOb('test_image')
         metadata = getUtility(IMetadataService).getMetadata(image)
         metadata.setValues('silva-extra', {
-                'modificationtime': DateTime('2010-04-25T12:00:00Z')})
+            'modificationtime': DateTime('2010-04-25T12:00:00Z')})
 
     def test_image(self):
         """Test image content.
@@ -103,6 +103,32 @@ class DefaultImageTestCase(TestCase):
         """Test set web presentation.
         """
         image = self.root._getOb('test_image')
+        original_dimensions = image.get_dimensions()
+
+        ## resizing image to 200x100.
+        image.set_web_presentation_properties('', '200x100', '')
+        ## it should be 200x100 now.
+        self.assertEquals((200, 100), image.get_dimensions())
+
+        ## resizing passing an empty size paramenter.
+        image.set_web_presentation_properties('', '', '')
+        ## it should be back to the original size now (100%).
+        self.assertEquals(original_dimensions, image.get_dimensions())
+
+        ## resizing passing an invalid size parameter.
+        image.set_web_presentation_properties('', 'invalid image size', '')
+        ## it should still have the original size.
+        self.assertEquals(original_dimensions, image.get_dimensions())
+
+        ## resizing image to 370x230.
+        image.set_web_presentation_properties('', '370x230', '')
+        ## it should be 370x230 now.
+        self.assertEquals((370, 230), image.get_dimensions())
+
+        ## resizing passing an invalid size parameter (again).
+        image.set_web_presentation_properties('', ' again an invalid image size ', '')
+        ## it should be back to the original size now (100%).
+        self.assertEquals(original_dimensions, image.get_dimensions())
 
     def test_add_image_with_existing_id(self):
         with Transaction():
@@ -110,7 +136,8 @@ class DefaultImageTestCase(TestCase):
                 factory = self.root.manage_addProduct['Silva']
                 factory.manage_addImage('test_image_id', 'Test Image 1', image)
                 with self.assertRaises(ValueError) as error:
-                    factory.manage_addImage('test_image_id', 'Test Image 2', image)
+                    factory.manage_addImage('test_image_id',
+                                            'Test Image 2', image)
 
         self.assertEqual(
             str(error.exception),
@@ -267,7 +294,8 @@ class DefaultImageTestCase(TestCase):
         """If you access the preview of an image, the cache should be disabled.
         """
         with self.layer.get_browser() as browser:
-            self.assertEqual(browser.open('/root/++preview++/test_image?thumbnail'), 200)
+            self.assertEqual(
+                browser.open('/root/++preview++/test_image?thumbnail'), 200)
             self.assertEqual(
                 browser.headers['Content-Disposition'],
                 'inline;filename=test_image.jpeg')
@@ -298,7 +326,8 @@ class DefaultImageTestCase(TestCase):
         data = self.root.test_image.image
         with self.layer.get_browser() as browser:
             browser.options.handle_errors = False
-            self.assertEquals(browser.open('/root/test_image', method='HEAD'), 200)
+            self.assertEquals(
+                browser.open('/root/test_image', method='HEAD'), 200)
             self.assertEquals(
                 browser.headers['Content-Disposition'],
                 'inline;filename=test_image.jpeg')
