@@ -180,6 +180,7 @@ class SilvaLayer(BrowserLayer):
             app.root._setObject(MAILHOST_ID, MockMailHost(MAILHOST_ID))
         if 'service_ui' in app.root.objectIds():
             app.root.service_ui.test_mode = True
+            app.root.service_ui.folder_goto_menu = True
 
         install_mockers(app.root)
 
