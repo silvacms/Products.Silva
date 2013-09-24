@@ -22,8 +22,8 @@ from infrae.testing import get_event_names, clear_events, get_events
 from infrae.testing import assertNotTriggersEvents, assertTriggersEvents
 from infrae.testing import testCleanUp
 from infrae.wsgi.testing import BrowserLayer, TestRequest
-from fanstatic.wsgi import Fanstatic
 from zope.site.hooks import setSite, setHooks
+import fanstatic
 import transaction
 
 
@@ -220,8 +220,10 @@ class SilvaLayer(BrowserLayer):
         """Return a WSGI application, that can be used to query the
         Silva Root.
         """
-        return Fanstatic(
+        return fanstatic.Fanstatic(
             self._test_wsgi_application,
+            minified=True,
+            bundle=True,
             publisher_signature='++static++')
 
     def get_browser(self, settings=None):
