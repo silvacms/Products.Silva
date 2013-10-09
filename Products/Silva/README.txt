@@ -38,3 +38,9 @@ another version can be edited at the same time.
 
 Silva is extensible with new document types and other types of content
 objects.
+
+Code repository
+===============
+
+You can find the code of this extension in Mercurial:
+https://hg.infrae.com/Products.Silva/.

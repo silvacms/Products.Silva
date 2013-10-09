@@ -1,11 +1,25 @@
 Changes
 =======
 
-
-Silva 3.0.3 (unreleased)
+Silva 3.0.3 (2013/10/09)
 ------------------------
 
-- ...
+- Fix various bugs:
+
+   - Regarding broken links and broken ghost.
+
+   - Allow empty string as resize specifier for images.
+
+
+- Refactor icon support to support different icons for different file
+  mimetypes.
+
+- Refactor and optimize how the last modification date and last author
+  is set. It is now set on contents at the end of the request, just
+  before the content is being re-index. This feature is disabled
+  during upgrade (the last modification date and author are not set on
+  content during upgrades).
+
 
 Silva 3.0.2 (2013/05/24)
 ------------------------
