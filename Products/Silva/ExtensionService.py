@@ -118,6 +118,7 @@ class ExtensionService(SilvaService, Folder):
         {'label': 'Logs', 'action':'manage_main'},
         ) + SilvaService.manage_options
 
+    _site_quota = 0
     _quota_enabled = False
     _quota_verify = False
 
@@ -179,7 +180,11 @@ class ExtensionService(SilvaService, Folder):
     def disable_quota_subsystem(self):
         """Disable quota sub-system.
         """
-        assert (self._quota_enabled)
+        if not self._quota_enabled:
+            return False
+        if self._site_quota:
+            # You cannot disable the quota system if there is a site quota.
+            return False
         root = self.get_root()
 
         # Disable metadata for quota
@@ -192,13 +197,15 @@ class ExtensionService(SilvaService, Folder):
 
         self._quota_enabled = False
         self._quota_verify = False
+        return True
 
     security.declareProtected(
         'View management screens', 'enable_quota_subsystem')
     def enable_quota_subsystem(self):
         """Enable quota sub-system.
         """
-        assert (not self._quota_enabled)
+        if self._quota_enabled:
+            return False
         root = self.get_root()
 
         # Setup metadata for quota
@@ -220,6 +227,7 @@ class ExtensionService(SilvaService, Folder):
         root.used_space = compute_used_space(root)
         self._quota_enabled = True
         self._quota_verify = True
+        return True
 
     security.declareProtected(
         'View management screens', 'upgrade_content')
@@ -245,6 +253,11 @@ class ExtensionService(SilvaService, Folder):
         if not self._quota_enabled:
             return None
         return self._quota_verify
+
+    security.declareProtected(
+        'Access contents information', 'get_site_quota')
+    def get_site_quota(self):
+        return self._site_quota
 
     security.declareProtected(
         'Access contents information', 'is_installed')

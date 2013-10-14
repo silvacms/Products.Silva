@@ -11,15 +11,16 @@ from Acquisition import aq_parent, aq_inner
 from App.special_dtml import DTMLFile
 from App.class_init import InitializeClass
 from zExceptions import BadRequest
+from zope.component import getUtility
 
 # Silva
 from Products.Silva.Folder import Folder, FolderAddForm
 from Products.Silva import SilvaPermissions, helpers
 
 from silva.core import conf as silvaconf
-from silva.core.interfaces import (
-    IPublication, IRoot, ISiteManager, IInvisibleService)
+from silva.core.interfaces import IPublication, ISiteManager, IInvisibleService
 from silva.core.interfaces import ContentError
+from silva.core.services.interfaces import IMetadataService
 from silva.translations import translate as _
 
 
@@ -102,8 +103,8 @@ class Publication(Folder):
         if value < 0:
             # Quota can't be negative.
             return False
-        if (not value) or IRoot.providedBy(self):
-            # 0 means no quota, Root don't have any parents.
+        if not value:
+            # 0 or means no quota.
             return True
         parent = aq_parent(self).get_publication()
         quota = parent.get_current_quota()
@@ -124,16 +125,16 @@ class Publication(Folder):
     def get_current_quota(self):
         """Return the current quota value on the publication.
         """
-        service_metadata = self.service_metadata
-        binding = service_metadata.getMetadata(self)
+        binding = getUtility(IMetadataService).getMetadata(self)
         try:
-            return int(binding.get('silva-quota', element_id='quota') or 0)
-        except KeyError:        # This publication object doesn't have
-                                # this metadata set
-            parent = aq_parent(self)
-            if not IRoot.providedBy(parent):
-                return parent.get_current_quota()
-            return 0
+            local = int(binding.get('silva-quota', element_id='quota') or 0)
+            if local > 0:
+                return local
+        except KeyError:
+            pass
+        # Test parent publication/root.
+        parent = aq_parent(self)
+        return parent.get_current_quota()
 
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'get_publication')

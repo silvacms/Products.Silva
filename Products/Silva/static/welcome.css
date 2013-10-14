@@ -33,6 +33,10 @@ body {
   text-align: right;
 }
 
+.action {
+  float: left;
+}
+
 .form-error, .field-error {
   color: red;
   font-weight: bold;

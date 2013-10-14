@@ -9,8 +9,12 @@
   <body>
     <div class="welcome">
       <div class="title">
-        <img src="#" alt="Silva logo"
-             tal:attributes="src view/static/silva_logo.png" />
+        <a href="#" title="Site overview"
+           i18n:attributes="title"
+           tal:attributes="href context/@@absolute_url">
+          <img src="#" alt="Silva logo"
+               tal:attributes="src view/static/silva_logo.png" />
+        </a>
         <h1 i18n:translate="">
           Welcome to Silva
           <span i18n:name="version" tal:content="view/version" />
@@ -38,6 +42,14 @@
             </tal:site>
           </li>
         </ul>
+        <p tal:condition="view/is_manager">
+          <i><a href="#" title="Manage quota"
+             tal:attributes="href string:${context/@@absolute_url}/manage.html"
+             i18n:attributes="title"
+             i18n:translate="">
+            Advanced management tasks...
+          </a></i>
+        </p>
       </div>
       <div class="new-site">
         <form action="." tal:attributes="action request/URL" method="post"
@@ -54,7 +66,7 @@
           </p>
 
           <div class="fields"
-               tal:condition="view/fieldWidgets">
+               tal:condition="view/is_manager">
             <div class="field" tal:repeat="widget view/fieldWidgets">
               <label class="field-label" for="#"
                      tal:attributes="for widget/htmlId"
@@ -82,6 +94,7 @@
               <tal:widget tal:content="structure widget/render" />
             </div>
           </div>
+          <br />
         </form>
       </div>
       <div class="info">

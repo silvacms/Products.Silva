@@ -27,22 +27,26 @@
         <input type="submit"
                name="install_documentation"
                value="install documentation"
-               tal:condition="python:context.is_installed('silva.app.document') and not hasattr(context, 'docs')"
+               tal:condition="python:context.is_installed('silva.app.document') and root._getOb('docs', None) is None"
                i18n:attributes="value" />
         <input type="submit"
                name="refresh_catalog"
                value="rebuild catalog"
                i18n:attributes="value" />
-        <input type="submit"
-               name="disable_quota_subsystem"
-               value="disable quota subsystem"
-               tal:condition="view/quota_enabled"
-               i18n:attributes="value" />
-        <input type="submit"
-               name="enable_quota_subsystem"
-               value="enable quota subsystem"
-               tal:condition="not:view/quota_enabled"
-               i18n:attributes="value" />
+        <tal:quota tal:condition="not: context/get_site_quota">
+          <!-- Site quota is not enabled, so you can enable or not the
+               feature. -->
+          <input type="submit"
+                 name="disable_quota_subsystem"
+                 value="disable quota subsystem"
+                 tal:condition="view/quota_enabled"
+                 i18n:attributes="value" />
+          <input type="submit"
+                 name="enable_quota_subsystem"
+                 value="enable quota subsystem"
+                 tal:condition="not:view/quota_enabled"
+                 i18n:attributes="value" />
+        </tal:quota>
         <input type="submit"
                name="purge_old_versions"
                value="purge old versions"
@@ -50,12 +54,18 @@
         <input type="submit" name="upgrade_all" value="upgrade content"
                onclick="if (!confirm('This will upgrade all Silva content, and may take a long time on a large site.\nThis is, however, necessary to make old Silva content work with new versions.\nAre you sure you want to continue?')) return false;"
                i18n:attributes="value" />
-        <br />
-        <br />
-        <span class="std-text">
+        <p class="std-text">
           (Software - <span tal:replace="root/get_silva_software_version">version</span> /
           Content - <span tal:replace="root/get_silva_content_version">version</span>)
-        </span>
+        </p>
+        <p class="std-text"
+           tal:condition="context/get_site_quota">
+          This site has a global quota of <span tal:replace="context/get_site_quota" /> MB.
+        </p>
+        <p class="std-text"
+           tal:condition="not: context/get_site_quota">
+          This site has no global quota restrictions.
+        </p>
       </form>
 
       <h3 i18n:translate="">Available extensions</h3>

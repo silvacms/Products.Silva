@@ -5,8 +5,9 @@
 # Zope 3
 from five import grok
 from five.localsitemanager import make_site
-from zope import schema, interface, component
+from zope import schema, interface
 from zope.event import notify
+from zope.component import getUtility
 from zope.lifecycleevent import ObjectCreatedEvent
 from zope.site.hooks import setSite, setHooks
 from zope.traversing.browser import absoluteURL
@@ -16,7 +17,7 @@ from AccessControl import ClassSecurityInfo, getSecurityManager
 from App.class_init import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from OFS.Application import Application
-from zExceptions import Unauthorized
+from zExceptions import Unauthorized, Redirect
 import Globals
 import transaction
 
@@ -33,8 +34,28 @@ from silva.core.interfaces import IRoot, ContentError
 from silva.core.interfaces.events import InstallRootEvent
 from silva.core.interfaces.events import InstallRootServicesEvent
 from silva.core.messages.interfaces import IMessageService
+from silva.core.services.interfaces import IExtensionService, IMetadataService
 from silva.translations import translate as _
 from zeam.form import silva as silvaforms
+
+
+class IQuotaRootManager(interface.Interface):
+    """Describe a quota for a Silva root.
+    """
+    identifier = schema.TextLine(
+        title=_(u"Site"),
+        readonly=True,
+        required=True)
+    quota = schema.Int(
+        title=_(u"Site quota"),
+        min=-1,
+        default=-1,
+        required=True)
+    used = schema.Float(
+        title=_(u'Used space'),
+        min=-1.0,
+        readonly=True,
+        required=True)
 
 
 class ISilvaRootAddFields(interface.Interface):
@@ -59,6 +80,7 @@ class ISilvaRootAddFields(interface.Interface):
 class ZopeWelcomePage(silvaforms.ZMIForm):
     grok.context(Application)
     grok.name('index.html')
+    grok.require('zope2.Public')
 
     fields = silvaforms.Fields(ISilvaRootAddFields)
 
@@ -67,21 +89,23 @@ class ZopeWelcomePage(silvaforms.ZMIForm):
         self.is_dev = Globals.DevelopmentMode
         self.version = extensionRegistry.get_extension('Silva').version
 
-    def is_allowed_to_add_root(self):
+    def is_manager(self):
         return getSecurityManager().checkPermission(
             'View Management Screens', self.context)
 
     @silvaforms.action(
         _(u"Authenticate first to add a new site"),
-        available=lambda form:not form.is_allowed_to_add_root())
+        identifier='login',
+        available=lambda form:not form.is_manager())
     def login(self):
-        if not self.is_allowed_to_add_root():
+        if not self.is_manager():
             raise Unauthorized("You must authenticate to add a new Silva Site")
 
     @silvaforms.action(
         _(u"Add a new site"),
-        available=lambda form:form.is_allowed_to_add_root())
-    def new_root(self):
+        identifier='add_site',
+        available=lambda form:form.is_manager())
+    def add_site(self):
         data, errors = self.extractData()
         if errors:
             return silvaforms.FAILURE
@@ -89,8 +113,7 @@ class ZopeWelcomePage(silvaforms.ZMIForm):
             data['identifier'],
             data.getDefault('title'))
         root = self.context._getOb(data['identifier'])
-        service = component.getUtility(IMessageService)
-        service.send(
+        getUtility(IMessageService).send(
             _(u"New Silva site ${identifier} added.",
               mapping={'identifier': data['identifier']}),
             self.request)
@@ -108,6 +131,76 @@ class ZopeWelcomePage(silvaforms.ZMIForm):
 
         self.redirect(absoluteURL(root, self.request) + '/edit')
         return silvaforms.SUCCESS
+
+
+class ManageSiteForm(silvaforms.ZMIComposedForm):
+    grok.context(Application)
+    grok.name('manage.html')
+
+
+class QuotaRootFactory(object):
+
+    def __init__(self, site):
+        self._site = site
+        self.identifier = site.getId()
+        self.quota = -1
+        self.used = -1
+        quota = self._site.service_extensions.get_site_quota()
+        if quota:
+            self.quota = quota
+        used = self._site.used_space
+        if used:
+            self.used = used / (1024*1014)
+
+    def update(self, value):
+        """Update the quota.
+        """
+        service = self._site.service_extensions
+        if value > 0:
+            service._site_quota = value
+            if not service.get_quota_subsystem_status():
+                try:
+                    setSite(self._site)
+                    setHooks()
+                    service.enable_quota_subsystem()
+                finally:
+                    setSite(None)
+                    setHooks()
+        else:
+            service._site_quota = None
+
+
+class SetQuotaAction(silvaforms.Action):
+    title = _(u'Set Quota')
+
+    def __call__(self, form, quota, line):
+        data, errors = line.extractData(form.tableFields)
+        if errors:
+            raise silvaforms.ActionError('Invalid quota settings.')
+        quota.update(data['quota'])
+        return silvaforms.SUCCESS
+
+
+class ManageQuotaRootForm(silvaforms.ZMISubTableForm):
+    grok.context(Application)
+    grok.view(ManageSiteForm)
+
+    label = _(u'Manage sites')
+    description = _(u'Modify the space (in MB) allocated to a complete Silva '
+                    u'site. This setting is not modifiable from within the site.')
+    ignoreContent = False
+    batchSize = 25
+    batchItemFactory = QuotaRootFactory
+    tableFields = silvaforms.Fields(IQuotaRootManager)
+    tableFields['identifier'].mode = silvaforms.DISPLAY
+    tableFields['used'].mode = silvaforms.DISPLAY
+    tableActions = silvaforms.TableActions(SetQuotaAction())
+
+    def getItems(self):
+        return self.context.objectValues('Silva Root')
+
+    def getItemIdentifier(self, item, position):
+        return item.identifier
 
 
 class Root(Publication):
@@ -137,6 +230,24 @@ class Root(Publication):
         self._content_version = self.get_silva_software_version()
 
     # MANIPULATORS
+
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'validate_wanted_quota')
+    def validate_wanted_quota(self, value, REQUEST=None):
+        """Validate the wanted quota is correct the current
+        publication.
+        """
+        if value < 0:
+            # Quota can't be negative.
+            return False
+        if not value:
+            # 0 or means no quota.
+            return True
+        # Quota can't be be bigger than the site quota.
+        if self.service_extensions._site_quota:
+            if self.service_extensions._site_quota < value:
+                return False
+        return True
 
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'to_folder')
@@ -186,9 +297,27 @@ class Root(Publication):
         site.
         """
         if not hasattr(self.aq_base, '_addables_forbidden'):
-            return 0
-        else:
-            return self._addables_forbidden.has_key(meta_type)
+            return False
+        return meta_type in self._addables_forbidden
+
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'get_current_quota')
+    def get_current_quota(self):
+        """Return the current quota value on the publication.
+        """
+        site = getUtility(IExtensionService).get_site_quota()
+        binding = getUtility(IMetadataService).getMetadata(self)
+        try:
+            local = int(binding.get('silva-quota', element_id='quota') or 0)
+            if local < 0:
+                local = 0
+        except KeyError:
+            local = 0
+        if site and local:
+            return min(site, local)
+        if site:
+            return site
+        return local
 
     security.declarePublic('get_silva_software_version')
     def get_silva_software_version(self):

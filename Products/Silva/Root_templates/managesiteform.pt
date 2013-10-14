@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html
+   i18n:domain="silva">
+  <head>
+    <title>Zope / Silva</title>
+    <link rel="stylesheet" href="#" type="text/css"
+          tal:attributes="href view/static/welcome.css" />
+  </head>
+  <body>
+    <div class="welcome">
+      <div class="title">
+        <a href="#" title="Site overview"
+           i18n:attributes="title"
+           tal:attributes="href context/@@absolute_url">
+          <img src="#" alt="Silva logo"
+               tal:attributes="src view/static/silva_logo.png" />
+        </a>
+        <h1 i18n:translate="">
+          Manage Silva sites
+        </h1>
+      </div>
+
+      <h2 tal:condition="view/label"
+          tal:content="view/label">Label</h2>
+
+      <p tal:condition="view/description"
+         tal:content="view/description">Description</p>
+
+      <p class="form-error"
+         tal:condition="view/errors">
+        There were errors:
+        <tal:error tal:repeat="error view/formErrors">
+          <br />
+          <span tal:replace="error/title" />
+        </tal:error>
+      </p>
+
+      <div class="subforms">
+        <div class="subform"
+             tal:repeat="subform view/subforms"
+             tal:content="structure subform/render">
+          Subform
+        </div>
+      </div>
+
+      <div class="actions"
+           tal:condition="view/actionWidgets">
+        <div class="action" tal:repeat="widget view/actionWidgets">
+          <tal:widget tal:content="structure widget/render" />
+        </div>
+      </div>
+
+      <div class="zope"
+           tal:content="structure context/ZopeAttributionButton">
+      </div>
+    </div>
+  </body>
+</html>
