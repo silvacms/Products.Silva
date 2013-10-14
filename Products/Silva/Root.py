@@ -167,7 +167,7 @@ class QuotaRootFactory(object):
                     setSite(None)
                     setHooks()
         else:
-            service._site_quota = None
+            service._site_quota = 0
 
 
 class SetQuotaAction(silvaforms.Action):

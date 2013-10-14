@@ -38,12 +38,47 @@ class ActivationQuotaTestCase(unittest.TestCase):
         content (same structure than the test folderAction), activate
         it, and check that all values are updated.
         """
+        # The quota is disabled by default
         service = getUtility(IExtensionService)
         self.assertEqual(service.get_quota_subsystem_status(), None)
-        service.enable_quota_subsystem()
+        self.assertEqual(service.get_site_quota(), 0)
+
+        # You can enable it.
+        self.assertEqual(service.enable_quota_subsystem(), True)
         self.assertEqual(service.get_quota_subsystem_status(), True)
-        service.disable_quota_subsystem()
+
+        # Enabling the already enabled service won't change anything.
+        self.assertEqual(service.enable_quota_subsystem(), False)
+        self.assertEqual(service.get_quota_subsystem_status(), True)
+
+        # And disabled it.
+        self.assertEqual(service.disable_quota_subsystem(), True)
         self.assertEqual(service.get_quota_subsystem_status(), None)
+
+        # If you disable it again you will get False and nothing will change.
+        self.assertEqual(service.disable_quota_subsystem(), False)
+        self.assertEqual(service.get_quota_subsystem_status(), None)
+
+    def test_activation_with_site_quota(self):
+        """If you set a site quota and activate the feature, you won't
+        be able to disable it (unless you clear the site quota).
+        """
+        service = getUtility(IExtensionService)
+        self.assertEqual(service.get_quota_subsystem_status(), None)
+
+        # Enable with site_quota.
+        service._site_quota = 100
+        self.assertEqual(service.enable_quota_subsystem(), True)
+        self.assertEqual(service.get_quota_subsystem_status(), True)
+        self.assertEqual(service.get_site_quota(), 100)
+
+        # Disable/enable won't change anything
+        self.assertEqual(service.disable_quota_subsystem(), False)
+        self.assertEqual(service.get_quota_subsystem_status(), True)
+        self.assertEqual(service.enable_quota_subsystem(), False)
+        self.assertEqual(service.get_quota_subsystem_status(), True)
+        self.assertEqual(service.disable_quota_subsystem(), False)
+        self.assertEqual(service.get_quota_subsystem_status(), True)
 
     def test_collect_quota_on_activation(self):
         """Test values update on activation.
@@ -114,34 +149,110 @@ class QuotaTestCase(unittest.TestCase):
         self.layer.login('editor')
         self.root.service_extensions.enable_quota_subsystem()
 
-    def test_validate_quota(self):
-        """Test validate quota
+    def test_validate_wanted_quota_on_publication(self):
+        """Test validate wanted quota on a publication.
         Content structure:
 
         root
-        `-- pub1
-            `-- folder1
-                |-- pub2
-                `-- pub3
+        `-- publication
+            `-- folder
+                `-- child
         """
         factory = self.root.manage_addProduct['Silva']
-        factory.manage_addPublication('pub1', 'Publication 1')
-        pub1 = self.root.pub1
-        factory = pub1.manage_addProduct['Silva']
-        factory.manage_addFolder('folder1', 'Folder 1')
-        folder1 = self.root.pub1.folder1
-        factory = folder1.manage_addProduct['Silva']
-        factory.manage_addPublication('pub2', 'Publication 2')
-        factory.manage_addPublication('pub3', 'Publication 3')
-        pub3 = self.root.pub1.folder1.pub3
+        factory.manage_addPublication('publication', 'Publication 1')
+        publication = self.root.publication
+        factory = publication.manage_addProduct['Silva']
+        factory.manage_addFolder('folder', 'Folder 1')
+        folder = self.root.publication.folder
+        factory = folder.manage_addProduct['Silva']
+        factory.manage_addPublication('child', 'Publication 3')
+        child = self.root.publication.folder.child
 
         # By default, the quota is 0
-        self.assertEqual(pub1.get_current_quota(), 0)
-        self.assertEqual(pub3.get_current_quota(), 0)
+        self.assertEqual(publication.get_current_quota(), 0)
+        self.assertEqual(child.get_current_quota(), 0)
+        self.assertEqual(self.root.get_current_quota(), 0)
 
-        # Wanted quota check if the wanted value is correct
-        self.assertFalse(pub1.validate_wanted_quota(-10))
-        self.assertTrue(pub1.validate_wanted_quota(10))
+        # Wanted quota check if the wanted value is correct. Negative
+        # is invalid. As well it can't be larger than the parent
+        # one. But larger than the current value.
+        self.assertFalse(publication.validate_wanted_quota(-10))
+        self.assertTrue(publication.validate_wanted_quota(50))
+        self.assertTrue(publication.validate_wanted_quota(0))
+
+        set_quota(self.root, 20)
+        self.assertFalse(publication.validate_wanted_quota(50))
+        self.assertTrue(publication.validate_wanted_quota(0))
+        self.assertTrue(self.root.validate_wanted_quota(30))
+
+        set_quota(publication, 10)
+        self.assertFalse(child.validate_wanted_quota(15))
+        self.assertTrue(child.validate_wanted_quota(5))
+        self.assertTrue(publication.validate_wanted_quota(15))
+
+        # Values are of now:
+        self.assertEqual(publication.get_current_quota(), 10)
+        self.assertEqual(child.get_current_quota(), 10)
+        self.assertEqual(self.root.get_current_quota(), 20)
+
+        # You can reset a quota with 0
+        set_quota(publication, 0)
+        self.assertEqual(publication.get_current_quota(), 20)
+        self.assertEqual(child.get_current_quota(), 20)
+        self.assertEqual(self.root.get_current_quota(), 20)
+
+    def test_validate_wanted_quota_on_root(self):
+        """Test validate wanted quota on a root with conformity of the
+        site quota.
+        Content structure:
+
+        root
+        `-- publication
+        """
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addPublication('publication', 'Publication 1')
+        publication = self.root.publication
+        service = self.root.service_extensions
+
+        # By default, the quota is 0 (disabled)
+        self.assertEqual(publication.get_current_quota(), 0)
+        self.assertEqual(self.root.get_current_quota(), 0)
+        self.assertEqual(service.get_site_quota(), 0)
+
+        # Set the site quota and check again to see all quota set to
+        # the site one:
+        service._site_quota = 20
+        self.assertEqual(publication.get_current_quota(), 20)
+        self.assertEqual(self.root.get_current_quota(), 20)
+        self.assertEqual(service.get_site_quota(), 20)
+
+        # You cannot set a quota on Root higher than the site quota:
+        self.assertFalse(self.root.validate_wanted_quota(30))
+        self.assertTrue(self.root.validate_wanted_quota(20))
+
+        # Same for publication:
+        self.assertFalse(publication.validate_wanted_quota(30))
+        self.assertTrue(publication.validate_wanted_quota(20))
+
+        # You can set smaller quota than the site quotas:
+        set_quota(self.root, 15)
+        set_quota(publication, 10)
+        self.assertEqual(publication.get_current_quota(), 10)
+        self.assertEqual(self.root.get_current_quota(), 15)
+        self.assertEqual(service.get_site_quota(), 20)
+
+        # And validate higher ones after:
+        self.assertTrue(self.root.validate_wanted_quota(20))
+        self.assertTrue(publication.validate_wanted_quota(15))
+
+        # You can reset all quotas:
+        set_quota(self.root, 0)
+        set_quota(publication, 0)
+
+        # And obtain the site quota again:
+        self.assertEqual(publication.get_current_quota(), 20)
+        self.assertEqual(self.root.get_current_quota(), 20)
+        self.assertEqual(service.get_site_quota(), 20)
 
     def test_folder_action(self):
         """Test that folder action update used space.
@@ -335,13 +446,15 @@ class QuotaTestCase(unittest.TestCase):
                 copier(self.root.folder)
 
     def test_cut_and_paste_do_not_raise_over_quota(self):
-        """ Test than moving to a folder would not exceed the quota.
+        """Test than moving to a folder would not exceed the quota.
         """
         factory = self.root.manage_addProduct['Silva']
         factory.manage_addFolder('folder', 'Folder')
         self.assertEqual(self.root.folder.used_space, 0)
 
-        set_quota(self.root, 2)
+        # Set a global quota of 4 MB.
+        set_quota(self.root, 4)
+        self.assertEqual(self.root.get_current_quota(), 4)
         factory = self.root.folder.manage_addProduct['Silva']
         with self.layer.open_fixture('test3.zip') as source:
             factory.manage_addFile('zipfile1.zip', 'Zip File', source)
@@ -349,16 +462,20 @@ class QuotaTestCase(unittest.TestCase):
             factory.manage_addFile('zipfile2.zip', 'Zip File', source)
 
         factory = self.root.manage_addProduct['Silva']
-        factory.manage_addPublication('pub', 'Publication')
+        factory.manage_addPublication('publication', 'Publication')
 
-        set_quota(self.root.pub, 1) # 1M
-        factory = self.root.pub.manage_addProduct['Silva']
-        with IContainerManager(self.root.pub).mover() as mover:
+        # Set the quota to 1 MB and move the folder (too small for this test).
+        set_quota(self.root.publication, 1)
+        self.assertEqual(self.root.publication.get_current_quota(), 1)
+        factory = self.root.publication.manage_addProduct['Silva']
+        with IContainerManager(self.root.publication).mover() as mover:
             with self.assertRaises(OverQuotaException):
                 mover(self.root.folder)
 
-        set_quota(self.root.pub, 0)
-        with IContainerManager(self.root.pub).mover() as mover:
+        # Delete the quota on the publication (soo retrieve root quota)
+        set_quota(self.root.publication, 0)
+        self.assertEqual(self.root.publication.get_current_quota(), 4)
+        with IContainerManager(self.root.publication).mover() as mover:
             mover(self.root.folder)
 
 
