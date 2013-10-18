@@ -46,7 +46,7 @@ class NonDefaultMimeTypes(mimetypes.MimeTypes):
     def __init__(self, filename):
         self.encodings_map = mimetypes.encodings_map.copy()
         self.suffix_map = mimetypes.suffix_map.copy()
-        self.types_map = ({}, {}) # dict for (non-strict, strict)
+        self.types_map = ({}, {})  # dict for (non-strict, strict)
         self.types_map_inv = ({}, {})
         self.read(filename, True)
 
@@ -91,7 +91,7 @@ class BaseMimeTypeClassifier(object):
         # extra table for them.
         if guessed_extension is None:
             if (content_type in _ENCODING_MIMETYPE_TO_ENCODING and
-                content_encoding is None):
+                    content_encoding is None):
                 # Compression extension often are used with some other
                 # extension. Unfortunately, at this point we might have
                 # lost that other extension. The editor has to rename
@@ -107,7 +107,7 @@ class BaseMimeTypeClassifier(object):
         if extension is not None:
             basename += extension
         if (content_encoding is not None and
-            content_encoding in _CONTENT_ENCODING_EXT):
+                content_encoding in _CONTENT_ENCODING_EXT):
             basename += _CONTENT_ENCODING_EXT[content_encoding]
         if basename != original_name:
             asset.set_filename(basename)
@@ -160,8 +160,8 @@ try:
     magic_error.argtypes = [magic_t]
 
     def error_check(result, func, args):
-        error = magic_error(args[0])
-        if error is not None:
+        if result is None:
+            error = magic_error(args[0])
             raise MagicException(error)
         return result
 
@@ -189,7 +189,7 @@ try:
     magic_load.argtypes = [magic_t, c_char_p]
     magic_load.errcheck = error_check
 
-    MAGIC_MIME = 0x000010 # Return a mime string
+    MAGIC_MIME = 0x000010  # Return a mime string
     MAGIC_COMPRESS = 0x000004
     HAVE_MAGIC = True
 
@@ -252,6 +252,7 @@ except (OSError, ImportError, AttributeError):
         def guess_file_type(self, filename):
             fd = open(filename)
             return self.buffer(fd.read(5))
+
 
 def MimeTypeClassifierFactory():
     zconf = getattr(getConfiguration(), 'product_config', {})
