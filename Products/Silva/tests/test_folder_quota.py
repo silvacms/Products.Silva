@@ -8,8 +8,9 @@ import unittest
 from zope.interface.verify import verifyObject
 from zope.component import getUtility
 
+from Products.Silva import File
 from Products.Silva.Publication import OverQuotaException
-from Products.Silva.testing import FunctionalLayer, TestRequest
+from Products.Silva.testing import FunctionalLayer, TestRequest, Transaction
 from silva.core.xml import ZipImporter
 from silva.core.interfaces import IArchiveFileImporter, IAsset, IPublication
 from silva.core.interfaces import IContainerManager
@@ -146,8 +147,12 @@ class QuotaTestCase(unittest.TestCase):
 
     def setUp(self):
         self.root = self.layer.get_application()
+        with Transaction():
+            self.root = self.layer.get_application()
+            self.root.service_files.storage = File.BlobFile
+            self.root.service_extensions.enable_quota_subsystem()
+
         self.layer.login('editor')
-        self.root.service_extensions.enable_quota_subsystem()
 
     def test_validate_wanted_quota_on_publication(self):
         """Test validate wanted quota on a publication.

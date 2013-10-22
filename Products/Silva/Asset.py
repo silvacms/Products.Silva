@@ -5,21 +5,17 @@
 import logging
 
 from five import grok
-from zope.component import queryUtility
 
 from AccessControl import ClassSecurityInfo
-from Acquisition import aq_parent
 from App.class_init import InitializeClass
 from OFS import SimpleItem
-import OFS.interfaces
 
 from Products.Silva import SilvaPermissions
-from Products.Silva.SilvaObject import ViewableObject
+from Products.Silva.SilvaObject import ViewableObject, QuotaObject
 from Products.Silva.Publishable import NonPublishable
 from Products.Silva.mangle import Bytes
 
-from silva.core.interfaces import IAsset, IImage
-from silva.core.services.interfaces import IExtensionService
+from silva.core.interfaces import IAsset
 from silva.core.smi.content import IEditScreen
 from silva.core.smi.content.metadata import ContentReferencedBy
 from silva.core.views import views as silvaviews
@@ -29,39 +25,12 @@ from zeam.form import silva as silvaforms
 logger = logging.getLogger('silva.core')
 
 
-class Asset(NonPublishable, ViewableObject, SimpleItem.SimpleItem):
+class Asset(NonPublishable, ViewableObject, QuotaObject,
+            SimpleItem.SimpleItem):
     grok.baseclass()
     grok.implements(IAsset)
 
     security = ClassSecurityInfo()
-
-    _old_size = 0               # Old size of the object.
-
-    # MANIPULATORS
-
-    security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'update_quota')
-    def update_quota(self):
-        service = queryUtility(IExtensionService)
-        if service is None:
-            return
-        verify = service.get_quota_subsystem_status()
-        if verify is None:
-            return
-
-        parent = aq_parent(self)
-        if not IImage.providedBy(parent):
-            new_size = self.get_file_size()
-            delta = new_size - self._old_size
-            if delta:
-                parent.update_quota(delta, verify)
-                self._old_size = new_size
-
-    security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'reset_quota')
-    def reset_quota(self):
-        self._old_size = self.get_file_size()
-        return self._old_size
 
     # ACCESSORS
 
@@ -87,42 +56,18 @@ class Asset(NonPublishable, ViewableObject, SimpleItem.SimpleItem):
         """
         return None
 
+    def get_quota_usage(self):
+        try:
+            return self.get_file_size()
+        except (AttributeError, NotImplementedError):
+            # Well, not all content respect its interface.
+            path = '/'.join(self.getPhysicalPath())
+            klass = str(self.__class__)
+            logger.error('bad asset object %s - %s' % (path, klass))
+            return -1
+
 
 InitializeClass(Asset)
-
-
-@grok.subscribe(IAsset, OFS.interfaces.IObjectWillBeMovedEvent)
-def asset_moved_update_quota(asset, event):
-    """Event called on Asset when they are moved to update quota on
-    parents folders.
-    """
-    if asset != event.object or event.newParent is event.oldParent:
-        return
-
-    service = queryUtility(IExtensionService)
-    if service is None:
-        return
-    verify = service.get_quota_subsystem_status()
-    if verify is None:
-        # Quota accouting is disabled
-        return
-
-    try:
-        size = asset.get_file_size()
-    except (AttributeError, NotImplementedError):
-        # Well, not all asset respect its interface.
-        path = '/'.join(asset.getPhysicalPath())
-        klass = str(asset.__class__)
-        logger.error('bad asset object %s - %s' % (path, klass))
-        return
-
-    if not size:
-        return
-
-    if event.oldParent:
-        event.oldParent.update_quota(-size, verify)
-    if event.newParent:
-        event.newParent.update_quota(size, verify)
 
 
 class AssetEditTab(silvaforms.SMIComposedForm):

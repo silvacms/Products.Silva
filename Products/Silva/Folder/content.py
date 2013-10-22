@@ -13,7 +13,6 @@ from zope.lifecycleevent import ObjectRemovedEvent
 from zope.traversing.browser import absoluteURL
 
 # Zope
-from Acquisition import aq_inner, aq_parent
 from AccessControl import ClassSecurityInfo
 from App.class_init import InitializeClass
 from OFS.Folder import Folder as BaseFolder
@@ -22,13 +21,14 @@ from OFS.subscribers import compatibilityCall
 import OFS.interfaces
 
 # Silva
+from Products.Silva.SilvaObject import QuotaContainer
 from Products.Silva.ExtensionRegistry import meta_types_for_interface
 from Products.Silva.Publishable import Publishable
 from Products.Silva import SilvaPermissions
 from Products.Silva import helpers
 
 from silva.core.interfaces import (
-    IContentImporter, INonPublishable, IPublishable, IOrderManager,
+    INonPublishable, IPublishable, IOrderManager,
     IVersionedContent, IFolder, IRoot, IContent)
 from silva.core import conf as silvaconf
 from silva.core.interfaces import ContentError
@@ -39,7 +39,7 @@ logger = logging.getLogger('silva.core')
 _marker = object()
 
 
-class Folder(Publishable, BaseFolder):
+class Folder(Publishable, QuotaContainer, BaseFolder):
     __doc__ = _("""The presentation of the information within a
        publication is structured with folders. They determine the visual
        hierarchy that a Visitor sees. Folders on the top level
@@ -65,7 +65,6 @@ class Folder(Publishable, BaseFolder):
             BaseFolder.manage_options[1:]
 
     _allow_feeds = False
-    used_space = 0
 
     def __init__(self, id):
         super(Folder, self).__init__(id)
@@ -174,25 +173,6 @@ class Folder(Publishable, BaseFolder):
         """
         raise ContentError(
             _(u"You cannot convert a folder into a folder."), self)
-
-    def _verify_quota(self):
-        # Hook to check quota. Do nothing by default.
-        pass
-
-    security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'update_quota')
-    def update_quota(self, delta, verify=True):
-        if IContentImporter.providedBy(aq_parent(self)):
-            aq_inner(self).update_quota(delta, verify)
-            return
-
-        self.used_space += delta
-        # If we add stuff, check we're not over quota.
-        if verify and delta > 0:
-            self._verify_quota()
-
-        if not IRoot.providedBy(self):
-            aq_parent(self).update_quota(delta, verify)
 
     # Silva addables
 
@@ -324,7 +304,7 @@ InitializeClass(Folder)
 
 
 @silvaconf.subscribe(IFolder, OFS.interfaces.IObjectWillBeMovedEvent)
-def folder_moved_update_quota(content, event):
+def folder_moved_update_used_quota(content, event):
     """Event called on folder, when they are moved, we want to update
     the quota on parents folders.
     """
@@ -348,8 +328,8 @@ def folder_moved_update_quota(content, event):
     if not size:
         return
     if event.oldParent:
-        event.oldParent.update_quota(-size, verify)
+        event.oldParent.update_used_quota(-size, verify)
     if event.newParent:
-        event.newParent.update_quota(size, verify)
+        event.newParent.update_used_quota(size, verify)
 
 

@@ -4,7 +4,7 @@
 
 # Zope 3
 from five import grok
-from zope.component import getUtility
+from zope.component import getUtility, queryUtility
 from zope.container.interfaces import IContainerModifiedEvent
 from zope.lifecycleevent.interfaces import IObjectAddedEvent
 from zope.lifecycleevent.interfaces import IObjectCopiedEvent
@@ -15,6 +15,7 @@ from zope.lifecycleevent.interfaces import IObjectRemovedEvent
 
 # Zope 2
 from AccessControl import ClassSecurityInfo
+from Acquisition import aq_inner, aq_parent
 from App.class_init import InitializeClass
 from OFS.interfaces import IObjectClonedEvent
 from OFS.interfaces import IObjectWillBeAddedEvent
@@ -25,9 +26,12 @@ from Products.Silva import SilvaPermissions
 from Products.Silva.Security import Security, ChangesTask
 
 # Silva adapters
-from silva.core.interfaces import ISilvaObject, IVersionedContent
+from silva.core.interfaces import ISilvaObject, IVersionedContent, IRoot
+from silva.core.interfaces import IQuotaContainer, IQuotaObject
+from silva.core.interfaces import IContentImporter
 from silva.core.services.interfaces import ICataloging
 from silva.core.services.interfaces import IMetadataService
+from silva.core.services.interfaces import IExtensionService
 
 
 class TitledObject(object):
@@ -180,6 +184,105 @@ class ViewableObject(object):
 InitializeClass(ViewableObject)
 
 
+class QuotaObject(object):
+    """A content that uses some of the site quota
+    """
+    security = ClassSecurityInfo()
+    _old_size = 0               # Old size of the object.
+
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'get_quota_usage')
+    def get_quota_usage(self):
+        return -1
+
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'update_quota')
+    def update_quota(self):
+        parent = aq_parent(self)
+        if IQuotaContainer.providedBy(parent):
+            service = queryUtility(IExtensionService)
+            if service is None:
+                return
+            verify = service.get_quota_subsystem_status()
+            if verify is None:
+                return
+
+            # Every content must be inside a container (unless they
+            # are inside an image ...).
+            new_size = self.get_quota_usage()
+            if new_size < 0:
+                # Broken quota usage
+                return
+            delta = new_size - self._old_size
+            if delta:
+                parent.update_used_quota(delta, verify)
+                self._old_size = new_size
+
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'reset_quota')
+    def reset_quota(self):
+        self._old_size = max(0, self.get_quota_usage())
+        return self._old_size
+
+InitializeClass(QuotaObject)
+
+
+class QuotaContainer(object):
+    """A container that aggregate multiple quota objects
+    """
+    security = ClassSecurityInfo()
+    used_space = 0
+
+    def _verify_quota(self):
+        # Hook to check quota. Do nothing by default.
+        pass
+
+    security.declarePrivate('update_used_quota')
+    def update_used_quota(self, delta, verify=True):
+        if IContentImporter.providedBy(aq_parent(self)):
+            aq_inner(self).update_used_quota(delta, verify)
+            return
+
+        self.used_space += delta
+        # If we add stuff, check we're not over quota.
+        if verify and delta > 0:
+            self._verify_quota()
+
+        if not IRoot.providedBy(self):
+            container = aq_parent(self)
+            if container is not None:
+                container.update_used_quota(delta, verify)
+
+InitializeClass(QuotaContainer)
+
+
+@grok.subscribe(IQuotaObject, IObjectWillBeMovedEvent)
+def update_moved_content_quota(content, event):
+    """Event called on a quotable when they are moved to update quota
+    on parents folders.
+    """
+    if content != event.object or event.newParent is event.oldParent:
+        return
+
+    service = queryUtility(IExtensionService)
+    if service is None:
+        return
+
+    verify = service.get_quota_subsystem_status()
+    if verify is None:
+        # Quota accouting is disabled
+        return
+
+    size = content.get_quota_usage()
+    if not size or size < 0:
+        return
+
+    if event.oldParent and IQuotaContainer.providedBy(event.oldParent):
+        event.oldParent.update_used_quota(-size, verify)
+    if event.newParent and IQuotaContainer.providedBy(event.newParent):
+        event.newParent.update_used_quota(size, verify)
+
+
 @grok.subscribe(ISilvaObject, IObjectCreatedEvent)
 @grok.subscribe(ISilvaObject, IObjectClonedEvent)
 def content_created(content, event):
@@ -206,6 +309,16 @@ def index_and_update_author_modified_content(content, event):
         return
     ChangesTask.get().modified(content)
     ICataloging(content).reindex()
+
+
+@grok.subscribe(IQuotaObject, IObjectCreatedEvent)
+def update_quota_created(content, event):
+    content.update_quota()
+
+
+@grok.subscribe(IQuotaObject, IObjectModifiedEvent)
+def update_quota_modified(content, event):
+    content.update_quota()
 
 
 @grok.subscribe(ISilvaObject, IObjectMovedEvent)

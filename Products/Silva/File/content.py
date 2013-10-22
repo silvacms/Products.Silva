@@ -14,9 +14,10 @@ from ZODB import blob
 from five import grok
 from zope.component import getUtility
 from zope.event import notify
-from zope.lifecycleevent import ObjectCreatedEvent
-from zope.lifecycleevent import ObjectModifiedEvent
-import zope.lifecycleevent.interfaces
+from zope.lifecycleevent import ObjectCreatedEvent, ObjectModifiedEvent
+from zope.lifecycleevent.interfaces import IObjectMovedEvent
+from zope.lifecycleevent.interfaces import IObjectCreatedEvent
+from zope.lifecycleevent.interfaces import IObjectModifiedEvent
 
 # Zope 2
 from AccessControl import ClassSecurityInfo
@@ -299,7 +300,7 @@ class ZODBFile(File):
             self._file.content_type = 'text/plain; charset=utf-8'
         self._content_encoding = content_encoding
         if not interfaces.IImage.providedBy(aq_parent(self)):
-            # If we are not a storage of an image, trigger an event.
+        #    # If we are not a storage of an image, trigger an event.
             notify(ObjectModifiedEvent(self))
 
     security.declareProtected(
@@ -365,7 +366,7 @@ class BlobFile(File):
         if self._content_type == 'text/plain':
             self._content_type = 'text/plain; charset=utf-8'
         if not interfaces.IImage.providedBy(aq_parent(self)):
-            # If we are not a storage of an image, trigger an event.
+        #    # If we are not a storage of an image, trigger an event.
             notify(ObjectModifiedEvent(self))
 
     security.declareProtected(
@@ -374,7 +375,7 @@ class BlobFile(File):
         with self._file.open('w') as descriptor:
             descriptor.write(text)
         if not interfaces.IImage.providedBy(aq_parent(self)):
-            # If we are not a storage of an image, trigger an event.
+        #    # If we are not a storage of an image, trigger an event.
             notify(ObjectModifiedEvent(self))
 
     security.declareProtected(
@@ -423,16 +424,15 @@ class FilePayload(grok.Adapter):
         return self.context.get_file()
 
 
-@grok.subscribe(
-    interfaces.IFile, zope.lifecycleevent.interfaces.IObjectModifiedEvent)
+@grok.subscribe(interfaces.IFile, IObjectModifiedEvent)
+@grok.subscribe(interfaces.IFile, IObjectCreatedEvent)
 def file_modified(content, event):
     getUtility(IMimeTypeClassifier).guess_filename(content, content.getId())
-    content.update_quota()
 
 
-@grok.subscribe(
-    interfaces.IFile, zope.lifecycleevent.interfaces.IObjectMovedEvent)
+@grok.subscribe(interfaces.IFile, IObjectMovedEvent)
 def file_added(content, event):
     if content is not event.object or event.newName is None:
         return
     getUtility(IMimeTypeClassifier).guess_filename(content, event.newName)
+
