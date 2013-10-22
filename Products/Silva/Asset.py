@@ -11,7 +11,8 @@ from App.class_init import InitializeClass
 from OFS import SimpleItem
 
 from Products.Silva import SilvaPermissions
-from Products.Silva.SilvaObject import ViewableObject, QuotaObject
+from Products.Silva.SilvaObject import ViewableObject
+from Products.Silva.QuotaObject import QuotaObject
 from Products.Silva.Publishable import NonPublishable
 from Products.Silva.mangle import Bytes
 

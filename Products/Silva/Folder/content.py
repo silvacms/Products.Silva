@@ -6,7 +6,6 @@
 import logging
 
 from five import grok
-from zope.component import queryUtility
 from zope.container.contained import notifyContainerModified
 from zope.event import notify
 from zope.lifecycleevent import ObjectRemovedEvent
@@ -18,21 +17,19 @@ from App.class_init import InitializeClass
 from OFS.Folder import Folder as BaseFolder
 from OFS.event import ObjectWillBeRemovedEvent
 from OFS.subscribers import compatibilityCall
-import OFS.interfaces
 
 # Silva
-from Products.Silva.SilvaObject import QuotaContainer
-from Products.Silva.ExtensionRegistry import meta_types_for_interface
-from Products.Silva.Publishable import Publishable
 from Products.Silva import SilvaPermissions
 from Products.Silva import helpers
+from Products.Silva.ExtensionRegistry import meta_types_for_interface
+from Products.Silva.Publishable import Publishable
+from Products.Silva.QuotaObject import QuotaContainer
 
 from silva.core.interfaces import (
     INonPublishable, IPublishable, IOrderManager,
-    IVersionedContent, IFolder, IRoot, IContent)
+    IVersionedContent, IFolder, IContent)
 from silva.core import conf as silvaconf
 from silva.core.interfaces import ContentError
-from silva.core.services.interfaces import IExtensionService
 from silva.translations import translate as _
 
 logger = logging.getLogger('silva.core')
@@ -302,34 +299,5 @@ class Folder(Publishable, QuotaContainer, BaseFolder):
 
 InitializeClass(Folder)
 
-
-@silvaconf.subscribe(IFolder, OFS.interfaces.IObjectWillBeMovedEvent)
-def folder_moved_update_used_quota(content, event):
-    """Event called on folder, when they are moved, we want to update
-    the quota on parents folders.
-    """
-    if content != event.object or IRoot.providedBy(content):
-        # Root is being destroyed, we don't care about quota anymore.
-        return
-
-    if event.newParent is event.oldParent:
-        # For rename event, we don't need to do something.
-        return
-
-    service = queryUtility(IExtensionService)
-    if service is None:
-        return
-    verify = service.get_quota_subsystem_status()
-    if verify is None:
-        # Quota accounting is disabled.
-        return
-
-    size = content.used_space
-    if not size:
-        return
-    if event.oldParent:
-        event.oldParent.update_used_quota(-size, verify)
-    if event.newParent:
-        event.newParent.update_used_quota(size, verify)
 
 
