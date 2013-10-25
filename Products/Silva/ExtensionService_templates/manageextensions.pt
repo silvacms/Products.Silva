@@ -71,7 +71,7 @@
       <h3 i18n:translate="">Available extensions</h3>
 
       <tal:extension
-         tal:repeat="extension view/extensions">
+         tal:repeat="extension view/get_extensions">
         <div tal:define="bg_color python:extension['is_installed'] and  'White' or 'LightGrey'"
              tal:attributes="style string:width:70%;; border:solid 1px;; padding:1ex;; margin:1ex;; background:${bg_color};;" >
           <div style="float:right; width:40%;">
@@ -106,9 +106,9 @@
             </tal:cond>
             <tal:cond tal:condition="python:name == 'Silva'">
               <ul>
-                <li tal:repeat="system_ext view/system_extensions">
-                  <span tal:replace="system_ext/name" />
-                  (<span tal:replace="system_ext/version" />)
+                <li tal:repeat="extension_system view/get_system_extensions">
+                  <span tal:replace="extension_system/name" />
+                  (<span tal:replace="extension_system/version" />)
                 </li>
               </ul>
               <input type="submit" name="refresh" value="refresh"

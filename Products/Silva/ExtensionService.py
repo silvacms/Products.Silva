@@ -7,6 +7,7 @@ import os.path
 import logging
 
 # Zope 3
+from zope.component import getUtility
 from zope import interface, schema
 from five import grok
 
@@ -19,14 +20,17 @@ import transaction
 # Silva
 from Products.Silva.ExtensionRegistry import extensionRegistry
 
+from silva.ui import rest
 from silva.core import conf as silvaconf
 from silva.core import interfaces
 from silva.core.interfaces import IPublication
+from silva.core.interfaces import ISilvaConfigurableService
 from silva.core.services.base import SilvaService
 from silva.core.services.interfaces import ICataloging, IExtensionService
 from silva.core.services.utils import walk_silva_tree
 from silva.core.upgrade import upgrade
 from silva.core.views import views as silvaviews
+from silva.core.messages.interfaces import IMessageService
 from silva.translations import translate as _
 from zeam.form import silva as silvaforms
 
@@ -105,7 +109,7 @@ def install_documentation(container, request):
 
 class ExtensionService(SilvaService, Folder):
     meta_type = 'Silva Extension Service'
-    grok.implements(IExtensionService)
+    grok.implements(IExtensionService, ISilvaConfigurableService)
     grok.name('service_extensions')
     silvaconf.default_service()
     silvaconf.icon('icons/service_extension.png')
@@ -348,10 +352,7 @@ class PartialReindexForm(silvaforms.ZMIForm):
             self.status = _(u"Partial catalog refreshed")
 
 
-class ManageExtensions(silvaviews.ZMIView):
-    """Form to activate, deactivate, refresh extensions.
-    """
-    grok.name('manage_extensions')
+class ManageExtensionsMixin(object):
     status = None
 
     def refresh_all(self):
@@ -418,7 +419,7 @@ class ManageExtensions(silvaviews.ZMIView):
     def quota_enabled(self):
         return self.context._quota_enabled
 
-    def extensions(self):
+    def get_extensions(self):
         """Return non-system extensions
         """
         names = extensionRegistry.get_names()
@@ -432,7 +433,7 @@ class ManageExtensions(silvaviews.ZMIView):
                     'is_installed': extension.installer.is_installed(root, extension),
                     'dependencies': map(get_extension, extension.depends)}
 
-    def system_extensions(self):
+    def get_system_extensions(self):
         """Return system extensions
         """
         names = extensionRegistry.get_names()
@@ -440,3 +441,25 @@ class ManageExtensions(silvaviews.ZMIView):
             extension = extensionRegistry.get_extension(name)
             if interfaces.ISystemExtension.providedBy(extension):
                 yield extension
+
+
+
+class ManageExtensions(ManageExtensionsMixin, silvaviews.ZMIView):
+    """Form to activate, deactivate, refresh extensions.
+    """
+    grok.name('manage_extensions')
+
+
+class ConfigureExtensions(ManageExtensionsMixin, rest.PageWithTemplateREST):
+    grok.adapts(rest.Screen, ExtensionService)
+    grok.name('admin')
+    grok.require('zope2.ViewManagementScreens')
+
+    def get_menu_title(self):
+        return _('Extensions management')
+
+    def update(self):
+        super(ConfigureExtensions, self).update()
+        if self.status:
+            service = getUtility(IMessageService)
+            service.send(self.status, self.request, namespace='feedbac')

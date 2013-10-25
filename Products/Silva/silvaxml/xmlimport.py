@@ -22,11 +22,11 @@ def reindex_import_content(content, event):
     ICataloging(content).index()
 
 
-# @grok.subscribe(interfaces.IQuotaObject, IContentImported)
-# def update_quota_import_content(content, event):
-#     """Update the quota of imported content (to be sure).
-#     """
-#     content.update_quota()
+@grok.subscribe(interfaces.IQuotaObject, IContentImported)
+def update_quota_import_content(content, event):
+    """Update the quota of imported content (to be sure).
+    """
+    content.update_quota()
 
 
 class FolderHandler(handlers.SilvaContainerHandler):

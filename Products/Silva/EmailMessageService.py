@@ -22,6 +22,7 @@ from transaction.interfaces import ISavepointDataManager, IDataManagerSavepoint
 
 from silva.core import conf as silvaconf
 from silva.core import interfaces
+from silva.core.interfaces import ISilvaConfigurableService
 from silva.core.services.interfaces import IMemberService
 from silva.core.services.base import SilvaService
 from silva.translations import translate as _
@@ -155,7 +156,7 @@ class EmailMessageService(SilvaService):
     messages.
     """
     meta_type = 'Silva Message Service'
-    grok.implements(interfaces.IMessageService)
+    grok.implements(interfaces.IMessageService, ISilvaConfigurableService)
     grok.name('service_messages')
     silvaconf.default_service()
     silvaconf.icon('icons/service_message.png')
@@ -291,13 +292,25 @@ class IEmailMessageSettings(interface.Interface):
 
 
 class EmailMessageSettings(silvaforms.ZMIForm):
+    grok.context(EmailMessageService)
     grok.require('zope2.ViewManagementScreens')
     grok.name('manage_settings')
-    grok.context(EmailMessageService)
 
-    label = _(u"Service Message Configuration")
+    label = _(u"Messaging Configuration")
     description = _(u"Configure settings for email messaging between members. "
                     u"The default MailHost service is used to send messages.")
     ignoreContent = False
     fields = silvaforms.Fields(IEmailMessageSettings)
     actions = silvaforms.Actions(silvaforms.EditAction())
+
+
+class EmailMessageConfiguration(silvaforms.ConfigurationForm):
+    grok.context(EmailMessageService)
+
+    label = _(u"Messaging Configuration")
+    description = _(u"Configure settings for email messaging between members. "
+                    u"The default MailHost service is used to send messages.")
+    fields = silvaforms.Fields(IEmailMessageSettings)
+    actions = silvaforms.Actions(
+        silvaforms.CancelAction(),
+        silvaforms.EditAction())

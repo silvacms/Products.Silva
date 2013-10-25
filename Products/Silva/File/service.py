@@ -21,6 +21,7 @@ from Products.Silva.Image.content import ImageStorageConverter
 from Products.Silva.File.content import BlobFile, ZODBFile
 from silva.core import conf as silvaconf
 from silva.core import interfaces
+from silva.core.interfaces import ISilvaConfigurableService
 from silva.core.services.base import SilvaService
 from silva.core.services.interfaces import IFilesService
 from silva.core.upgrade import upgrade
@@ -41,7 +42,7 @@ directlyProvides(FileStorageTypeVocabulary, IVocabularyFactory)
 
 class FilesService(SilvaService):
     meta_type = 'Silva Files Service'
-    grok.implements(IFilesService)
+    grok.implements(IFilesService, ISilvaConfigurableService)
     grok.name('service_files')
     silvaconf.default_service()
     silvaconf.icon('icons/service_files.png')
@@ -95,10 +96,18 @@ class FileServiceManagementView(silvaforms.ZMIComposedForm):
     label = _(u"Configure file storage")
 
 
+class FileServiceConfiguration(silvaforms.ComposedConfigurationForm):
+    """Edit File Service.
+    """
+    grok.context(FilesService)
+
+    label = _(u"Configure file storage")
+
+
 class FileServiceSettings(silvaforms.ZMISubForm):
     grok.context(FilesService)
-    silvaforms.view(FileServiceManagementView)
-    silvaforms.order(10)
+    grok.view(FileServiceManagementView)
+    grok.order(10)
 
     label = _(u"Select storage")
     fields = silvaforms.Fields(IFilesService)
@@ -106,10 +115,23 @@ class FileServiceSettings(silvaforms.ZMISubForm):
     ignoreContent = False
 
 
+class FileServiceSettingsConfiguration(silvaforms.SMISubForm):
+    grok.context(FilesService)
+    silvaforms.view(FileServiceConfiguration)
+    silvaforms.order(10)
+
+    label = _(u"Select storage")
+    fields = silvaforms.Fields(IFilesService)
+    actions = silvaforms.Actions(
+        silvaforms.CancelAction(),
+        silvaforms.EditAction())
+    ignoreContent = False
+
+
 class FileServiceConvert(silvaforms.ZMISubForm):
     grok.context(FilesService)
-    silvaforms.view(FileServiceManagementView)
-    silvaforms.order(20)
+    grok.view(FileServiceManagementView)
+    grok.order(20)
 
     label = _(u"Convert stored files")
     description = _(u"Convert all currently stored file to "
@@ -126,6 +148,31 @@ class FileServiceConvert(silvaforms.ZMISubForm):
         self.context.convert_storage(parent)
         self.status = _(u'Storage for Silva Files and Images converted. '
                         u'Check the log for more details.')
+
+
+class FileServiceConvertConfiguration(silvaforms.SMISubForm):
+    grok.context(FilesService)
+    grok.view(FileServiceConfiguration)
+    grok.order(20)
+
+    label = _(u"Convert stored files")
+    description = _(u"Convert all currently stored file to "
+                    u"the current set storage.")
+    actions = silvaforms.Actions(silvaforms.CancelAction())
+
+    def available(self):
+        if self.context.storage is None:
+            return False
+        return self.context.storage is not ZODBFile
+
+    @silvaforms.action(_(u'Convert all files'))
+    def convert(self):
+        parent = self.context.get_publication()
+        self.context.convert_storage(parent)
+        self.send_message(
+            _(u'Storage for Silva Files and Images converted. '
+              u'Check the log for more details.'),
+            type='feedback')
 
 
 class StorageConverterHelper(object):

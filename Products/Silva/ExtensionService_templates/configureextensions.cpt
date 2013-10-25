@@ -1,0 +1,136 @@
+<tal:configure tal:define="root context.get_root()"
+               i18n:domain="silva">
+    <div class="form-head">
+      <h3 i18n:translate="">
+        Extensions management
+      </h3>
+      <p>
+        Software version: <span tal:replace="root.get_silva_software_version()">.
+      </p>
+      <p>
+        Site version: <span tal:replace="root.get_silva_content_version()">.
+      </p>
+      <p tal:condition="context.get_site_quota()"
+         i18n:translate="">
+        This site has a global quota of <span tal:replace="context.get_site_quota()" i18n:name="used" /> MB.
+      </p>
+      <p tal:condition="not context.get_site_quota()"
+         i18n:translate="">
+        This site has no global quota restrictions.
+      </p>
+    </div>
+
+    <form class="form-fields-container">
+    <div class="form-footer">
+      <div class="form-controls">
+        <a class="form-control" name="refresh_all"
+           i18n:translate="">
+          Refresh all
+        </a>
+        <a class="form-control" name="install_documentation"
+           tal:condition="context.is_installed('silva.app.document') and root._getOb('docs', None) is None"
+           i18n:translate="">
+          Install documentation
+        </a>
+        <a class="form-control" name="refresh_catalog"
+           i18n:translate="">
+          Rebuild catalog
+        </a>
+        <tal:quota tal:condition="not: context.get_site_quota()">
+          <!-- Site quota is not enabled, so you can enable or not the
+               feature. -->
+          <a class="form-control" name="disable_quota_subsystem"
+             tal:condition="rest.quota_enabled"
+             i18n:translate="">
+            Disable quota subsystem
+          </a>
+          <a class="form-control" name="enable_quota_subsystem"
+             tal:condition="not rest.quota_enabled"
+             i18n:translate="">
+            Enable quota subsystem
+          </a>
+        </tal:quota>
+        <a class="form-control" name="purge_old_versions"
+           i18n:translate="">
+          Purge old versions
+        </a>
+        <a class="form-control" name="upgrade_all" value=""
+           data-confirmation="This will upgrade all Silva content, and may take a long time on a large site. This is, however, necessary to make old Silva content work with new versions."
+           data-confirmation-title="Are you sure you want to continue?"
+           i18n:attributes="data-confirmation-title data-confirmation"
+           i18n:translate="">
+          Upgrade content
+        </a>
+      </div>
+    </div>
+    </form>
+
+    <div class="form-header">
+      <h4 i18n:translate="">Available extensions</h4>
+    </div>
+
+    <tal:extensions tal:repeat="extension rest.get_extensions()">
+      <div tal:define="bg_color extension.is_installed and  'White' or 'LightGrey'"
+           tal:attributes="style string:width:70%;; border:solid 1px;; padding:1ex;; margin:1ex;; background:${bg_color};;" >
+        <h3 style="margin: 0 0 0.5ex;" tal:content="extension.info.title" />
+
+        <div style="float:right; width:40%; border: 1px solid black; margin: 0px 0px 15px 15px"
+             tal:condition="extension.dependencies">
+          <h5 class="form-title">Dependencies</h5>
+          <ul style="padding-left: 0;list-style-position:inside;margin-top:0;">
+            <li class="list-item"
+                tal:repeat="dependency extension.dependencies">
+              <span tal:content="dependency.title" />
+            </li>
+          </ul>
+        </div>
+
+        <p style="margin: 0 0 1ex;" tal:content="extension.info.version"/>
+        <p style="margin: 0 0 1ex;" tal:content="extension.info.description"/>
+
+        <form name="#"
+              tal:define="name extension.info.name"
+              tal:attributes="name name">
+          <input type="hidden" name="name"
+                 tal:attributes="value name" />
+          <tal:regular tal:condition="name != 'Silva'">
+            <div class="form-footer">
+              <div class="form-controls">
+                <a class="form-control" name="install"
+                   tal:condition="not extension.is_installed"
+                   i18n:translate="">
+                  Activate
+                </a>
+                <a class="form-control" name="uninstall"
+                   tal:condition="extension.is_installed"
+                   i18n:translate="">
+                  Deactivate
+                </a>
+                <a class="form-control" name="refresh"
+                   tal:condition="extension.is_installed"
+                   i18n:translate="">
+                  Refresh
+                </a>
+              </div>
+            </div>
+          </tal:regular>
+          <tal:systems tal:condition="name == 'Silva'">
+            <ul>
+              <li tal:repeat="extension_system rest.get_system_extensions()">
+                <span tal:replace="extension_system.name" />
+                (<span tal:replace="extension_system.version" />)
+              </li>
+            </ul>
+            <div class="form-footer">
+              <div class="form-controls">
+                <a class="form-control" name="refresh"
+                   i18n:translate="">
+                  Refresh
+                </a>
+              </div>
+            </div>
+          </tal:systems>
+        </form>
+      </div>
+    </tal:extensions>
+</tal:configure>
