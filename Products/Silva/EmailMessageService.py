@@ -312,5 +312,5 @@ class EmailMessageConfiguration(silvaforms.ConfigurationForm):
                     u"The default MailHost service is used to send messages.")
     fields = silvaforms.Fields(IEmailMessageSettings)
     actions = silvaforms.Actions(
-        silvaforms.CancelAction(),
+        silvaforms.CancelConfigurationAction(),
         silvaforms.EditAction())

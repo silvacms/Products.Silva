@@ -123,7 +123,7 @@ class FileServiceSettingsConfiguration(silvaforms.SMISubForm):
     label = _(u"Select storage")
     fields = silvaforms.Fields(IFilesService)
     actions = silvaforms.Actions(
-        silvaforms.CancelAction(),
+        silvaforms.CancelConfigurationAction(),
         silvaforms.EditAction())
     ignoreContent = False
 
@@ -158,7 +158,7 @@ class FileServiceConvertConfiguration(silvaforms.SMISubForm):
     label = _(u"Convert stored files")
     description = _(u"Convert all currently stored file to "
                     u"the current set storage.")
-    actions = silvaforms.Actions(silvaforms.CancelAction())
+    actions = silvaforms.Actions(silvaforms.CancelConfigurationAction())
 
     def available(self):
         if self.context.storage is None:
