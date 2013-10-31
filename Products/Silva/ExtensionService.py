@@ -450,7 +450,7 @@ class ManageExtensions(ManageExtensionsMixin, silvaviews.ZMIView):
     grok.name('manage_extensions')
 
 
-class ConfigureExtensions(ManageExtensionsMixin, rest.PageWithTemplateREST):
+class ConfigureExtensions(ManageExtensionsMixin, rest.FormWithTemplateREST):
     grok.adapts(rest.Screen, ExtensionService)
     grok.name('admin')
     grok.require('zope2.ViewManagementScreens')
@@ -462,4 +462,4 @@ class ConfigureExtensions(ManageExtensionsMixin, rest.PageWithTemplateREST):
         super(ConfigureExtensions, self).update()
         if self.status:
             service = getUtility(IMessageService)
-            service.send(self.status, self.request, namespace='feedbac')
+            service.send(self.status, self.request, namespace='feedback')
