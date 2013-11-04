@@ -22,20 +22,22 @@
 
   <form class="form-fields-container">
     <div class="form-footer">
-      <a class="form-button open-screen" rel="admin" href="."
-         data-form-shortcut="ctrl+z" title="Go back to the site preferences"
-         i18n:attributes="title">
-        <ins class="ui-icon ui-icon-arrowreturnthick-1-w"></ins>
-        Cancel
-      </a>
       <div class="form-controls">
+        <a class="form-button open-screen" rel="admin" href="."
+           data-form-shortcut="ctrl+z" title="Go back to the site preferences"
+           i18n:attributes="title">
+          <ins class="icon form_cancel"></ins>
+          Cancel
+        </a>
         <a class="form-control" name="refresh_all"
            i18n:translate="">
+          <ins class="icon form_check"></ins>
           Refresh all
         </a>
         <a class="form-control" name="install_documentation"
            tal:condition="context.is_installed('silva.app.document') and root._getOb('docs', None) is None"
            i18n:translate="">
+          <ins class="icon form_check"></ins>
           Install documentation
         </a>
         <tal:quota tal:condition="not: context.get_site_quota()">
@@ -44,11 +46,13 @@
           <a class="form-control" name="disable_quota_subsystem"
              tal:condition="rest.quota_enabled"
              i18n:translate="">
+          <ins class="icon form_close"></ins>
             Disable quota subsystem
           </a>
           <a class="form-control" name="enable_quota_subsystem"
              tal:condition="not rest.quota_enabled"
              i18n:translate="">
+            <ins class="icon form_check"></ins>
             Enable quota subsystem
           </a>
         </tal:quota>
@@ -62,10 +66,10 @@
 
   <tal:extensions tal:repeat="extension rest.get_extensions()">
     <div tal:define="bg_color extension.is_installed and  'White' or 'LightGrey'"
-         tal:attributes="style string:width:70%;; border:solid 1px;; padding:1ex;; margin:1ex;; background:${bg_color};;" >
+         tal:attributes="style string:width:70%;; border:1px solid rgba(0, 0, 0, 0.2);; border-radius:3px;; padding:1ex;; margin:1ex;; background:${bg_color};;" >
       <h3 style="margin: 0 0 0.5ex;" tal:content="extension.info.title" />
 
-      <div style="float:right; width:40%; border: 1px solid black; margin: 0px 0px 15px 15px"
+      <div style="float:right; width:40%; margin: 0px 0px 15px 15px"
            tal:condition="extension.dependencies">
         <h5 class="form-title">Dependencies</h5>
         <ul style="padding-left: 0;list-style-position:inside;margin-top:0;">
@@ -90,11 +94,13 @@
               <a class="form-control" name="install"
                  tal:condition="not extension.is_installed"
                  i18n:translate="">
+                <ins class="icon form_check"></ins>
                 Activate
               </a>
               <a class="form-control" name="uninstall"
                  tal:condition="extension.is_installed"
                  i18n:translate="">
+                <ins class="icon form_close"></ins>
                 Deactivate
               </a>
               <a class="form-control" name="refresh"
