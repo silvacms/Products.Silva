@@ -93,7 +93,7 @@ class GhostBaseManager(object):
 
     def modify(self, target, identifier=None):
         if identifier is None:
-            identifier = target
+            identifier = target.getId()
         if IGhostAware.providedBy(target):
             target = target.get_haunted()
         return self.manipulator(self, target, identifier)
