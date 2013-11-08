@@ -31,6 +31,19 @@ class GhostBaseManipulator(object):
         self.manager = manager
         self.target = target
         self.identifier = identifier
+        self.__references = []
+
+    def save_references_of(self, content):
+        service = getUtility(IReferenceService)
+        self.__references = []
+        for reference in service.get_references_to(content):
+            # Break the reference so we can replace it.
+            reference.set_target_id(0)
+            self.__references.append(reference)
+
+    def restore_references_to(self, content):
+        for reference in self.__references:
+            reference.set_target(content)
 
     def create(self):
         raise NotImplementedError
@@ -40,6 +53,20 @@ class GhostBaseManipulator(object):
 
     def need_update(self):
         raise NotImplementedError
+
+    def delete(self):
+        assert self.manager.ghost is not None
+        self.manager.container.manage_delObjects([self.identifier])
+        self.manager.ghost = None
+        return None
+
+    def recreate(self):
+        # Recreate the ghost, conserving the references.
+        assert self.manager.ghost is not None
+        self.save_references_of(self.manager.ghost)
+        self.delete()
+        self.create()
+        self.restore_references_to(self.manager.ghost)
 
     def verify(self):
         if self.manager.ghost is None:

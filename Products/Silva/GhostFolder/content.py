@@ -227,10 +227,8 @@ class GhostFolderManipulator(GhostBaseManipulator):
         if IGhostFolder.providedBy(self.manager.ghost):
             self.manager.ghost.set_haunted(
                 self.target, auto_delete=self.manager.auto_delete)
-            return None
-        self.manager.container.manage_delObjects([self.identifier])
-        self.manager.ghost = None
-        return self.create()
+        else:
+            self.recreate()
 
     def need_update(self):
         if IGhostFolder.providedBy(self.manager.ghost):

@@ -124,10 +124,9 @@ class GhostManipulator(GhostBaseManipulator):
                 self.target, auto_delete=self.manager.auto_delete)
             if self.manager.auto_publish:
                 publication.publish()
-            return self.manager.ghost
-        self.manager.container.manage_delObjects([self.identifier])
-        self.manager.ghost = None
-        return self.create()
+        else:
+            self.recreate()
+        return self.manager.ghost
 
     def need_update(self):
         if IGhost.providedBy(self.manager.ghost):

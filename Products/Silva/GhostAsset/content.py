@@ -81,10 +81,9 @@ class GhostAssetManipulator(GhostBaseManipulator):
         if IGhostAsset.providedBy(self.manager.ghost):
             self.manager.ghost.set_haunted(
                 self.target, auto_delete=self.manager.auto_delete)
-            return self.manager.ghost
-        self.manager.container.manage_delObjects([self.identifier])
-        self.manager.ghost = None
-        return self.create()
+        else:
+            self.recreate()
+        return self.manager.ghost
 
     def need_update(self):
         if IGhostAsset.providedBy(self.manager.ghost):
