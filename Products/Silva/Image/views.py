@@ -29,10 +29,11 @@ class ImageView(silvaviews.View):
     thumbnail = False
 
     def render(self):
-        return self.content.tag(request=self.request,
-                                hires=self.hires,
-                                preview=self.is_preview,
-                                thumbnail=self.thumbnail)
+        return self.content.get_html_tag(
+            request=self.request,
+            hires=self.hires,
+            preview=self.is_preview,
+            thumbnail=self.thumbnail)
 
 
 class ImageDownloadView(FileDownloadView):

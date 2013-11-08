@@ -296,7 +296,7 @@ class EmailMessageSettings(silvaforms.ZMIForm):
     grok.require('zope2.ViewManagementScreens')
     grok.name('manage_settings')
 
-    label = _(u"Messaging Configuration")
+    label = _(u"Messaging configuration")
     description = _(u"Configure settings for email messaging between members. "
                     u"The default MailHost service is used to send messages.")
     ignoreContent = False
@@ -307,7 +307,7 @@ class EmailMessageSettings(silvaforms.ZMIForm):
 class EmailMessageConfiguration(silvaforms.ConfigurationForm):
     grok.context(EmailMessageService)
 
-    label = _(u"Messaging Configuration")
+    label = _(u"Messaging configuration")
     description = _(u"Configure settings for email messaging between members. "
                     u"The default MailHost service is used to send messages.")
     fields = silvaforms.Fields(IEmailMessageSettings)

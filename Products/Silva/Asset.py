@@ -63,8 +63,7 @@ class Asset(NonPublishable, ViewableObject, QuotaObject,
         except (AttributeError, NotImplementedError):
             # Well, not all content respect its interface.
             path = '/'.join(self.getPhysicalPath())
-            klass = str(self.__class__)
-            logger.error('bad asset object %s - %s' % (path, klass))
+            logger.error('Invalid asset %s - %s', path, str(self.__class__))
             return -1
 
 

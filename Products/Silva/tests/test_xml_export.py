@@ -7,7 +7,6 @@ from zipfile import ZipFile
 import re
 import io
 import unittest
-import transaction
 
 from zope.component import getAdapter, getUtility
 
@@ -220,7 +219,7 @@ class XMLExportTestCase(SilvaXMLTestCase):
         self.layer.login('author')
         exporter = self.assertExportEqual(
             self.root.folder,
-            'test_export_ghostfolder.silvaxml')
+            'test_export_ghost_folder.silvaxml')
         self.assertEqual(
             exporter.getZexpPaths(),
             [])
@@ -249,6 +248,31 @@ class XMLExportTestCase(SilvaXMLTestCase):
 
         self.layer.login('author')
         self.assertExportFail(self.root.ghost)
+
+    def test_ghost_asset(self):
+        """Export a file and a ghost asset.
+        """
+        with Transaction():
+            self.layer.login('editor')
+            factory = self.root.folder.manage_addProduct['Silva']
+            with self.layer.open_fixture('silva.png') as stream:
+                factory.manage_addFile('logo', 'Silva Logo', stream)
+            factory.manage_addGhostAsset(
+                'ghost', None, haunted=self.root.folder.logo)
+
+        self.layer.login('author')
+        exporter = self.assertExportEqual(
+            self.root.folder,
+            'test_export_ghost_asset.silvaxml')
+        self.assertEqual(
+            exporter.getZexpPaths(),
+            [])
+        self.assertEqual(
+            exporter.getAssetPaths(),
+            [(('', 'root', 'folder', 'logo'), '1')])
+        self.assertEqual(
+            exporter.getProblems(),
+            [])
 
     def test_link_relative(self):
         """Export a link with to an another Silva object.

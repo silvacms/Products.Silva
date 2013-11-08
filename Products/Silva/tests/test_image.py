@@ -71,11 +71,14 @@ class DefaultImageTestCase(TestCase):
         self.assertEquals(image.get_mime_type(), 'image/tiff')
 
         # Image methods
-        self.assertTrue(image.tag() is not None)
+        self.assertTrue(image.get_html_tag() is not None)
         self.assertEquals(image.get_format(), 'TIFF')
         self.assertEquals(image.get_web_format(), 'JPEG')
         self.assertEquals(image.get_dimensions(), (960, 1280))
         self.assertEquals(str(image.get_orientation()), "portrait")
+        self.assertEquals(
+            image.get_download_url(),
+            'http://localhost/root/test_image')
 
         image.set_web_presentation_properties('JPEG', '100x100', '')
         self.assertEquals(image.get_web_format(), 'JPEG')
@@ -87,6 +90,9 @@ class DefaultImageTestCase(TestCase):
 
         data = image.get_image(hires=True, webformat=False)
         self.assertHashEqual(self.image_data, data)
+        self.assertEquals(
+            image.get_download_url(hires=True),
+            'http://localhost/root/test_image?hires')
 
         data = io.BytesIO(image.get_image(hires=True, webformat=True))
         pil_image = PILImage.open(data)

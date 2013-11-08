@@ -9,6 +9,7 @@ import mimetypes
 import os.path
 import re
 import time
+import warnings
 
 # Zope 3
 from five import grok
@@ -23,13 +24,13 @@ from App.class_init import InitializeClass
 
 # Silva
 from silva.core import conf as silvaconf
-from silva.core.conf.utils import ISilvaFactoryDispatcher
 from silva.core import interfaces
-from silva.core.interfaces import IMimeTypeClassifier, ISilvaNameChooser
+from silva.core.conf.utils import ISilvaFactoryDispatcher
 from silva.core.interfaces import ContentError
+from silva.core.interfaces import IMimeTypeClassifier, ISilvaNameChooser
 from silva.core.services.interfaces import IFilesService
-from silva.translations import translate as _
 from silva.core.views.interfaces import IContentURL
+from silva.translations import translate as _
 
 from .. import SilvaPermissions
 from ..Asset import Asset
@@ -428,7 +429,18 @@ class Image(Asset):
 
     security.declareProtected(SilvaPermissions.View, 'tag')
     def tag(self, hires=False, thumbnail=False,
-            request=None, preview=False, **extra_attributes):
+             request=None, preview=False, **extra_attributes):
+        warnings.warn(
+            'tag have been replaced with get_html_tag. '
+            'It will be removed, please update your code.',
+            DeprecationWarning, stacklevel=2)
+        return self.get_html_tag(
+            hires=hires, thumbnail=thumbnail,
+            request=request, preview=preview, **extra_attributes)
+
+    security.declareProtected(SilvaPermissions.View, 'get_html_tag')
+    def get_html_tag(self, preview=False, request=None, hires=False,
+                     thumbnail=False, **extra_attributes):
         """ return xhtml tag
 
         Since 'class' is a Python reserved word, it cannot be passed in
@@ -437,10 +449,8 @@ class Image(Asset):
         will accept a 'css_class' argument that will be converted to
         'class' in the output tag to work around this.
         """
-        url = self.url(request=request,
-                       preview=preview,
-                       hires=hires,
-                       thumbnail=thumbnail)
+        url = self.get_download_url(
+            request=request, preview=preview, hires=hires, thumbnail=thumbnail)
 
         title = self.get_title_or_id()
         width, height = self.get_dimensions(thumbnail=thumbnail, hires=hires)
@@ -463,6 +473,16 @@ class Image(Asset):
 
     security.declareProtected(SilvaPermissions.View, 'url')
     def url(self, hires=False, thumbnail=False, request=None, preview=False):
+        warnings.warn(
+            'url have been replaced with get_download_url. '
+            'It will be removed, please update your code.',
+            DeprecationWarning, stacklevel=2)
+        return self.get_download_url(
+            hires=hires, thumbnail=thumbnail,
+            request=request, preview=preview)
+
+    security.declareProtected(SilvaPermissions.View, 'get_download_url')
+    def get_download_url(self, preview=False, request=None, hires=False, thumbnail=False):
         "return url of image"
         if request is None:
             request = self.REQUEST

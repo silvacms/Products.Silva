@@ -30,6 +30,7 @@
           Cancel
         </a>
         <a class="form-control" name="refresh_all"
+           data-confirmation="Are you sure ?"
            i18n:translate="">
           <ins class="icon form_check"></ins>
           Refresh all

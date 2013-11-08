@@ -700,6 +700,35 @@ class XMLImportTestCase(SilvaXMLTestCase):
         self.assertEqual(folder.objectIds(), ['zope2folder'])
         self.assertEqual(folder.zope2folder.meta_type, 'Folder')
 
+    def test_ghost_asset(self):
+        """Import a ghost asset pointing to an image.
+        """
+        importer = self.assertImportZip(
+            'test_import_ghost_asset.zip',
+            ['/root/folder',
+             '/root/folder/torvald',
+             '/root/folder/ghost'])
+        self.assertEqual(importer.getProblems(), [])
+        self.assertItemsEqual(
+            self.root.folder.objectIds(),
+            ['torvald',
+             'ghost'])
+
+        image = self.root.folder.torvald
+        self.assertTrue(interfaces.IImage.providedBy(image))
+        self.assertEqual(image.get_web_format(), 'GIF')
+        self.assertEqual(image.get_web_scale(), '200%')
+
+        ghost = self.root.folder.ghost
+        self.assertTrue(interfaces.IGhostAsset.providedBy(ghost))
+        self.assertEqual(ghost.get_haunted(), image)
+        self.assertEqual(aq_chain(ghost.get_haunted()), aq_chain(image))
+
+        get_metadata = self.metadata.getMetadata(image).get
+        self.assertEqual(
+            get_metadata('silva-extra', 'comment'),
+            u'Torvald public face.')
+
     def test_image(self):
         """Import an image.
         """

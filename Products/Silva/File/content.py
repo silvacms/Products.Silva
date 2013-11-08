@@ -2,17 +2,19 @@
 # Copyright (c) 2002-2013 Infrae. All rights reserved.
 # See also LICENSE.txt
 
+from cStringIO import StringIO
+from cgi import escape
+from types import StringTypes
+import logging
 import os
 import os.path
-import logging
-from types import StringTypes
-from cgi import escape
-from cStringIO import StringIO
+import time
+import warnings
 
 # Zope 3
 from ZODB import blob
 from five import grok
-from zope.component import getUtility
+from zope.component import getUtility, getMultiAdapter
 from zope.event import notify
 from zope.lifecycleevent import ObjectCreatedEvent, ObjectModifiedEvent
 from zope.lifecycleevent.interfaces import IObjectMovedEvent
@@ -31,11 +33,12 @@ from Products.Silva.Asset import Asset
 from Products.Silva.File.converters import get_converter_for_mimetype
 
 from silva.core import conf as silvaconf
-from silva.core.conf.utils import ISilvaFactoryDispatcher
 from silva.core import interfaces
-from silva.core.interfaces import IMimeTypeClassifier, ISilvaNameChooser
+from silva.core.conf.utils import ISilvaFactoryDispatcher
 from silva.core.interfaces import ContentError
+from silva.core.interfaces import IMimeTypeClassifier, ISilvaNameChooser
 from silva.core.services.interfaces import IFilesService
+from silva.core.views.interfaces import IContentURL
 from silva.translations import translate as _
 
 logger = logging.getLogger('silva.file')
@@ -151,12 +154,27 @@ class File(Asset):
 
     security.declareProtected(
         SilvaPermissions.View, 'get_download_url')
-    def get_download_url(self):
-        return self.absolute_url()
+    def get_download_url(self, preview=False, request=None):
+        if request is None:
+            request = self.REQUEST
+        url = getMultiAdapter((self, request), IContentURL).url(preview=preview)
+        if preview:
+            # In case of preview we add something that change at the
+            # end of the url to prevent caching from the browser.
+            url += '?' + str(int(time.time()))
+        return url
 
     security.declareProtected(
         SilvaPermissions.View, 'tag')
     def tag(self, **kw):
+        warnings.warn(
+            'tag have been replaced with get_html_tag. '
+            'It will be removed, please update your code.',
+            DeprecationWarning, stacklevel=2)
+        return self.get_html_tag(**kw)
+
+    security.declareProtected(SilvaPermissions.View, 'get_html_tag')
+    def get_html_tag(self, preview=False, request=None, **extra_attributes):
         """ return xhtml tag
 
         Since 'class' is a Python reserved word, it cannot be passed in
@@ -165,19 +183,20 @@ class File(Asset):
         will accept a 'css_class' argument that will be converted to
         'class' in the output tag to work around this.
         """
-        src = self.get_download_url()
-        named = []
-        tooltip = unicode(_('download'))
+        src = self.get_download_url(preview, request)
+        title = self.get_title_or_id()
 
-        if kw.has_key('css_class'):
-            kw['class'] = kw['css_class']
-            del kw['css_class']
+        if extra_attributes.has_key('css_class'):
+            extra_attributes['class'] = extra_attributes['css_class']
+            del extra_attributes['css_class']
 
-        for name, value in kw.items():
-            named.append('%s="%s"' % (escape(name), escape(value)))
-        named = ' '.join(named)
-        return '<a href="%s" title="%s %s" %s>%s</a>' % (
-            src, tooltip, self.id, named, self.get_title_or_id())
+        extra_html_attributes = [
+            u'{name}="{value}"'.format(name=escape(name, 1),
+                                      value=escape(value, 1))
+            for name, value in extra_attributes.iteritems()]
+
+        return '<a href="%s" title="Download %s" %s>%s</a>' % (
+            src, self.get_filename(), extra_html_attributes, title)
 
     # checks where the mime type is text/* or javascript
     security.declareProtected(

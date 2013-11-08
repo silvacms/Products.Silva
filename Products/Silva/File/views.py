@@ -125,7 +125,8 @@ class FileView(silvaviews.View):
     grok.require('zope2.View')
 
     def render(self):
-        return self.content.tag()
+        return self.content.get_html_tag(
+            request=self.request, preview=self.is_preview)
 
 
 def parse_datetime(value):

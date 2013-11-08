@@ -3,8 +3,9 @@
 # See also LICENSE.txt
 
 from five import grok
+from zope.cachedescriptors.property import Lazy
+from zeam.component import getComponent
 
-from Products.Silva.Ghost import validate_target
 from silva.core import conf as silvaconf
 from silva.core import interfaces
 from silva.core.interfaces.events import IContentImported
@@ -151,6 +152,10 @@ class GhostVersionHandler(handlers.SilvaVersionHandler):
             (NS_SILVA_URI, 'haunted'):
                 self.handlerFactories.contentHandler('haunted'),}
 
+    @Lazy
+    def _getManager(self):
+        return getComponent((interfaces.IGhost,), interfaces.IGhostManager)
+
     def _createVersion(self, identifier):
         factory = self.parent().manage_addProduct['Silva']
         factory.manage_addGhostVersion(identifier, None)
@@ -162,20 +167,21 @@ class GhostVersionHandler(handlers.SilvaVersionHandler):
     def endElementNS(self, name, qname):
         if name == (NS_SILVA_URI, 'content'):
             importer = self.getExtra()
-            ghost = self.result()
+            version = self.result()
             haunted = self.getData('haunted')
             if not haunted:
-                importer.reportProblem(_(u'Missing ghost target.'), ghost)
+                importer.reportProblem(_(u'Missing ghost target.'), version)
             else:
 
                 def set_target(target):
-                    problem = validate_target(ghost, target)
+                    problem = self._getManager(
+                        ghost=version.get_silva_object()).validate(target)
                     if problem is not None:
-                        importer.reportProblem(problem.doc(), ghost)
+                        importer.reportProblem(problem.doc(), version)
                     else:
-                        ghost.set_haunted(target)
+                        version.set_haunted(target)
 
-                importer.resolveImportedPath(ghost, set_target, haunted)
+                importer.resolveImportedPath(version, set_target, haunted)
             self.updateVersionCount()
             self.storeWorkflow()
 
@@ -187,6 +193,10 @@ class GhostFolderHandler(handlers.SilvaContainerHandler):
         return {
             (NS_SILVA_URI, 'haunted'):
                 self.handlerFactories.contentHandler('haunted'),}
+    @Lazy
+    def _getManager(self):
+        return getComponent(
+            (interfaces.IGhostFolder,), interfaces.IGhostManager)
 
     def _createContent(self, identifier):
         factory = self.parent().manage_addProduct['Silva']
@@ -209,7 +219,7 @@ class GhostFolderHandler(handlers.SilvaContainerHandler):
             else:
 
                 def set_target(target):
-                    problem = validate_target(folder, target, is_folderish=True)
+                    problem = self._getManager(ghost=folder).validate(target)
                     if problem is not None:
                         importer.reportProblem(problem.doc(), folder)
                     else:
@@ -363,6 +373,49 @@ class FileHandler(handlers.SilvaHandler):
             self.notifyImport()
 
 
+class GhostAssetHandler(handlers.SilvaHandler):
+    grok.name('ghost_asset')
+
+    def getOverrides(self):
+        return {
+            (NS_SILVA_URI, 'haunted'):
+                self.handlerFactories.contentHandler('haunted'),}
+
+    @Lazy
+    def _getManager(self):
+        return getComponent((interfaces.IGhostAsset,), interfaces.IGhostManager)
+
+    def _createContent(self, identifier):
+        factory = self.parent().manage_addProduct['Silva']
+        factory.manage_addGhostAsset(identifier, None)
+
+    def _verifyContent(self, content):
+        return interfaces.IGhostAsset.providedBy(content)
+
+    def startElementNS(self, name, qname, attrs):
+        if name == (NS_SILVA_URI, 'ghost_asset'):
+            self.createContent(attrs)
+
+    def endElementNS(self, name, qname):
+        if name == (NS_SILVA_URI, 'ghost_asset'):
+            importer = self.getExtra()
+            asset = self.result()
+            haunted = self.getData('haunted')
+            if not haunted:
+                importer.reportProblem(_(u'Missing ghost target.'), asset)
+            else:
+
+                def set_target(target):
+                    problem = self._getManager(ghost=asset).validate(target)
+                    if problem is not None:
+                        importer.reportProblem(problem.doc(), asset)
+                    else:
+                        asset.set_haunted(target)
+
+                importer.resolveImportedPath(asset, set_target, haunted)
+            self.notifyImport()
+
+
 class UnknownContentHandler(handlers.SilvaHandler):
     """Importer for content which have been exported in a ZEXP.
     """
@@ -380,7 +433,7 @@ class UnknownContentHandler(handlers.SilvaHandler):
     def endElementNS(self, name, qname):
         if name == (NS_SILVA_URI, 'unknown_content'):
             extra = self.getExtra()
-            # XXX check non
+            # XXX check name
             identifier = self.getData('id')
             import_file = extra.getFile('zexps/' + self.getData('zexp'))
             content = extra.root._p_jar.importFile(import_file)

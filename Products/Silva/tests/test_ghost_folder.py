@@ -9,12 +9,12 @@ from zope.component import getUtility
 
 from Acquisition import aq_chain
 from Products.Silva.testing import FunctionalLayer
-from Products.Silva.tests.mockers import IMockupAsset
+from Products.Silva.tests.mockers import IMockupNonPublishable
 from Products.SilvaMetadata.interfaces import IMetadataService, ReadOnlyError
 
 from silva.core.interfaces import IContainerManager, IPublicationWorkflow
-from silva.core.interfaces import IGhostFolder, IGhost
-from silva.core.interfaces import IPublication, IFolder
+from silva.core.interfaces import IGhost, IGhostAsset, IGhostVersion
+from silva.core.interfaces import IPublication, IFolder, IGhostFolder
 from silva.core.interfaces import errors
 from silva.core.references.interfaces import IReferenceService, IReferenceValue
 
@@ -46,7 +46,7 @@ class GhostFolderTestCase(unittest.TestCase):
         factory.manage_addMockupVersionedContent('document', 'Document')
         factory.manage_addFolder('folder', 'Folder')
 
-    def test_ghost_folder(self):
+    def test_get_folder(self):
         """Test a Ghost Folder haunting to a Folder.
         """
         factory = self.root.target.manage_addProduct['Silva']
@@ -454,16 +454,106 @@ class GhostFolderTestCase(unittest.TestCase):
         self.assertTrue('folder' in ghost.objectIds())
         self.assertFalse('results' in ghost.folder.objectIds())
 
-        ghost.haunt()
-        self.assertTrue('testing' in ghost.objectIds())
+        self.assertTrue(ghost.haunt())
+        self.assertIn('testing', ghost.objectIds())
         self.assertTrue(verifyObject(IGhost, ghost.testing))
-        self.assertTrue('folder' in ghost.objectIds())
-        self.assertTrue('results' in ghost.folder.objectIds())
+        self.assertTrue(verifyObject(IGhostVersion,
+                                     ghost.testing.get_viewable()))
+        self.assertEqual(
+            ghost.testing.get_viewable().get_haunted(),
+            self.root.folder.testing)
+        self.assertEqual(
+            aq_chain(ghost.testing.get_viewable().get_haunted()),
+            aq_chain(self.root.folder.testing))
+        self.assertIn('folder', ghost.objectIds())
+        self.assertIn('results', ghost.folder.objectIds())
         self.assertTrue(verifyObject(IGhostFolder, ghost.folder.results))
+        self.assertEqual(
+            ghost.folder.results.get_haunted(),
+            self.root.folder.folder.results)
+        self.assertEqual(
+            aq_chain(ghost.folder.results.get_haunted()),
+            aq_chain(self.root.folder.folder.results))
+
+    def test_ghost_haunt_add_non_publishables(self):
+        """Test modifications: adding new non publishables in the
+        target folder copy them in the ghost folder when it is
+        haunted.
+        """
+        factory = self.root.target.manage_addProduct['Silva']
+        factory.manage_addGhostFolder('ghost', None, haunted=self.root.folder)
+
+        ghost = self.root.target.ghost
+        factory = self.root.folder.manage_addProduct['Silva']
+        factory.manage_addMockupNonPublishable('stuff', 'Configuration stuff')
+        factory = self.root.folder.publication.manage_addProduct['Silva']
+        factory.manage_addMockupNonPublishable('results', 'Results set 1')
+
+        self.assertIn('publication', ghost.objectIds())
+        self.assertTrue(verifyObject(IGhostFolder, ghost.publication))
+        self.assertNotIn('data', ghost.objectIds())
+        self.assertNotIn('results', ghost.publication.objectIds())
+
+        self.assertTrue(ghost.haunt())
+        self.assertTrue('stuff' in ghost.objectIds())
+        self.assertTrue(verifyObject(IMockupNonPublishable, ghost.stuff))
+        self.assertIn('publication', ghost.objectIds())
+        self.assertTrue(verifyObject(IGhostFolder, ghost.publication))
+        self.assertIn('results', ghost.publication.objectIds())
+        self.assertTrue(verifyObject(IMockupNonPublishable,
+                                     ghost.publication.results))
+
+    def test_ghost_haunt_convert_assets_to_ghost_assets(self):
+        """Test update: old ghost folders might have copys of assets
+        instead of ghost assets poiting to them. In this case, if you
+        re-haunt the folder, they should be replaced with ghost
+        assets.
+        """
+        factory = self.root.target.manage_addProduct['Silva']
+        factory.manage_addGhostFolder('ghost', None, haunted=self.root.folder)
+
+        ghost = self.root.target.ghost
+        factory = self.root.folder.manage_addProduct['Silva']
+        factory.manage_addMockupAsset('data', 'Data set 1')
+        factory = self.root.folder.publication.manage_addProduct['Silva']
+        factory.manage_addMockupAsset('results', 'Results set 1')
+        factory.manage_addMockupAsset('analyze', 'Analyze set 1')
+
+        # Add assets with the same id in the ghost folder.
+        factory = ghost.manage_addProduct['Silva']
+        factory.manage_addMockupAsset('data', 'Data set 1')
+        factory = ghost.publication.manage_addProduct['Silva']
+        factory.manage_addMockupAsset('results', 'Results set 1')
+        factory.manage_addMockupNonPublishable('analyze', 'Analyze set 1')
+
+        # Now if we rehaunt the folder, they should be replaced by ghost assets.
+        self.assertTrue(ghost.haunt())
+        self.assertIn('data', ghost.objectIds())
+        self.assertTrue(verifyObject(IGhostAsset, ghost.data))
+        self.assertEqual(
+            ghost.data.get_haunted(),
+            self.root.folder.data)
+        self.assertEqual(
+            aq_chain(ghost.data.get_haunted()),
+            aq_chain(self.root.folder.data))
+        self.assertIn('publication', ghost.objectIds())
+        self.assertTrue(verifyObject(IGhostFolder, ghost.publication))
+        self.assertIn('results', ghost.publication.objectIds())
+        self.assertTrue(verifyObject(IGhostAsset, ghost.publication.results))
+        self.assertEqual(
+            ghost.publication.results.get_haunted(),
+            self.root.folder.publication.results)
+        self.assertEqual(
+            aq_chain(ghost.publication.results.get_haunted()),
+            aq_chain(self.root.folder.publication.results))
+        # Analyze was not an asset, it didn't get replaced
+        self.assertIn('analyze', ghost.publication.objectIds())
+        self.assertTrue(verifyObject(IMockupNonPublishable,
+                                     ghost.publication.analyze))
 
     def test_ghost_haunt_add_assets(self):
         """Test modifications: adding assets in the target creates new
-        assets in the ghost folder when the ghost folder is haunted.
+        ghost assets in the ghost folder when it is haunted.
         """
         factory = self.root.target.manage_addProduct['Silva']
         factory.manage_addGhostFolder('ghost', None, haunted=self.root.folder)
@@ -474,15 +564,30 @@ class GhostFolderTestCase(unittest.TestCase):
         factory = self.root.folder.publication.manage_addProduct['Silva']
         factory.manage_addMockupAsset('results', 'Results set 1')
 
-        self.assertFalse('data' in ghost.objectIds())
-        self.assertTrue('publication' in ghost.objectIds())
-        self.assertFalse('results' in ghost.publication.objectIds())
+        self.assertIn('publication', ghost.objectIds())
+        self.assertTrue(verifyObject(IGhostFolder, ghost.publication))
+        self.assertNotIn('data', ghost.objectIds())
+        self.assertNotIn('results', ghost.publication.objectIds())
 
-        ghost.haunt()
-        self.assertTrue('data' in ghost.objectIds())
-        self.assertTrue(verifyObject(IMockupAsset, ghost.data))
-        self.assertTrue('publication' in ghost.objectIds())
-        self.assertTrue(verifyObject(IMockupAsset, ghost.publication.results))
+        self.assertTrue(ghost.haunt())
+        self.assertIn('data', ghost.objectIds())
+        self.assertTrue(verifyObject(IGhostAsset, ghost.data))
+        self.assertEqual(
+            ghost.data.get_haunted(),
+            self.root.folder.data)
+        self.assertEqual(
+            aq_chain(ghost.data.get_haunted()),
+            aq_chain(self.root.folder.data))
+        self.assertIn('publication', ghost.objectIds())
+        self.assertTrue(verifyObject(IGhostFolder, ghost.publication))
+        self.assertIn('results', ghost.publication.objectIds())
+        self.assertTrue(verifyObject(IGhostAsset, ghost.publication.results))
+        self.assertEqual(
+            ghost.publication.results.get_haunted(),
+            self.root.folder.publication.results)
+        self.assertEqual(
+            aq_chain(ghost.publication.results.get_haunted()),
+            aq_chain(self.root.folder.publication.results))
 
     def test_ghost_haunt_remove_assets(self):
         """Test modifications: removing asssets in the target doesn't
@@ -496,18 +601,35 @@ class GhostFolderTestCase(unittest.TestCase):
         factory.manage_addGhostFolder('ghost', None, haunted=self.root.folder)
 
         ghost = self.root.target.ghost
+        self.assertIn('data', ghost.objectIds())
+        self.assertTrue(verifyObject(IGhostAsset, ghost.data))
+        self.assertEqual(
+            ghost.data.get_haunted(),
+            self.root.folder.data)
+        self.assertEqual(
+            aq_chain(ghost.data.get_haunted()),
+            aq_chain(self.root.folder.data))
+        self.assertIn('export', ghost.objectIds())
+        self.assertTrue(verifyObject(IGhostAsset, ghost.export))
+        self.assertEqual(
+            ghost.export.get_haunted(),
+            self.root.folder.export)
+        self.assertEqual(
+            aq_chain(ghost.export.get_haunted()),
+            aq_chain(self.root.folder.export))
+
         with IContainerManager(self.root.folder).deleter() as deleter:
             deleter(self.root.folder.data)
             deleter(self.root.folder.export)
 
-        self.assertTrue('data' in ghost.objectIds())
-        self.assertTrue(verifyObject(IMockupAsset, ghost.data))
-        self.assertTrue('export' in ghost.objectIds())
-        self.assertTrue(verifyObject(IMockupAsset, ghost.export))
+        # Ghost should have been auto-deleted
+        self.assertNotIn('data', ghost.objectIds())
+        self.assertNotIn('export', ghost.objectIds())
 
-        ghost.haunt()
-        self.assertFalse('data' in ghost.objectIds())
-        self.assertFalse('export' in ghost.objectIds())
+        # And they won't come back
+        self.assertTrue(ghost.haunt())
+        self.assertNotIn('data', ghost.objectIds())
+        self.assertNotIn('export', ghost.objectIds())
 
     def test_ghost_haunt_add_ghosts_for_ghosts(self):
         """Test modification: adding ghost to the target will create
@@ -523,8 +645,8 @@ class GhostFolderTestCase(unittest.TestCase):
         IPublicationWorkflow(self.root.folder.notes).publish()
         self.assertFalse('notes' in ghost.objectIds())
 
-        ghost.haunt()
-        self.assertTrue('notes' in ghost.objectIds())
+        self.assertTrue(ghost.haunt())
+        self.assertIn('notes', ghost.objectIds())
         self.assertTrue(verifyObject(IGhost, ghost.notes))
         version = ghost.notes.get_editable()
         self.assertIs(version, None)
@@ -567,10 +689,10 @@ class GhostFolderTestCase(unittest.TestCase):
 
         # Nothing should change if the folder is ghosted (broken
         # ghosts should not be created).
-        ghost.haunt()
-        self.assertTrue('notes' in self.root.folder.objectIds())
+        self.assertTrue(ghost.haunt())
+        self.assertIn('notes', self.root.folder.objectIds())
         self.assertEqual(self.root.folder.notes.get_haunted(), None)
-        self.assertFalse('notes' in ghost.objectIds())
+        self.assertNotIn('notes', ghost.objectIds())
 
     def test_ghost_haunt_remove_ghosted_content_for_ghosts(self):
         """Test modification: remove a target of a ghost that is
@@ -609,9 +731,9 @@ class GhostFolderTestCase(unittest.TestCase):
         self.assertEqual(version.get_haunted(), self.root.folder.document)
 
         # Haunting should remove the ghost since it does no longer exists
-        ghost.haunt()
-        self.assertFalse('notes' in self.root.folder.objectIds())
-        self.assertFalse('notes' in ghost.objectIds())
+        self.assertTrue(ghost.haunt())
+        self.assertNotIn('notes', self.root.folder.objectIds())
+        self.assertNotIn('notes', ghost.objectIds())
 
     def test_ghost_haunt_add_ghost_folders_for_ghost_folders(self):
         """Test modification: add a ghost folder in the target
@@ -627,10 +749,10 @@ class GhostFolderTestCase(unittest.TestCase):
         factory = self.root.folder.manage_addProduct['Silva']
         factory.manage_addGhostFolder(
             'backup', None, haunted=self.root.folder.publication)
-        self.assertFalse('backup' in ghost.objectIds())
+        self.assertNotIn('backup', ghost.objectIds())
 
-        ghost.haunt()
-        self.assertTrue('backup' in ghost.objectIds())
+        self.assertTrue(ghost.haunt())
+        self.assertIn('backup', ghost.objectIds())
         self.assertTrue(verifyObject(IGhostFolder, ghost.backup))
         self.assertEqual(ghost.backup.get_link_status(), None)
         self.assertEqual(
@@ -640,7 +762,7 @@ class GhostFolderTestCase(unittest.TestCase):
             aq_chain(ghost.backup.get_haunted()),
             aq_chain(self.root.folder.publication))
         # Content in this ghost folder have been ghosted
-        self.assertTrue('document' in ghost.backup.objectIds())
+        self.assertIn('document', ghost.backup.objectIds())
         self.assertTrue(verifyObject(IGhost, ghost.backup.document))
 
     def test_ghost_haunt_remove_ghost_folders_for_ghost_folders(self):
@@ -670,12 +792,12 @@ class GhostFolderTestCase(unittest.TestCase):
         self.assertFalse('backup' in ghost.objectIds())
 
         # Ghosting should not change anything
-        ghost.haunt()
-        self.assertTrue('backup' in self.root.folder.objectIds())
+        self.assertTrue(ghost.haunt())
+        self.assertIn('backup', self.root.folder.objectIds())
         self.assertEqual(
             self.root.folder.backup.get_link_status(),
             errors.EmptyInvalidTarget())
-        self.assertFalse('backup' in ghost.objectIds())
+        self.assertNotIn('backup', ghost.objectIds())
 
 
 def test_suite():

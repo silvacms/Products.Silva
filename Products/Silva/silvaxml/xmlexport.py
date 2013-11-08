@@ -169,6 +169,19 @@ class ImageProducer(producers.SilvaProducer):
         self.endElement('image')
 
 
+class GhostAssetProducer(producers.SilvaProducer):
+    """Export a verson of a Silva Asset to XML.
+    """
+    grok.adapts(interfaces.IGhostAsset, Interface)
+
+    def sax(self):
+        self.startElement('ghost_asset', {'id': self.context.id})
+        self.startElement('haunted')
+        self.characters(self.get_reference(u'haunted'))
+        self.endElement('haunted')
+        self.endElement('ghost_asset')
+
+
 class IndexerProducer(producers.SilvaProducer):
     """Export an IndexerProducer to XML.
     """

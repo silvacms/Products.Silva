@@ -63,6 +63,7 @@ class ExtensionRegistryTestCase(unittest.TestCase):
              'Silva Folder',
              'Silva Ghost',
              'Silva Ghost Version',
+             'Silva Ghost Asset',
              'Silva Ghost Folder',
              'Silva Image',
              'Silva Indexer',
@@ -73,11 +74,14 @@ class ExtensionRegistryTestCase(unittest.TestCase):
              'Silva Simple Member',
              'Silva Filtering Service',
              'Mockup Asset',
+             'Mockup Non Publishable',
              'Mockup VersionedContent',
              'Mockup Version'])
         self.assertEqual(
             [c['product'] for c in extension.get_content()],
             ['Silva',
+             'Silva',
+             'Silva',
              'Silva',
              'Silva',
              'Silva',

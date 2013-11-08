@@ -11,11 +11,13 @@ from zope.interface.verify import verifyObject
 DEFAULT_ALL_ADDABLES = [
     'Mockup VersionedContent',
     'Mockup Asset',
+    'Mockup Non Publishable',
     'Silva Folder',
     'Silva Publication',
     'Silva Image',
     'Silva File',
     'Silva Ghost',
+    'Silva Ghost Asset',
     'Silva Ghost Folder',
     'Silva Indexer',
     'Silva Link',
@@ -23,10 +25,12 @@ DEFAULT_ALL_ADDABLES = [
 AUTHOR_ALL_ADDABLES = [
     'Mockup VersionedContent',
     'Mockup Asset',
+    'Mockup Non Publishable',
     'Silva Folder',
     'Silva Image',
     'Silva File',
     'Silva Ghost',
+    'Silva Ghost Asset',
     'Silva Link',
     'Silva AutoTOC']
 
@@ -98,7 +102,8 @@ class AddablesTestCase(unittest.TestCase):
         folder_addables = IAddableContents(self.root.folder)
         self.assertTrue(verifyObject(IAddableContents, folder_addables))
         self.assertEqual(
-            folder_addables.get_authorized_addables(), AUTHOR_ALL_ADDABLES)
+            folder_addables.get_authorized_addables(),
+            AUTHOR_ALL_ADDABLES)
 
         self.root.set_silva_addables_allowed_in_container(
             ['Silva Publication', 'Silva File'])

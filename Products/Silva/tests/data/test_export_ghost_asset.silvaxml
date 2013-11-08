@@ -1,0 +1,100 @@
+<?xml version='1.0' encoding='utf-8'?>
+<silva xmlns="http://infrae.com/namespace/silva" {namespaces} silva_version="{version}">
+  <folder id="folder">
+    <metadata>
+      <set id="silva-content">
+        <silva-content:maintitle>
+          This is &lt;boo&gt;a&lt;/boo&gt; folder
+        </silva-content:maintitle>
+        <silva-content:shorttitle>
+        </silva-content:shorttitle>
+      </set>
+      <set id="silva-extra">
+        <silva-extra:comment>
+        </silva-extra:comment>
+        <silva-extra:contactemail>
+        </silva-extra:contactemail>
+        <silva-extra:contactname>
+        </silva-extra:contactname>
+        <silva-extra:content_description>
+        </silva-extra:content_description>
+        <silva-extra:creationtime>
+          YYYY-MM-DDTHH:MM:SS
+        </silva-extra:creationtime>
+        <silva-extra:creator>
+          author
+        </silva-extra:creator>
+        <silva-extra:keywords>
+        </silva-extra:keywords>
+        <silva-extra:language>
+        </silva-extra:language>
+        <silva-extra:lastauthor>
+          editor
+        </silva-extra:lastauthor>
+        <silva-extra:modificationtime>
+          YYYY-MM-DDTHH:MM:SS
+        </silva-extra:modificationtime>
+        <silva-extra:subject>
+        </silva-extra:subject>
+      </set>
+      <set xmlns:silvasettings="http://infrae.com/namespace/metadata/silva-settings" id="silva-settings">
+        <silvasettings:hide_from_tocs>
+          do not hide
+        </silvasettings:hide_from_tocs>
+      </set>
+    </metadata>
+    <content>
+      <ghost_asset id="ghost">
+        <haunted>
+          folder/logo
+        </haunted>
+      </ghost_asset>
+      <file id="logo">
+        <metadata>
+          <set id="silva-content">
+            <silva-content:maintitle>
+              Silva Logo
+            </silva-content:maintitle>
+            <silva-content:shorttitle>
+            </silva-content:shorttitle>
+          </set>
+          <set id="silva-extra">
+            <silva-extra:comment>
+            </silva-extra:comment>
+            <silva-extra:contactemail>
+            </silva-extra:contactemail>
+            <silva-extra:contactname>
+            </silva-extra:contactname>
+            <silva-extra:content_description>
+            </silva-extra:content_description>
+            <silva-extra:creationtime>
+              YYYY-MM-DDTHH:MM:SS
+            </silva-extra:creationtime>
+            <silva-extra:creator>
+              editor
+            </silva-extra:creator>
+            <silva-extra:keywords>
+            </silva-extra:keywords>
+            <silva-extra:language>
+            </silva-extra:language>
+            <silva-extra:lastauthor>
+              editor
+            </silva-extra:lastauthor>
+            <silva-extra:modificationtime>
+              YYYY-MM-DDTHH:MM:SS
+            </silva-extra:modificationtime>
+            <silva-extra:subject>
+            </silva-extra:subject>
+          </set>
+          <set xmlns:silvasettings="http://infrae.com/namespace/metadata/silva-settings" id="silva-settings">
+            <silvasettings:hide_from_tocs>
+              do not hide
+            </silvasettings:hide_from_tocs>
+          </set>
+        </metadata>
+        <asset id="1">
+        </asset>
+      </file>
+    </content>
+  </folder>
+</silva>

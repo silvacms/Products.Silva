@@ -4,6 +4,7 @@
 
 from OFS.SimpleItem import SimpleItem
 
+from Products.Silva.Asset import Asset
 from Products.Silva.Publishable import NonPublishable
 from Products.Silva.VersionedContent import VersionedContent
 from Products.Silva.Version import Version
@@ -12,7 +13,7 @@ from Products.Silva import roleinfo
 from five import grok
 from silva.core import conf as silvaconf
 from silva.core.views import views as silvaviews
-from silva.core.interfaces import INonPublishable, IVersionedContent
+from silva.core.interfaces import INonPublishable, IAsset, IVersionedContent
 from silva.core.interfaces.adapters import IIndexEntries
 from zeam.form import silva as silvaforms
 
@@ -76,12 +77,25 @@ class MockupView(silvaviews.View):
         return self.content.get_title()
 
 
-class IMockupAsset(INonPublishable):
+class IMockupNonPublishable(INonPublishable):
     pass
 
 
-class MockupAsset(NonPublishable, SimpleItem):
-    """A mockup asset.
+class MockupNonPublishable(NonPublishable, SimpleItem):
+    """A mockup non-publishable.
+    """
+    grok.implements(IMockupNonPublishable)
+    meta_type = 'Mockup Non Publishable'
+    silvaconf.priority(-10)
+    silvaconf.icon('tests/mockers.png')
+
+
+class IMockupAsset(IAsset):
+    pass
+
+
+class MockupAsset(Asset, SimpleItem):
+    """A mockup non-publishable.
     """
     grok.implements(IMockupAsset)
     meta_type = 'Mockup Asset'
@@ -93,11 +107,15 @@ def install_mockers(root):
     root.manage_permission(
         'Add Mockup Assets', roleinfo.AUTHOR_ROLES)
     root.manage_permission(
+        'Add Mockup Non Publishables', roleinfo.AUTHOR_ROLES)
+    root.manage_permission(
         'Add Mockup Versions', roleinfo.AUTHOR_ROLES)
     root.manage_permission(
         'Add Mockup VersionedContents', roleinfo.AUTHOR_ROLES)
     root.service_metadata.addTypesMapping(
         ['Mockup Version'], ('silva-content', 'silva-extra', 'silva-settings'))
+    root.service_metadata.addTypesMapping(
+        ['Mockup Non Publishable'], ('silva-content', 'silva-extra',))
     root.service_metadata.addTypesMapping(
         ['Mockup Asset'], ('silva-content', 'silva-extra',))
 

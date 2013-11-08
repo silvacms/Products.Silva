@@ -121,6 +121,7 @@ def configure_security(root, event):
         'Add Silva Folders',
         'Add Silva Ghost Versions',
         'Add Silva Ghosts',
+        'Add Silva Ghost Assets',
         'Add Silva Links',
         'Add Silva Link Versions',
         'Add Silva Images',

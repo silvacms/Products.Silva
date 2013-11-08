@@ -346,9 +346,9 @@ class QuotaTestCase(unittest.TestCase):
         with manager1.ghoster() as ghoster:
             ghoster(folder2['subfolder1'])
 
-        # And check used space
-        self.assertEqual(folder1.used_space, zipfile_size)
-        self.assertEqual(self.root.used_space, (2 * zipfile_size) + image_size)
+        # And check used space. Ghost Assets don't use any quota.
+        self.assertEqual(folder1.used_space, 0)
+        self.assertEqual(self.root.used_space, zipfile_size + image_size)
         self.assertEqual(folder2.used_space, zipfile_size + image_size)
 
         # Delete the ghost

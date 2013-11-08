@@ -5,7 +5,7 @@
 import re
 
 from five import grok
-from zope.cachedescriptors.property import CachedProperty
+from zope.cachedescriptors.property import Lazy
 from zope.container.contained import notifyContainerModified
 from zope.event import notify
 from zope.lifecycleevent import ObjectCopiedEvent
@@ -20,7 +20,7 @@ from OFS.event import ObjectClonedEvent
 from OFS.subscribers import compatibilityCall
 
 from Products.Silva import helpers
-from Products.Silva.Ghost import ghost_factory
+from Products.Silva.Ghost import get_ghost_factory
 
 from infrae.comethods import cofunction
 from silva.core import conf as silvaconf
@@ -88,7 +88,7 @@ class ContainerManager(grok.Adapter):
                 self.context, to_identifier))
         return content
 
-    @CachedProperty
+    @Lazy
     def __addables(self):
         return set(IAddableContents(self.context).get_authorized_addables())
 
@@ -233,12 +233,13 @@ class ContainerManager(grok.Adapter):
         while content is not None:
             result = self.__verify_copyable(content)
             if result is None:
-                if IAsset.providedBy(content):
+                factory = get_ghost_factory(self.context, content)
+                if factory is None:
                     identifier = self.__make_id('copy', content.getId())
                     result = self.__copy(content, identifier)
                 else:
                     identifier = self.__make_id('ghost', content.getId())
-                    result = ghost_factory(self.context, identifier, content)
+                    result = factory(identifier)
 
             content = yield result
 

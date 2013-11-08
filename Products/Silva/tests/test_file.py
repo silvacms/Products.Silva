@@ -66,13 +66,16 @@ class DefaultFileImplementationTestCase(TestCase):
         with self.layer.open_fixture('photo.tif') as test_file:
             factory.manage_addFile('test_file_id', 'Test File 1', test_file)
             with self.assertRaises(ValueError) as error:
-                factory.manage_addImage('test_file_id', 'Test File 2',
-                        test_file)
+                factory.manage_addImage(
+                    'test_file_id', 'Test File 2', test_file)
 
-        self.assertEqual(str(error.exception), "Please provide a unique id: ${reason}")
+        self.assertEqual(
+            str(error.exception),
+            "Please provide a unique id: ${reason}")
 
         with self.layer.open_fixture('photo.tif') as test_file:
-            factory.manage_addFile('test_file_unique_id', 'Test File 3', test_file)
+            factory.manage_addFile(
+                'test_file_unique_id', 'Test File 3', test_file)
 
         content = self.root._getOb('test_file_unique_id')
         self.assertTrue(verifyObject(interfaces.IAsset, content))
