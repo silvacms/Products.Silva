@@ -2,6 +2,7 @@
 # Zope 3
 from five import grok
 from zeam.component import component
+from zope.interface import noLongerProvides, alsoProvides
 
 # Zope 2
 from AccessControl import ClassSecurityInfo
@@ -15,7 +16,39 @@ from Products.Silva.Ghost import GhostBaseManipulator, GhostBaseManager
 
 from silva.core.interfaces import IGhostAsset, IAsset
 from silva.core.interfaces import IAssetPayload, IGhostManager
+from silva.core.interfaces import IImage, IImageIncluable
 from silva.core.interfaces.errors import AssetInvalidTarget
+
+from silva.core.references.reference import get_content_from_id, get_content_id
+from silva.core.references.reference import DeleteSourceReferenceValue
+
+
+class ImageDeleteSourceReferenceValue(DeleteSourceReferenceValue):
+
+    def _check_image(self, target):
+        source = self.source
+        if source is not None:
+            is_image = IImage.providedBy(target)
+            have_image = IImageIncluable.providedBy(source)
+            if is_image and not have_image:
+                alsoProvides(source, IImageIncluable)
+            elif not is_image and have_image:
+                noLongerProvides(source, IImageIncluable)
+
+    def set_target_id(self, target_id):
+        self._check_image(get_content_from_id(target_id))
+        super(ImageDeleteSourceReferenceValue, self).set_target_id(target_id)
+
+    def set_target(self, target):
+        self._check_image(target)
+        super(ImageDeleteSourceReferenceValue, self).set_target_id(
+            get_content_id(target))
+
+
+class ImageWeakReferenceValue(ImageDeleteSourceReferenceValue):
+
+    def cleanup(self):
+        pass
 
 
 class GhostAsset(GhostBase, Asset):
@@ -23,13 +56,18 @@ class GhostAsset(GhostBase, Asset):
     security = ClassSecurityInfo()
     meta_type = "Silva Ghost Asset"
 
+    def _get_haunted_factories(self, auto_delete=False):
+        if auto_delete:
+            return ImageDeleteSourceReferenceValue
+        return ImageWeakReferenceValue
+
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'get_filename')
     def get_filename(self):
         asset = self.get_haunted()
         if asset is not None:
             return asset.get_filename()
-        return ''
+        return self.getId()
 
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'get_file_size')

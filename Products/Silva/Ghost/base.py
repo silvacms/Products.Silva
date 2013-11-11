@@ -20,7 +20,6 @@ from silva.core.interfaces.errors import ContentError
 from silva.core.interfaces import IGhostAware, IGhostManager, IPublishable
 from silva.core.references.reference import DeleteSourceReferenceValue
 from silva.core.references.reference import WeakReferenceValue
-from silva.core.references.reference import get_content_id
 from silva.core.references.interfaces import IReferenceService
 from silva.translations import translate as _
 
@@ -176,20 +175,26 @@ class GhostBase(object):
             return content.get_short_title_editable()
         return _(u"Ghost target is broken")
 
+    def _get_haunted_factories(self, auto_delete=False):
+        # Give the possibilties to override the selection of reference
+        # factories.
+        if auto_delete:
+            return DeleteSourceReferenceValue
+        return WeakReferenceValue
+
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'set_haunted')
     def set_haunted(self, content, auto_delete=False):
         """ Set the content as the haunted object
         """
         service = getUtility(IReferenceService)
-        factory = WeakReferenceValue
-        if auto_delete:
-            factory = DeleteSourceReferenceValue
+        factory = self._get_haunted_factories(auto_delete)
         reference = service.get_reference(
             aq_inner(self), name=u"haunted", add=True, factory=factory)
-        if not isinstance(content, int):
-            content = get_content_id(content)
-        reference.set_target_id(content)
+        if isinstance(content, int):
+            reference.set_target_id(content)
+        else:
+            reference.set_target(content)
 
     security.declareProtected(SilvaPermissions.View, 'get_haunted')
     def get_haunted(self):
