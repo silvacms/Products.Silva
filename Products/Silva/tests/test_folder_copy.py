@@ -9,7 +9,7 @@ from silva.core.interfaces import IPublicationWorkflow
 from silva.core.interfaces import IAutoTOC, ILink, IFolder
 from zope.interface.verify import verifyObject
 
-from Products.Silva.testing import FunctionalLayer
+from Products.Silva.testing import FunctionalLayer, Transaction
 from Products.Silva.testing import assertTriggersEvents, assertNotTriggersEvents
 
 
@@ -23,17 +23,18 @@ class AuthorFolderCopyTestCase(unittest.TestCase):
         self.root = self.layer.get_application()
         self.layer.login('editor')
 
-        factory = self.root.manage_addProduct['Silva']
-        factory.manage_addFolder('source', 'Source Folder')
-        factory.manage_addFolder('target', 'Target Folder')
+        with Transaction():
+            factory = self.root.manage_addProduct['Silva']
+            factory.manage_addFolder('source', 'Source Folder')
+            factory.manage_addFolder('target', 'Target Folder')
 
-        factory = self.root.source.manage_addProduct['Silva']
-        factory.manage_addAutoTOC('toc', 'AutoTOC')
-        factory.manage_addLink('link', 'Link')
-        factory.manage_addLink('published_link', 'Published Link')
-        factory.manage_addFolder('folder', 'Folder')
+            factory = self.root.source.manage_addProduct['Silva']
+            factory.manage_addAutoTOC('toc', 'AutoTOC')
+            factory.manage_addLink('link', 'Link')
+            factory.manage_addLink('published_link', 'Published Link')
+            factory.manage_addFolder('folder', 'Folder')
 
-        IPublicationWorkflow(self.root.source.published_link).publish()
+            IPublicationWorkflow(self.root.source.published_link).publish()
 
         self.layer.login(self.user)
 

@@ -120,7 +120,7 @@ InitializeClass(GhostAsset)
 
 class GhostAssetManipulator(GhostBaseManipulator):
 
-    def create(self):
+    def create(self, recursive=False):
         assert self.manager.ghost is None
         factory = self.manager.container.manage_addProduct['Silva']
         factory.manage_addGhostAsset(self.identifier, None)

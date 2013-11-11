@@ -99,7 +99,7 @@ InitializeClass(Ghost)
 
 class GhostManipulator(GhostBaseManipulator):
 
-    def create(self):
+    def create(self, recursive=False):
         assert self.manager.ghost is None
         ghost = None
         factory = self.manager.container.manage_addProduct['Silva']

@@ -23,5 +23,5 @@ def get_ghost_factory(container, target):
         return None
 
     return lambda identifier: get_manager(
-        container=container).modify(target, identifier).create()
+        container=container).modify(target, identifier).create(recursive=True)
 

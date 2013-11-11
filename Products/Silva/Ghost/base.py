@@ -44,7 +44,7 @@ class GhostBaseManipulator(object):
         for reference in self.__references:
             reference.set_target(content)
 
-    def create(self):
+    def create(self, recursive=False):
         raise NotImplementedError
 
     def update(self):
@@ -67,10 +67,10 @@ class GhostBaseManipulator(object):
         self.create()
         self.restore_references_to(self.manager.ghost)
 
-    def verify(self):
+    def verify(self, recursive=False):
         if self.manager.ghost is None:
             if self.target is not None:
-                return self.create()
+                return self.create(recursive=recursive)
         elif self.need_update():
             return self.update()
         return self.manager.ghost

@@ -38,7 +38,7 @@ class CopyManipulator(GhostBaseManipulator):
         # Publish if needed ?
         return self.manager.container._getOb(self.identifier)
 
-    def create(self):
+    def create(self, recursive=False):
         assert self.manager.ghost is None
         ghost = self.make_copy()
         self.manager.ghost = ghost
@@ -213,12 +213,14 @@ InitializeClass(GhostFolder)
 
 class GhostFolderManipulator(GhostBaseManipulator):
 
-    def create(self):
+    def create(self, recursive=False):
         assert self.manager.ghost is None
         factory = self.manager.container.manage_addProduct['Silva']
         factory.manage_addGhostFolder(self.identifier, None)
         ghost = self.manager.container._getOb(self.identifier)
         ghost.set_haunted(self.target, auto_delete=self.manager.auto_delete)
+        if recursive:
+            ghost.haunt()
         self.manager.ghost = ghost
         return ghost
 
