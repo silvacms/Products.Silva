@@ -65,7 +65,7 @@ class GhostFolderEditForm(silvaforms.SMIEditForm):
     """ Edit form Ghost Folder
     """
     grok.context(IGhostFolder)
-    grok.name('silva.ui.edit')
+    grok.name('edit')
 
     fields = silvaforms.Fields(IGhostFolderSchema).omit('id')
     dataValidators = [TargetValidator('haunted', IContainer, adding=False)]

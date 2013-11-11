@@ -102,6 +102,9 @@ class InfoPortlet(SMIAssetPortlet):
     grok.context(IFile)
 
     def update(self):
+        self.filename = self.context.get_filename()
+        self.download_url = self.context.get_download_url(
+            preview=True, request=self.request)
         self.mime_type = self.context.get_mime_type()
         self.content_encoding = self.context.get_content_encoding()
 

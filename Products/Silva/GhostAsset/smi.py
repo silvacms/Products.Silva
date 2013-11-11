@@ -5,11 +5,11 @@ from five import grok
 
 # Silva
 from Products.Silva.Ghost import TargetValidator
-from Products.Silva.Asset import AssetEditTab
+from Products.Silva.Asset import AssetEditTab, SMIAssetPortlet
 
 from silva.core.conf.interfaces import IIdentifiedContent
+from silva.core.interfaces import IAsset, IGhostAsset, IImageIncluable
 from silva.core.references.reference import Reference
-from silva.core.interfaces import IAsset, IGhostAsset
 from silva.translations import translate as _
 from zeam.form import silva as silvaforms
 
@@ -54,3 +54,14 @@ class GhostAssetEditForm(silvaforms.SMISubForm):
         silvaforms.CancelEditAction(),
         silvaforms.EditAction())
 
+
+class GhostAssetPortlet(SMIAssetPortlet):
+    grok.context(IGhostAsset)
+    grok.order(10)
+
+    def update(self):
+        self.is_image = IImageIncluable.providedBy(self.context)
+        self.filename = self.context.get_filename()
+        self.mime_type = self.context.get_mime_type()
+        self.download_url = self.context.get_download_url(
+            preview=True, request=self.request)

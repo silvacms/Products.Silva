@@ -1,8 +1,11 @@
 
+import time
+
 # Zope 3
 from five import grok
 from zeam.component import component
 from zope.interface import noLongerProvides, alsoProvides
+from zope.component import getMultiAdapter
 
 # Zope 2
 from AccessControl import ClassSecurityInfo
@@ -14,13 +17,13 @@ from Products.Silva.Asset import Asset
 from Products.Silva.Ghost import GhostBase
 from Products.Silva.Ghost import GhostBaseManipulator, GhostBaseManager
 
-from silva.core.interfaces import IGhostAsset, IAsset
 from silva.core.interfaces import IAssetPayload, IGhostManager
+from silva.core.interfaces import IGhostAsset, IAsset
 from silva.core.interfaces import IImage, IImageIncluable
 from silva.core.interfaces.errors import AssetInvalidTarget
-
-from silva.core.references.reference import get_content_from_id, get_content_id
 from silva.core.references.reference import DeleteSourceReferenceValue
+from silva.core.references.reference import get_content_from_id, get_content_id
+from silva.core.views.interfaces import IContentURL
 
 
 class ImageDeleteSourceReferenceValue(DeleteSourceReferenceValue):
@@ -84,6 +87,18 @@ class GhostAsset(GhostBase, Asset):
         if asset is not None:
             return asset.get_mime_type()
         return 'application/octet-stream'
+
+    security.declareProtected(
+        SilvaPermissions.View, 'get_download_url')
+    def get_download_url(self, preview=False, request=None):
+        if request is None:
+            request = self.REQUEST
+        url = getMultiAdapter((self, request), IContentURL).url(preview=preview)
+        if preview:
+            # In case of preview we add something that change at the
+            # end of the url to prevent caching from the browser.
+            url += '?' + str(int(time.time()))
+        return url
 
     def get_quota_usage(self):
         # Ghost Assets don't use any quota.

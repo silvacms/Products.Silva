@@ -12,11 +12,11 @@ from AccessControl import getSecurityManager
 from AccessControl import Unauthorized
 
 # Silva
-from silva.core.views import views as silvaviews
 from silva.core.interfaces import IGhostAsset, IDownloableAsset
-from silva.translations import translate as _
+from silva.core.views import views as silvaviews
 from silva.core.views.httpheaders import HTTPResponseHeaders
 from silva.core.views.interfaces import IHTTPResponseHeaders
+from silva.translations import translate as _
 
 
 class GhostAssetView(silvaviews.View):
@@ -71,3 +71,4 @@ class GhostAssetResponseHeaders(HTTPResponseHeaders):
                 (self.request, haunted),
                 IHTTPResponseHeaders)
             headers.other_headers(headers)
+

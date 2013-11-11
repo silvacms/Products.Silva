@@ -1,4 +1,13 @@
 <tal:info i18n:domain="silva">
+  <div class="portlet"
+       tal:condition="viewlet.is_image"
+       i18n:domain="silva">
+    <h4 i18n:translate="">Inclusion in documents</h4>
+    <p i18n:translate="">
+      This asset can be included as an image inside documents.
+    </p>
+  </div>
+
   <div class="portlet">
     <h4 i18n:translate="">Link to file</h4>
     <p>
@@ -14,10 +23,5 @@
   <div class="portlet" tal:condition="viewlet.mime_type">
     <h4 i18n:translate="">File mime type</h4>
     <p tal:content="viewlet.mime_type">mime type</p>
-  </div>
-
-  <div class="portlet" tal:condition="viewlet.content_encoding">
-    <h4 i18n:translate="">File encoding</h4>
-    <p tal:content="viewlet.content_encoding">content encoding</p>
   </div>
 </tal:info>
