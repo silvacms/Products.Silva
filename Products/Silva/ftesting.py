@@ -206,6 +206,10 @@ else
         type='clickable')
     # Folder listing
     browser.inspect.add(
+        'listing_groups',
+        xpath='//dl[@class="listing"]/dt',
+        type='clickable')
+    browser.inspect.add(
         'listing',
         xpath='//dl[@class="listing"]//tr[contains(@class,"item")]',
         nested={
