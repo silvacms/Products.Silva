@@ -6,6 +6,7 @@ import re
 import email
 import os.path
 import sys
+import tempfile
 
 from AccessControl.SecurityManagement import newSecurityManager
 from OFS.SimpleItem import SimpleItem
@@ -21,9 +22,10 @@ from infrae.testing import TestCase, TestMethods, suite_from_package
 from infrae.testing import get_event_names, clear_events, get_events
 from infrae.testing import assertNotTriggersEvents, assertTriggersEvents
 from infrae.testing import testCleanUp
+from infrae.fileupload.middleware import UploadMiddleware
 from infrae.wsgi.testing import BrowserLayer, TestRequest
 from zope.site.hooks import setSite, setHooks
-import fanstatic
+from fanstatic import Fanstatic
 import transaction
 
 
@@ -220,11 +222,13 @@ class SilvaLayer(BrowserLayer):
         """Return a WSGI application, that can be used to query the
         Silva Root.
         """
-        return fanstatic.Fanstatic(
-            self._test_wsgi_application,
-            minified=True,
-            bundle=True,
-            publisher_signature='++static++')
+        return UploadMiddleware(
+            Fanstatic(
+                self._test_wsgi_application,
+                minified=True,
+                bundle=True,
+                publisher_signature='++static++'),
+            tempfile.gettempdir())
 
     def get_browser(self, settings=None):
         """A lxml-based based-browser, that case be used for simple
