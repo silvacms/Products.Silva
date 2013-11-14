@@ -27,6 +27,7 @@ from silva.core import conf as silvaconf
 from silva.core.interfaces import IContainer, IGhostFolder, IGhostManager
 from silva.core.interfaces import IPublication
 from silva.core.interfaces.errors import ContainerInvalidTarget
+from silva.core.interfaces.errors import ContentError, ContentErrorBundle
 from silva.translations import translate as _
 
 
@@ -89,6 +90,7 @@ class GhostFolder(GhostBase, Folder):
         if haunted is None:
             return False
         stack = self._haunt_diff(haunted, self)
+        errors = []
 
         while stack:
             # breadth first search
@@ -105,15 +107,22 @@ class GhostFolder(GhostBase, Folder):
             if g_id is not None:
                 g_ob = g_container._getOb(g_id)
 
-            g_ob = get_factory(h_ob)(
-                ghost=g_ob,
-                container=g_container,
-                auto_delete=True,
-                auto_publish=True).modify(h_ob, h_id).verify()
+            try:
+                g_ob = get_factory(h_ob)(
+                    ghost=g_ob,
+                    container=g_container,
+                    auto_delete=True,
+                    auto_publish=True).modify(h_ob, h_id).verify()
+            except ContentError as error:
+                errors.append(error)
 
             if IContainer.providedBy(h_ob) and g_ob is not None:
                 stack.extend(self._haunt_diff(h_ob, g_ob))
 
+        if errors:
+            raise ContentErrorBundle(
+                _(u"Error while synchronizing the Ghost Folder"),
+                content=self, errors=errors)
         return True
 
     def _haunt_diff(self, haunted, ghost):
@@ -216,7 +225,10 @@ class GhostFolderManipulator(GhostBaseManipulator):
     def create(self, recursive=False):
         assert self.manager.ghost is None
         factory = self.manager.container.manage_addProduct['Silva']
-        factory.manage_addGhostFolder(self.identifier, None)
+        try:
+            factory.manage_addGhostFolder(self.identifier, None)
+        except ValueError as error:
+            raise ContentError(error[0], content=self.target)
         ghost = self.manager.container._getOb(self.identifier)
         ghost.set_haunted(self.target, auto_delete=self.manager.auto_delete)
         if recursive:

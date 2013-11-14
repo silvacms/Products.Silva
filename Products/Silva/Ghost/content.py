@@ -17,7 +17,7 @@ from Products.Silva.Version import Version
 from Products.Silva import SilvaPermissions
 
 from silva.core import conf as silvaconf
-from silva.core.interfaces.errors import ContentInvalidTarget
+from silva.core.interfaces.errors import ContentInvalidTarget, ContentError
 from silva.core.interfaces import IContent, IGhost, IGhostVersion
 from silva.core.interfaces import IPublicationWorkflow, IGhostManager
 from silva.translations import translate as _
@@ -103,7 +103,10 @@ class GhostManipulator(GhostBaseManipulator):
         assert self.manager.ghost is None
         ghost = None
         factory = self.manager.container.manage_addProduct['Silva']
-        factory.manage_addGhost(self.identifier, None)
+        try:
+            factory.manage_addGhost(self.identifier, None)
+        except ValueError as error:
+            raise ContentError(error[0], content=self.target)
         ghost = self.manager.container._getOb(self.identifier)
         version = ghost.get_editable()
         version.set_haunted(

@@ -6,10 +6,12 @@ import unittest
 
 from silva.core.interfaces import IContainerManager, IPublicationWorkflow
 from silva.core.interfaces import IGhost, IGhostVersion, IGhostAsset, IGhostFolder
+from silva.core.interfaces.errors import IContentErrorBundle
 from zope.interface.verify import verifyObject
 
 from Products.Silva.testing import assertTriggersEvents
 from Products.Silva.testing import FunctionalLayer, Transaction
+from Products.Silva.tests.mockers import IMockupNonPublishable
 
 
 class EditorFolderGhosterTestCase(unittest.TestCase):
@@ -32,6 +34,39 @@ class EditorFolderGhosterTestCase(unittest.TestCase):
                 factory.manage_addFile('logo', 'Silva Logo', stream)
 
             IPublicationWorkflow(self.root.source.data).publish()
+
+    def test_invalid(self):
+        """Pasting a content as a ghost folder that contains a content
+        with an invalid identifier.
+        """
+        self.root.source.manage_renameObject('folder', 'index')
+        manager = IContainerManager(self.root.target)
+        with assertTriggersEvents('ObjectWillBeAddedEvent',
+                                  'ObjectAddedEvent',
+                                  'ContainerModifiedEvent'):
+            with manager.ghoster() as ghoster:
+                error = ghoster(self.root.source)
+
+        self.assertTrue(verifyObject(IContentErrorBundle, error))
+        self.assertEqual(error.content, self.root.target.source)
+        self.assertEqual(error.reason, u'Error while synchronizing the Ghost Folder')
+        self.assertEqual(len(error.errors), 1)
+
+    def test_other(self):
+        """Pasting a content that doesn't have a ghost
+        implementation. It should be copied.
+        """
+        factory = self.root.source.manage_addProduct['Silva']
+        factory.manage_addMockupNonPublishable('stuff', 'Stuff')
+        manager = IContainerManager(self.root.target)
+        with assertTriggersEvents('ObjectWillBeAddedEvent',
+                                  'ObjectAddedEvent',
+                                  'ContainerModifiedEvent'):
+            with manager.ghoster() as ghoster:
+                ghost = ghoster(self.root.source.stuff)
+
+        self.assertTrue(verifyObject(IMockupNonPublishable, ghost))
+        self.assertIn('stuff', self.root.target.objectIds())
 
     def test_asset(self):
         """Pasting an asset as a ghost asset.

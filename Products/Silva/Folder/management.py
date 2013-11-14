@@ -26,7 +26,7 @@ from infrae.comethods import cofunction
 from silva.core import conf as silvaconf
 from silva.core.interfaces import IContainerManager
 from silva.core.interfaces import IAddableContents
-from silva.core.interfaces import IContainer, IAsset
+from silva.core.interfaces import IContainer
 from silva.core.interfaces import ContainerError, ContentError
 from silva.core.interfaces import ISilvaNameChooser
 from silva.translations import translate as _
@@ -239,7 +239,10 @@ class ContainerManager(grok.Adapter):
                     result = self.__copy(content, identifier)
                 else:
                     identifier = self.__make_id('ghost', content.getId())
-                    result = factory(identifier)
+                    try:
+                        result = factory(identifier)
+                    except ContentError as result:
+                        pass
 
             content = yield result
 

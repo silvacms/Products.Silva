@@ -23,7 +23,7 @@ from Products.Silva.Ghost import GhostBaseManipulator, GhostBaseManager
 from silva.core.interfaces import IAssetPayload, IGhostManager
 from silva.core.interfaces import IGhostAsset, IAsset
 from silva.core.interfaces import IImage, IImageIncluable
-from silva.core.interfaces.errors import AssetInvalidTarget
+from silva.core.interfaces.errors import AssetInvalidTarget, ContentError
 from silva.core.references.reference import DeleteSourceReferenceValue
 from silva.core.references.reference import get_content_from_id, get_content_id
 from silva.core.views.interfaces import IContentURL
@@ -126,7 +126,10 @@ class GhostAssetManipulator(GhostBaseManipulator):
     def create(self, recursive=False):
         assert self.manager.ghost is None
         factory = self.manager.container.manage_addProduct['Silva']
-        factory.manage_addGhostAsset(self.identifier, None)
+        try:
+            factory.manage_addGhostAsset(self.identifier, None)
+        except ValueError as error:
+            raise ContentError(error[0], content=self.target)
         ghost = self.manager.container._getOb(self.identifier)
         ghost.set_haunted(self.target, auto_delete=self.manager.auto_delete)
         self.manager.ghost = ghost

@@ -15,7 +15,8 @@ from Products.SilvaMetadata.interfaces import IMetadataService, ReadOnlyError
 from silva.core.interfaces import IContainerManager, IPublicationWorkflow
 from silva.core.interfaces import IGhost, IGhostAsset, IGhostVersion
 from silva.core.interfaces import IPublication, IFolder, IGhostFolder
-from silva.core.interfaces import errors
+from silva.core.interfaces.errors import EmptyInvalidTarget, CircularInvalidTarget
+from silva.core.interfaces.errors import ContentError, ContainerInvalidTarget
 from silva.core.references.interfaces import IReferenceService, IReferenceValue
 
 
@@ -46,7 +47,7 @@ class GhostFolderTestCase(unittest.TestCase):
         factory.manage_addMockupVersionedContent('document', 'Document')
         factory.manage_addFolder('folder', 'Folder')
 
-    def test_get_folder(self):
+    def test_ghost_folder(self):
         """Test a Ghost Folder haunting to a Folder.
         """
         factory = self.root.target.manage_addProduct['Silva']
@@ -183,7 +184,7 @@ class GhostFolderTestCase(unittest.TestCase):
             aq_chain(reference.source),
             aq_chain(ghost))
 
-    def test_ghost_to_publication(self):
+    def test_convert_to_publication(self):
         """Test convertion of a Ghost Folder to a Publication.
         """
         factory = self.root.target.manage_addProduct['Silva']
@@ -222,7 +223,7 @@ class GhostFolderTestCase(unittest.TestCase):
         self.assertTrue(verifyObject(IGhost, ghost.index))
         self.assertTrue(verifyObject(IGhost, ghost.document))
 
-    def test_ghost_to_folder(self):
+    def test_convert_to_folder(self):
         """Test Ghost Folder convertion to a regular Folder.
         """
         factory = self.root.target.manage_addProduct['Silva']
@@ -342,22 +343,22 @@ class GhostFolderTestCase(unittest.TestCase):
         ghost = self.root.target.ghost
         self.assertEqual(
             ghost.get_link_status(),
-            errors.EmptyInvalidTarget())
+            EmptyInvalidTarget())
 
         ghost.set_haunted(self.root.folder.document)
         self.assertEqual(
             ghost.get_link_status(),
-            errors.ContainerInvalidTarget())
+            ContainerInvalidTarget())
 
         ghost.set_haunted(self.root)
         self.assertEqual(
             ghost.get_link_status(),
-            errors.CircularInvalidTarget())
+            CircularInvalidTarget())
 
         ghost.set_haunted(self.root.target.ghost)
         self.assertEqual(
             ghost.get_link_status(),
-            errors.CircularInvalidTarget())
+            CircularInvalidTarget())
 
         ghost.set_haunted(self.root.target.folder)
         self.assertEqual(ghost.get_link_status(), None)
@@ -367,12 +368,12 @@ class GhostFolderTestCase(unittest.TestCase):
         ghost.set_haunted(self.root.target.ghost.folder)
         self.assertEqual(
             ghost.get_link_status(),
-            errors.CircularInvalidTarget())
+            CircularInvalidTarget())
 
         ghost.set_haunted(0)
         self.assertEqual(
             ghost.get_link_status(),
-            errors.EmptyInvalidTarget())
+            EmptyInvalidTarget())
 
     def test_ghost_title(self):
         """Test Ghost Folder title.
@@ -433,6 +434,25 @@ class GhostFolderTestCase(unittest.TestCase):
         self.assertFalse('index' in ghost.objectIds())
         self.assertFalse('folder' in ghost.objectIds())
         self.assertTrue('publication' in ghost.objectIds())
+
+    def test_ghost_haunt_errors(self):
+        """Test modifications: a ghost folder is haunted a folder
+        containing content with invalid identifiers.
+        """
+        factory = self.root.target.manage_addProduct['Silva']
+        factory.manage_addGhostFolder('ghost', None, haunted=self.root.folder)
+
+        ghost = self.root.target.ghost
+        self.root.folder.folder.manage_renameObject('asset', 'cb_asset')
+        with self.assertRaises(ContentError):
+            ghost.haunt()
+
+        self.assertItemsEqual(
+            ghost.objectIds(),
+            ['index', 'document', 'folder', 'publication'])
+        self.assertItemsEqual(
+            ghost.folder.objectIds(),
+            ['document'])
 
     def test_ghost_haunt_add_ghosts(self):
         """Test modifications: adding content in the target creates
@@ -801,7 +821,7 @@ class GhostFolderTestCase(unittest.TestCase):
         self.assertTrue('backup' in self.root.folder.objectIds())
         self.assertEqual(
             self.root.folder.backup.get_link_status(),
-            errors.EmptyInvalidTarget())
+            EmptyInvalidTarget())
         self.assertFalse('backup' in ghost.objectIds())
 
         # Ghosting should not change anything
@@ -809,7 +829,7 @@ class GhostFolderTestCase(unittest.TestCase):
         self.assertIn('backup', self.root.folder.objectIds())
         self.assertEqual(
             self.root.folder.backup.get_link_status(),
-            errors.EmptyInvalidTarget())
+            EmptyInvalidTarget())
         self.assertNotIn('backup', ghost.objectIds())
 
 
