@@ -15,6 +15,7 @@ from Products.Silva.Ghost import TargetValidator
 from silva.core.conf.interfaces import IIdentifiedContent
 from silva.core.references.reference import Reference
 from silva.core.interfaces import IContainer, IGhostFolder
+from silva.core.interfaces.errors import ContentError
 from silva.ui.menu import ContentMenu, MenuItem
 from silva.translations import translate as _
 from zeam.form import silva as silvaforms
@@ -37,15 +38,23 @@ class SyncAction(silvaforms.Action):
 
     def __call__(self, form):
         folder = form.context
-        if folder.get_link_status() is None:
+        if folder.get_link_status() is not None:
+            form.send_message(
+                _(u'Ghost Folder was not synchronized, '
+                  u'because the target is invalid.'),
+                type='error')
+            return silvaforms.FAILURE
+        try:
             folder.haunt()
+        except ContentError as error:
+            form.send_message(
+                error.reason,
+                type='error')
+            return silvaforms.FAILURE
+        else:
             form.send_message(
                 _(u'Ghost Folder synchronized.'), type='feedback')
             return silvaforms.SUCCESS
-        form.send_message(
-            _(u'Ghost Folder was not synchronized, because the target is invalid.'),
-            type='error')
-        return silvaforms.FAILURE
 
 
 class GhostFolderAddForm(silvaforms.SMIAddForm):
