@@ -49,7 +49,7 @@ class EditorFolderGhosterTestCase(unittest.TestCase):
 
         self.assertTrue(verifyObject(IContentErrorBundle, error))
         self.assertEqual(error.content, self.root.target.source)
-        self.assertEqual(error.reason, u'Error while synchronizing the Ghost Folder')
+        self.assertEqual(error.reason, u'Error while synchronizing the Ghost Folder: not all its content have been updated properly.')
         self.assertEqual(len(error.errors), 1)
 
     def test_other(self):
