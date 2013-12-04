@@ -35,7 +35,7 @@ class GhostBaseManipulator(object):
     def save_references_of(self, content):
         service = getUtility(IReferenceService)
         self.__references = []
-        for reference in service.get_references_to(content):
+        for reference in list(service.get_references_to(content)):
             # Break the reference so we can replace it.
             reference.set_target_id(0)
             self.__references.append(reference)
