@@ -2,7 +2,7 @@
 Silva
 =====
 
-Silva is a Zope-based web application designed for the creation and
+`Silva`_ is a Zope-based web application designed for the creation and
 management of structured, textual content. Silva allows users to enter
 new documents as well as edit existing documents using a web
 interface.
@@ -42,5 +42,7 @@ objects.
 Code repository
 ===============
 
-You can find the code of this extension in Mercurial:
-https://hg.infrae.com/Products.Silva/.
+You can find the code of this extension in Git:
+https://github.com/silvacms/Products.Silva
+
+.. _Silva: http://silvacms.org
