@@ -161,8 +161,8 @@ try:
     magic_error.argtypes = [magic_t]
 
     def error_check(result, func, args):
-        err = magic_error(args[0])
-        if err is not None:
+        if result is None:
+            err = magic_error(args[0])
             raise MagicException(err)
         else:
             return result
