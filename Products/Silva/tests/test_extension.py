@@ -114,7 +114,7 @@ class ExtensionRegistryTestCase(unittest.TestCase):
         self.assertEqual(extension.module_name, 'silva.core.layout')
         self.assertEqual(
             extension.description,
-            'Layout system for Silva base on Zope Tool Kit and Grok')
+            'Layout and theme engine for Silva CMS')
 
     def test_installer(self):
         # First system extension installer.
